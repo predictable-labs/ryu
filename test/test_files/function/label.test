@@ -41,3 +41,19 @@ workAt
 -STATEMENT RETURN labels(null);
 ---- 1
 
+
+-LOG LabelOnPathNodeExtract
+# Test for segfault bug when calling label() on node extracted from path with array indexing
+# Working query using properties() for comparison
+-STATEMENT MATCH p = (n)-[:knows]->(m:person {ID: 2}) WITH nodes(p) AS ns RETURN properties(ns, "_LABEL")[1];
+---- 3
+person
+person
+person
+# This query should segfault (the bug being tested)
+-STATEMENT MATCH p = (n)-[:knows]->(m:person {ID: 2}) WITH nodes(p) AS ns RETURN label(ns[1]);
+---- 3
+person
+person
+person
+

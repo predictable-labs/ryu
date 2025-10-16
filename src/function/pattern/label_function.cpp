@@ -87,13 +87,16 @@ std::shared_ptr<Expression> LabelFunction::rewriteFunc(const RewriteFunctionBind
     if (ExpressionUtil::isNullLiteral(*argument)) {
         return expressionBinder->createNullLiteralExpression();
     }
-    expression_vector children;
-    if (argument->expressionType == ExpressionType::VARIABLE) {
+    // For non-pattern expressions (VARIABLE, FUNCTION, etc.), extract the _LABEL field
+    if (argument->expressionType != ExpressionType::PATTERN) {
+        expression_vector children;
         children.push_back(input.arguments[0]);
         children.push_back(expressionBinder->createLiteralExpression(InternalKeyword::LABEL));
         return expressionBinder->bindScalarFunctionExpression(children,
             StructExtractFunctions::name);
     }
+    // For PATTERN expressions (NODE/REL), use optimized binary function
+    expression_vector children;
     auto disableLiteralRewrite = expressionBinder->getConfig().disableLabelFunctionLiteralRewrite;
     if (ExpressionUtil::isNodePattern(*argument)) {
         auto& node = argument->constCast<NodeExpression>();

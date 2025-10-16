@@ -145,3 +145,53 @@ def test_int8_type_sniffing(conn_db_readwrite: ConnDB) -> None:
 #     assert result.get_next() == [2]
 #     assert not result.has_next()
 #     result.close()
+
+
+def test_label_segfault(conn_db_readwrite: ConnDB) -> None:
+    """Test for segfault bug when calling label() on node extracted from path with array indexing.
+
+    Issue: With data created using LivesWith relationship, the following segfaults:
+        MATCH p = (n)-[:LivesWith]->(m:Person {name: 'Bob'})
+        WITH nodes(p) AS ns
+        RETURN label(ns[1]);
+
+    But this works:
+        MATCH p = (n)-[:LivesWith]->(m:Person {name: 'Bob'})
+        WITH nodes(p) AS ns
+        RETURN properties(ns, "_LABEL")[1];
+    """
+    conn, _ = conn_db_readwrite
+
+    # Create schema as described in the issue
+    conn.execute("CREATE NODE TABLE Person(name STRING PRIMARY KEY, occupation STRING);")
+    conn.execute("CREATE REL TABLE LivesWith(FROM Person TO Person);")
+
+    # Create test data
+    conn.execute("CREATE (p:Person {name: 'Alice'})-[:LivesWith]->(:Person {name: 'Bob'});")
+
+    # First, verify the working query using properties()
+    result = conn.execute(
+        """
+        MATCH p = (n)-[:LivesWith]->(m:Person {name: 'Bob'})
+        WITH nodes(p) AS ns
+        RETURN properties(ns, "_LABEL")[1];
+        """
+    )
+    assert result.has_next()
+    assert result.get_next() == ["Person"]
+    assert not result.has_next()
+    result.close()
+
+    # Now test the segfault query with label()
+    # This should segfault with the current bug
+    result = conn.execute(
+        """
+        MATCH p = (n)-[:LivesWith]->(m:Person {name: 'Bob'})
+        WITH nodes(p) AS ns
+        RETURN label(ns[1]);
+        """
+    )
+    assert result.has_next()
+    assert result.get_next() == ["Person"]
+    assert not result.has_next()
+    result.close()
