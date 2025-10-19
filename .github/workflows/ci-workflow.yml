@@ -174,9 +174,60 @@ jobs:
           s3cmd sync ./ldbc01 s3://ryu-test/
           rm -rf ldbc01 version_minio.txt
 
+  gcc-release-build:
+    name: gcc release build
+    needs: [ sanity-checks, python-lint-check, generate-binary-datasets ]
+    runs-on: ubuntu-latest
+    env:
+      NUM_THREADS: 32
+      GEN: Ninja
+      CC: gcc
+      CXX: g++
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install DuckDB
+        uses: ./.github/actions/install-duckdb
+
+      - name: Setup ccache
+        uses: hendrikmuhs/ccache-action@v1.2
+        with:
+          key: gcc-release-${{ github.sha }}
+          restore-keys: |
+            gcc-release-
+
+      - name: Build release with tests
+        run: |
+          export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
+          make test-build
+          make release EXTRA_CMAKE_FLAGS="-DBUILD_EXTENSIONS=\"httpfs;duckdb;json;postgres;sqlite;fts;delta;iceberg;azure;unity_catalog;vector;neo4j;algo;llm\""
+
+      - name: Upload test build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: gcc-test-build
+          path: |
+            build/relwithdebinfo/
+            !build/relwithdebinfo/**/*.o
+            !build/relwithdebinfo/**/*.a
+            !build/relwithdebinfo/_deps/
+          retention-days: 1
+
+      - name: Upload release build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: gcc-release-build
+          path: |
+            build/release/
+            !build/release/**/*.o
+            !build/release/**/*.a
+            !build/release/_deps/
+          retention-days: 1
+
   gcc-build-test:
     name: gcc build & test
-    needs: [ sanity-checks, python-lint-check, generate-binary-datasets ]
+    needs: [ gcc-release-build, generate-binary-datasets ]
     runs-on: ubuntu-latest
     env:
       NUM_THREADS: 32
@@ -199,6 +250,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Download gcc-test-build
+        uses: actions/download-artifact@v4
+        with:
+          name: gcc-test-build
+          path: build/relwithdebinfo/
+
+      - name: Download gcc-release-build
+        uses: actions/download-artifact@v4
+        with:
+          name: gcc-release-build
+          path: build/release/
 
       - name: Download binary-demo
         uses: actions/download-artifact@v4
@@ -468,6 +531,7 @@ jobs:
 
   rust-build-test:
     name: rust build & test
+    needs: [ gcc-release-build ]
     runs-on: ubuntu-latest
     env:
       # CARGO_BUILD_JOBS is set using this in the Makefile
@@ -481,8 +545,11 @@ jobs:
       - name: Install DuckDB
         uses: ./.github/actions/install-duckdb
 
-      - name: Build RyuGraph with extensions
-        run: make release EXTRA_CMAKE_FLAGS="-DBUILD_EXTENSIONS=\"httpfs;duckdb;json;postgres;sqlite;fts;delta;iceberg;azure;unity_catalog;vector;neo4j;algo;llm\""
+      - name: Download gcc-release-build
+        uses: actions/download-artifact@v4
+        with:
+          name: gcc-release-build
+          path: build/release/
 
       - name: Rust API test
         env:
@@ -568,9 +635,60 @@ jobs:
         run: |
           make test DEFAULT_REL_STORAGE_DIRECTION=BOTH
 
+  clang-release-build:
+    name: clang release build
+    needs: [ sanity-checks, python-lint-check, generate-binary-datasets ]
+    runs-on: ubuntu-latest
+    env:
+      NUM_THREADS: 32
+      GEN: Ninja
+      CC: clang
+      CXX: clang++
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install DuckDB
+        uses: ./.github/actions/install-duckdb
+
+      - name: Setup ccache
+        uses: hendrikmuhs/ccache-action@v1.2
+        with:
+          key: clang-release-${{ github.sha }}
+          restore-keys: |
+            clang-release-
+
+      - name: Build release with tests
+        run: |
+          export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
+          make test-build
+          make release EXTRA_CMAKE_FLAGS="-DBUILD_EXTENSIONS=\"httpfs;duckdb;json;postgres;sqlite;fts;delta;iceberg;azure;unity_catalog;vector;neo4j;algo;llm\""
+
+      - name: Upload test build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: clang-test-build
+          path: |
+            build/relwithdebinfo/
+            !build/relwithdebinfo/**/*.o
+            !build/relwithdebinfo/**/*.a
+            !build/relwithdebinfo/_deps/
+          retention-days: 1
+
+      - name: Upload release build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: clang-release-build
+          path: |
+            build/release/
+            !build/release/**/*.o
+            !build/release/**/*.a
+            !build/release/_deps/
+          retention-days: 1
+
   clang-build-test:
     name: clang build & test
-    needs: [ sanity-checks, python-lint-check, generate-binary-datasets ]
+    needs: [ clang-release-build, generate-binary-datasets ]
     runs-on: ubuntu-latest
     env:
       NUM_THREADS: 32
@@ -589,6 +707,18 @@ jobs:
       HTTP_CACHE_FILE: TRUE
     steps:
       - uses: actions/checkout@v4
+
+      - name: Download clang-test-build
+        uses: actions/download-artifact@v4
+        with:
+          name: clang-test-build
+          path: build/relwithdebinfo/
+
+      - name: Download clang-release-build
+        uses: actions/download-artifact@v4
+        with:
+          name: clang-release-build
+          path: build/release/
 
       - name: Download binary-demo
         uses: actions/download-artifact@v4
