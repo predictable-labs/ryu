@@ -355,7 +355,7 @@ jobs:
 
       - name: Generate coverage report for on-disk mode
         run: |
-          lcov --config-file .lcovrc -c -d ./ --no-external -o cover_on_disk.info &&\
+          lcov --config-file .lcovrc --ignore-errors mismatch,negative -c -d ./ --no-external -o cover_on_disk.info &&\
           lcov --remove cover_on_disk.info $(< .github/workflows/lcov_exclude) -o cover_on_disk.info
 
       - name: Upload coverage report for on-disk mode
@@ -377,7 +377,7 @@ jobs:
 
       - name: Generate coverage report for in-mem mode
         run: |
-          lcov --config-file .lcovrc -c -d ./ --no-external -o cover_in_mem.info &&\
+          lcov --config-file .lcovrc --ignore-errors mismatch,negative -c -d ./ --no-external -o cover_in_mem.info &&\
           lcov --remove cover_in_mem.info $(< .github/workflows/lcov_exclude) -o cover_in_mem.info
 
       - name: Upload coverage report for in-mem mode
@@ -400,7 +400,7 @@ jobs:
 
       - name: Generate coverage report for recovery
         run: |
-          lcov --config-file .lcovrc -c -d ./ --no-external -o cover_recovery.info &&\
+          lcov --config-file .lcovrc --ignore-errors mismatch,negative -c -d ./ --no-external -o cover_recovery.info &&\
           lcov --remove cover_recovery.info $(< .github/workflows/lcov_exclude) -o cover_recovery.info
 
       - name: Upload coverage report for recovery
@@ -1267,7 +1267,7 @@ jobs:
 
       - name: Generate coverage report
         run: |
-          lcov --config-file .lcovrc -c -d ./ --no-external -o cover_extension.info &&\
+          lcov --config-file .lcovrc --ignore-errors mismatch,negative -c -d ./ --no-external -o cover_extension.info &&\
           lcov --remove cover_extension.info $(< .github/workflows/lcov_exclude) -o cover_extension.info
 
       - name: Upload coverage report
