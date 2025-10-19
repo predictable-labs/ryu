@@ -78,7 +78,31 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Get Ryu version for cache key
+        id: get-version
+        run: |
+          VERSION=$(python3 benchmark/version.py)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Ryu version: $VERSION"
+
+      - name: Cache binary-demo dataset
+        id: cache-binary-demo
+        uses: actions/cache@v4
+        with:
+          path: dataset/binary-demo
+          key: binary-demo-${{ runner.os }}-${{ steps.get-version.outputs.version }}-${{ hashFiles('scripts/generate_binary_demo.sh', 'dataset/demo-db/**') }}
+
+      - name: Check cache status
+        run: |
+          if [[ "${{ steps.cache-binary-demo.outputs.cache-hit }}" == "true" ]]; then
+            echo "✓ Cache hit! Using cached binary-demo dataset"
+            echo "  Skipping: MinIO setup, DuckDB install, build, and dataset generation"
+          else
+            echo "✗ Cache miss. Will generate binary-demo dataset"
+          fi
+
       - name: Setup MinIO
+        if: steps.cache-binary-demo.outputs.cache-hit != 'true'
         run: |
           # Start MinIO in Docker
           docker run -d \
@@ -126,14 +150,17 @@ jobs:
           EOF
 
       - name: Install DuckDB
+        if: steps.cache-binary-demo.outputs.cache-hit != 'true'
         uses: ./.github/actions/install-duckdb
 
       - name: Build
+        if: steps.cache-binary-demo.outputs.cache-hit != 'true'
         run: make release
-        
+
 
       # Generate the binary db once to test that it can be read on all platforms.
       - name: Generate datasets
+        if: steps.cache-binary-demo.outputs.cache-hit != 'true'
         run: bash scripts/generate_binary_demo.sh
 
       - name: Upload binary-demo
@@ -355,8 +382,8 @@ jobs:
 
       - name: Generate coverage report for on-disk mode
         run: |
-          lcov --config-file .lcovrc --ignore-errors mismatch,negative -c -d ./ --no-external -o cover_on_disk.info &&\
-          lcov --remove cover_on_disk.info $(< .github/workflows/lcov_exclude) -o cover_on_disk.info
+          lcov --config-file .lcovrc --ignore-errors mismatch,negative,unused,empty -c -d ./ --no-external -o cover_extension.info && \
+          lcov --config-file .lcovrc --ignore-errors mismatch,negative,unused,empty --remove cover_extension.info $(< .github/workflows/lcov_exclude) -o cover_extension.info
 
       - name: Upload coverage report for on-disk mode
         uses: codecov/codecov-action@v4.5.0
@@ -378,7 +405,7 @@ jobs:
       - name: Generate coverage report for in-mem mode
         run: |
           lcov --config-file .lcovrc --ignore-errors mismatch,negative -c -d ./ --no-external -o cover_in_mem.info &&\
-          lcov --remove cover_in_mem.info $(< .github/workflows/lcov_exclude) -o cover_in_mem.info
+          lcov --config-file .lcovrc --ignore-errors mismatch,negative --remove cover_in_mem.info $(< .github/workflows/lcov_exclude) -o cover_in_mem.info
 
       - name: Upload coverage report for in-mem mode
         uses: codecov/codecov-action@v4.5.0
@@ -401,7 +428,7 @@ jobs:
       - name: Generate coverage report for recovery
         run: |
           lcov --config-file .lcovrc --ignore-errors mismatch,negative -c -d ./ --no-external -o cover_recovery.info &&\
-          lcov --remove cover_recovery.info $(< .github/workflows/lcov_exclude) -o cover_recovery.info
+          lcov --config-file .lcovrc --ignore-errors mismatch,negative --remove cover_recovery.info $(< .github/workflows/lcov_exclude) -o cover_recovery.info
 
       - name: Upload coverage report for recovery
         uses: codecov/codecov-action@v4.5.0
@@ -1268,7 +1295,7 @@ jobs:
       - name: Generate coverage report
         run: |
           lcov --config-file .lcovrc --ignore-errors mismatch,negative -c -d ./ --no-external -o cover_extension.info &&\
-          lcov --remove cover_extension.info $(< .github/workflows/lcov_exclude) -o cover_extension.info
+          lcov --config-file .lcovrc --ignore-errors mismatch,negative --remove cover_extension.info $(< .github/workflows/lcov_exclude) -o cover_extension.info
 
       - name: Upload coverage report
         uses: codecov/codecov-action@v4.5.0
