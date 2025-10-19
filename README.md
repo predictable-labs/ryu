@@ -1,21 +1,3 @@
-> [!NOTE]
-> Ryu is working on something new!
-> 
-> We are archiving the RyuGraph project here: https://github.com/ryugraph/ryu/
-> 
-> For those using Ryu currently, prior Ryu releases will continue to be usable in the same way without modifications to your code.
-> 
-> If you are also using extensions, moving forward you have two options:
->   1. we have a new release 0.11.3 that bundles many (but not all) of the extensions, so you can migrate to 0.11.3; or
->   2. you can follow the [instructions here](http://ryugraph.github.io/docs/extensions/#host-your-own-extension-server) to run a local extension server.
-> 
-> Further, some of our resources are moving from our website to GitHub:
->   - Docs: http://ryugraph.github.io/docs
->   - Blog: http://ryugraph.github.io/blog
-> 
-> We thank you for being early users of Ryu and making Ryu better over the last few years!
-
-
 # Ryu
 Ryu is an embedded graph database built for query speed and scalability. Ryu is optimized for handling complex analytical workloads 
 on very large databases and provides a set of retrieval features, such as a full text search and vector indices. Our core feature set includes:
@@ -31,7 +13,7 @@ on very large databases and provides a set of retrieval features, such as a full
 - Serializable ACID transactions
 - Wasm (WebAssembly) bindings for fast, secure execution in the browser
 
-Ryu was initially developed by Ryu Inc. It is available under a permissible license.
+Ryu was initially developed by Kuzu Inc. Now it's maintained by Predictable Labs under the name of Ryu. It is available under a permissible license.
 
 ## Docs and Blog
 
