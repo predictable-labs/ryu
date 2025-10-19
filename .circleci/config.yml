@@ -1,0 +1,437 @@
+version: 2.1
+
+# Reusable commands
+commands:
+  checkout-with-submodules:
+    steps:
+      - checkout
+      - run:
+          name: Update submodules
+          command: git submodule update --init --recursive
+
+  setup-ubuntu-deps:
+    steps:
+      - run:
+          name: Install system dependencies
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y \
+              build-essential \
+              cmake \
+              ninja-build \
+              python3 \
+              python3-dev \
+              python3-pip \
+              python3-venv \
+              clang \
+              clang-format-18 \
+              clang-tidy \
+              clangd \
+              openjdk-17-jdk \
+              nodejs \
+              npm
+
+  install-rust:
+    steps:
+      - run:
+          name: Install Rust
+          command: |
+            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable
+            echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> $BASH_ENV
+            source $BASH_ENV
+
+  install-duckdb:
+    steps:
+      - run:
+          name: Install DuckDB
+          command: |
+            # Using the custom action logic from .github/actions/install-duckdb
+            wget https://github.com/duckdb/duckdb/releases/download/v1.1.3/duckdb_cli-linux-amd64.zip
+            unzip duckdb_cli-linux-amd64.zip
+            sudo mv duckdb /usr/local/bin/
+            duckdb --version
+
+  setup-emsdk:
+    steps:
+      - run:
+          name: Install Emscripten SDK
+          command: |
+            cd ~
+            git clone https://github.com/emscripten-core/emsdk.git
+            cd emsdk
+            ./emsdk install latest
+            ./emsdk activate latest
+
+# Executors
+executors:
+  ubuntu-large:
+    docker:
+      - image: cimg/base:current
+    resource_class: xlarge
+    environment:
+      WERROR: 1
+      RUSTFLAGS: "--deny warnings"
+      PIP_BREAK_SYSTEM_PACKAGES: 1
+      NUM_THREADS: 32
+
+  ubuntu-medium:
+    docker:
+      - image: cimg/base:current
+    resource_class: large
+    environment:
+      WERROR: 1
+
+  macos-runner:
+    macos:
+      xcode: "15.0"
+    resource_class: macos.m1.large.gen1
+    environment:
+      WERROR: 1
+
+# Jobs
+jobs:
+  # Job 1: Sanity Checks
+  sanity-checks:
+    executor: ubuntu-medium
+    steps:
+      - checkout-with-submodules
+      - setup-ubuntu-deps
+      - run:
+          name: Check source headers for include guards
+          command: |
+            ./scripts/check-include-guards.sh src/include
+            ./scripts/check-include-guards.sh test/include
+      - run:
+          name: Check extension headers for include guards
+          command: |
+            for dir in extension/*/src/include; do
+              ./scripts/check-include-guards.sh "$dir"
+            done
+      - run:
+          name: Check source files for std::assert
+          command: ./scripts/check-no-std-assert.sh src
+      - run:
+          name: Check extension files for std::assert
+          command: ./scripts/check-no-std-assert.sh extension
+      - run:
+          name: Ensure generated grammar files are up to date
+          command: |
+            python3 scripts/antlr4/hash.py src/antlr4/keywords.txt src/antlr4/Cypher.g4 > tmphashfile
+            cmp tmphashfile scripts/antlr4/hash.md5
+            rm tmphashfile
+
+  # Job 2: Code Format
+  code-format:
+    executor: ubuntu-medium
+    steps:
+      - checkout-with-submodules
+      - setup-ubuntu-deps
+      - install-rust
+      - run:
+          name: Check and fix source format
+          command: python3 scripts/run-clang-format.py --in-place --clang-format-executable /usr/bin/clang-format-18 -r src/
+      - run:
+          name: Check and fix test format
+          command: python3 scripts/run-clang-format.py --in-place --clang-format-executable /usr/bin/clang-format-18 -r test/
+      - run:
+          name: Check and fix tools format
+          command: python3 scripts/run-clang-format.py --in-place --clang-format-executable /usr/bin/clang-format-18 -r tools/
+      - run:
+          name: Check and fix extension format
+          command: python3 scripts/run-clang-format.py --in-place --clang-format-executable /usr/bin/clang-format-18 -r extension/
+      - run:
+          name: Format Python API
+          working_directory: tools/python_api
+          command: make format
+      - run:
+          name: Format Rust API
+          working_directory: tools/rust_api
+          command: cargo fmt --all
+      - run:
+          name: Fail if any formatting change is detected
+          command: git diff --exit-code
+
+  # Job 3: Python Lint Check
+  python-lint-check:
+    executor: macos-runner
+    steps:
+      - checkout-with-submodules
+      - run:
+          name: Setup Python
+          command: |
+            brew install python@3.11
+            echo 'export PATH="/opt/homebrew/opt/python@3.11/bin:$PATH"' >> $BASH_ENV
+      - run:
+          name: Run Python lint
+          working_directory: tools/python_api
+          command: make check
+
+  # Job 4: WebAssembly Build Test
+  webassembly-build-test:
+    executor: ubuntu-large
+    environment:
+      WERROR: 0
+      TEST_JOBS: 8
+      NUM_THREADS: 32
+      USE_EXISTING_BINARY_DATASET: 1
+    steps:
+      - checkout-with-submodules
+      - setup-ubuntu-deps
+      - setup-emsdk
+      - restore_cache:
+          keys:
+            - wasm-npm-deps-{{ checksum "tools/wasm/package.json" }}
+      - run:
+          name: Install dependencies
+          working_directory: tools/wasm
+          command: npm i
+      - save_cache:
+          key: wasm-npm-deps-{{ checksum "tools/wasm/package.json" }}
+          paths:
+            - tools/wasm/node_modules
+      - run:
+          name: Build WebAssembly package
+          working_directory: tools/wasm
+          command: |
+            source ~/emsdk/emsdk_env.sh
+            npm run build
+      - run:
+          name: API test
+          working_directory: tools/wasm
+          command: npm run test
+      - run:
+          name: Clean up
+          command: make clean
+      - run:
+          name: Kernel build & test
+          command: |
+            source ~/emsdk/emsdk_env.sh
+            make wasmtest
+      - run:
+          name: Kernel build & test in memory
+          environment:
+            IN_MEM_MODE: true
+          command: |
+            source ~/emsdk/emsdk_env.sh
+            make wasmtest
+      - run:
+          name: Kernel build & test (single-threaded)
+          environment:
+            SINGLE_THREADED: true
+          command: |
+            make clean
+            source ~/emsdk/emsdk_env.sh
+            make wasmtest
+
+  # Job 5: Rust Build Test
+  rust-build-test:
+    executor: ubuntu-large
+    environment:
+      NUM_THREADS: 32
+      CC: gcc
+      CXX: g++
+    steps:
+      - checkout-with-submodules
+      - setup-ubuntu-deps
+      - install-duckdb
+      - install-rust
+      - restore_cache:
+          keys:
+            - rust-cargo-{{ checksum "tools/rust_api/Cargo.lock" }}
+            - rust-cargo-
+      - run:
+          name: Build RyuGraph
+          command: make release
+      - run:
+          name: Rust API test
+          command: |
+            export RYU_LOCAL_EXTENSIONS="${PWD}/extension"
+            make extension-release
+            make rusttest
+      - run:
+          name: Rust example build
+          working_directory: examples/rust
+          command: cargo build --locked --all-features
+      - run:
+          name: Rust API clippy
+          working_directory: tools/rust_api
+          command: cargo clippy --release --all-targets --all-features
+      - save_cache:
+          key: rust-cargo-{{ checksum "tools/rust_api/Cargo.lock" }}
+          paths:
+            - ~/.cargo
+            - target
+
+  # Job 6: Clang Build Test with TSAN
+  clang-build-test-with-tsan:
+    executor: ubuntu-large
+    environment:
+      NUM_THREADS: 32
+      TEST_JOBS: 16
+      GEN: Ninja
+      CC: clang
+      CXX: clang++
+      WERROR: 0
+      TSAN: 1
+      RUNTIME_CHECKS: 0
+      TSAN_OPTIONS: "halt_on_error=1"
+      MAX_DB_SIZE: 34359738368
+      USE_EXISTING_BINARY_DATASET: 1
+    steps:
+      - checkout-with-submodules
+      - setup-ubuntu-deps
+      - restore_cache:
+          keys:
+            - build-tsan-{{ .Branch }}-{{ .Revision }}
+            - build-tsan-{{ .Branch }}-
+            - build-tsan-
+      - run:
+          name: Test with TSAN
+          command: make test
+      - save_cache:
+          key: build-tsan-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - build
+
+  # Job 7: GCC Build Test with ASAN
+  gcc-build-test-with-asan:
+    executor: ubuntu-large
+    environment:
+      NUM_THREADS: 32
+      TEST_JOBS: 16
+      GEN: Ninja
+      CC: gcc
+      CXX: g++
+      WERROR: 0
+      ASAN_OPTIONS: "detect_leaks=1"
+      USE_EXISTING_BINARY_DATASET: 1
+    steps:
+      - checkout-with-submodules
+      - setup-ubuntu-deps
+      - restore_cache:
+          keys:
+            - build-asan-{{ .Branch }}-{{ .Revision }}
+            - build-asan-{{ .Branch }}-
+            - build-asan-
+      - run:
+          name: Test with ASAN
+          command: make test ASAN=1 BM_MALLOC=ON
+      - run:
+          name: Test fwd only rel tables with ASAN
+          environment:
+            GTEST_FILTER: "*~*:RelScanTest*"
+            DEFAULT_REL_STORAGE_DIRECTION: FWD
+          command: make test
+      - run:
+          name: Test compression disabled with ASAN
+          environment:
+            ENABLE_COMPRESSION: false
+          command: make test DEFAULT_REL_STORAGE_DIRECTION=BOTH
+      - save_cache:
+          key: build-asan-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - build
+
+  # Job 8: Report Benchmark Result
+  report-benchmark-result:
+    executor: ubuntu-medium
+    steps:
+      - checkout-with-submodules
+      - run:
+          name: Note about benchmark reporting
+          command: |
+            echo "This job would download benchmark artifacts and post to PR"
+            echo "CircleCI doesn't have native PR commenting like GitHub Actions"
+            echo "Would need to use GitHub API or a dedicated tool"
+            echo "Skipping for now - can be implemented with gh CLI or API calls"
+
+  # Job 9: Clang Tidy
+  clang-tidy:
+    executor: ubuntu-large
+    environment:
+      GEN: Ninja
+      NUM_THREADS: 32
+      CC: clang
+      CXX: clang++
+    steps:
+      - checkout-with-submodules
+      - setup-ubuntu-deps
+      - install-duckdb
+      - run:
+          name: Install clangd
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y clangd
+      - restore_cache:
+          keys:
+            - nodejs-deps-{{ checksum "package.json" }}
+      - run:
+          name: Ensure Node.js dependencies
+          command: make nodejs-deps
+      - save_cache:
+          key: nodejs-deps-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: Check for clangd diagnostics
+          command: make clangd-diagnostics
+      - run:
+          name: Run clang-tidy
+          command: make tidy
+      - run:
+          name: Run clang-tidy analyzer
+          command: make tidy-analyzer
+
+  # Job 10: Shell Test
+  shell-test:
+    executor: ubuntu-large
+    steps:
+      - checkout-with-submodules
+      - setup-ubuntu-deps
+      - run:
+          name: Build
+          command: make release NUM_THREADS=$(nproc) USE_STD_FORMAT=1
+      - run:
+          name: Install test dependencies
+          command: |
+            pip3 install pytest pexpect
+      - run:
+          name: Test
+          command: make shell-test
+
+# Workflows
+workflows:
+  version: 2
+  ci-pipeline:
+    jobs:
+      # Independent jobs that can run in parallel
+      - sanity-checks
+      - code-format
+      - python-lint-check
+
+      # Jobs that depend on sanity checks
+      - webassembly-build-test:
+          requires:
+            - sanity-checks
+      - rust-build-test:
+          requires:
+            - sanity-checks
+      - clang-tidy:
+          requires:
+            - sanity-checks
+      - shell-test:
+          requires:
+            - sanity-checks
+
+      # Sanitizer tests (can run independently but scheduled after basic checks)
+      - clang-build-test-with-tsan:
+          requires:
+            - sanity-checks
+      - gcc-build-test-with-asan:
+          requires:
+            - sanity-checks
+
+      # Reporting job
+      - report-benchmark-result:
+          requires:
+            - sanity-checks
