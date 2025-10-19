@@ -128,12 +128,35 @@ jobs:
       - name: Install DuckDB
         uses: ./.github/actions/install-duckdb
 
+      - name: Get version for cache key
+        id: version
+        run: echo "version=$(python3 benchmark/version.py)" >> $GITHUB_OUTPUT
+
+      - name: Cache binary-demo
+        id: cache-binary-demo
+        uses: actions/cache@v4
+        with:
+          path: dataset/binary-demo
+          key: binary-demo-${{ steps.version.outputs.version }}-${{ hashFiles('scripts/generate_binary_demo.sh') }}
+
+      - name: Setup ccache
+        if: steps.cache-binary-demo.outputs.cache-hit != 'true'
+        uses: hendrikmuhs/ccache-action@v1.2
+        with:
+          key: dataset-build-${{ github.sha }}
+          restore-keys: |
+            dataset-build-
+
       - name: Build
-        run: make release
-        
+        if: steps.cache-binary-demo.outputs.cache-hit != 'true'
+        run: |
+          export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
+          make release
+
 
       # Generate the binary db once to test that it can be read on all platforms.
       - name: Generate datasets
+        if: steps.cache-binary-demo.outputs.cache-hit != 'true'
         run: bash scripts/generate_binary_demo.sh
 
       - name: Upload binary-demo
@@ -176,7 +199,7 @@ jobs:
 
   gcc-release-build:
     name: gcc release build
-    needs: [ sanity-checks, python-lint-check, generate-binary-datasets ]
+    needs: [ sanity-checks, python-lint-check ]
     runs-on: ubuntu-latest
     env:
       NUM_THREADS: 32
@@ -637,7 +660,7 @@ jobs:
 
   clang-release-build:
     name: clang release build
-    needs: [ sanity-checks, python-lint-check, generate-binary-datasets ]
+    needs: [ sanity-checks, python-lint-check ]
     runs-on: ubuntu-latest
     env:
       NUM_THREADS: 32
