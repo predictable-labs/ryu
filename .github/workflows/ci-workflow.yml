@@ -427,6 +427,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup Emscripten
+        uses: mymindstorm/setup-emsdk@v14
+
       - name: Download binary-demo
         uses: actions/download-artifact@v4
         with:
@@ -439,9 +442,7 @@ jobs:
 
       - name: Build WebAssembly package
         working-directory: tools/wasm
-        run: |
-          source /home/runner/emsdk/emsdk_env.sh
-          npm run build
+        run: npm run build
 
       - name: API test
         working-directory: tools/wasm
@@ -451,14 +452,10 @@ jobs:
         run: make clean
 
       - name: Kernel build & test
-        run: |
-          source /home/runner/emsdk/emsdk_env.sh
-          make wasmtest
+        run: make wasmtest
 
       - name: Kernel build & test in memory
-        run: |
-          source /home/runner/emsdk/emsdk_env.sh
-          make wasmtest
+        run: make wasmtest
         env:
           IN_MEM_MODE: true
 
@@ -467,7 +464,6 @@ jobs:
           SINGLE_THREADED: true
         run: |
           make clean
-          source /home/runner/emsdk/emsdk_env.sh
           make wasmtest
 
   rust-build-test:
