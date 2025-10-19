@@ -2,7 +2,7 @@
 
 #include "return_clause.h"
 
-namespace kuzu {
+namespace ryu {
 namespace parser {
 
 class WithClause : public ReturnClause {
@@ -23,4 +23,4 @@ private:
 };
 
 } // namespace parser
-} // namespace kuzu
+} // namespace ryu

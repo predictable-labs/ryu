@@ -3,11 +3,11 @@
 #include "processor/execution_context.h"
 #include "storage/local_storage/local_storage.h"
 
-using namespace kuzu::common;
-using namespace kuzu::storage;
-using namespace kuzu::transaction;
+using namespace ryu::common;
+using namespace ryu::storage;
+using namespace ryu::transaction;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 bool DirectionInfo::needFlip(RelDataDirection relDataDirection) const {
@@ -106,4 +106,4 @@ void ScanMultiRelTable::initCurrentScanner(const nodeID_t& nodeID) {
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

@@ -2,7 +2,7 @@
 
 #include "expression_evaluator.h"
 
-namespace kuzu {
+namespace ryu {
 namespace evaluator {
 
 class ExpressionEvaluatorVisitor {
@@ -40,4 +40,4 @@ private:
 };
 
 } // namespace evaluator
-} // namespace kuzu
+} // namespace ryu

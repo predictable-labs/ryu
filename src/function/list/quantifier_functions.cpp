@@ -4,9 +4,9 @@
 #include "function/function.h"
 #include "function/list/vector_list_functions.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 void execQuantifierFunc(quantifier_handler handler,
@@ -48,4 +48,4 @@ std::unique_ptr<FunctionBindData> bindQuantifierFunc(const ScalarBindFuncInput& 
 }
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

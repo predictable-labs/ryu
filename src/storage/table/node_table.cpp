@@ -13,12 +13,12 @@
 #include "storage/wal/local_wal.h"
 #include "transaction/transaction.h"
 
-using namespace kuzu::catalog;
-using namespace kuzu::common;
-using namespace kuzu::transaction;
-using namespace kuzu::evaluator;
+using namespace ryu::catalog;
+using namespace ryu::common;
+using namespace ryu::transaction;
+using namespace ryu::evaluator;
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 
 NodeTableVersionRecordHandler::NodeTableVersionRecordHandler(NodeTable* table) : table(table) {}
@@ -853,4 +853,4 @@ void NodeTable::deserialize(main::ClientContext* context, StorageManager* storag
 }
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

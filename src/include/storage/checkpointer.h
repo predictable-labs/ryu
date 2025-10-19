@@ -3,7 +3,7 @@
 #include "storage/database_header.h"
 #include "storage/page_range.h"
 
-namespace kuzu {
+namespace ryu {
 namespace transaction {
 class Transaction;
 }
@@ -17,14 +17,14 @@ namespace testing {
 struct FSMLeakChecker;
 }
 namespace main {
-class AttachedKuzuDatabase;
+class AttachedRyuDatabase;
 } // namespace main
 
 namespace storage {
 class StorageManager;
 
 class Checkpointer {
-    friend class main::AttachedKuzuDatabase;
+    friend class main::AttachedRyuDatabase;
     friend struct testing::FSMLeakChecker;
 
 public:
@@ -59,4 +59,4 @@ protected:
 };
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

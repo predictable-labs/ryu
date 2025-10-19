@@ -3,13 +3,13 @@
 #include "common/api.h"
 #include "exception.h"
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 
-class KUZU_API RuntimeException : public Exception {
+class RYU_API RuntimeException : public Exception {
 public:
     explicit RuntimeException(const std::string& msg) : Exception("Runtime exception: " + msg){};
 };
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

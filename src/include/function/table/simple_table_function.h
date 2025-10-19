@@ -3,7 +3,7 @@
 #include "common/system_config.h"
 #include "function/table/table_function.h"
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct TableFuncMorsel {
@@ -29,7 +29,7 @@ struct TableFuncMorsel {
 using simple_internal_table_func = std::function<common::offset_t(const TableFuncMorsel&,
     const TableFuncInput&, common::DataChunk& output)>;
 
-class KUZU_API SimpleTableFuncSharedState : public TableFuncSharedState {
+class RYU_API SimpleTableFuncSharedState : public TableFuncSharedState {
 public:
     SimpleTableFuncSharedState() = default;
 
@@ -43,7 +43,7 @@ public:
     common::offset_t maxMorselSize = common::DEFAULT_VECTOR_CAPACITY;
 };
 
-struct KUZU_API SimpleTableFunc {
+struct RYU_API SimpleTableFunc {
     static std::unique_ptr<TableFuncSharedState> initSharedState(
         const TableFuncInitSharedStateInput& input);
 
@@ -185,4 +185,4 @@ struct LocalCacheArrayColumnFunction final {
 };
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

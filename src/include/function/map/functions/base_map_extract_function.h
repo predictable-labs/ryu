@@ -2,7 +2,7 @@
 
 #include "common/vector/value_vector.h"
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct BaseMapExtract {
@@ -20,4 +20,4 @@ struct BaseMapExtract {
 };
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

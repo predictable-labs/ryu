@@ -6,12 +6,12 @@
 #include "common/types/ku_string.h"
 #include "common/vector/value_vector.h"
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct Repeat {
 public:
-    KUZU_API static void operation(common::ku_string_t& left, int64_t& right,
+    RYU_API static void operation(common::ku_string_t& left, int64_t& right,
         common::ku_string_t& result, common::ValueVector& resultValueVector);
 
 private:
@@ -23,4 +23,4 @@ private:
 };
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

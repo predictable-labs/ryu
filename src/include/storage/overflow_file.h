@@ -10,7 +10,7 @@
 #include "storage/index/hash_index_utils.h"
 #include "storage/storage_utils.h"
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 
 class OverflowFile;
@@ -72,7 +72,7 @@ private:
 
 private:
     static constexpr common::page_idx_t END_OF_PAGE =
-        common::KUZU_PAGE_SIZE - sizeof(common::page_idx_t);
+        common::RYU_PAGE_SIZE - sizeof(common::page_idx_t);
     // Index of the first page managed by this handle
     common::page_idx_t& startPageIdx;
     // This is the index of the last free byte to which we can write.
@@ -153,4 +153,4 @@ public:
 };
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

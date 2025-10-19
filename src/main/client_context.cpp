@@ -32,15 +32,15 @@
 #include "common/windows_utils.h"
 #endif
 
-using namespace kuzu::parser;
-using namespace kuzu::binder;
-using namespace kuzu::common;
-using namespace kuzu::catalog;
-using namespace kuzu::planner;
-using namespace kuzu::processor;
-using namespace kuzu::transaction;
+using namespace ryu::parser;
+using namespace ryu::binder;
+using namespace ryu::common;
+using namespace ryu::catalog;
+using namespace ryu::planner;
+using namespace ryu::processor;
+using namespace ryu::transaction;
 
-namespace kuzu {
+namespace ryu {
 namespace main {
 
 ActiveQuery::ActiveQuery() : interrupted{false} {}
@@ -182,8 +182,8 @@ const main::ExtensionOption* ClientContext::getExtensionOption(std::string optio
 }
 
 std::string ClientContext::getExtensionDir() const {
-    return stringFormat("{}/.kuzu/extension/{}/{}/", clientConfig.homeDirectory,
-        KUZU_EXTENSION_VERSION, extension::getPlatform());
+    return stringFormat("{}/.ryu/extension/{}/{}/", clientConfig.homeDirectory,
+        RYU_EXTENSION_VERSION, extension::getPlatform());
 }
 
 std::string ClientContext::getDatabasePath() const {
@@ -194,7 +194,7 @@ Database* ClientContext::getDatabase() const {
     return localDatabase;
 }
 
-AttachedKuzuDatabase* ClientContext::getAttachedDatabase() const {
+AttachedRyuDatabase* ClientContext::getAttachedDatabase() const {
     return remoteDatabase;
 }
 
@@ -231,7 +231,7 @@ std::string ClientContext::getUserHomeDir() {
 #endif
 }
 
-void ClientContext::setDefaultDatabase(AttachedKuzuDatabase* defaultDatabase_) {
+void ClientContext::setDefaultDatabase(AttachedRyuDatabase* defaultDatabase_) {
     remoteDatabase = defaultDatabase_;
 }
 
@@ -598,11 +598,11 @@ bool ClientContext::canExecuteWriteQuery() const {
     if (getDBConfig()->readOnly) {
         return false;
     }
-    // Note: we can only attach a remote kuzu database in read-only mode and only one
-    // remote kuzu database can be attached.
+    // Note: we can only attach a remote ryu database in read-only mode and only one
+    // remote ryu database can be attached.
     const auto dbManager = DatabaseManager::Get(*this);
     for (const auto& attachedDB : dbManager->getAttachedDatabases()) {
-        if (attachedDB->getDBType() == ATTACHED_KUZU_DB_TYPE) {
+        if (attachedDB->getDBType() == ATTACHED_RYU_DB_TYPE) {
             return false;
         }
     }
@@ -610,4 +610,4 @@ bool ClientContext::canExecuteWriteQuery() const {
 }
 
 } // namespace main
-} // namespace kuzu
+} // namespace ryu

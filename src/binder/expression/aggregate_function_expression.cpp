@@ -2,9 +2,9 @@
 
 #include "binder/expression/expression_util.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
 std::string AggregateFunctionExpression::toStringInternal() const {
@@ -19,4 +19,4 @@ std::string AggregateFunctionExpression::getUniqueName(const std::string& functi
 }
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

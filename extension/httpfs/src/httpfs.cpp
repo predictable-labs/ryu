@@ -5,10 +5,10 @@
 #include "common/exception/not_implemented.h"
 #include "transaction/transaction.h"
 
-namespace kuzu {
+namespace ryu {
 namespace httpfs_extension {
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
 HTTPResponse::HTTPResponse(httplib::Response& res, std::string url)
     : code{res.status}, error{res.reason}, url{std::move(url)}, body{res.body} {
@@ -506,4 +506,4 @@ void HTTPFileSystem::initCachedFileManager(main::ClientContext* context) {
 }
 
 } // namespace httpfs_extension
-} // namespace kuzu
+} // namespace ryu

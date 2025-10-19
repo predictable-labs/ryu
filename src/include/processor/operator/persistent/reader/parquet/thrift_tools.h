@@ -7,7 +7,7 @@
 #include "common/file_system/file_info.h"
 #include "transport/TVirtualTransport.h"
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 // A ReadHead for prefetching data in a specific range
@@ -114,7 +114,7 @@ struct ReadAheadBuffer {
 };
 
 class ThriftFileTransport
-    : public kuzu_apache::thrift::transport::TVirtualTransport<ThriftFileTransport> {
+    : public ryu_apache::thrift::transport::TVirtualTransport<ThriftFileTransport> {
 public:
     static constexpr uint64_t PREFETCH_FALLBACK_BUFFERSIZE = 1000000;
 
@@ -195,4 +195,4 @@ private:
 };
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

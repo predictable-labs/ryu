@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct Add {
@@ -37,4 +37,4 @@ template<>
 void Add::operation(int64_t& left, int64_t& right, int64_t& result);
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

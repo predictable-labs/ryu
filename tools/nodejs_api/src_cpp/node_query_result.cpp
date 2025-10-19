@@ -3,9 +3,9 @@
 #include <thread>
 
 #include "include/node_util.h"
-#include "main/kuzu.h"
+#include "main/ryu.h"
 
-using namespace kuzu::main;
+using namespace ryu::main;
 
 Napi::Object NodeQueryResult::Init(Napi::Env env, Napi::Object exports) {
     Napi::HandleScope scope(env);

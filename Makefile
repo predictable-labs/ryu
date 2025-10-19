@@ -77,23 +77,23 @@ ifdef SKIP_SINGLE_FILE_HEADER
 endif
 
 ifdef PAGE_SIZE_LOG2
-	CMAKE_FLAGS += -DKUZU_PAGE_SIZE_LOG2=$(PAGE_SIZE_LOG2)
+	CMAKE_FLAGS += -DRYU_PAGE_SIZE_LOG2=$(PAGE_SIZE_LOG2)
 endif
 
 ifdef DEFAULT_REL_STORAGE_DIRECTION
-	CMAKE_FLAGS += -DKUZU_DEFAULT_REL_STORAGE_DIRECTION=$(DEFAULT_REL_STORAGE_DIRECTION)
+	CMAKE_FLAGS += -DRYU_DEFAULT_REL_STORAGE_DIRECTION=$(DEFAULT_REL_STORAGE_DIRECTION)
 endif
 
 ifdef VECTOR_CAPACITY_LOG2
-	CMAKE_FLAGS += -DKUZU_VECTOR_CAPACITY_LOG2=$(VECTOR_CAPACITY_LOG2)
+	CMAKE_FLAGS += -DRYU_VECTOR_CAPACITY_LOG2=$(VECTOR_CAPACITY_LOG2)
 endif
 
 ifdef NODE_GROUP_SIZE_LOG2
-	CMAKE_FLAGS += -DKUZU_NODE_GROUP_SIZE_LOG2=$(NODE_GROUP_SIZE_LOG2)
+	CMAKE_FLAGS += -DRYU_NODE_GROUP_SIZE_LOG2=$(NODE_GROUP_SIZE_LOG2)
 endif
 
 ifdef MAX_SEGMENT_SIZE_LOG2
-	CMAKE_FLAGS += -DKUZU_MAX_SEGMENT_SIZE_LOG2=$(MAX_SEGMENT_SIZE_LOG2)
+	CMAKE_FLAGS += -DRYU_MAX_SEGMENT_SIZE_LOG2=$(MAX_SEGMENT_SIZE_LOG2)
 endif
 
 ifdef SINGLE_THREADED
@@ -166,7 +166,7 @@ lcov:
 
 # Required for clangd-related tools.
 java_native_header:
-	cmake --build build/$(call get-build-path,Release) --target kuzu_java
+	cmake --build build/$(call get-build-path,Release) --target ryu_java
 
 java:
 	$(call run-cmake-release, -DBUILD_JAVA=TRUE)
@@ -248,7 +248,7 @@ extension-test: extension-test-build
 		E2E_TEST_FILES_DIRECTORY=extension) \
     ctest --test-dir build/$(call get-build-path,RelWithDebInfo)/test/runner --output-on-failure -j ${TEST_JOBS} --exclude-regex "${EXTENSION_TEST_EXCLUDE_FILTER}" && \
     ctest --test-dir build/$(call get-build-path,RelWithDebInfo)/extension --output-on-failure -j ${TEST_JOBS} --exclude-regex "${EXTENSION_TEST_EXCLUDE_FILTER}" && \
-	aws s3 rm s3://kuzu-dataset-us/${RUN_ID}/ --recursive
+	aws s3 rm s3://ryu-dataset-us/${RUN_ID}/ --recursive
 
 extension-test-static-build:
 	$(call run-cmake-relwithdebinfo, \
@@ -264,7 +264,7 @@ extension-static-link-test: extension-test-static-build
 		E2E_TEST_FILES_DIRECTORY=extension) \
     ctest --test-dir build/$(call get-build-path,RelWithDebInfo)/test/runner --output-on-failure -j ${TEST_JOBS} --exclude-regex "${EXTENSION_TEST_EXCLUDE_FILTER}" && \
     ctest --test-dir build/$(call get-build-path,RelWithDebInfo)/extension --output-on-failure -j ${TEST_JOBS} --exclude-regex "${EXTENSION_TEST_EXCLUDE_FILTER}" && \
-	aws s3 rm s3://kuzu-dataset-us/${RUN_ID}/ --recursive
+	aws s3 rm s3://ryu-dataset-us/${RUN_ID}/ --recursive
 
 extension-lcov-build:
 	$(call run-cmake-release, \
@@ -280,18 +280,18 @@ extension-lcov: extension-lcov-build
 		E2E_TEST_FILES_DIRECTORY=extension) \
     ctest --test-dir build/$(call get-build-path,Release)/test/runner --output-on-failure -j ${TEST_JOBS} --exclude-regex "${EXTENSION_TEST_EXCLUDE_FILTER}" && \
     ctest --test-dir build/$(call get-build-path,Release)/extension --output-on-failure -j ${TEST_JOBS} --exclude-regex "${EXTENSION_TEST_EXCLUDE_FILTER}" && \
-	aws s3 rm s3://kuzu-dataset-us/${RUN_ID}/ --recursive
+	aws s3 rm s3://ryu-dataset-us/${RUN_ID}/ --recursive
 
 extension-debug:
 	$(call run-cmake-debug, \
 		-DBUILD_EXTENSIONS="$(EXTENSION_LIST)" \
-		-DBUILD_KUZU=FALSE \
+		-DBUILD_RYU=FALSE \
 	)
 
 extension-release:
 	$(call run-cmake-release, \
 		-DBUILD_EXTENSIONS="$(EXTENSION_LIST)" \
-		-DBUILD_KUZU=FALSE \
+		-DBUILD_RYU=FALSE \
 	)
 
 # pytest expects a `Release` build path.

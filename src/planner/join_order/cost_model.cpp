@@ -4,9 +4,9 @@
 #include "planner/join_order/join_order_util.h"
 #include "planner/operator/logical_hash_join.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace planner {
 
 uint64_t CostModel::computeExtendCost(const LogicalPlan& childPlan) {
@@ -54,4 +54,4 @@ uint64_t CostModel::computeIntersectCost(const LogicalPlan& probePlan,
 }
 
 } // namespace planner
-} // namespace kuzu
+} // namespace ryu

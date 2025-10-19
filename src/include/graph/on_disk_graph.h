@@ -15,7 +15,7 @@
 #include "storage/table/node_table.h"
 #include "storage/table/rel_table.h"
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 class MemoryManager;
 }
@@ -117,7 +117,7 @@ private:
     common::offset_t endOffsetExclusive;
 };
 
-class KUZU_API OnDiskGraph final : public Graph {
+class RYU_API OnDiskGraph final : public Graph {
 public:
     OnDiskGraph(main::ClientContext* context, NativeGraphEntry entry);
 
@@ -160,4 +160,4 @@ private:
 };
 
 } // namespace graph
-} // namespace kuzu
+} // namespace ryu

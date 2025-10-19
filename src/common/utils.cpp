@@ -1,6 +1,6 @@
 #include "common/utils.h"
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 
 uint64_t nextPowerOfTwo(uint64_t v) {
@@ -26,4 +26,4 @@ bool isLittleEndian() {
 }
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

@@ -5,7 +5,7 @@
 #include "common/arrow/arrow_row_batch.h"
 #include "common/exception/runtime.h"
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 
 static void releaseArrowSchema(ArrowSchema* schema) {
@@ -303,7 +303,7 @@ std::unique_ptr<ArrowSchema> ArrowConverter::toArrowSchema(
     outSchema->format = "+s"; // struct apparently
     outSchema->flags = 0;
     outSchema->metadata = nullptr;
-    outSchema->name = "kuzu_query_result";
+    outSchema->name = "ryu_query_result";
     outSchema->dictionary = nullptr;
 
     for (auto i = 0u; i < columnCount; i++) {
@@ -319,4 +319,4 @@ std::unique_ptr<ArrowSchema> ArrowConverter::toArrowSchema(
 }
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

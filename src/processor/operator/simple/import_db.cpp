@@ -6,11 +6,11 @@
 #include "storage/buffer_manager/memory_manager.h"
 #include "transaction/transaction_context.h"
 
-using namespace kuzu::common;
-using namespace kuzu::transaction;
-using namespace kuzu::catalog;
+using namespace ryu::common;
+using namespace ryu::transaction;
+using namespace ryu::catalog;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 static void validateQueryResult(main::QueryResult* queryResult) {
@@ -48,4 +48,4 @@ void ImportDB::executeInternal(ExecutionContext* context) {
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

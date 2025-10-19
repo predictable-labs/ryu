@@ -2,7 +2,7 @@
 
 #include "extension/extension.h"
 
-namespace kuzu {
+namespace ryu {
 namespace postgres_extension {
 
 class PostgresExtension final : public extension::Extension {
@@ -14,4 +14,4 @@ public:
 };
 
 } // namespace postgres_extension
-} // namespace kuzu
+} // namespace ryu

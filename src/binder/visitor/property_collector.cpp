@@ -12,9 +12,9 @@
 #include "binder/query/updating_clause/bound_set_clause.h"
 #include "catalog/catalog_entry/table_catalog_entry.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
 expression_vector PropertyCollector::getProperties() const {
@@ -177,4 +177,4 @@ void PropertyCollector::collectPropertiesSkipNodeRel(
 }
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

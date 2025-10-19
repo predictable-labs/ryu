@@ -9,7 +9,7 @@
 #include "common/types/value/value.h"
 #include "query_summary.h"
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 class LogicalType;
 }
@@ -48,19 +48,19 @@ class PreparedStatement {
     friend class ClientContext;
 
 public:
-    KUZU_API ~PreparedStatement();
+    RYU_API ~PreparedStatement();
     /**
      * @return the query is prepared successfully or not.
      */
-    KUZU_API bool isSuccess() const;
+    RYU_API bool isSuccess() const;
     /**
      * @return the error message if the query is not prepared successfully.
      */
-    KUZU_API std::string getErrorMessage() const;
+    RYU_API std::string getErrorMessage() const;
     /**
      * @return the prepared statement is read-only or not.
      */
-    KUZU_API bool isReadOnly() const;
+    RYU_API bool isReadOnly() const;
 
     const std::unordered_set<std::string>& getUnknownParameters() const {
         return unknownParameters;
@@ -87,4 +87,4 @@ private:
 };
 
 } // namespace main
-} // namespace kuzu
+} // namespace ryu

@@ -7,10 +7,10 @@
 #include "main/client_context.h"
 #include "transaction/transaction.h"
 
-using namespace kuzu::common;
-using namespace kuzu::catalog;
+using namespace ryu::common;
+using namespace ryu::catalog;
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct MacroInfo {
@@ -79,4 +79,4 @@ function_set ShowMacrosFunction::getFunctionSet() {
 }
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

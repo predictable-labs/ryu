@@ -2,10 +2,10 @@
 
 #include "binder/expression/expression_util.h"
 
-using namespace kuzu::common;
-using namespace kuzu::storage;
+using namespace ryu::common;
+using namespace ryu::storage;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 std::string InsertPrintInfo::toString() const {
@@ -39,4 +39,4 @@ bool Insert::getNextTuplesInternal(ExecutionContext* context) {
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

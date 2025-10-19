@@ -8,10 +8,10 @@
 #include "function/cast/functions/numeric_limits.h"
 #include <span>
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 
-class KUZU_API StringUtils {
+class RYU_API StringUtils {
 public:
     static std::vector<std::string> splitComma(const std::string& input);
 
@@ -122,4 +122,4 @@ public:
 };
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

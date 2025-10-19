@@ -8,9 +8,9 @@
 #include "index/hnsw_config.h"
 #include "transaction/transaction.h"
 
-using namespace kuzu::catalog;
+using namespace ryu::catalog;
 
-namespace kuzu {
+namespace ryu {
 namespace vector_extension {
 
 std::shared_ptr<common::BufferWriter> HNSWIndexAuxInfo::serialize() const {
@@ -46,4 +46,4 @@ std::string HNSWIndexAuxInfo::toCypher(const IndexCatalogEntry& indexEntry,
 }
 
 } // namespace vector_extension
-} // namespace kuzu
+} // namespace ryu

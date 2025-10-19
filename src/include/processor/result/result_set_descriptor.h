@@ -2,7 +2,7 @@
 
 #include "common/types/types.h"
 
-namespace kuzu {
+namespace ryu {
 namespace planner {
 class Schema;
 } // namespace planner
@@ -23,7 +23,7 @@ struct DataChunkDescriptor {
     }
 };
 
-struct KUZU_API ResultSetDescriptor {
+struct RYU_API ResultSetDescriptor {
     std::vector<std::unique_ptr<DataChunkDescriptor>> dataChunkDescriptors;
 
     ResultSetDescriptor() = default;
@@ -41,4 +41,4 @@ struct KUZU_API ResultSetDescriptor {
 };
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

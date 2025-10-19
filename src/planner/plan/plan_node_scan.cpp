@@ -1,8 +1,8 @@
 #include "planner/planner.h"
 
-using namespace kuzu::binder;
+using namespace ryu::binder;
 
-namespace kuzu {
+namespace ryu {
 namespace planner {
 
 LogicalPlan Planner::getNodePropertyScanPlan(const NodeExpression& node) {
@@ -16,4 +16,4 @@ LogicalPlan Planner::getNodePropertyScanPlan(const NodeExpression& node) {
 }
 
 } // namespace planner
-} // namespace kuzu
+} // namespace ryu

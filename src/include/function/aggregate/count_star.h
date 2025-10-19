@@ -2,7 +2,7 @@
 
 #include "base_count.h"
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct CountStarFunction : public BaseCountFunction {
@@ -18,4 +18,4 @@ struct CountStarFunction : public BaseCountFunction {
 };
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

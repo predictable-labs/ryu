@@ -2,7 +2,7 @@
 
 #include "parser/statement.h"
 
-namespace kuzu {
+namespace ryu {
 namespace parser {
 
 class CreateType final : public Statement {
@@ -22,4 +22,4 @@ private:
 };
 
 } // namespace parser
-} // namespace kuzu
+} // namespace ryu

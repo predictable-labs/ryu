@@ -19,13 +19,13 @@ jobs:
           
       - name: Pull ghcr extensions and run container
         run: |
-          docker pull ghcr.io/kuzudb/extension-repo:latest
-          docker run --rm -d --name kuzu-extensions ghcr.io/kuzudb/extension-repo:latest tail -f /dev/null
+          docker pull ghcr.io/ryugraph/extension-repo:latest
+          docker run --rm -d --name ryu-extensions ghcr.io/ryugraph/extension-repo:latest tail -f /dev/null
       
       - name: Copy ghcr extensions
         run: |
           mkdir ./ghcr-extensions
-          docker cp kuzu-extensions:/usr/share/nginx/html ./ghcr-extensions
+          docker cp ryu-extensions:/usr/share/nginx/html ./ghcr-extensions
           sudo chown -R $USER:$USER ghcr-extensions
           sudo chmod -R 755 ghcr-extensions
           mv ghcr-extensions/html/dataset ghcr-extensions/dataset

@@ -7,7 +7,7 @@
 #include "common/cast.h"
 #include "file_info.h"
 
-namespace kuzu {
+namespace ryu {
 namespace main {
 class ClientContext;
 } // namespace main
@@ -43,7 +43,7 @@ struct FileOpenFlags {
     explicit FileOpenFlags(int flags, FileLockType lockType) : flags{flags}, lockType{lockType} {}
 };
 
-class KUZU_API FileSystem {
+class RYU_API FileSystem {
     friend struct FileInfo;
 
 public:
@@ -131,4 +131,4 @@ protected:
 };
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

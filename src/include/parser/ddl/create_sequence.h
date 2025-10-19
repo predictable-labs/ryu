@@ -3,7 +3,7 @@
 #include "create_sequence_info.h"
 #include "parser/statement.h"
 
-namespace kuzu {
+namespace ryu {
 namespace parser {
 
 class CreateSequence final : public Statement {
@@ -19,4 +19,4 @@ private:
 };
 
 } // namespace parser
-} // namespace kuzu
+} // namespace ryu

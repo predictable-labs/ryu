@@ -5,9 +5,9 @@
 #include "py_prepared_statement.h"
 #include "py_query_result.h"
 
-using kuzu::common::LogicalType;
-using kuzu::common::LogicalTypeID;
-using kuzu::common::Value;
+using ryu::common::LogicalType;
+using ryu::common::LogicalTypeID;
+using ryu::common::Value;
 
 class PyConnection {
 

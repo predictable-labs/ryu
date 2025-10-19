@@ -4,11 +4,11 @@
 #include "processor/execution_context.h"
 #include "transaction/transaction.h"
 
-using namespace kuzu::common;
-using namespace kuzu::graph;
-using namespace kuzu::processor;
+using namespace ryu::common;
+using namespace ryu::graph;
+using namespace ryu::processor;
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 void SparseFrontier::pinTableID(table_id_t tableID) {
@@ -420,4 +420,4 @@ bool SPEdgeCompute::terminate(NodeOffsetMaskMap& maskMap) {
 }
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

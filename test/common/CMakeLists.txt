@@ -1,4 +1,4 @@
-add_kuzu_test(types_test
+add_ryu_test(types_test
         int128_test.cpp
         uint128_test.cpp
         date_test.cpp

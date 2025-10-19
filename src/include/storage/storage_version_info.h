@@ -6,7 +6,7 @@
 
 #include "common/api.h"
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 
 using storage_version_t = uint64_t;
@@ -22,10 +22,10 @@ struct StorageVersionInfo {
             {"0.0.7", 15}, {"0.0.6", 9}, {"0.0.5", 8}, {"0.0.4", 7}, {"0.0.3", 1}};
     }
 
-    static KUZU_API storage_version_t getStorageVersion();
+    static RYU_API storage_version_t getStorageVersion();
 
-    static constexpr const char* MAGIC_BYTES = "KUZU";
+    static constexpr const char* MAGIC_BYTES = "RYU";
 };
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

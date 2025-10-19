@@ -9,7 +9,7 @@
 
 #include "parquet_types.h"
 
-namespace kuzu_parquet { namespace format {
+namespace ryu_parquet { namespace format {
 
 class parquetConstants {
  public:

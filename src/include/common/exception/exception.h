@@ -5,10 +5,10 @@
 
 #include "common/api.h"
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 
-class KUZU_API Exception : public std::exception {
+class RYU_API Exception : public std::exception {
 public:
     explicit Exception(std::string msg);
 
@@ -20,4 +20,4 @@ private:
 };
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

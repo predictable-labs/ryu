@@ -4,7 +4,7 @@
 #include "binder/expression/node_expression.h"
 #include "common/case_insensitive_map.h"
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
 class BinderScope {
@@ -68,4 +68,4 @@ private:
 };
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

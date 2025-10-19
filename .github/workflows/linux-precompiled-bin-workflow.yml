@@ -36,25 +36,25 @@ jobs:
 
       - name: Collect artifacts
         run: |
-          mv install/include/kuzu.h .
-          mv install/include/kuzu.hpp .
-          mv install/lib64/libkuzu.so .
-          mv install/bin/kuzu .
+          mv install/include/ryu.h .
+          mv install/include/ryu.hpp .
+          mv install/lib64/libryu.so .
+          mv install/bin/ryu .
 
       - name: Create tarball
         run: |
-          tar -czvf libkuzu-linux-x86_64.tar.gz kuzu.h kuzu.hpp libkuzu.so
-          tar -czvf kuzu_cli-linux-x86_64.tar.gz kuzu
+          tar -czvf libryu-linux-x86_64.tar.gz ryu.h ryu.hpp libryu.so
+          tar -czvf ryu_cli-linux-x86_64.tar.gz ryu
 
       - uses: actions/upload-artifact@v4
         with:
-          name: libkuzu-linux-x86_64
-          path: libkuzu-linux-x86_64.tar.gz
+          name: libryu-linux-x86_64
+          path: libryu-linux-x86_64.tar.gz
 
       - uses: actions/upload-artifact@v4
         with:
-          name: kuzu_cli-linux-x86_64
-          path: kuzu_cli-linux-x86_64.tar.gz
+          name: ryu_cli-linux-x86_64
+          path: ryu_cli-linux-x86_64.tar.gz
 
   build-precompiled-bin-aarch64:
     if: ${{ inputs.x86_64Only != true }}
@@ -76,25 +76,25 @@ jobs:
 
       - name: Collect artifacts
         run: |
-          mv install/include/kuzu.h .
-          mv install/include/kuzu.hpp .
-          mv install/lib64/libkuzu.so .
-          mv install/bin/kuzu .
+          mv install/include/ryu.h .
+          mv install/include/ryu.hpp .
+          mv install/lib64/libryu.so .
+          mv install/bin/ryu .
 
       - name: Create tarball
         run: |
-          tar -czvf libkuzu-linux-aarch64.tar.gz kuzu.h kuzu.hpp libkuzu.so
-          tar -czvf kuzu_cli-linux-aarch64.tar.gz kuzu
+          tar -czvf libryu-linux-aarch64.tar.gz ryu.h ryu.hpp libryu.so
+          tar -czvf ryu_cli-linux-aarch64.tar.gz ryu
 
       - uses: actions/upload-artifact@v4
         with:
-          name: libkuzu-linux-aarch64
-          path: libkuzu-linux-aarch64.tar.gz
+          name: libryu-linux-aarch64
+          path: libryu-linux-aarch64.tar.gz
 
       - uses: actions/upload-artifact@v4
         with:
-          name: kuzu_cli-linux-aarch64
-          path: kuzu_cli-linux-aarch64.tar.gz
+          name: ryu_cli-linux-aarch64
+          path: ryu_cli-linux-aarch64.tar.gz
 
   build-precompiled-bin-android-armv8a:
     if: ${{ inputs.x86_64Only != true }}
@@ -120,22 +120,22 @@ jobs:
     
       - name: Collect artifacts
         run: |
-          mv install/include/kuzu.h .
-          mv install/include/kuzu.hpp .
-          mv install/lib/libkuzu.so .
-          mv install/bin/kuzu .
+          mv install/include/ryu.h .
+          mv install/include/ryu.hpp .
+          mv install/lib/libryu.so .
+          mv install/bin/ryu .
         
       - name: Create tarball
         run: |
-          tar -czvf libkuzu-android-armv8a.tar.gz kuzu.h kuzu.hpp libkuzu.so
-          tar -czvf kuzu_cli-android-armv8a.tar.gz kuzu
+          tar -czvf libryu-android-armv8a.tar.gz ryu.h ryu.hpp libryu.so
+          tar -czvf ryu_cli-android-armv8a.tar.gz ryu
         
       - uses: actions/upload-artifact@v4
         with:
-          name: libkuzu-android-armv8a
-          path: libkuzu-android-armv8a.tar.gz
+          name: libryu-android-armv8a
+          path: libryu-android-armv8a.tar.gz
         
       - uses: actions/upload-artifact@v4
         with:
-          name: kuzu_cli-android-armv8a
-          path: kuzu_cli-android-armv8a.tar.gz
+          name: ryu_cli-android-armv8a
+          path: ryu_cli-android-armv8a.tar.gz

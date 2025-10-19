@@ -1,4 +1,4 @@
-add_library(kuzu_storage_buffer_manager
+add_library(ryu_storage_buffer_manager
         OBJECT
         vm_region.cpp
         buffer_manager.cpp
@@ -6,5 +6,5 @@ add_library(kuzu_storage_buffer_manager
         spiller.cpp)
 
 set(ALL_OBJECT_FILES
-        ${ALL_OBJECT_FILES} $<TARGET_OBJECTS:kuzu_storage_buffer_manager>
+        ${ALL_OBJECT_FILES} $<TARGET_OBJECTS:ryu_storage_buffer_manager>
         PARENT_SCOPE)

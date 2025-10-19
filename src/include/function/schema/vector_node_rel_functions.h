@@ -2,7 +2,7 @@
 
 #include "function/function.h"
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct RewriteFunctionBindInput;
@@ -51,4 +51,4 @@ struct CostFunction {
 };
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

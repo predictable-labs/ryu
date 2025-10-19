@@ -6,9 +6,9 @@
 #include "function/list/functions/list_unique_function.h"
 #include "utf8proc_wrapper.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 // ---------------------- cast String Helper ------------------------------ //
@@ -1053,4 +1053,4 @@ void CastString::copyStringToVector(ValueVector* vector, uint64_t vectorPos,
 }
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

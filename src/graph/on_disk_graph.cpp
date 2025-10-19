@@ -21,15 +21,15 @@
 #include "storage/table/node_table.h"
 #include "storage/table/rel_table.h"
 
-using namespace kuzu::catalog;
-using namespace kuzu::storage;
-using namespace kuzu::main;
-using namespace kuzu::common;
-using namespace kuzu::planner;
-using namespace kuzu::processor;
-using namespace kuzu::binder;
+using namespace ryu::catalog;
+using namespace ryu::storage;
+using namespace ryu::main;
+using namespace ryu::common;
+using namespace ryu::planner;
+using namespace ryu::processor;
+using namespace ryu::binder;
 
-namespace kuzu {
+namespace ryu {
 namespace graph {
 
 static std::vector<column_id_t> getColumnIDs(const expression_vector& propertyExprs,
@@ -347,4 +347,4 @@ bool OnDiskGraphVertexScanState::next() {
 }
 
 } // namespace graph
-} // namespace kuzu
+} // namespace ryu

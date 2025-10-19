@@ -4,7 +4,7 @@
 #include "parquet_types.h"
 #include "processor/operator/persistent/writer/parquet/basic_column_writer.h"
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 struct StringHash {
@@ -38,7 +38,7 @@ public:
 
 class StringColumnWriterState : public BasicColumnWriterState {
 public:
-    StringColumnWriterState(kuzu_parquet::format::RowGroup& rowGroup, uint64_t colIdx,
+    StringColumnWriterState(ryu_parquet::format::RowGroup& rowGroup, uint64_t colIdx,
         storage::MemoryManager* mm)
         : BasicColumnWriterState{rowGroup, colIdx}, estimatedDictPageSize{0},
           estimatedRlePagesSize{0}, estimatedPlainSize{0},
@@ -88,7 +88,7 @@ public:
     }
 
     std::unique_ptr<ColumnWriterState> initializeWriteState(
-        kuzu_parquet::format::RowGroup& rowGroup) override;
+        ryu_parquet::format::RowGroup& rowGroup) override;
 
     inline bool hasAnalyze() override { return true; }
 
@@ -98,11 +98,11 @@ public:
         return std::make_unique<StringWriterPageState>(state.keyBitWidth, state.dictionary);
     }
 
-    inline kuzu_parquet::format::Encoding::type getEncoding(
+    inline ryu_parquet::format::Encoding::type getEncoding(
         BasicColumnWriterState& writerState) override {
         auto& state = reinterpret_cast<StringColumnWriterState&>(writerState);
-        return state.isDictionaryEncoded() ? kuzu_parquet::format::Encoding::RLE_DICTIONARY :
-                                             kuzu_parquet::format::Encoding::PLAIN;
+        return state.isDictionaryEncoded() ? ryu_parquet::format::Encoding::RLE_DICTIONARY :
+                                             ryu_parquet::format::Encoding::PLAIN;
     }
 
     inline bool hasDictionary(BasicColumnWriterState& writerState) override {
@@ -139,4 +139,4 @@ private:
 };
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

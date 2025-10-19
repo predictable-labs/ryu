@@ -1,6 +1,6 @@
 #include "planner/operator/logical_create_macro.h"
 
-namespace kuzu {
+namespace ryu {
 namespace planner {
 
 std::string LogicalCreateMacroPrintInfo::toString() const {
@@ -18,4 +18,4 @@ void LogicalCreateMacro::computeFactorizedSchema() {
 }
 
 } // namespace planner
-} // namespace kuzu
+} // namespace ryu

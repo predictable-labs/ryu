@@ -3,10 +3,10 @@
 #include "storage/table/column_chunk_data.h"
 #include "transaction/transaction.h"
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 
-class KUZU_API CachedColumn : public transaction::LocalCacheObject {
+class RYU_API CachedColumn : public transaction::LocalCacheObject {
 public:
     static std::string getKey(common::table_id_t tableID, common::property_id_t propertyID) {
         return common::stringFormat("{}-{}", tableID, propertyID);
@@ -19,4 +19,4 @@ public:
 };
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

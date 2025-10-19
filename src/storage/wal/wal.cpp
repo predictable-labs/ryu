@@ -13,9 +13,9 @@
 #include "storage/wal/checksum_writer.h"
 #include "storage/wal/local_wal.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 
 WAL::WAL(const std::string& dbPath, bool readOnly, bool enableChecksums, VirtualFileSystem* vfs)
@@ -119,4 +119,4 @@ WAL* WAL::Get(const main::ClientContext& context) {
 }
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

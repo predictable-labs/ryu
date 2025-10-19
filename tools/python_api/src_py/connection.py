@@ -3,7 +3,7 @@ from __future__ import annotations
 import warnings
 from typing import TYPE_CHECKING, Any, Callable
 
-from . import _kuzu
+from . import _ryu
 from .prepared_statement import PreparedStatement
 from .query_result import QueryResult
 
@@ -25,7 +25,7 @@ class Connection:
 
     def __init__(self, database: Database, num_threads: int = 0):
         """
-        Initialise kuzu database connection.
+        Initialise ryu database connection.
 
         Parameters
         ----------
@@ -36,7 +36,7 @@ class Connection:
             Maximum number of threads to use for executing queries.
 
         """
-        self._connection: Any = None  # (type: _kuzu.Connection from pybind11)
+        self._connection: Any = None  # (type: _ryu.Connection from pybind11)
         self.database = database
         self.num_threads = num_threads
         self.is_closed = False
@@ -57,7 +57,7 @@ class Connection:
             raise RuntimeError(error_msg)
         self.database.init_database()
         if self._connection is None:
-            self._connection = _kuzu.Connection(self.database._database, self.num_threads)  # type: ignore[union-attr]
+            self._connection = _ryu.Connection(self.database._database, self.num_threads)  # type: ignore[union-attr]
 
     def set_max_threads_for_exec(self, num_threads: int) -> None:
         """

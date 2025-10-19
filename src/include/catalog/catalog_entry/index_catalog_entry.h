@@ -6,16 +6,16 @@
 #include "common/serializer/deserializer.h"
 #include "table_catalog_entry.h"
 
-namespace kuzu::common {
+namespace ryu::common {
 struct BufferReader;
 }
-namespace kuzu::common {
+namespace ryu::common {
 class BufferWriter;
 }
-namespace kuzu {
+namespace ryu {
 namespace catalog {
 
-struct KUZU_API IndexToCypherInfo : ToCypherInfo {
+struct RYU_API IndexToCypherInfo : ToCypherInfo {
     const main::ClientContext* context;
     const common::FileScanInfo& exportFileInfo;
 
@@ -25,7 +25,7 @@ struct KUZU_API IndexToCypherInfo : ToCypherInfo {
 };
 
 class IndexCatalogEntry;
-struct KUZU_API IndexAuxInfo {
+struct RYU_API IndexAuxInfo {
     virtual ~IndexAuxInfo() = default;
     virtual std::shared_ptr<common::BufferWriter> serialize() const;
 
@@ -48,7 +48,7 @@ struct KUZU_API IndexAuxInfo {
     }
 };
 
-class KUZU_API IndexCatalogEntry final : public CatalogEntry {
+class RYU_API IndexCatalogEntry final : public CatalogEntry {
 public:
     static std::string getInternalIndexName(common::table_id_t tableID, std::string indexName) {
         return common::stringFormat("{}_{}", tableID, std::move(indexName));
@@ -113,4 +113,4 @@ protected:
 };
 
 } // namespace catalog
-} // namespace kuzu
+} // namespace ryu

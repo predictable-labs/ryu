@@ -1,4 +1,4 @@
-# Kuzu implementation
+# Ryu implementation
 
 To run the benchmark, execute the following commands:
 

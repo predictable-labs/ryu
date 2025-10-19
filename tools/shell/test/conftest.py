@@ -7,7 +7,7 @@ import subprocess
 import pexpect
 import pytest
 
-from test_helper import KUZU_EXEC_PATH, KUZU_ROOT, deleteIfExists
+from test_helper import RYU_EXEC_PATH, RYU_ROOT, deleteIfExists
 
 
 def pytest_addoption(parser) -> None:
@@ -55,7 +55,7 @@ class TestResult:
 
 class ShellTest:
     def __init__(self) -> None:
-        self.shell = KUZU_EXEC_PATH
+        self.shell = RYU_EXEC_PATH
         self.arguments = [self.shell]
         self.statements: list[str] = []
         self.input = None
@@ -152,18 +152,18 @@ class ShellTest:
 
     def send_finished_statement(self, stmt: str) -> None:
         if self.shell_process:
-            assert self.shell_process.expect_exact(["kuzu", pexpect.EOF]) == 0
+            assert self.shell_process.expect_exact(["ryu", pexpect.EOF]) == 0
             self.shell_process.send(stmt)
-            assert self.shell_process.expect_exact(["kuzu", pexpect.EOF]) == 0
+            assert self.shell_process.expect_exact(["ryu", pexpect.EOF]) == 0
 
     def send_statement(self, stmt: str) -> None:
         if self.shell_process:
-            assert self.shell_process.expect_exact(["kuzu", pexpect.EOF]) == 0
+            assert self.shell_process.expect_exact(["ryu", pexpect.EOF]) == 0
             self.shell_process.send(stmt)
 
     def send_control_statement(self, stmt: str) -> None:
         if self.shell_process:
-            assert self.shell_process.expect_exact(["kuzu", pexpect.EOF]) == 0
+            assert self.shell_process.expect_exact(["ryu", pexpect.EOF]) == 0
             self.shell_process.sendcontrol(stmt)
 
 
@@ -180,19 +180,19 @@ def get_tmp_path(tmp_path):
 
 @pytest.fixture()
 def history_path():
-    path = os.path.join(KUZU_ROOT, "tools", "shell", "test", "files")
+    path = os.path.join(RYU_ROOT, "tools", "shell", "test", "files")
     deleteIfExists(os.path.join(path, "history.txt"))
     return path
 
 
 @pytest.fixture()
 def csv_path():
-    return os.path.join(KUZU_ROOT, "tools", "shell", "test", "files", "vPerson.csv")
+    return os.path.join(RYU_ROOT, "tools", "shell", "test", "files", "vPerson.csv")
 
 
 @pytest.fixture()
 def init_path():
-    return os.path.join(KUZU_ROOT, "tools", "shell", "test", "files", "start.cypher")
+    return os.path.join(RYU_ROOT, "tools", "shell", "test", "files", "start.cypher")
 
 
 @pytest.fixture

@@ -4,13 +4,13 @@
 #include "processor/execution_context.h"
 #include "transaction/transaction.h"
 
-using namespace kuzu::processor;
-using namespace kuzu::common;
-using namespace kuzu::binder;
-using namespace kuzu::storage;
-using namespace kuzu::graph;
+using namespace ryu::processor;
+using namespace ryu::common;
+using namespace ryu::binder;
+using namespace ryu::storage;
+using namespace ryu::graph;
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 using multiplicity_t = uint64_t;
@@ -330,4 +330,4 @@ std::unique_ptr<RJAlgorithm> AllSPDestinationsFunction::getAlgorithm() {
 }
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

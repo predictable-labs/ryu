@@ -13,7 +13,7 @@
 #include "common/types/types.h"
 #include <span>
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 class ValueVector;
 class NullMask;
@@ -148,7 +148,7 @@ struct InPlaceUpdateLocalState {
 };
 
 // Data statistics used for determining how to handle compressed data
-struct KUZU_API CompressionMetadata {
+struct RYU_API CompressionMetadata {
 
     // Minimum and maximum are upper and lower bounds for the data.
     // Updates and deletions may cause them to no longer be the exact minimums and maximums,
@@ -495,4 +495,4 @@ public:
 };
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

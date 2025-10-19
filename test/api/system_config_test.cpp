@@ -2,9 +2,9 @@
 #include "common/exception/buffer_manager.h"
 #include "common/system_config.h"
 
-using namespace kuzu::common;
-using namespace kuzu::testing;
-using namespace kuzu::main;
+using namespace ryu::common;
+using namespace ryu::testing;
+using namespace ryu::main;
 
 class SystemConfigTest : public ApiTest {
     void SetUp() override { BaseGraphTest::SetUp(); }
@@ -75,16 +75,16 @@ TEST_F(SystemConfigTest, testMaxDBSize) {
     } catch (const BufferManagerException& e) {
         ASSERT_EQ(std::string(e.what()),
             "Buffer manager exception: The given max db size should be at least " +
-                std::to_string(2 * KUZU_PAGE_SIZE * StorageConstants::PAGE_GROUP_SIZE) + " bytes.");
+                std::to_string(2 * RYU_PAGE_SIZE * StorageConstants::PAGE_GROUP_SIZE) + " bytes.");
     }
-    systemConfig->maxDBSize = 2 * KUZU_PAGE_SIZE * StorageConstants::PAGE_GROUP_SIZE + 1;
+    systemConfig->maxDBSize = 2 * RYU_PAGE_SIZE * StorageConstants::PAGE_GROUP_SIZE + 1;
     try {
         auto db = std::make_unique<Database>(databasePath, *systemConfig);
     } catch (const BufferManagerException& e) {
         ASSERT_EQ(std::string(e.what()),
             "Buffer manager exception: The given max db size should be a power of 2.");
     }
-    systemConfig->maxDBSize = 2 * KUZU_PAGE_SIZE * StorageConstants::PAGE_GROUP_SIZE;
+    systemConfig->maxDBSize = 2 * RYU_PAGE_SIZE * StorageConstants::PAGE_GROUP_SIZE;
     try {
         auto db = std::make_unique<Database>(databasePath, *systemConfig);
     } catch (const BufferManagerException& e) {
@@ -100,7 +100,7 @@ TEST_F(SystemConfigTest, testBufferPoolSize) {
     } catch (const BufferManagerException& e) {
         ASSERT_EQ(std::string(e.what()),
             "Buffer manager exception: The given buffer pool size should be at least " +
-                std::to_string(KUZU_PAGE_SIZE) + " bytes.");
+                std::to_string(RYU_PAGE_SIZE) + " bytes.");
     }
     systemConfig->bufferPoolSize = TestHelper::DEFAULT_BUFFER_POOL_SIZE_FOR_TESTING;
     EXPECT_NO_THROW(auto db = std::make_unique<Database>(databasePath, *systemConfig));

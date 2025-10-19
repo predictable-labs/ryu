@@ -8,10 +8,10 @@ namespace antlr4 {
 class ParserRuleContext;
 }
 
-namespace kuzu {
+namespace ryu {
 namespace extension {
 
-class KUZU_API TransformerExtension {
+class RYU_API TransformerExtension {
 public:
     TransformerExtension() {}
 
@@ -21,4 +21,4 @@ public:
 };
 
 } // namespace extension
-} // namespace kuzu
+} // namespace ryu

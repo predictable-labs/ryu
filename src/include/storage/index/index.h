@@ -8,22 +8,22 @@
 #include "in_mem_hash_index.h"
 #include <span>
 
-namespace kuzu::storage {
+namespace ryu::storage {
 class StorageManager;
 }
-namespace kuzu {
+namespace ryu {
 namespace transaction {
 class Transaction;
 } // namespace transaction
 
 namespace storage {
 
-enum class KUZU_API IndexConstraintType : uint8_t {
+enum class RYU_API IndexConstraintType : uint8_t {
     PRIMARY = 0,              // Primary key index
     SECONDARY_NON_UNIQUE = 1, // Secondary index that is not unique
 };
 
-enum class KUZU_API IndexDefinitionType : uint8_t {
+enum class RYU_API IndexDefinitionType : uint8_t {
     BUILTIN = 0,
     EXTENSION = 1,
 };
@@ -33,7 +33,7 @@ struct IndexInfo;
 using index_load_func_t = std::function<std::unique_ptr<Index>(main::ClientContext* context,
     StorageManager* storageManager, IndexInfo, std::span<uint8_t>)>;
 
-struct KUZU_API IndexType {
+struct RYU_API IndexType {
     std::string typeName;
     IndexConstraintType constraintType;
     IndexDefinitionType definitionType;
@@ -45,7 +45,7 @@ struct KUZU_API IndexType {
           definitionType{definitionType}, loadFunc{std::move(loadFunc)} {}
 };
 
-struct KUZU_API IndexInfo {
+struct RYU_API IndexInfo {
     std::string name;
     std::string indexType;
     common::table_id_t tableID;
@@ -65,7 +65,7 @@ struct KUZU_API IndexInfo {
     static IndexInfo deserialize(common::Deserializer& deSer);
 };
 
-struct KUZU_API IndexStorageInfo {
+struct RYU_API IndexStorageInfo {
     IndexStorageInfo() {}
     virtual ~IndexStorageInfo();
     DELETE_COPY_DEFAULT_MOVE(IndexStorageInfo);
@@ -83,7 +83,7 @@ struct KUZU_API IndexStorageInfo {
     }
 };
 
-class KUZU_API Index {
+class RYU_API Index {
 public:
     struct InsertState {
         virtual ~InsertState();
@@ -196,7 +196,7 @@ public:
     bool isLoaded() const { return loaded; }
 
     void serialize(common::Serializer& ser) const;
-    KUZU_API void load(main::ClientContext* context, StorageManager* storageManager);
+    RYU_API void load(main::ClientContext* context, StorageManager* storageManager);
     bool needCommitInsert() const { return index->needCommitInsert(); }
     // NOLINTNEXTLINE(readability-make-member-function-const): Semantically non-const.
     void checkpoint(main::ClientContext* context, PageAllocator& pageAllocator) {
@@ -236,4 +236,4 @@ private:
 };
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

@@ -3,7 +3,7 @@
 #include "function/llm_functions.h"
 #include "main/client_context.h"
 
-namespace kuzu {
+namespace ryu {
 namespace llm_extension {
 
 // This extension provides an interface to retrieve text embeddings from supported LLM providers.
@@ -21,23 +21,23 @@ void LlmExtension::load(main::ClientContext* context) {
 }
 
 } // namespace llm_extension
-} // namespace kuzu
+} // namespace ryu
 
 #if defined(BUILD_DYNAMIC_LOAD)
 extern "C" {
-// Because we link against the static library on windows, we implicitly inherit KUZU_STATIC_DEFINE,
-// which cancels out any exporting, so we can't use KUZU_API.
+// Because we link against the static library on windows, we implicitly inherit RYU_STATIC_DEFINE,
+// which cancels out any exporting, so we can't use RYU_API.
 #if defined(_WIN32)
 #define INIT_EXPORT __declspec(dllexport)
 #else
 #define INIT_EXPORT __attribute__((visibility("default")))
 #endif
-INIT_EXPORT void init(kuzu::main::ClientContext* context) {
-    kuzu::llm_extension::LlmExtension::load(context);
+INIT_EXPORT void init(ryu::main::ClientContext* context) {
+    ryu::llm_extension::LlmExtension::load(context);
 }
 
 INIT_EXPORT const char* name() {
-    return kuzu::llm_extension::LlmExtension::EXTENSION_NAME;
+    return ryu::llm_extension::LlmExtension::EXTENSION_NAME;
 }
 }
 #endif

@@ -11,7 +11,7 @@
 #ifndef ZSTD_H_ZSTD_STATIC_LINKING_ONLY
 #define ZSTD_H_ZSTD_STATIC_LINKING_ONLY
 
-namespace kuzu_zstd {
+namespace ryu_zstd {
 
 /****************************************************************************************
  *   experimental API (static linking only)

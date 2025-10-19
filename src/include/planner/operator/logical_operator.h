@@ -6,7 +6,7 @@
 #include "planner/operator/operator_print_info.h"
 #include "planner/operator/schema.h"
 
-namespace kuzu {
+namespace ryu {
 namespace planner {
 
 // This ENUM is sorted by alphabetical order.
@@ -72,7 +72,7 @@ struct LogicalOperatorUtils {
     static bool isAccHashJoin(const LogicalOperator& op);
 };
 
-class KUZU_API LogicalOperator {
+class RYU_API LogicalOperator {
 public:
     explicit LogicalOperator(LogicalOperatorType operatorType)
         : operatorType{operatorType}, cardinality{1} {}
@@ -146,4 +146,4 @@ protected:
 };
 
 } // namespace planner
-} // namespace kuzu
+} // namespace ryu

@@ -5,7 +5,7 @@
 #include "common/types/int128_t.h"
 #include "common/types/uint128_t.h"
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct Modulo {
@@ -47,4 +47,4 @@ void Modulo::operation(common::uint128_t& left, common::uint128_t& right,
     common::uint128_t& result);
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

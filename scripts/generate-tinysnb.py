@@ -3,9 +3,9 @@ import shutil
 import subprocess
 import sys
 
-KUZU_ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+RYU_ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 # Datasets can only be copied from the root since copy.schema contains relative paths
-os.chdir(KUZU_ROOT)
+os.chdir(RYU_ROOT)
 
 # Define the build type from input
 if len(sys.argv) > 1 and sys.argv[1].lower() == "release":
@@ -14,21 +14,21 @@ else:
     build_type = "relwithdebinfo"
 
 # Change the current working directory
-if os.path.exists(f"{KUZU_ROOT}/dataset/databases/tinysnb"):
-    shutil.rmtree(f"{KUZU_ROOT}/dataset/databases/tinysnb")
+if os.path.exists(f"{RYU_ROOT}/dataset/databases/tinysnb"):
+    shutil.rmtree(f"{RYU_ROOT}/dataset/databases/tinysnb")
 if sys.platform == "win32":
-    kuzu_shell_path = f"{KUZU_ROOT}/build/{build_type}/src/kuzu_shell"
+    ryu_shell_path = f"{RYU_ROOT}/build/{build_type}/src/ryu_shell"
 else:
-    kuzu_shell_path = f"{KUZU_ROOT}/build/{build_type}/tools/shell/kuzu"
+    ryu_shell_path = f"{RYU_ROOT}/build/{build_type}/tools/shell/ryu"
 subprocess.check_call(
     [
         "python3",
-        f"{KUZU_ROOT}/benchmark/serializer.py",
+        f"{RYU_ROOT}/benchmark/serializer.py",
         "TinySNB",
-        f"{KUZU_ROOT}/dataset/tinysnb",
-        f"{KUZU_ROOT}/dataset/databases/tinysnb",
+        f"{RYU_ROOT}/dataset/tinysnb",
+        f"{RYU_ROOT}/dataset/databases/tinysnb",
         "--single-thread",
-        "--kuzu-shell",
-        kuzu_shell_path,
+        "--ryu-shell",
+        ryu_shell_path,
     ]
 )

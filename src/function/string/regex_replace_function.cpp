@@ -5,7 +5,7 @@
 #include "function/string/vector_string_functions.h"
 #include "re2.h"
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 using namespace common;
@@ -33,7 +33,7 @@ struct RegexpReplace {
         std::string resultStr = value.getAsString();
         RE2 re2Pattern{pattern.getAsString()};
         bindData->replaceFunc(&resultStr, re2Pattern, replacement.getAsString());
-        BaseRegexpOperation::copyToKuzuString(resultStr, result, resultValueVector);
+        BaseRegexpOperation::copyToRyuString(resultStr, result, resultValueVector);
     }
 };
 
@@ -58,7 +58,7 @@ struct RegexpReplaceStaticPattern {
         auto bindData = reinterpret_cast<RegexReplaceBindDataStaticPattern*>(dataPtr);
         auto resultStr = value.getAsString();
         bindData->replaceFunc(&resultStr, bindData->pattern, replacement.getAsString());
-        BaseRegexpOperation::copyToKuzuString(resultStr, result, resultValueVector);
+        BaseRegexpOperation::copyToRyuString(resultStr, result, resultValueVector);
     }
 };
 
@@ -139,4 +139,4 @@ function_set RegexpReplaceFunction::getFunctionSet() {
 }
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

@@ -2,9 +2,9 @@
 #include "processor/operator/flatten.h"
 #include "processor/plan_mapper.h"
 
-using namespace kuzu::planner;
+using namespace ryu::planner;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 std::unique_ptr<PhysicalOperator> PlanMapper::mapFlatten(const LogicalOperator* logicalOperator) {
@@ -17,4 +17,4 @@ std::unique_ptr<PhysicalOperator> PlanMapper::mapFlatten(const LogicalOperator* 
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

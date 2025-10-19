@@ -6,7 +6,7 @@
 #include "common/enums/rel_multiplicity.h"
 #include "node_table_id_pair.h"
 
-namespace kuzu {
+namespace ryu {
 namespace catalog {
 
 struct RelGroupToCypherInfo final : ToCypherInfo {
@@ -27,7 +27,7 @@ struct RelTableCatalogInfo {
     static RelTableCatalogInfo deserialize(common::Deserializer& deser);
 };
 
-class KUZU_API RelGroupCatalogEntry final : public TableCatalogEntry {
+class RYU_API RelGroupCatalogEntry final : public TableCatalogEntry {
     static constexpr CatalogEntryType type_ = CatalogEntryType::REL_GROUP_ENTRY;
 
 public:
@@ -100,4 +100,4 @@ private:
 };
 
 } // namespace catalog
-} // namespace kuzu
+} // namespace ryu

@@ -36,7 +36,7 @@ Noura|25
 
 -CASE ScanFromHTTPS
 -LOAD_DYNAMIC_EXTENSION httpfs
--STATEMENT load from "https://extension.kuzudb.com/dataset/test/city.csv" return *;
+-STATEMENT load from "https://extension.ryugraph.com/dataset/test/city.csv" return *;
 ---- 3
 Waterloo|150000
 Kitchener|200000
@@ -47,19 +47,19 @@ Guelph|75000
 -LOG validateTableNotExists
 -STATEMENT CALL SHOW_TABLES() RETURN *
 ---- 0
--STATEMENT attach 'http://localhost/dataset/databases/tinysnb/db.kz' as test (dbtype kuzu)
+-STATEMENT attach 'http://localhost/dataset/databases/tinysnb/db.ryu' as test (dbtype ryu)
 ---- ok
 -LOG validateTableExistsAfterAttach
 -STATEMENT CALL SHOW_TABLES() RETURN *
 ---- 8
-0|person|NODE|test(KUZU)|
-1|organisation|NODE|test(KUZU)|
-2|movies|NODE|test(KUZU)|
-4|knows|REL|test(KUZU)|
-6|studyAt|REL|test(KUZU)|
-8|workAt|REL|test(KUZU)|
-10|meets|REL|test(KUZU)|
-12|marries|REL|test(KUZU)|
+0|person|NODE|test(RYU)|
+1|organisation|NODE|test(RYU)|
+2|movies|NODE|test(RYU)|
+4|knows|REL|test(RYU)|
+6|studyAt|REL|test(RYU)|
+8|workAt|REL|test(RYU)|
+10|meets|REL|test(RYU)|
+12|marries|REL|test(RYU)|
 
 -LOG QueryRemoteNodeTable
 -STATEMENT match (p:person) return p.*
@@ -107,7 +107,7 @@ Binder exception: Table person does not exist.
 5
 -STATEMENT CALL HTTP_CACHE_FILE=FALSE
 -LOG AttachAgain
--STATEMENT attach 'http://localhost/dataset/databases/tinysnb/db.kz' as tinysnb (dbtype kuzu)
+-STATEMENT attach 'http://localhost/dataset/databases/tinysnb/db.ryu' as tinysnb (dbtype ryu)
 ---- ok
 -LOG QueryRemoteNodeTable
 -STATEMENT match (p:person) return p.*
@@ -122,36 +122,36 @@ Binder exception: Table person does not exist.
 10|Hubert Blaine Wolfeschlegelsteinhausenbergerdorff|2|False|True|83|4.900000|1990-11-27|2023-02-21 13:25:30|3 years 2 days 13:02:00|[10,11,12,3,4,5,6,7]|[Ad,De,Hi,Kye,Orlan]|[[7],[10],[6,7]]|[77,64,100,54]|1.323000|a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a18
 -STATEMENT call SHOW_ATTACHED_DATABASES() return *;
 ---- 1
-tinysnb|KUZU
+tinysnb|RYU
 -STATEMENT detach tinysnb
 ---- ok
 -LOG AttachWithSlashStylePath
--STATEMENT attach 'http://localhost/dataset/databases/tinysnb/db.kz' as tinysnb1 (dbtype kuzu)
+-STATEMENT attach 'http://localhost/dataset/databases/tinysnb/db.ryu' as tinysnb1 (dbtype ryu)
 ---- ok
 -STATEMENT call SHOW_ATTACHED_DATABASES() return *;
 ---- 1
-tinysnb1|KUZU
+tinysnb1|RYU
 -STATEMENT detach tinysnb1
 ---- ok
 
 -CASE AttachNotExistPath
 -LOAD_DYNAMIC_EXTENSION httpfs
--STATEMENT attach 'http://localhost/dataset/databases/tinysnb1' as test (dbtype kuzu)
+-STATEMENT attach 'http://localhost/dataset/databases/tinysnb1' as test (dbtype ryu)
 ---- error
-Runtime exception: Cannot attach a remote Kuzu database due to invalid path: http://localhost/dataset/databases/tinysnb1.
+Runtime exception: Cannot attach a remote Ryu database due to invalid path: http://localhost/dataset/databases/tinysnb1.
 
 #TODO(Ziyi): figure out a way to automate upload if storage has changed.
 -CASE AttachDBWithNonEmptyWAL
 -SKIP
 -LOAD_DYNAMIC_EXTENSION httpfs
--STATEMENT attach 'http://localhost/dataset/databases/non-empty-wal' as test (dbtype kuzu)
+-STATEMENT attach 'http://localhost/dataset/databases/non-empty-wal' as test (dbtype ryu)
 ---- error
-Runtime exception: Cannot attach an external Kuzu database with non-empty wal file. Try manually checkpointing the external database (i.e., run "CHECKPOINT;").
+Runtime exception: Cannot attach an external Ryu database with non-empty wal file. Try manually checkpointing the external database (i.e., run "CHECKPOINT;").
 
--CASE AttachKuzuWithRelativePath
--STATEMENT attach '${KUZU_ROOT_DIRECTORY}/dataset/databases/tinysnb/./' (dbtype kuzu)
+-CASE AttachRyuWithRelativePath
+-STATEMENT attach '${RYU_ROOT_DIRECTORY}/dataset/databases/tinysnb/./' (dbtype ryu)
 ---- error
-Binder exception: Attaching a kuzu database without an alias is not allowed.
+Binder exception: Attaching a ryu database without an alias is not allowed.
 
 -CASE InstallOfficialExtension
 -SKIP

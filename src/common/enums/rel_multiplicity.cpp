@@ -5,7 +5,7 @@
 #include "common/string_format.h"
 #include "common/string_utils.h"
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 
 RelMultiplicity RelMultiplicityUtils::getFwd(const std::string& str) {
@@ -40,4 +40,4 @@ std::string RelMultiplicityUtils::toString(RelMultiplicity multiplicity) {
 }
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

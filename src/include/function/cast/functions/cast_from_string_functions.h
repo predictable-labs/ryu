@@ -7,12 +7,12 @@
 #include "common/types/uuid.h"
 #include "common/vector/value_vector.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
-struct KUZU_API CastString {
+struct RYU_API CastString {
     static void copyStringToVector(ValueVector* vector, uint64_t vectorPos, std::string_view strVal,
         const CSVOption* option);
 
@@ -187,4 +187,4 @@ void CastString::operation(const ku_string_t& input, union_entry_t& result,
     ValueVector* resultVector, uint64_t rowToAdd, const CSVOption* option);
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

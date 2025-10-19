@@ -6,7 +6,7 @@
 #include "function/gds/rec_joins.h"
 #include "node_expression.h"
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
 enum class RelDirectionType : uint8_t {
@@ -41,7 +41,7 @@ struct RecursiveInfo {
     std::unique_ptr<function::RJBindData> bindData;
 };
 
-class KUZU_API RelExpression final : public NodeOrRelExpression {
+class RYU_API RelExpression final : public NodeOrRelExpression {
 public:
     RelExpression(common::LogicalType dataType, std::string uniqueName, std::string variableName,
         std::vector<catalog::TableCatalogEntry*> entries, std::shared_ptr<NodeExpression> srcNode,
@@ -120,4 +120,4 @@ private:
 };
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

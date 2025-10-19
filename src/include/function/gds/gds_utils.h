@@ -4,10 +4,10 @@
 #include "common/enums/extend_direction.h"
 #include "gds_state.h"
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
-class KUZU_API GDSUtils {
+class RYU_API GDSUtils {
 public:
     // Run edge compute for graph algorithms
     static void runAlgorithmEdgeCompute(processor::ExecutionContext* context,
@@ -36,4 +36,4 @@ public:
 };
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

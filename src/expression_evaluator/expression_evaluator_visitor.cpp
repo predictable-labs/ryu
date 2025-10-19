@@ -2,7 +2,7 @@
 
 #include "expression_evaluator/case_evaluator.h"
 
-namespace kuzu {
+namespace ryu {
 namespace evaluator {
 
 void ExpressionEvaluatorVisitor::visitSwitch(ExpressionEvaluator* evaluator) {
@@ -64,4 +64,4 @@ void LambdaParamEvaluatorCollector::visit(ExpressionEvaluator* evaluator) {
 }
 
 } // namespace evaluator
-} // namespace kuzu
+} // namespace ryu

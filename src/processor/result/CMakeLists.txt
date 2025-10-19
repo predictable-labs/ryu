@@ -1,4 +1,4 @@
-add_library(kuzu_processor_result
+add_library(ryu_processor_result
         OBJECT
         base_hash_table.cpp
         factorized_table.cpp
@@ -12,5 +12,5 @@ add_library(kuzu_processor_result
         )
 
 set(ALL_OBJECT_FILES
-        ${ALL_OBJECT_FILES} $<TARGET_OBJECTS:kuzu_processor_result>
+        ${ALL_OBJECT_FILES} $<TARGET_OBJECTS:ryu_processor_result>
         PARENT_SCOPE)

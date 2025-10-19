@@ -3,7 +3,7 @@
 #include "binder/expression/expression.h"
 #include "planner/operator/logical_operator.h"
 
-namespace kuzu {
+namespace ryu {
 namespace planner {
 
 struct LogicalFilterPrintInfo final : OPPrintInfo {
@@ -44,4 +44,4 @@ private:
 };
 
 } // namespace planner
-} // namespace kuzu
+} // namespace ryu

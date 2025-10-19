@@ -8,12 +8,12 @@
 #include "parser/parser.h"
 #include "processor/execution_context.h"
 
-using namespace kuzu::binder;
-using namespace kuzu::common;
-using namespace kuzu::catalog;
-using namespace kuzu::graph;
+using namespace ryu::binder;
+using namespace ryu::common;
+using namespace ryu::catalog;
+using namespace ryu::graph;
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct ProjectGraphNativeBindData final : TableFuncBindData {
@@ -95,4 +95,4 @@ function_set ProjectGraphNativeFunction::getFunctionSet() {
 }
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

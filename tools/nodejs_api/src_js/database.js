@@ -1,6 +1,6 @@
 "use strict";
 
-const KuzuNative = require("./kuzu_native.js");
+const RyuNative = require("./ryu_native.js");
 
 class Database {
   /**
@@ -22,7 +22,7 @@ class Database {
    * @param {Number} checkpointThreshold The threshold of the WAL file size in bytes. When the size of the
    * WAL file exceeds this threshold, the database will checkpoint if autoCheckpoint is true.
    * @param {Boolean} throwOnWalReplayFailure If true, any WAL replaying failure when loading the database
-   * will throw an error. Otherwise, Kuzu will silently ignore the failure and replay up to where
+   * will throw an error. Otherwise, Ryu will silently ignore the failure and replay up to where
    * the error occured.
    * @param {Boolean} enableChecksums If true, the database will use checksums to detect corruption in the
    * WAL file.
@@ -56,7 +56,7 @@ class Database {
     bufferManagerSize = Math.floor(bufferManagerSize);
     maxDBSize = Math.floor(maxDBSize);
     checkpointThreshold = Math.floor(checkpointThreshold);
-    this._database = new KuzuNative.NodeDatabase(
+    this._database = new RyuNative.NodeDatabase(
       databasePath,
       bufferManagerSize,
       enableCompression,
@@ -77,7 +77,7 @@ class Database {
    * @returns {String} the version of the library.
    */
   static getVersion() {
-    return KuzuNative.NodeDatabase.getVersion();
+    return RyuNative.NodeDatabase.getVersion();
   }
 
   /**
@@ -85,7 +85,7 @@ class Database {
    * @returns {Number} the storage version of the library.
    */
   static getStorageVersion() {
-    return KuzuNative.NodeDatabase.getStorageVersion();
+    return RyuNative.NodeDatabase.getStorageVersion();
   }
 
   /**
@@ -133,7 +133,7 @@ class Database {
 
   /**
    * Internal function to get the underlying native database object.
-   * @returns {KuzuNative.NodeDatabase} the underlying native database.
+   * @returns {RyuNative.NodeDatabase} the underlying native database.
    * @throws {Error} if the database is closed.
    */
   async _getDatabase() {
@@ -146,7 +146,7 @@ class Database {
 
   /**
    * Internal function to get the underlying native database object synchronously.
-   * @returns {KuzuNative.NodeDatabase} the underlying native database.
+   * @returns {RyuNative.NodeDatabase} the underlying native database.
    * @throws {Error} if the database is closed.
    */
   _getDatabaseSync() {

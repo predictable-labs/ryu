@@ -5,7 +5,7 @@
 #include "common/api.h"
 #include "pcg_random.hpp"
 
-namespace kuzu {
+namespace ryu {
 
 namespace main {
 class ClientContext;
@@ -19,7 +19,7 @@ struct RandomState {
     RandomState() {}
 };
 
-class KUZU_API RandomEngine {
+class RYU_API RandomEngine {
 public:
     RandomEngine();
     RandomEngine(uint64_t seed, uint64_t stream);
@@ -37,4 +37,4 @@ private:
 };
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

@@ -1,9 +1,9 @@
 #pragma once
 
 #include "benchmark_config.h"
-#include "main/kuzu.h"
+#include "main/ryu.h"
 
-namespace kuzu {
+namespace ryu {
 namespace benchmark {
 
 /**
@@ -37,4 +37,4 @@ public:
 };
 
 } // namespace benchmark
-} // namespace kuzu
+} // namespace ryu

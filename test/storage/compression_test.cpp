@@ -11,8 +11,8 @@
 #include "storage/compression/compression.h"
 #include "storage/storage_utils.h"
 
-using namespace kuzu::common;
-using namespace kuzu::storage;
+using namespace ryu::common;
+using namespace ryu::storage;
 
 /*
  * StorageValue Tests
@@ -111,11 +111,11 @@ TEST(CompressionTests, IntegerBitpackingMetadataInvalidPhysicalType) {
         CompressionType::INTEGER_BITPACKING};
     uint8_t data = 0;
 
-    kuzu::storage::InPlaceUpdateLocalState localUpdateState{};
+    ryu::storage::InPlaceUpdateLocalState localUpdateState{};
     EXPECT_THROW(metadata.canUpdateInPlace(&data, 0, 1, PhysicalTypeID::ARRAY, localUpdateState),
         StorageException);
 
-    EXPECT_THROW(metadata.numValues(KUZU_PAGE_SIZE, LogicalType::STRING()), StorageException);
+    EXPECT_THROW(metadata.numValues(RYU_PAGE_SIZE, LogicalType::STRING()), StorageException);
 
     EXPECT_THROW(metadata.toString(PhysicalTypeID::FLOAT), InternalException);
     EXPECT_THROW(metadata.toString(PhysicalTypeID::BOOL), InternalException);
@@ -134,11 +134,11 @@ TEST(CompressionTests, FloatCompressionMetadataInvalidPhysicalType) {
     const CompressionMetadata metadata{StorageValue{-10}, StorageValue{-5}, CompressionType::ALP};
     uint8_t data = 0;
 
-    kuzu::storage::InPlaceUpdateLocalState localUpdateState{};
+    ryu::storage::InPlaceUpdateLocalState localUpdateState{};
     EXPECT_THROW(metadata.canUpdateInPlace(&data, 0, 1, PhysicalTypeID::INT32, localUpdateState),
         StorageException);
 
-    EXPECT_THROW(metadata.numValues(KUZU_PAGE_SIZE, LogicalType::UINT64()), StorageException);
+    EXPECT_THROW(metadata.numValues(RYU_PAGE_SIZE, LogicalType::UINT64()), StorageException);
 
     EXPECT_THROW(metadata.toString(PhysicalTypeID::STRUCT), InternalException);
 
@@ -322,11 +322,11 @@ TEST(CompressionTests, IntegerPackingTest128WorksOnNonZeroBuffer) {
 }
 
 TEST(CompressionTests, IntegerPackingTest128AllPositive) {
-    std::vector<kuzu::common::int128_t> src(101);
+    std::vector<ryu::common::int128_t> src(101);
 
     {
-        kuzu::common::int128_t cur = 1;
-        kuzu::common::int128_t diff = 1;
+        ryu::common::int128_t cur = 1;
+        ryu::common::int128_t diff = 1;
         std::ranges::generate(src.begin(), src.end(), [&diff, &cur] {
             diff *= 2;
             cur += diff;
@@ -334,23 +334,23 @@ TEST(CompressionTests, IntegerPackingTest128AllPositive) {
         });
     }
 
-    auto alg = IntegerBitpacking<kuzu::common::int128_t>();
+    auto alg = IntegerBitpacking<ryu::common::int128_t>();
     test_compression(alg, src, false);
 }
 
 TEST(CompressionTests, IntegerPackingTest128SignBitFillingDoesNotBreakUnpacking) {
-    std::vector<kuzu::common::int128_t> src(128, 0b1111);
+    std::vector<ryu::common::int128_t> src(128, 0b1111);
 
-    auto alg = IntegerBitpacking<kuzu::common::int128_t>();
+    auto alg = IntegerBitpacking<ryu::common::int128_t>();
     test_compression(alg, src, false);
 }
 
 TEST(CompressionTests, IntegerPackingTest128Negative) {
-    std::vector<kuzu::common::int128_t> src(101);
+    std::vector<ryu::common::int128_t> src(101);
 
     {
-        auto cur = -(kuzu::common::int128_t(1) << 120);
-        kuzu::common::int128_t diff = 1;
+        auto cur = -(ryu::common::int128_t(1) << 120);
+        ryu::common::int128_t diff = 1;
         std::ranges::generate(src.begin(), src.end(), [&diff, &cur] {
             diff *= 2;
             cur += diff;
@@ -358,22 +358,22 @@ TEST(CompressionTests, IntegerPackingTest128Negative) {
         });
     }
 
-    auto alg = IntegerBitpacking<kuzu::common::int128_t>();
+    auto alg = IntegerBitpacking<ryu::common::int128_t>();
     test_compression(alg, src, false);
 }
 
 TEST(CompressionTests, IntegerPackingTest128NegativeSimple) {
-    std::vector<kuzu::common::int128_t> src{-1024, -1027, -1023};
+    std::vector<ryu::common::int128_t> src{-1024, -1027, -1023};
 
-    auto alg = IntegerBitpacking<kuzu::common::int128_t>();
+    auto alg = IntegerBitpacking<ryu::common::int128_t>();
     test_compression(alg, src, false);
 }
 
 TEST(CompressionTests, IntegerPackingTest128CompressFullChunkLargeWidth) {
-    std::vector<kuzu::common::int128_t> src{IntegerBitpacking<int128_t>::CHUNK_SIZE,
+    std::vector<ryu::common::int128_t> src{IntegerBitpacking<int128_t>::CHUNK_SIZE,
         (int128_t{1} << 126) | 0b111};
 
-    auto alg = IntegerBitpacking<kuzu::common::int128_t>();
+    auto alg = IntegerBitpacking<ryu::common::int128_t>();
     test_compression(alg, src, false);
 }
 
@@ -454,8 +454,8 @@ void integerPackingMultiPage(const std::vector<T>& src) {
 
 TEST(CompressionTests, IntegerPackingMultiPage64) {
     int64_t numValues = 10000;
-    std::vector<kuzu::common::int128_t> src(numValues);
-    const auto M = (kuzu::common::int128_t(1) << 126) - 1;
+    std::vector<ryu::common::int128_t> src(numValues);
+    const auto M = (ryu::common::int128_t(1) << 126) - 1;
     for (int i = 0; i < numValues; i++) {
         src[i] = (i * i) % M;
     }
@@ -465,9 +465,9 @@ TEST(CompressionTests, IntegerPackingMultiPage64) {
 
 TEST(CompressionTests, IntegerPackingMultiPageNegative64) {
     int64_t numValues = 10000;
-    std::vector<kuzu::common::int128_t> src(numValues);
+    std::vector<ryu::common::int128_t> src(numValues);
 
-    const auto M = (kuzu::common::int128_t(1) << 126) - 1;
+    const auto M = (ryu::common::int128_t(1) << 126) - 1;
     for (int i = 0; i < numValues; i++) {
         src[i] = -((i * i) % M);
     }

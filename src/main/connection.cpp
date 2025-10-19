@@ -4,14 +4,14 @@
 
 #include "common/random_engine.h"
 
-using namespace kuzu::parser;
-using namespace kuzu::binder;
-using namespace kuzu::common;
-using namespace kuzu::planner;
-using namespace kuzu::processor;
-using namespace kuzu::transaction;
+using namespace ryu::parser;
+using namespace ryu::binder;
+using namespace ryu::common;
+using namespace ryu::planner;
+using namespace ryu::processor;
+using namespace ryu::transaction;
 
-namespace kuzu {
+namespace ryu {
 namespace main {
 
 Connection::Connection(Database* database) {
@@ -108,4 +108,4 @@ void Connection::removeScalarFunction(std::string name) {
 }
 
 } // namespace main
-} // namespace kuzu
+} // namespace ryu

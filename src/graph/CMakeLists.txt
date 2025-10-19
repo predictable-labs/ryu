@@ -1,4 +1,4 @@
-add_library(kuzu_graph
+add_library(ryu_graph
         OBJECT
         graph.cpp
         graph_entry.cpp
@@ -7,5 +7,5 @@ add_library(kuzu_graph
         parsed_graph_entry.cpp)
 
 set(ALL_OBJECT_FILES
-        ${ALL_OBJECT_FILES} $<TARGET_OBJECTS:kuzu_graph>
+        ${ALL_OBJECT_FILES} $<TARGET_OBJECTS:ryu_graph>
         PARENT_SCOPE)

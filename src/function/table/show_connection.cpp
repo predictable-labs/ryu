@@ -8,11 +8,11 @@
 #include "function/table/simple_table_function.h"
 #include "transaction/transaction.h"
 
-using namespace kuzu::catalog;
-using namespace kuzu::common;
-using namespace kuzu::main;
+using namespace ryu::catalog;
+using namespace ryu::common;
+using namespace ryu::main;
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct ShowConnectionBindData final : TableFuncBindData {
@@ -98,4 +98,4 @@ function_set ShowConnectionFunction::getFunctionSet() {
 }
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

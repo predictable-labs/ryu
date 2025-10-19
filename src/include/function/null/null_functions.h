@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct IsNull {
@@ -20,4 +20,4 @@ struct IsNotNull {
 };
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

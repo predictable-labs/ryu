@@ -2,7 +2,7 @@
 
 #include "rel_pattern.h"
 
-namespace kuzu {
+namespace ryu {
 namespace parser {
 
 class PatternElementChain {
@@ -21,4 +21,4 @@ private:
 };
 
 } // namespace parser
-} // namespace kuzu
+} // namespace ryu

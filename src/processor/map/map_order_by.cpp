@@ -9,11 +9,11 @@
 #include "processor/operator/order_by/top_k_scanner.h"
 #include "processor/plan_mapper.h"
 
-using namespace kuzu::binder;
-using namespace kuzu::common;
-using namespace kuzu::planner;
+using namespace ryu::binder;
+using namespace ryu::common;
+using namespace ryu::planner;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 std::unique_ptr<PhysicalOperator> PlanMapper::mapOrderBy(const LogicalOperator* logicalOperator) {
@@ -104,4 +104,4 @@ std::unique_ptr<PhysicalOperator> PlanMapper::mapOrderBy(const LogicalOperator* 
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

@@ -32,22 +32,22 @@ jobs:
       - name: Collect artifacts
         shell: cmd
         run: |
-          move install\include\kuzu.h
-          move install\include\kuzu.hpp
-          move install\bin\kuzu_shared.dll
-          move install\lib\kuzu_shared.lib
-          move install\bin\kuzu_shell.exe kuzu.exe
+          move install\include\ryu.h
+          move install\include\ryu.hpp
+          move install\bin\ryu_shared.dll
+          move install\lib\ryu_shared.lib
+          move install\bin\ryu_shell.exe ryu.exe
 
       - uses: actions/upload-artifact@v4
         with:
-          name: libkuzu-windows-x86_64
+          name: libryu-windows-x86_64
           path: |
-            kuzu.h
-            kuzu.hpp
-            kuzu_shared.dll
-            kuzu_shared.lib
+            ryu.h
+            ryu.hpp
+            ryu_shared.dll
+            ryu_shared.lib
 
       - uses: actions/upload-artifact@v4
         with:
-          name: kuzu_cli-windows-x86_64
-          path: kuzu.exe
+          name: ryu_cli-windows-x86_64
+          path: ryu.exe

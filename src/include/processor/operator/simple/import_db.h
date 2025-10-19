@@ -2,7 +2,7 @@
 
 #include "processor/operator/sink.h"
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 class ImportDB final : public SimpleSink {
@@ -27,4 +27,4 @@ private:
 };
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

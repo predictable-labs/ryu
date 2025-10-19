@@ -6,7 +6,7 @@
 #include "common/type_utils.h"
 #include "function/cast/functions/numeric_limits.h"
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 // reference from duckDB multiply.cpp
@@ -141,4 +141,4 @@ void Modulo::operation(common::uint128_t& left, common::uint128_t& right,
 }
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

@@ -75,19 +75,88 @@ jobs:
       GEN: Ninja
       CC: gcc
       CXX: g++
-      GCS_ACCESS_KEY_ID: ${{ secrets.GCS_ACCESS_KEY_ID }}
-      GCS_SECRET_ACCESS_KEY: ${{ secrets.GCS_SECRET_ACCESS_KEY }}
     steps:
       - uses: actions/checkout@v4
+
+      - name: Setup MinIO
+        run: |
+          # Start MinIO in Docker
+          docker run -d \
+            --name minio \
+            -p 9000:9000 \
+            -e MINIO_ROOT_USER=minioadmin \
+            -e MINIO_ROOT_PASSWORD=minioadmin \
+            minio/minio:latest \
+            server /data
+
+          # Install MinIO client
+          wget -q https://dl.min.io/client/mc/release/linux-amd64/mc
+          chmod +x mc
+          sudo mv mc /usr/local/bin/
+
+          # Wait for MinIO to be ready
+          echo "Waiting for MinIO to be ready..."
+          for i in {1..30}; do
+            if curl -f http://localhost:9000/minio/health/live 2>/dev/null; then
+              echo "MinIO is ready!"
+              break
+            fi
+            echo "Waiting... ($i/30)"
+            sleep 2
+          done
+
+          # Configure MinIO client
+          mc alias set minio http://localhost:9000 minioadmin minioadmin
+
+          # Create buckets
+          mc mb minio/ryu-test || true
+          mc mb minio/ryugraph-test || true
+
+          # Install and configure s3cmd for MinIO
+          sudo apt-get update
+          sudo apt-get install -y s3cmd
+          cat > ~/.s3cfg << EOF
+          [default]
+          access_key = minioadmin
+          secret_key = minioadmin
+          host_base = localhost:9000
+          host_bucket = localhost:9000
+          use_https = False
+          signature_v2 = False
+          EOF
 
       - name: Install DuckDB
         uses: ./.github/actions/install-duckdb
 
+      - name: Get version for cache key
+        id: version
+        run: echo "version=$(python3 benchmark/version.py)" >> $GITHUB_OUTPUT
+
+      - name: Cache binary-demo
+        id: cache-binary-demo
+        uses: actions/cache@v4
+        with:
+          path: dataset/binary-demo
+          key: binary-demo-${{ steps.version.outputs.version }}-${{ hashFiles('scripts/generate_binary_demo.sh') }}
+
+      - name: Setup ccache
+        if: steps.cache-binary-demo.outputs.cache-hit != 'true'
+        uses: hendrikmuhs/ccache-action@v1.2
+        with:
+          key: dataset-build-${{ github.sha }}
+          restore-keys: |
+            dataset-build-
+
       - name: Build
-        run: make release
+        if: steps.cache-binary-demo.outputs.cache-hit != 'true'
+        run: |
+          export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
+          make release
+
 
       # Generate the binary db once to test that it can be read on all platforms.
       - name: Generate datasets
+        if: steps.cache-binary-demo.outputs.cache-hit != 'true'
         run: bash scripts/generate_binary_demo.sh
 
       - name: Upload binary-demo
@@ -99,46 +168,89 @@ jobs:
       - name: Generate and upload tinysnb
         run: |
           version_current="$(python3 benchmark/version.py)"
-          echo "0" > version_s3.txt
-          echo "0" > version_gcs.txt
-          s3cmd get --force s3://kuzu-test/tinysnb/version.txt version_s3.txt || true
-          s3cmd --access_key=${GCS_ACCESS_KEY_ID} --secret_key=${GCS_SECRET_ACCESS_KEY} --host=storage.googleapis.com --host-bucket="%(bucket)s.storage.googleapis.com" get --force s3://kuzudb-test/tinysnb/version.txt version_gcs.txt || true
-          if [[ "$version_current" == "$(cat version_s3.txt)" ]] && [[ "$version_current" == "$(cat version_gcs.txt)" ]]; then
+          echo "0" > version_minio.txt
+          s3cmd get --force s3://ryu-test/tinysnb/version.txt version_minio.txt || true
+          if [[ "$version_current" == "$(cat version_minio.txt)" ]]; then
             echo "TinySNB dataset is up to date, skipping upload"
-            rm -rf tinysnb version_s3.txt version_gcs.txt
+            rm -rf tinysnb version_minio.txt
             exit 0
           fi
-          echo "TinySNB dataset is outdated, uploading..."
+          echo "TinySNB dataset is outdated, uploading to MinIO..."
           bash scripts/generate_binary_tinysnb.sh
-          s3cmd del -r s3://kuzu-test/tinysnb/
-          s3cmd sync ./tinysnb s3://kuzu-test/
-          # s3cmd del -r doesn't work on GCS so we individually delete each object in the directory
-          for gcs_file in $(s3cmd --access_key=${GCS_ACCESS_KEY_ID} --secret_key=${GCS_SECRET_ACCESS_KEY} --host=storage.googleapis.com --host-bucket="%(bucket)s.storage.googleapis.com" ls s3://kuzudb-test/tinysnb/ | awk '{ print $4 }');
-          do
-              s3cmd --access_key=${GCS_ACCESS_KEY_ID} --secret_key=${GCS_SECRET_ACCESS_KEY} --host=storage.googleapis.com --host-bucket="%(bucket)s.storage.googleapis.com" del ${gcs_file}
-          done
-          s3cmd --access_key=${GCS_ACCESS_KEY_ID} --secret_key=${GCS_SECRET_ACCESS_KEY} --host=storage.googleapis.com --host-bucket="%(bucket)s.storage.googleapis.com" sync ./tinysnb s3://kuzudb-test/
-          rm -rf tinysnb version_s3.txt version_gcs.txt
+          s3cmd del -r s3://ryu-test/tinysnb/ || true
+          s3cmd sync ./tinysnb s3://ryu-test/
+          rm -rf tinysnb version_minio.txt
 
       - name: Generate and upload ldbc-sf01
         run: |
           version_current="$(python3 benchmark/version.py)"
-          echo "0" > version_s3.txt
-          s3cmd get --force s3://kuzu-test/ldbc01/version.txt version_s3.txt || true
-          if [[ "$version_current" == "$(cat version_s3.txt)" ]]; then
+          echo "0" > version_minio.txt
+          s3cmd get --force s3://ryu-test/ldbc01/version.txt version_minio.txt || true
+          if [[ "$version_current" == "$(cat version_minio.txt)" ]]; then
             echo "LDBC-SF01 dataset is up to date, skipping upload"
-            rm -rf ldbc01 version_s3.txt
+            rm -rf ldbc01 version_minio.txt
             exit 0
           fi
-          echo "LDBC-SF01 dataset is outdated, uploading..."
+          echo "LDBC-SF01 dataset is outdated, uploading to MinIO..."
           bash scripts/generate_binary_ldbc-sf01.sh
-          s3cmd del -r s3://kuzu-test/ldbc01/
-          s3cmd sync ./ldbc01 s3://kuzu-test/
-          rm -rf ldbc01 version_s3.txt
+          s3cmd del -r s3://ryu-test/ldbc01/ || true
+          s3cmd sync ./ldbc01 s3://ryu-test/
+          rm -rf ldbc01 version_minio.txt
+
+  gcc-release-build:
+    name: gcc release build
+    needs: [ sanity-checks, python-lint-check ]
+    runs-on: ubuntu-latest
+    env:
+      NUM_THREADS: 32
+      GEN: Ninja
+      CC: gcc
+      CXX: g++
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install DuckDB
+        uses: ./.github/actions/install-duckdb
+
+      - name: Setup ccache
+        uses: hendrikmuhs/ccache-action@v1.2
+        with:
+          key: gcc-release-${{ github.sha }}
+          restore-keys: |
+            gcc-release-
+
+      - name: Build release with tests
+        run: |
+          export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
+          make test-build
+          make release EXTRA_CMAKE_FLAGS="-DBUILD_EXTENSIONS=\"httpfs;duckdb;json;postgres;sqlite;fts;delta;iceberg;azure;unity_catalog;vector;neo4j;algo;llm\""
+
+      - name: Upload test build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: gcc-test-build
+          path: |
+            build/relwithdebinfo/
+            !build/relwithdebinfo/**/*.o
+            !build/relwithdebinfo/**/*.a
+            !build/relwithdebinfo/_deps/
+          retention-days: 1
+
+      - name: Upload release build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: gcc-release-build
+          path: |
+            build/release/
+            !build/release/**/*.o
+            !build/release/**/*.a
+            !build/release/_deps/
+          retention-days: 1
 
   gcc-build-test:
     name: gcc build & test
-    needs: [ sanity-checks, python-lint-check, generate-binary-datasets ]
+    needs: [ gcc-release-build, generate-binary-datasets ]
     runs-on: ubuntu-latest
     env:
       NUM_THREADS: 32
@@ -161,6 +273,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Download gcc-test-build
+        uses: actions/download-artifact@v4
+        with:
+          name: gcc-test-build
+          path: build/relwithdebinfo/
+
+      - name: Download gcc-release-build
+        uses: actions/download-artifact@v4
+        with:
+          name: gcc-release-build
+          path: build/release/
 
       - name: Download binary-demo
         uses: actions/download-artifact@v4
@@ -221,10 +345,10 @@ jobs:
 
       - name: Rust test with pre-built library
         env:
-          KUZU_SHARED: 1
-          KUZU_INCLUDE_DIR: ${{ github.workspace }}/build/release/src
-          KUZU_LIBRARY_DIR: ${{ github.workspace }}/build/release/src
-          KUZU_LOCAL_EXTENSIONS: ${{ github.workspace }}/extension
+          RYU_SHARED: 1
+          RYU_INCLUDE_DIR: ${{ github.workspace }}/build/release/src
+          RYU_LIBRARY_DIR: ${{ github.workspace }}/build/release/src
+          RYU_LOCAL_EXTENSIONS: ${{ github.workspace }}/extension
         run: |
           make extension-release
           make rusttest
@@ -300,6 +424,11 @@ jobs:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install coverage tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lcov
 
       - name: Download binary-demo
         uses: actions/download-artifact@v4
@@ -384,6 +513,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup Emscripten
+        uses: mymindstorm/setup-emsdk@v14
+
       - name: Download binary-demo
         uses: actions/download-artifact@v4
         with:
@@ -396,9 +528,7 @@ jobs:
 
       - name: Build WebAssembly package
         working-directory: tools/wasm
-        run: |
-          source /home/runner/emsdk/emsdk_env.sh
-          npm run build
+        run: npm run build
 
       - name: API test
         working-directory: tools/wasm
@@ -408,14 +538,10 @@ jobs:
         run: make clean
 
       - name: Kernel build & test
-        run: |
-          source /home/runner/emsdk/emsdk_env.sh
-          make wasmtest
+        run: make wasmtest
 
       - name: Kernel build & test in memory
-        run: |
-          source /home/runner/emsdk/emsdk_env.sh
-          make wasmtest
+        run: make wasmtest
         env:
           IN_MEM_MODE: true
 
@@ -424,28 +550,36 @@ jobs:
           SINGLE_THREADED: true
         run: |
           make clean
-          source /home/runner/emsdk/emsdk_env.sh
           make wasmtest
 
   rust-build-test:
     name: rust build & test
+    needs: [ gcc-release-build ]
     runs-on: ubuntu-latest
     env:
       # CARGO_BUILD_JOBS is set using this in the Makefile
       NUM_THREADS: 32
       CC: gcc
       CXX: g++
-      KUZU_LOCAL_EXTENSIONS: ${{ github.workspace }}/extension
+      RYU_LOCAL_EXTENSIONS: ${{ github.workspace }}/extension
     steps:
       - uses: actions/checkout@v4
 
       - name: Install DuckDB
         uses: ./.github/actions/install-duckdb
 
+      - name: Download gcc-release-build
+        uses: actions/download-artifact@v4
+        with:
+          name: gcc-release-build
+          path: build/release/
+
       - name: Rust API test
-        run: |
-          make extension-release
-          make rusttest
+        env:
+          RYU_LOCAL_EXTENSIONS: ${{ github.workspace }}/extension
+          LD_LIBRARY_PATH: /usr/local/lib:${{ env.LD_LIBRARY_PATH }}
+          LD_PRELOAD: /usr/local/lib/libduckdb.so
+        run: make rusttest
 
       - name: Rust example build
         working-directory: examples/rust
@@ -524,9 +658,60 @@ jobs:
         run: |
           make test DEFAULT_REL_STORAGE_DIRECTION=BOTH
 
+  clang-release-build:
+    name: clang release build
+    needs: [ sanity-checks, python-lint-check ]
+    runs-on: ubuntu-latest
+    env:
+      NUM_THREADS: 32
+      GEN: Ninja
+      CC: clang
+      CXX: clang++
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install DuckDB
+        uses: ./.github/actions/install-duckdb
+
+      - name: Setup ccache
+        uses: hendrikmuhs/ccache-action@v1.2
+        with:
+          key: clang-release-${{ github.sha }}
+          restore-keys: |
+            clang-release-
+
+      - name: Build release with tests
+        run: |
+          export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
+          make test-build
+          make release EXTRA_CMAKE_FLAGS="-DBUILD_EXTENSIONS=\"httpfs;duckdb;json;postgres;sqlite;fts;delta;iceberg;azure;unity_catalog;vector;neo4j;algo;llm\""
+
+      - name: Upload test build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: clang-test-build
+          path: |
+            build/relwithdebinfo/
+            !build/relwithdebinfo/**/*.o
+            !build/relwithdebinfo/**/*.a
+            !build/relwithdebinfo/_deps/
+          retention-days: 1
+
+      - name: Upload release build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: clang-release-build
+          path: |
+            build/release/
+            !build/release/**/*.o
+            !build/release/**/*.a
+            !build/release/_deps/
+          retention-days: 1
+
   clang-build-test:
     name: clang build & test
-    needs: [ sanity-checks, python-lint-check, generate-binary-datasets ]
+    needs: [ clang-release-build, generate-binary-datasets ]
     runs-on: ubuntu-latest
     env:
       NUM_THREADS: 32
@@ -545,6 +730,18 @@ jobs:
       HTTP_CACHE_FILE: TRUE
     steps:
       - uses: actions/checkout@v4
+
+      - name: Download clang-test-build
+        uses: actions/download-artifact@v4
+        with:
+          name: clang-test-build
+          path: build/relwithdebinfo/
+
+      - name: Download clang-release-build
+        uses: actions/download-artifact@v4
+        with:
+          name: clang-release-build
+          path: build/release/
 
       - name: Download binary-demo
         uses: actions/download-artifact@v4
@@ -594,10 +791,10 @@ jobs:
 
       - name: Rust test with pre-built library
         env:
-          KUZU_SHARED: 1
-          KUZU_INCLUDE_DIR: ${{ github.workspace }}/build/release/src
-          KUZU_LIBRARY_DIR: ${{ github.workspace }}/build/release/src
-          KUZU_LOCAL_EXTENSIONS: ${{ github.workspace }}/extension
+          RYU_SHARED: 1
+          RYU_INCLUDE_DIR: ${{ github.workspace }}/build/release/src
+          RYU_LIBRARY_DIR: ${{ github.workspace }}/build/release/src
+          RYU_LOCAL_EXTENSIONS: ${{ github.workspace }}/extension
         run: |
           make extension-release
           make rusttest
@@ -832,7 +1029,7 @@ jobs:
       - name: Rust test
         shell: cmd
         env:
-          KUZU_LOCAL_EXTENSIONS: ${{ github.workspace }}/extension
+          RYU_LOCAL_EXTENSIONS: ${{ github.workspace }}/extension
         run: |
           call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           make extension-release
@@ -840,10 +1037,10 @@ jobs:
 
       - name: Rust test with pre-built library
         env:
-          KUZU_SHARED: 1
-          KUZU_INCLUDE_DIR: ${{ github.workspace }}/build/release/src
-          KUZU_LIBRARY_DIR: ${{ github.workspace }}/build/release/src
-          KUZU_LOCAL_EXTENSIONS: ${{ github.workspace }}/extension
+          RYU_SHARED: 1
+          RYU_INCLUDE_DIR: ${{ github.workspace }}/build/release/src
+          RYU_LIBRARY_DIR: ${{ github.workspace }}/build/release/src
+          RYU_LOCAL_EXTENSIONS: ${{ github.workspace }}/extension
         shell: cmd
         run: |
           call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
@@ -884,9 +1081,6 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-        with:
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
-          ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Install clang-format
         run: |
@@ -916,16 +1110,8 @@ jobs:
         working-directory: tools/rust_api
         run: cargo fmt --all
 
-      - name: Fail if any change is detected on the master branch
-        if: github.ref == 'refs/heads/master'
+      - name: Fail if any formatting change is detected
         run: git diff --exit-code
-
-      - name: Commit changes on non-master branches
-        uses: EndBug/add-and-commit@v9
-        if: github.ref != 'refs/heads/master'
-        with:
-          author_name: "CI Bot"
-          message: "ci: auto code format"
 
   python-lint-check:
     name: python lint check
@@ -976,6 +1162,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install clangd
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clangd
+
+      - name: Install DuckDB
+        uses: ./.github/actions/install-duckdb
 
       # For `napi.h` header.
       - name: Ensure Node.js dependencies
@@ -1091,20 +1285,20 @@ jobs:
 
       - name: Rust test
         env:
-          KUZU_LOCAL_EXTENSIONS: ${{ github.workspace }}/extension
+          RYU_LOCAL_EXTENSIONS: ${{ github.workspace }}/extension
         run: |
           ulimit -n 10240
           source /Users/runner/.cargo/env
-          # `extension-release` disables KUZU_BUILD, but it is a dependency of `BUILD_EXAMPLES`, so disable it too.
+          # `extension-release` disables RYU_BUILD, but it is a dependency of `BUILD_EXAMPLES`, so disable it too.
           make extension-release EXTRA_CMAKE_FLAGS="-DBUILD_EXAMPLES=OFF"
           make rusttest
 
       - name: Rust test with pre-built library
         env:
-          KUZU_SHARED: 1
-          KUZU_INCLUDE_DIR: ${{ github.workspace }}/build/release/src
-          KUZU_LIBRARY_DIR: ${{ github.workspace }}/build/release/src
-          KUZU_LOCAL_EXTENSIONS: ${{ github.workspace }}/extension
+          RYU_SHARED: 1
+          RYU_INCLUDE_DIR: ${{ github.workspace }}/build/release/src
+          RYU_LIBRARY_DIR: ${{ github.workspace }}/build/release/src
+          RYU_LOCAL_EXTENSIONS: ${{ github.workspace }}/extension
         run: |
           ulimit -n 10240
           source /Users/runner/.cargo/env
@@ -1163,6 +1357,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install coverage tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lcov
 
       - name: Install DuckDB
         uses: ./.github/actions/install-duckdb

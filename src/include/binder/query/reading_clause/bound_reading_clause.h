@@ -3,10 +3,10 @@
 #include "binder/expression/expression.h"
 #include "common/enums/clause_type.h"
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
-class KUZU_API BoundReadingClause {
+class RYU_API BoundReadingClause {
 public:
     explicit BoundReadingClause(common::ClauseType clauseType) : clauseType{clauseType} {}
     DELETE_COPY_DEFAULT_MOVE(BoundReadingClause);
@@ -45,4 +45,4 @@ private:
 };
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

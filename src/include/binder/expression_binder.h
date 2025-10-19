@@ -4,7 +4,7 @@
 #include "common/types/value/value.h"
 #include "parser/expression/parsed_expression.h"
 
-namespace kuzu {
+namespace ryu {
 namespace main {
 class ClientContext;
 }
@@ -42,7 +42,7 @@ public:
     std::shared_ptr<Expression> bindExpression(const parser::ParsedExpression& parsedExpression);
 
     // TODO(Xiyang): move to an expression rewriter
-    KUZU_API std::shared_ptr<Expression> foldExpression(
+    RYU_API std::shared_ptr<Expression> foldExpression(
         const std::shared_ptr<Expression>& expression) const;
 
     // Boolean expressions.
@@ -119,7 +119,7 @@ public:
         const parser::ParsedExpression& parsedExpression);
 
     /****** cast *****/
-    KUZU_API std::shared_ptr<Expression> implicitCastIfNecessary(
+    RYU_API std::shared_ptr<Expression> implicitCastIfNecessary(
         const std::shared_ptr<Expression>& expression, const common::LogicalType& targetType);
     // Use implicitCast to cast to types you have obtained through known implicit casting rules.
     // Use forceCast to cast to types you have obtained through other means, for example,
@@ -152,4 +152,4 @@ private:
 };
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

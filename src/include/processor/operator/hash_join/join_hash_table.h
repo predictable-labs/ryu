@@ -3,7 +3,7 @@
 #include "processor/result/base_hash_table.h"
 #include "processor/result/factorized_table.h"
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 class MemoryManager;
 }
@@ -70,4 +70,4 @@ private:
 };
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

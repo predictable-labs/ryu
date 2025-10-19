@@ -5,7 +5,7 @@
 #include "common/api.h"
 #include "extension.h"
 
-namespace kuzu {
+namespace ryu {
 namespace main {
 class ClientContext;
 }
@@ -20,7 +20,7 @@ struct InstallExtensionInfo {
         : name{std::move(name)}, repo{std::move(repo)}, forceInstall{forceInstall} {}
 };
 
-class KUZU_API ExtensionInstaller {
+class RYU_API ExtensionInstaller {
 public:
     ExtensionInstaller(const InstallExtensionInfo& info, main::ClientContext& context)
         : info{info}, context{context} {}
@@ -42,4 +42,4 @@ protected:
 };
 
 } // namespace extension
-} // namespace kuzu
+} // namespace ryu

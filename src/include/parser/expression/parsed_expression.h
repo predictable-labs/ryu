@@ -10,7 +10,7 @@
 #include "common/enums/expression_type.h"
 #include "common/types/types.h"
 
-namespace kuzu {
+namespace ryu {
 
 namespace common {
 struct FileInfo;
@@ -27,7 +27,7 @@ using parsed_expr_pair =
     std::pair<std::unique_ptr<ParsedExpression>, std::unique_ptr<ParsedExpression>>;
 using s_parsed_expr_pair = std::pair<std::string, std::unique_ptr<ParsedExpression>>;
 
-class KUZU_API ParsedExpression {
+class RYU_API ParsedExpression {
     friend class ParsedExpressionChildrenVisitor;
 
 public:
@@ -97,4 +97,4 @@ protected:
 using options_t = std::unordered_map<std::string, std::unique_ptr<parser::ParsedExpression>>;
 
 } // namespace parser
-} // namespace kuzu
+} // namespace ryu

@@ -1,4 +1,4 @@
-add_executable(kuzu_wasm
+add_executable(ryu_wasm
     src_cpp/main.cpp
     ${PROJECT_SOURCE_DIR}/src/c_api/connection.cpp
     ${PROJECT_SOURCE_DIR}/src/c_api/database.cpp
@@ -14,13 +14,13 @@ add_executable(kuzu_wasm
 
 file(GLOB JS_SOURCE_FILES ./src_js/*)
 
-target_link_libraries(kuzu_wasm PRIVATE kuzu)
+target_link_libraries(ryu_wasm PRIVATE ryu)
 
-set_target_properties(kuzu_wasm
+set_target_properties(ryu_wasm
     PROPERTIES
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/build/kuzu"
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/build/kuzu"
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/build/kuzu"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/build/ryu"
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/build/ryu"
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/build/ryu"
 )
 
 file(COPY ${JS_SOURCE_FILES} DESTINATION  "${CMAKE_CURRENT_SOURCE_DIR}/build")

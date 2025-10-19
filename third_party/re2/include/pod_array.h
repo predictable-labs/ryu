@@ -8,7 +8,7 @@
 #include <memory>
 #include <type_traits>
 
-namespace kuzu {
+namespace ryu {
 namespace regex {
 
 template<typename T>
@@ -38,5 +38,5 @@ private:
     std::unique_ptr<T[], Deleter> ptr_;
 };
 } // namespace regex
-} // namespace kuzu
+} // namespace ryu
 #endif // UTIL_POD_ARRAY_H_

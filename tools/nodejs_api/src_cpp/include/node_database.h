@@ -2,10 +2,10 @@
 
 #include <memory>
 
-#include "main/kuzu.h"
+#include "main/ryu.h"
 #include <napi.h>
 
-using namespace kuzu::main;
+using namespace ryu::main;
 
 class NodeDatabase : public Napi::ObjectWrap<NodeDatabase> {
     friend class NodeConnection;

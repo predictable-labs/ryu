@@ -5,7 +5,7 @@
 #include "common/utils.h"
 #include <ranges>
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 
 namespace {
@@ -24,12 +24,12 @@ common::LogicalType getBitpackingLogicalType() {
 template<std::floating_point T>
 size_t EncodeException<T>::numPagesFromExceptions(size_t exceptionCount) {
     return common::ceilDiv(static_cast<uint64_t>(exceptionCount),
-        common::KUZU_PAGE_SIZE / sizeInBytes());
+        common::RYU_PAGE_SIZE / sizeInBytes());
 }
 
 template<std::floating_point T>
 size_t EncodeException<T>::exceptionBytesPerPage() {
-    return common::KUZU_PAGE_SIZE / sizeInBytes() * sizeInBytes();
+    return common::RYU_PAGE_SIZE / sizeInBytes() * sizeInBytes();
 }
 
 template<std::floating_point T>
@@ -245,4 +245,4 @@ template struct EncodeExceptionView<double>;
 template struct EncodeExceptionView<float>;
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

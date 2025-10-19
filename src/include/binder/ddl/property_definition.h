@@ -3,10 +3,10 @@
 #include "common/types/types.h"
 #include "parser/expression/parsed_expression.h"
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
-struct KUZU_API ColumnDefinition {
+struct RYU_API ColumnDefinition {
     std::string name;
     common::LogicalType type;
 
@@ -19,7 +19,7 @@ private:
     ColumnDefinition(const ColumnDefinition& other) : name{other.name}, type{other.type.copy()} {}
 };
 
-struct KUZU_API PropertyDefinition {
+struct RYU_API PropertyDefinition {
     ColumnDefinition columnDefinition;
     std::unique_ptr<parser::ParsedExpression> defaultExpr;
 
@@ -44,4 +44,4 @@ private:
 };
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

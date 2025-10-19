@@ -9,7 +9,7 @@
 #include "common/types/types.h"
 #include <concepts>
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 
 struct PageCursor {
@@ -88,4 +88,4 @@ public:
 };
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

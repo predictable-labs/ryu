@@ -3,13 +3,13 @@
 #include "common/constants.h"
 #include "common/exception/runtime.h"
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
-using namespace kuzu_parquet::format;
+using namespace ryu_parquet::format;
 
 std::unique_ptr<ColumnWriterState> ListColumnWriter::initializeWriteState(
-    kuzu_parquet::format::RowGroup& rowGroup) {
+    ryu_parquet::format::RowGroup& rowGroup) {
     auto result = std::make_unique<ListColumnWriterState>(rowGroup, rowGroup.columns.size());
     result->childState = childWriter->initializeWriteState(rowGroup);
     return result;
@@ -106,4 +106,4 @@ void ListColumnWriter::finalizeWrite(ColumnWriterState& writerState) {
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

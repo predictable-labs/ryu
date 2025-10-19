@@ -3,7 +3,7 @@
 #include "column_reader.h"
 #include "resizable_buffer.h"
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 template<class VALUE_TYPE>
@@ -29,7 +29,7 @@ public:
 
 public:
     TemplatedColumnReader(ParquetReader& reader, common::LogicalType type,
-        const kuzu_parquet::format::SchemaElement& schema, uint64_t schemaIdx, uint64_t maxDefine,
+        const ryu_parquet::format::SchemaElement& schema, uint64_t schemaIdx, uint64_t maxDefine,
         uint64_t maxRepeat)
         : ColumnReader(reader, std::move(type), schema, schemaIdx, maxDefine, maxRepeat){};
 
@@ -92,4 +92,4 @@ struct CallbackParquetValueConversion {
 };
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

@@ -17,12 +17,12 @@
  * under the License.
  */
 
-#ifndef _KUZU_THRIFT_PROTOCOL_TPROTOCOLEXCEPTION_H_
-#define _KUZU_THRIFT_PROTOCOL_TPROTOCOLEXCEPTION_H_ 1
+#ifndef _RYU_THRIFT_PROTOCOL_TPROTOCOLEXCEPTION_H_
+#define _RYU_THRIFT_PROTOCOL_TPROTOCOLEXCEPTION_H_ 1
 
 #include <string>
 
-namespace kuzu_apache {
+namespace ryu_apache {
 namespace thrift {
 namespace protocol {
 
@@ -34,7 +34,7 @@ namespace protocol {
  * pipes etc.
  *
  */
-class TProtocolException : public kuzu_apache::thrift::TException {
+class TProtocolException : public ryu_apache::thrift::TException {
 public:
   /**
    * Error codes for the various types of exceptions.
@@ -49,15 +49,15 @@ public:
     DEPTH_LIMIT = 6
   };
 
-  TProtocolException() : kuzu_apache::thrift::TException(), type_(UNKNOWN) {}
+  TProtocolException() : ryu_apache::thrift::TException(), type_(UNKNOWN) {}
 
-  TProtocolException(TProtocolExceptionType type) : kuzu_apache::thrift::TException(), type_(type) {}
+  TProtocolException(TProtocolExceptionType type) : ryu_apache::thrift::TException(), type_(type) {}
 
   TProtocolException(const std::string& message)
-    : kuzu_apache::thrift::TException(message), type_(UNKNOWN) {}
+    : ryu_apache::thrift::TException(message), type_(UNKNOWN) {}
 
   TProtocolException(TProtocolExceptionType type, const std::string& message)
-    : kuzu_apache::thrift::TException(message), type_(type) {}
+    : ryu_apache::thrift::TException(message), type_(type) {}
 
   ~TProtocolException() noexcept override = default;
 
@@ -100,6 +100,6 @@ protected:
 };
 }
 }
-} // kuzu_apache::thrift::protocol
+} // ryu_apache::thrift::protocol
 
-#endif // #ifndef _KUZU_THRIFT_PROTOCOL_TPROTOCOLEXCEPTION_H_
+#endif // #ifndef _RYU_THRIFT_PROTOCOL_TPROTOCOLEXCEPTION_H_

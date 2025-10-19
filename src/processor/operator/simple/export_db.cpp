@@ -16,12 +16,12 @@
 #include "processor/execution_context.h"
 #include "storage/buffer_manager/memory_manager.h"
 
-using namespace kuzu::common;
-using namespace kuzu::transaction;
-using namespace kuzu::catalog;
-using namespace kuzu::main;
+using namespace ryu::common;
+using namespace ryu::transaction;
+using namespace ryu::catalog;
+using namespace ryu::main;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 using std::stringstream;
@@ -200,4 +200,4 @@ void ExportDB::executeInternal(ExecutionContext* context) {
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

@@ -6,7 +6,7 @@
 #include "common/types/types.h"
 #include "common/types/uint128_t.h"
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct Abs {
@@ -36,4 +36,4 @@ template<>
 void Abs::operation(common::int128_t& input, common::int128_t& result);
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

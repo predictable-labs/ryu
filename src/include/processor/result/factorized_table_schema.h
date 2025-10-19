@@ -4,7 +4,7 @@
 #include "common/copy_constructors.h"
 #include "common/types/types.h"
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 // TODO(Guodong/Ziyi): Move these typedef to common and unify them with the ones without `ft_`.
@@ -52,7 +52,7 @@ private:
     bool mayContainNulls;
 };
 
-class KUZU_API FactorizedTableSchema {
+class RYU_API FactorizedTableSchema {
 public:
     FactorizedTableSchema() = default;
     EXPLICIT_COPY_DEFAULT_MOVE(FactorizedTableSchema);
@@ -94,4 +94,4 @@ private:
 };
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

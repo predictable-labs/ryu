@@ -19,7 +19,7 @@
 #include "storage/index/in_mem_hash_index.h"
 #include "storage/local_storage/local_hash_index.h"
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 class VirtualFileSystem;
 }
@@ -475,7 +475,7 @@ public:
     }
     void reclaimStorage(PageAllocator& pageAllocator) const;
 
-    static KUZU_API std::unique_ptr<Index> load(main::ClientContext* context,
+    static RYU_API std::unique_ptr<Index> load(main::ClientContext* context,
         StorageManager* storageManager, IndexInfo indexInfo, std::span<uint8_t> storageInfoBuffer);
 
     static IndexType getIndexType() {
@@ -505,4 +505,4 @@ private:
 };
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

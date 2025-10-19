@@ -3,7 +3,7 @@
 #include "common/copy_constructors.h"
 #include "parsed_expression.h"
 
-namespace kuzu {
+namespace ryu {
 namespace parser {
 
 struct ParsedCaseAlternative {
@@ -90,4 +90,4 @@ private:
 };
 
 } // namespace parser
-} // namespace kuzu
+} // namespace ryu

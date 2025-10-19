@@ -6,9 +6,9 @@
 #include "common/string_utils.h"
 #include "test_helper/test_helper.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace testing {
 
 static std::unique_ptr<main::QueryResult> validateQuery(main::Connection& conn,
@@ -23,7 +23,7 @@ static std::unique_ptr<main::QueryResult> validateQuery(main::Connection& conn,
 
 void InsertDatasetByRow::init() {
     auto copyFile = "dataset/" + datasetPath + "/" + TestHelper::COPY_FILE_NAME;
-    copyFile = TestHelper::appendKuzuRootPath(copyFile);
+    copyFile = TestHelper::appendRyuRootPath(copyFile);
     std::ifstream file(copyFile);
     if (!file.is_open()) {
         throw TestException(stringFormat("Error opening file: {}, errno: {}.", copyFile, errno));
@@ -54,7 +54,7 @@ void InsertDatasetByRow::init() {
             throw TestException(stringFormat("Invalid file from copy {}.", line));
         }
         std::string filePath = line.substr(start + 1, end - start - 1);
-        auto fullPath = TestHelper::appendKuzuRootPath(filePath);
+        auto fullPath = TestHelper::appendRyuRootPath(filePath);
         line.replace(line.find(filePath), filePath.length(), fullPath);
         end = line.find(';');
         auto datasetFilePath = line.substr(start, end == std::string::npos ? end : end - start);
@@ -131,4 +131,4 @@ std::string InsertDatasetByRow::RelTableInfo::getLoadFromQuery() const {
 }
 
 } // namespace testing
-} // namespace kuzu
+} // namespace ryu

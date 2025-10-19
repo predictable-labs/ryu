@@ -6,9 +6,9 @@ import fs from 'fs';
 
 const SRC_PATH = path.resolve("..", "..");
 const THREADS = os.cpus().length;
-const KUZU_VERSION_TEXT = "Kuzu VERSION";
+const RYU_VERSION_TEXT = "Ryu VERSION";
 const ES_BUILD_CONFIG = {
-  entryPoints: ['./build/sync/index.js', './build/index.js', 'build/kuzu_wasm_worker.js'],
+  entryPoints: ['./build/sync/index.js', './build/index.js', 'build/ryu_wasm_worker.js'],
   bundle: true,
   format: 'esm',
   external: ['fs', 'path', 'ws', 'crypto', "worker_threads", "os", "util"],
@@ -19,10 +19,10 @@ const ES_BUILD_CONFIG = {
   }
 };
 
-console.log(`Using ${THREADS} threads to build Kuzu.`);
+console.log(`Using ${THREADS} threads to build Ryu.`);
 console.log('Cleaning up...');
 execSync("npm run clean", { stdio: "inherit" });
-console.log('Building single-threaded version of Kuzu WebAssembly module...')
+console.log('Building single-threaded version of Ryu WebAssembly module...')
 execSync(`make wasm NUM_THREADS=${THREADS} SINGLE_THREADED=true`, {
   cwd: SRC_PATH,
   stdio: "inherit",
@@ -33,7 +33,7 @@ await esbuild.build(ES_BUILD_CONFIG);
 
 console.log('Cleaning up...');
 execSync("npm run clean exclude-package", { stdio: "inherit" });
-console.log("Building multi-threaded version of Kuzu WebAssembly module...");
+console.log("Building multi-threaded version of Ryu WebAssembly module...");
 execSync(`make wasm NUM_THREADS=${THREADS} SINGLE_THREADED=false`, {
   cwd: SRC_PATH,
   stdio: "inherit",
@@ -45,7 +45,7 @@ await esbuild.build(ES_BUILD_CONFIG_MULTI);
 
 console.log('Cleaning up...');
 execSync("npm run clean exclude-package", { stdio: "inherit" });
-console.log("Building Node.js version of Kuzu WebAssembly module...");
+console.log("Building Node.js version of Ryu WebAssembly module...");
 execSync(`make wasm NUM_THREADS=${THREADS} SINGLE_THREADED=false WASM_NODEFS=true`, {
   cwd: SRC_PATH,
   stdio: "inherit",
@@ -67,7 +67,7 @@ const packageJsonText = await fs.promises.readFile(path.resolve(".", 'package.js
 const packageJson = JSON.parse(packageJsonText);
 const lines = CMakeListsTxt.split("\n");
 for (const line of lines) {
-  if (line.includes(KUZU_VERSION_TEXT)) {
+  if (line.includes(RYU_VERSION_TEXT)) {
     const versionSplit = line.split(" ")[2].trim().split(".");
     let version = versionSplit.slice(0, 3).join(".");
     if (versionSplit.length >= 4) {
@@ -89,6 +89,6 @@ console.log('Copying README.md...');
 await fs.promises.copyFile(path.resolve('.', 'README.md'), path.resolve(".", 'package', 'README.md'));
 
 console.log('Creating tarball...');
-execSync("tar -czf kuzu-wasm.tar.gz package", { cwd: path.resolve("."), stdio: "inherit" });
+execSync("tar -czf ryu-wasm.tar.gz package", { cwd: path.resolve("."), stdio: "inherit" });
 
 console.log('All done!');

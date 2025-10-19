@@ -1,8 +1,8 @@
 #include "binder/bound_scan_source.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
 expression_vector BoundTableScanSource::getWarningColumns() const {
@@ -33,4 +33,4 @@ bool BoundQueryScanSource::getIgnoreErrorsOption() const {
 }
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

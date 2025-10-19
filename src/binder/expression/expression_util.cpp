@@ -11,9 +11,9 @@
 #include "common/type_utils.h"
 #include "common/types/value/nested.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
 expression_vector ExpressionUtil::getExpressionsWithDataType(const expression_vector& expressions,
@@ -528,41 +528,41 @@ std::shared_ptr<Expression> ExpressionUtil::applyImplicitCastingIfNecessary(
     return expr;
 }
 
-template KUZU_API std::string ExpressionUtil::getExpressionVal(const Expression& expr,
+template RYU_API std::string ExpressionUtil::getExpressionVal(const Expression& expr,
     const common::Value& value, const common::LogicalType& targetType,
     validate_param_func<std::string> validateParamFunc);
 
-template KUZU_API double ExpressionUtil::getExpressionVal(const Expression& expr,
+template RYU_API double ExpressionUtil::getExpressionVal(const Expression& expr,
     const common::Value& value, const common::LogicalType& targetType,
     validate_param_func<double> validateParamFunc);
 
-template KUZU_API int64_t ExpressionUtil::getExpressionVal(const Expression& expr,
+template RYU_API int64_t ExpressionUtil::getExpressionVal(const Expression& expr,
     const common::Value& value, const common::LogicalType& targetType,
     validate_param_func<int64_t> validateParamFunc);
 
-template KUZU_API bool ExpressionUtil::getExpressionVal(const Expression& expr,
+template RYU_API bool ExpressionUtil::getExpressionVal(const Expression& expr,
     const common::Value& value, const common::LogicalType& targetType,
     validate_param_func<bool> validateParamFunc);
 
-template KUZU_API std::string ExpressionUtil::evaluateLiteral<std::string>(
+template RYU_API std::string ExpressionUtil::evaluateLiteral<std::string>(
     main::ClientContext* context, std::shared_ptr<Expression> expression,
     const common::LogicalType& type, validate_param_func<std::string> validateParamFunc);
 
-template KUZU_API double ExpressionUtil::evaluateLiteral<double>(main::ClientContext* context,
+template RYU_API double ExpressionUtil::evaluateLiteral<double>(main::ClientContext* context,
     std::shared_ptr<Expression> expression, const LogicalType& type,
     validate_param_func<double> validateParamFunc);
 
-template KUZU_API int64_t ExpressionUtil::evaluateLiteral<int64_t>(main::ClientContext* context,
+template RYU_API int64_t ExpressionUtil::evaluateLiteral<int64_t>(main::ClientContext* context,
     std::shared_ptr<Expression> expression, const LogicalType& type,
     validate_param_func<int64_t> validateParamFunc);
 
-template KUZU_API bool ExpressionUtil::evaluateLiteral<bool>(main::ClientContext* context,
+template RYU_API bool ExpressionUtil::evaluateLiteral<bool>(main::ClientContext* context,
     std::shared_ptr<Expression> expression, const LogicalType& type,
     validate_param_func<bool> validateParamFunc);
 
-template KUZU_API uint64_t ExpressionUtil::evaluateLiteral<uint64_t>(main::ClientContext* context,
+template RYU_API uint64_t ExpressionUtil::evaluateLiteral<uint64_t>(main::ClientContext* context,
     std::shared_ptr<Expression> expression, const LogicalType& type,
     validate_param_func<uint64_t> validateParamFunc);
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

@@ -4,7 +4,7 @@
 #include "function/table/table_function.h"
 #include "processor/result/factorized_table.h"
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 struct FTableScanBindData : public function::TableFuncBindData {
@@ -32,4 +32,4 @@ struct FTableScan {
 };
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

@@ -2,10 +2,10 @@
 
 #include "storage/buffer_manager/memory_manager.h"
 
-using namespace kuzu::common;
-using namespace kuzu::transaction;
+using namespace ryu::common;
+using namespace ryu::transaction;
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 
 void InMemChunkedNodeGroupCollection::append(MemoryManager& memoryManager,
@@ -48,4 +48,4 @@ void InMemChunkedNodeGroupCollection::merge(InMemChunkedNodeGroupCollection& oth
 }
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

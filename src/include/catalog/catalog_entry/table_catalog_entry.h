@@ -10,7 +10,7 @@
 #include "common/types/types.h"
 #include "function/table/table_function.h"
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 struct BoundExtraCreateCatalogEntryInfo;
 } // namespace binder
@@ -23,7 +23,7 @@ namespace catalog {
 
 class CatalogSet;
 class Catalog;
-class KUZU_API TableCatalogEntry : public CatalogEntry {
+class RYU_API TableCatalogEntry : public CatalogEntry {
 public:
     TableCatalogEntry() = default;
     TableCatalogEntry(CatalogEntryType catalogType, std::string name)
@@ -93,4 +93,4 @@ using table_catalog_entry_set_t =
     std::unordered_set<TableCatalogEntry*, TableCatalogEntryHasher, TableCatalogEntryEquality>;
 
 } // namespace catalog
-} // namespace kuzu
+} // namespace ryu

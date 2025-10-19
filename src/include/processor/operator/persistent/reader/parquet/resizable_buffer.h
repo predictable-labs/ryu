@@ -6,7 +6,7 @@
 
 #include "common/utils.h"
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 class ByteBuffer { // on to the 10 thousandth impl
@@ -82,4 +82,4 @@ private:
 };
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

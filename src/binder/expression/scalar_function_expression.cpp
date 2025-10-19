@@ -2,9 +2,9 @@
 
 #include "binder/expression/expression_util.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
 std::string ScalarFunctionExpression::toStringInternal() const {
@@ -21,4 +21,4 @@ std::string ScalarFunctionExpression::getUniqueName(const std::string& functionN
 }
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

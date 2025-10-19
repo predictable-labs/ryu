@@ -6,7 +6,7 @@
 #include "common/api.h"
 #include "common/types/types.h"
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 class NodeTable;
 class RelTable;
@@ -16,7 +16,7 @@ class ClientContext;
 }
 namespace processor {
 
-struct KUZU_API PartitionerSharedState {
+struct RYU_API PartitionerSharedState {
     storage::NodeTable* srcNodeTable;
     storage::NodeTable* dstNodeTable;
     storage::RelTable* relTable;
@@ -58,4 +58,4 @@ struct KUZU_API PartitionerSharedState {
     static common::partition_idx_t getNumPartitionsFromRows(common::offset_t numRows);
 };
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

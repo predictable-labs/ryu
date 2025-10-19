@@ -4,10 +4,10 @@
 #include "binder/expression/expression_util.h"
 #include "planner/operator/logical_operator.h"
 
-namespace kuzu {
+namespace ryu {
 namespace planner {
 
-class KUZU_API LogicalProjection : public LogicalOperator {
+class RYU_API LogicalProjection : public LogicalOperator {
     static constexpr LogicalOperatorType type_ = LogicalOperatorType::PROJECTION;
 
 public:
@@ -37,4 +37,4 @@ private:
 };
 
 } // namespace planner
-} // namespace kuzu
+} // namespace ryu

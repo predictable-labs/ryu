@@ -2,10 +2,10 @@
 
 #include "node_rel_expression.h"
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
-class KUZU_API NodeExpression final : public NodeOrRelExpression {
+class RYU_API NodeExpression final : public NodeOrRelExpression {
 public:
     NodeExpression(common::LogicalType dataType, std::string uniqueName, std::string variableName,
         std::vector<catalog::TableCatalogEntry*> entries)
@@ -30,4 +30,4 @@ private:
 };
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

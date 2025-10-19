@@ -25,14 +25,14 @@
 #include "processor/plan_mapper.h"
 #include "storage/storage_manager.h"
 
-using namespace kuzu::common;
-using namespace kuzu::binder;
-using namespace kuzu::function;
-using namespace kuzu::planner;
-using namespace kuzu::catalog;
-using namespace kuzu::processor;
+using namespace ryu::common;
+using namespace ryu::binder;
+using namespace ryu::function;
+using namespace ryu::planner;
+using namespace ryu::catalog;
+using namespace ryu::processor;
 
-namespace kuzu {
+namespace ryu {
 namespace vector_extension {
 
 static std::vector<LogicalType> inferInputTypes(const expression_vector& params) {
@@ -393,4 +393,4 @@ function_set QueryVectorIndexFunction::getFunctionSet() {
 }
 
 } // namespace vector_extension
-} // namespace kuzu
+} // namespace ryu

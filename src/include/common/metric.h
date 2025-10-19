@@ -2,7 +2,7 @@
 
 #include "common/timer.h"
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 
 /**
@@ -49,4 +49,4 @@ public:
 };
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

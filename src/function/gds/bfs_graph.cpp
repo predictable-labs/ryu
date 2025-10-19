@@ -3,11 +3,11 @@
 #include "function/gds/gds_utils.h"
 #include "processor/execution_context.h"
 
-using namespace kuzu::common;
-using namespace kuzu::graph;
-using namespace kuzu::processor;
+using namespace ryu::common;
+using namespace ryu::graph;
+using namespace ryu::processor;
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 static constexpr uint64_t BFS_GRAPH_BLOCK_SIZE = (std::uint64_t)1 << 19;
@@ -273,4 +273,4 @@ void BFSGraphManager::switchToDense(ExecutionContext* context, Graph* graph) {
 }
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

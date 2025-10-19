@@ -7,9 +7,9 @@ use std::convert::{TryFrom, TryInto};
 use std::fmt;
 
 pub enum ConversionError {
-    /// Kuzu's internal date as the number of days since 1970-01-01
+    /// Ryu's internal date as the number of days since 1970-01-01
     Date(i32),
-    /// Kuzu's internal timestamp as the number of microseconds since 1970-01-01
+    /// Ryu's internal timestamp as the number of microseconds since 1970-01-01
     Timestamp(i64),
     TimestampTz(i64),
     TimestampNs(i64),
@@ -29,12 +29,12 @@ impl std::fmt::Debug for ConversionError {
             Date, Timestamp, TimestampMs, TimestampNs, TimestampSec, TimestampTz,
         };
         match self {
-            Date(days) => write!(f, "Could not convert Kuzu date offset of UNIX_EPOCH + {days} days to time::Date"),
-            Timestamp(us) => write!(f, "Could not convert Kuzu timestamp offset of UNIX_EPOCH + {us} microseconds to time::OffsetDateTime"),
-            TimestampTz(us) => write!(f, "Could not convert Kuzu timestamp_tz offset of UNIX_EPOCH + {us} microseconds to time::OffsetDateTime"),
-            TimestampNs(ns) => write!(f, "Could not convert Kuzu timestamp_ns offset of UNIX_EPOCH + {ns} nanoseconds to time::OffsetDateTime"),
-            TimestampMs(ms) => write!(f, "Could not convert Kuzu timestamp_ms offset of UNIX_EPOCH + {ms} milliseconds to time::OffsetDateTime"),
-            TimestampSec(sec) => write!(f, "Could not convert Kuzu timestamp_sec offset of UNIX_EPOCH + {sec} seconds to time::OffsetDateTime"),
+            Date(days) => write!(f, "Could not convert Ryu date offset of UNIX_EPOCH + {days} days to time::Date"),
+            Timestamp(us) => write!(f, "Could not convert Ryu timestamp offset of UNIX_EPOCH + {us} microseconds to time::OffsetDateTime"),
+            TimestampTz(us) => write!(f, "Could not convert Ryu timestamp_tz offset of UNIX_EPOCH + {us} microseconds to time::OffsetDateTime"),
+            TimestampNs(ns) => write!(f, "Could not convert Ryu timestamp_ns offset of UNIX_EPOCH + {ns} nanoseconds to time::OffsetDateTime"),
+            TimestampMs(ms) => write!(f, "Could not convert Ryu timestamp_ms offset of UNIX_EPOCH + {ms} milliseconds to time::OffsetDateTime"),
+            TimestampSec(sec) => write!(f, "Could not convert Ryu timestamp_sec offset of UNIX_EPOCH + {sec} seconds to time::OffsetDateTime"),
         }
     }
 }
@@ -195,9 +195,9 @@ impl From<(u64, u64)> for InternalID {
     }
 }
 
-/// Data types supported by Kuzu
+/// Data types supported by Ryu
 ///
-/// Also see <https://kuzudb.com/docusaurus/cypher/data-types/overview.html>
+/// Also see <https://ryugraph.com/docusaurus/cypher/data-types/overview.html>
 #[derive(Clone, Debug, PartialEq)]
 pub enum Value {
     Null(LogicalType),
@@ -216,37 +216,37 @@ pub enum Value {
     /// Stored internally as the number of days since 1970-01-01 as a 32-bit signed integer, which
     /// allows for a wider range of dates to be stored than can be represented by `time::Date`
     ///
-    /// <https://kuzudb.com/docusaurus/cypher/data-types/date.html>
+    /// <https://ryugraph.com/docusaurus/cypher/data-types/date.html>
     Date(time::Date),
     /// May be signed or unsigned.
     ///
     /// Nanosecond precision of `time::Duration` (if available) will not be preserved when passed to
     /// queries, and results will always have at most microsecond precision.
     ///
-    /// <https://kuzudb.com/docusaurus/cypher/data-types/interval.html>
+    /// <https://ryugraph.com/docusaurus/cypher/data-types/interval.html>
     Interval(time::Duration),
     /// Stored internally as the number of microseconds since 1970-01-01
     /// Nanosecond precision of `SystemTime` (if available) will not be preserved when used.
     ///
-    /// <https://kuzudb.com/docusaurus/cypher/data-types/timestamp.html>
+    /// <https://ryugraph.com/docusaurus/cypher/data-types/timestamp.html>
     Timestamp(time::OffsetDateTime),
     TimestampTz(time::OffsetDateTime),
     TimestampNs(time::OffsetDateTime),
     TimestampMs(time::OffsetDateTime),
     TimestampSec(time::OffsetDateTime),
     InternalID(InternalID),
-    /// <https://kuzudb.com/docusaurus/cypher/data-types/string.html>
+    /// <https://ryugraph.com/docusaurus/cypher/data-types/string.html>
     String(String),
     Blob(Vec<u8>),
     // TODO: Enforce type of contents
     // LogicalType is necessary so that we can pass the correct type to the C++ API if the list is empty.
     /// These must contain elements which are all the given type.
-    /// <https://kuzudb.com/docusaurus/cypher/data-types/list.html>
+    /// <https://ryugraph.com/docusaurus/cypher/data-types/list.html>
     List(LogicalType, Vec<Value>),
     /// These must contain elements which are all the same type.
-    /// <https://kuzudb.com/docusaurus/cypher/data-types/list.html>
+    /// <https://ryugraph.com/docusaurus/cypher/data-types/list.html>
     Array(LogicalType, Vec<Value>),
-    /// <https://kuzudb.com/docusaurus/cypher/data-types/struct.html>
+    /// <https://ryugraph.com/docusaurus/cypher/data-types/struct.html>
     Struct(Vec<(String, Value)>),
     Node(NodeVal),
     Rel(RelVal),
@@ -258,9 +258,9 @@ pub enum Value {
         /// Sequence of Rels which make up the `RecursiveRel`
         rels: Vec<RelVal>,
     },
-    /// <https://kuzudb.com/docusaurus/cypher/data-types/map>
+    /// <https://ryugraph.com/docusaurus/cypher/data-types/map>
     Map((LogicalType, LogicalType), Vec<(Value, Value)>),
-    /// <https://kuzudb.com/docusaurus/cypher/data-types/union>
+    /// <https://ryugraph.com/docusaurus/cypher/data-types/union>
     Union {
         types: Vec<(String, LogicalType)>,
         value: Box<Value>,
@@ -299,7 +299,7 @@ impl std::fmt::Display for Value {
             Value::Blob(x) => write!(f, "{x:x?}"),
             Value::Null(_) => write!(f, ""),
             Value::List(_, x) | Value::Array(_, x) => display_list(f, x),
-            // Note: These don't match kuzu's toString, but we probably don't want them to
+            // Note: These don't match ryu's toString, but we probably don't want them to
             Value::Interval(x) => write!(f, "{x}"),
             Value::Timestamp(x)
             | Value::TimestampTz(x)
@@ -463,7 +463,7 @@ impl TryFrom<&ffi::Value> for Value {
             )),
             LogicalTypeID::INTERVAL => Ok(Value::Interval(time::Duration::new(
                 ffi::value_get_interval_secs(value),
-                // Duration is constructed using nanoseconds, but kuzu stores microseconds
+                // Duration is constructed using nanoseconds, but ryu stores microseconds
                 ffi::value_get_interval_micros(value) * 1000,
             ))),
             LogicalTypeID::DATE => Ok(Value::Date(get_date_from_unix_days(
@@ -694,12 +694,12 @@ impl TryInto<cxx::UniquePtr<ffi::Value>> for Value {
             ((value >> 64) as i64, value as u64)
         }
 
-        fn date_to_kuzu_date_t(value: time::Date) -> i32 {
+        fn date_to_ryu_date_t(value: time::Date) -> i32 {
             // Convert to days since 1970-01-01
             (value - time::Date::from_ordinal_date(1970, 1).unwrap())
                 .whole_days()
                 .to_i32()
-                .expect("kuzu_date i64->i32 overflow")
+                .expect("ryu_date i64->i32 overflow")
         }
 
         fn datetime_to_timestamp_t(value: time::OffsetDateTime) -> i64 {
@@ -780,7 +780,7 @@ impl TryInto<cxx::UniquePtr<ffi::Value>> for Value {
                     .to_i64()
                     .expect("TimestampSec i128->i64 overflow"),
             )),
-            Value::Date(value) => Ok(ffi::create_value_date(date_to_kuzu_date_t(value))),
+            Value::Date(value) => Ok(ffi::create_value_date(date_to_ryu_date_t(value))),
             Value::Interval(value) => {
                 let (months, days, micros) = get_interval_t(value);
                 Ok(ffi::create_value_interval(months, days, micros))
@@ -976,7 +976,7 @@ mod tests {
         ($($name:ident: $value:expr,)*) => {
         $(
             #[test]
-            /// Tests that the values are correctly converted into `kuzu::common::Value` and back
+            /// Tests that the values are correctly converted into `ryu::common::Value` and back
             fn $name() -> Result<()> {
                 let rust_type: LogicalType = $value;
                 let typ: cxx::UniquePtr<ffi::LogicalType> = (&rust_type).try_into()?;
@@ -992,7 +992,7 @@ mod tests {
         ($($name:ident: $value:expr,)*) => {
         $(
             #[test]
-            /// Tests that the values are correctly converted into `kuzu::common::Value` and back
+            /// Tests that the values are correctly converted into `ryu::common::Value` and back
             fn $name() -> Result<()> {
                 let rust_value: Value = $value;
                 let value: cxx::UniquePtr<ffi::Value> = rust_value.clone().try_into()?;
@@ -1173,7 +1173,7 @@ mod tests {
     }
 
     database_tests! {
-        // Passing these values as arguments is not yet implemented in kuzu:
+        // Passing these values as arguments is not yet implemented in ryu:
         // db_union: Value::Union {
         //    types: vec![("Num".to_string(), LogicalType::Int8), ("duration".to_string(), LogicalType::Interval)],
         //    value: Box::new(Value::Int8(-127))
@@ -1237,7 +1237,7 @@ mod tests {
     }
 
     #[test]
-    /// Test that the timestamp round-trips through kuzu's internal timestamp
+    /// Test that the timestamp round-trips through ryu's internal timestamp
     fn test_timestamp() -> Result<()> {
         let temp_dir = tempfile::tempdir()?;
         let db = Database::new(temp_dir.path().join("test"), SYSTEM_CONFIG_FOR_TESTS)?;

@@ -2,7 +2,7 @@
 
 #include "projection_body.h"
 
-namespace kuzu {
+namespace ryu {
 namespace parser {
 
 class ReturnClause {
@@ -20,4 +20,4 @@ private:
 };
 
 } // namespace parser
-} // namespace kuzu
+} // namespace ryu

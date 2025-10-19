@@ -4,7 +4,7 @@
 #include "common/vector/value_vector.h"
 #include "re2.h"
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct RegexpSplitToArray : BaseRegexpOperation {
@@ -16,11 +16,11 @@ struct RegexpSplitToArray : BaseRegexpOperation {
         auto resultValues = common::ListVector::getListValues(&resultVector, result);
         auto resultDataVector = common::ListVector::getDataVector(&resultVector);
         auto numBytesPerValue = resultDataVector->getNumBytesPerValue();
-        common::ku_string_t kuString;
+        common::ku_string_t ryString;
         for (const auto& match : matches) {
-            copyToKuzuString(match, kuString, *resultDataVector);
+            copyToRyuString(match, ryString, *resultDataVector);
             resultDataVector->copyFromVectorData(resultValues, resultDataVector,
-                reinterpret_cast<uint8_t*>(&kuString));
+                reinterpret_cast<uint8_t*>(&ryString));
             resultValues += numBytesPerValue;
         }
     }
@@ -62,4 +62,4 @@ struct RegexpSplitToArray : BaseRegexpOperation {
 };
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

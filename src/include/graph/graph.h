@@ -9,7 +9,7 @@
 #include "common/vector/value_vector.h"
 #include <span>
 
-namespace kuzu {
+namespace ryu {
 namespace catalog {
 class TableCatalogEntry;
 } // namespace catalog
@@ -32,7 +32,7 @@ struct GraphRelInfo {
           relTableID{relTableID} {}
 };
 
-class KUZU_API NbrScanState {
+class RYU_API NbrScanState {
 public:
     struct Chunk {
         friend class NbrScanState;
@@ -96,7 +96,7 @@ public:
         }
 
     private:
-        KUZU_API Chunk(std::span<const common::nodeID_t> nodeIDs,
+        RYU_API Chunk(std::span<const common::nodeID_t> nodeIDs,
             std::span<const std::shared_ptr<common::ValueVector>> propertyVectors);
 
     private:
@@ -252,4 +252,4 @@ public:
 };
 
 } // namespace graph
-} // namespace kuzu
+} // namespace ryu

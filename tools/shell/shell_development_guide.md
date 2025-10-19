@@ -4,7 +4,7 @@ The `shell_runner.cpp` file is the starting point for the shell program. This fi
 
 For the shell flags, we use this c++ [args](https://taywee.github.io/args/) library. This allows us to easily define different types of flags. The main types we use are `Positional`, `HelpFlag`, `ValueFlag` and `Flag`. 
 ```c++
-args::ArgumentParser  parser("KuzuDB Shell");
+args::ArgumentParser  parser("RyuGraph Shell");
 args::Positional<std::string> inputDirFlag(parser, "databasePath",
 "Path to the database. If not given or set to \":memory:\", the database will be opened "
 "under in-memory mode.");
@@ -21,7 +21,7 @@ All flag strings are parsed to be lower case so make sure there are no capital l
 
 If the flag is a value flag, you can receive the value by using `args::get()` with the flag as a parameter. You can then handle the flag as needed.
 
-After the flags are parsed, the database and connection are set up, and an `EmbeddedShell` object is created. Using this object, we can process every line in the run command startup file (usually `.kuzurc`) and then start up the shell, calling `shell.run();`
+After the flags are parsed, the database and connection are set up, and an `EmbeddedShell` object is created. Using this object, we can process every line in the run command startup file (usually `.ryurc`) and then start up the shell, calling `shell.run();`
 
 ### Embedded Shell
 The `embedded_shell.cpp` file contains all the code to process completed queries. It handles the processing of shell `:` commands and processes and prints the query results to the terminal. 

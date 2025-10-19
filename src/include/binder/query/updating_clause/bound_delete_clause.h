@@ -3,7 +3,7 @@
 #include "bound_delete_info.h"
 #include "bound_updating_clause.h"
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
 class BoundDeleteClause final : public BoundUpdatingClause {
@@ -39,4 +39,4 @@ private:
 };
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

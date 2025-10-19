@@ -10,7 +10,7 @@
 #include "storage/storage_extension.h"
 #include "storage/storage_manager.h"
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 std::string AttachDatabasePrintInfo::toString() const {
@@ -31,9 +31,9 @@ void AttachDatabase::executeInternal(ExecutionContext* context) {
     auto client = context->clientContext;
     auto databaseManager = main::DatabaseManager::Get(*client);
     auto memoryManager = storage::MemoryManager::Get(*client);
-    if (common::StringUtils::getUpper(attachInfo.dbType) == common::ATTACHED_KUZU_DB_TYPE) {
-        auto db = std::make_unique<main::AttachedKuzuDatabase>(attachInfo.dbPath,
-            attachInfo.dbAlias, common::ATTACHED_KUZU_DB_TYPE, client);
+    if (common::StringUtils::getUpper(attachInfo.dbType) == common::ATTACHED_RYU_DB_TYPE) {
+        auto db = std::make_unique<main::AttachedRyuDatabase>(attachInfo.dbPath, attachInfo.dbAlias,
+            common::ATTACHED_RYU_DB_TYPE, client);
         client->setDefaultDatabase(db.get());
         databaseManager->registerAttachedDatabase(std::move(db));
         appendMessage(attachMessage(), memoryManager);
@@ -61,4 +61,4 @@ void AttachDatabase::executeInternal(ExecutionContext* context) {
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

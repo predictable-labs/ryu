@@ -4,7 +4,7 @@
 #include "index/fts_internal_table_info.h"
 #include "storage/index/index.h"
 
-namespace kuzu {
+namespace ryu {
 namespace fts_extension {
 
 struct FTSInsertState;
@@ -92,4 +92,4 @@ private:
 };
 
 } // namespace fts_extension
-} // namespace kuzu
+} // namespace ryu

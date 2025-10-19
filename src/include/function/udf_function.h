@@ -6,7 +6,7 @@
 #include "common/types/ku_string.h"
 #include "function/scalar_function.h"
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct UnaryUDFExecutor {
@@ -280,4 +280,4 @@ struct UDF {
 };
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

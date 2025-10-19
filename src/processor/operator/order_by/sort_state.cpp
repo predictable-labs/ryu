@@ -5,9 +5,9 @@
 #include "common/constants.h"
 #include "common/system_config.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 void SortSharedState::init(const OrderByDataInfo& orderByDataInfo) {
@@ -75,7 +75,7 @@ void SortLocalState::append(const std::vector<common::ValueVector*>& keyVectors,
     payloadTable->append(payloadVectors);
 }
 
-void SortLocalState::finalize(kuzu::processor::SortSharedState& sharedState) {
+void SortLocalState::finalize(ryu::processor::SortSharedState& sharedState) {
     for (auto& keyBlock : orderByKeyEncoder->getKeyBlocks()) {
         if (keyBlock->numTuples > 0) {
             radixSorter->sortSingleKeyBlock(*keyBlock);
@@ -195,4 +195,4 @@ void PayloadScanner::applyLimitOnResultVectors(std::vector<common::ValueVector*>
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

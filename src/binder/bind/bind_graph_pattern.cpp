@@ -17,11 +17,11 @@
 #include "main/client_context.h"
 #include "transaction/transaction.h"
 
-using namespace kuzu::common;
-using namespace kuzu::parser;
-using namespace kuzu::catalog;
+using namespace ryu::common;
+using namespace ryu::parser;
+using namespace ryu::catalog;
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
 // A graph pattern contains node/rel and a set of key-value pairs associated with the variable. We
@@ -692,4 +692,4 @@ std::vector<TableCatalogEntry*> Binder::bindRelGroupEntries(
 }
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

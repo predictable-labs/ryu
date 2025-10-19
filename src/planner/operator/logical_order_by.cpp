@@ -4,9 +4,9 @@
 #include "planner/operator/factorization/flatten_resolver.h"
 #include "planner/operator/factorization/sink_util.h"
 
-using namespace kuzu::binder;
+using namespace ryu::binder;
 
-namespace kuzu {
+namespace ryu {
 namespace planner {
 
 f_group_pos_set LogicalOrderBy::getGroupsPosToFlatten() {
@@ -56,4 +56,4 @@ std::string LogicalOrderBy::getExpressionsForPrinting() const {
 }
 
 } // namespace planner
-} // namespace kuzu
+} // namespace ryu

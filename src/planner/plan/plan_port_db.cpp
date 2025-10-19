@@ -10,13 +10,13 @@
 #include "planner/planner.h"
 #include "transaction/transaction.h"
 
-using namespace kuzu::binder;
-using namespace kuzu::storage;
-using namespace kuzu::catalog;
-using namespace kuzu::common;
-using namespace kuzu::transaction;
+using namespace ryu::binder;
+using namespace ryu::storage;
+using namespace ryu::catalog;
+using namespace ryu::common;
+using namespace ryu::transaction;
 
-namespace kuzu {
+namespace ryu {
 namespace planner {
 
 std::vector<std::shared_ptr<LogicalOperator>> Planner::planExportTableData(
@@ -73,4 +73,4 @@ LogicalPlan Planner::planImportDatabase(const BoundStatement& statement) {
 }
 
 } // namespace planner
-} // namespace kuzu
+} // namespace ryu

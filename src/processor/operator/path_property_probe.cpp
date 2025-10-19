@@ -3,9 +3,9 @@
 #include "common/constants.h"
 #include "function/hash/hash_functions.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 void PathPropertyProbe::initLocalStateInternal(ResultSet* /*resultSet_*/,
@@ -286,7 +286,7 @@ bool PathPropertyProbe::getNextTuplesInternal(ExecutionContext* context) {
     return true;
 }
 
-void PathPropertyProbe::probe(kuzu::processor::JoinHashTable* hashTable, uint64_t sizeProbed,
+void PathPropertyProbe::probe(ryu::processor::JoinHashTable* hashTable, uint64_t sizeProbed,
     uint64_t sizeToProbe, ValueVector* idVector, const std::vector<ValueVector*>& propertyVectors,
     const std::vector<ft_col_idx_t>& colIndicesToScan) const {
     // Hash
@@ -324,4 +324,4 @@ void PathPropertyProbe::probe(kuzu::processor::JoinHashTable* hashTable, uint64_
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

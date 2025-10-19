@@ -17,7 +17,7 @@ if TYPE_CHECKING:
     from .database import Database
 
 
-class KuzuFeatureStore(FeatureStore):  # type: ignore[misc]
+class RyuFeatureStore(FeatureStore):  # type: ignore[misc]
     """Feature store compatible with `torch_geometric`."""
 
     def __init__(self, db: Database, num_threads: int | None = None):

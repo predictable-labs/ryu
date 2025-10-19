@@ -12,10 +12,10 @@
 #define ADD_CONFIDENTIAL_EXTENSION_OPTION(OPTION)                                                  \
     db->addExtensionOption(OPTION::NAME, OPTION::TYPE, OPTION::getDefaultValue(), true)
 
-namespace kuzu::storage {
+namespace ryu::storage {
 struct IndexType;
 }
-namespace kuzu {
+namespace ryu {
 namespace function {
 struct TableFunction;
 } // namespace function
@@ -29,7 +29,7 @@ typedef void (*ext_install_func_t)(const std::string&, main::ClientContext&);
 
 std::string getPlatform();
 
-class KUZU_API Extension {
+class RYU_API Extension {
 public:
     virtual ~Extension() = default;
 };
@@ -57,9 +57,9 @@ void addFunc(main::Database& database, std::string name, catalog::CatalogEntryTy
         T::getFunctionSet(), isInternal);
 }
 
-struct KUZU_API ExtensionUtils {
-    static constexpr const char* OFFICIAL_EXTENSION_REPO = "http://extension.kuzudb.com/";
-    static constexpr const char* EXTENSION_FILE_SUFFIX = "kuzu_extension";
+struct RYU_API ExtensionUtils {
+    static constexpr const char* OFFICIAL_EXTENSION_REPO = "http://extension.ryugraph.com/";
+    static constexpr const char* EXTENSION_FILE_SUFFIX = "ryu_extension";
 
     static constexpr const char* EXTENSION_FILE_REPO_PATH = "{}v{}/{}/{}/{}";
 
@@ -151,7 +151,7 @@ struct KUZU_API ExtensionUtils {
     static void registerIndexType(main::Database& database, storage::IndexType type);
 };
 
-class KUZU_API ExtensionLibLoader {
+class RYU_API ExtensionLibLoader {
 public:
     static constexpr const char* EXTENSION_LOAD_FUNC_NAME = "load";
 
@@ -193,4 +193,4 @@ void dlclose(void* handle);
 #endif
 
 } // namespace extension
-} // namespace kuzu
+} // namespace ryu

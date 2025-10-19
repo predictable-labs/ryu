@@ -2,7 +2,7 @@
 
 #include "processor/operator/scan/scan_rel_table.h"
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 struct DirectionInfo {
@@ -90,4 +90,4 @@ private:
 };
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

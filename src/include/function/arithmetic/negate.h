@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct Negate {
@@ -25,4 +25,4 @@ template<>
 void Negate::operation(int64_t& input, int64_t& result);
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

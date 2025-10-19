@@ -11,12 +11,12 @@
 #include "storage/table/table.h"
 #include "transaction/transaction.h"
 
-using namespace kuzu::binder;
-using namespace kuzu::common;
-using namespace kuzu::catalog;
-using namespace kuzu::transaction;
+using namespace ryu::binder;
+using namespace ryu::common;
+using namespace ryu::catalog;
+using namespace ryu::transaction;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 void Alter::initLocalStateInternal(ResultSet* resultSet, ExecutionContext* context) {
@@ -353,4 +353,4 @@ void Alter::alterTable(main::ClientContext* clientContext, const TableCatalogEnt
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

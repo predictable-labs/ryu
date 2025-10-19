@@ -6,7 +6,7 @@
 #include "function/string/functions/base_regexp_function.h"
 #include "re2.h"
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct RegexpExtract : BaseRegexpOperation {
@@ -38,9 +38,9 @@ struct RegexpExtract : BaseRegexpOperation {
             return;
         }
 
-        copyToKuzuString(targetSubMatches[group].ToString(), result, resultValueVector);
+        copyToRyuString(targetSubMatches[group].ToString(), result, resultValueVector);
     }
 };
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

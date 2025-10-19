@@ -5,13 +5,13 @@
 #include "common/serializer/writer.h"
 #include "storage/buffer_manager/memory_manager.h"
 
-namespace kuzu::storage {
+namespace ryu::storage {
 struct PageRange;
 class ShadowFile;
 class PageAllocator;
-} // namespace kuzu::storage
+} // namespace ryu::storage
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 class BufferedFileWriter;
 
@@ -37,7 +37,7 @@ public:
     void flush(Writer& writer) const;
 
     uint64_t getSize() const override {
-        uint64_t size = pages.size() > 1 ? KUZU_PAGE_SIZE * (pages.size() - 1) : 0;
+        uint64_t size = pages.size() > 1 ? RYU_PAGE_SIZE * (pages.size() - 1) : 0;
         return size + pageOffset;
     }
 
@@ -63,4 +63,4 @@ private:
 };
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

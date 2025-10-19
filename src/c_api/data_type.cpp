@@ -1,19 +1,19 @@
-#include "c_api/kuzu.h"
+#include "c_api/ryu.h"
 #include "common/types/types.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu::common {
+namespace ryu::common {
 struct CAPIHelper {
     static inline LogicalType* createLogicalType(LogicalTypeID typeID,
         std::unique_ptr<ExtraTypeInfo> extraTypeInfo) {
         return new LogicalType(typeID, std::move(extraTypeInfo));
     }
 };
-} // namespace kuzu::common
+} // namespace ryu::common
 
-void kuzu_data_type_create(kuzu_data_type_id id, kuzu_logical_type* child_type,
-    uint64_t num_elements_in_array, kuzu_logical_type* out_data_type) {
+void ryu_data_type_create(ryu_data_type_id id, ryu_logical_type* child_type,
+    uint64_t num_elements_in_array, ryu_logical_type* out_data_type) {
     uint8_t data_type_id_u8 = id;
     LogicalType* data_type = nullptr;
     auto logicalTypeID = static_cast<LogicalTypeID>(data_type_id_u8);
@@ -30,12 +30,12 @@ void kuzu_data_type_create(kuzu_data_type_id id, kuzu_logical_type* child_type,
     out_data_type->_data_type = data_type;
 }
 
-void kuzu_data_type_clone(kuzu_logical_type* data_type, kuzu_logical_type* out_data_type) {
+void ryu_data_type_clone(ryu_logical_type* data_type, ryu_logical_type* out_data_type) {
     out_data_type->_data_type =
         new LogicalType(static_cast<LogicalType*>(data_type->_data_type)->copy());
 }
 
-void kuzu_data_type_destroy(kuzu_logical_type* data_type) {
+void ryu_data_type_destroy(ryu_logical_type* data_type) {
     if (data_type == nullptr) {
         return;
     }
@@ -44,27 +44,27 @@ void kuzu_data_type_destroy(kuzu_logical_type* data_type) {
     }
 }
 
-bool kuzu_data_type_equals(kuzu_logical_type* data_type1, kuzu_logical_type* data_type2) {
+bool ryu_data_type_equals(ryu_logical_type* data_type1, ryu_logical_type* data_type2) {
     return *static_cast<LogicalType*>(data_type1->_data_type) ==
            *static_cast<LogicalType*>(data_type2->_data_type);
 }
 
-kuzu_data_type_id kuzu_data_type_get_id(kuzu_logical_type* data_type) {
+ryu_data_type_id ryu_data_type_get_id(ryu_logical_type* data_type) {
     auto data_type_id_u8 =
         static_cast<uint8_t>(static_cast<LogicalType*>(data_type->_data_type)->getLogicalTypeID());
-    return static_cast<kuzu_data_type_id>(data_type_id_u8);
+    return static_cast<ryu_data_type_id>(data_type_id_u8);
 }
 
-kuzu_state kuzu_data_type_get_num_elements_in_array(kuzu_logical_type* data_type,
+ryu_state ryu_data_type_get_num_elements_in_array(ryu_logical_type* data_type,
     uint64_t* out_result) {
     auto parent_type = static_cast<LogicalType*>(data_type->_data_type);
     if (parent_type->getLogicalTypeID() != LogicalTypeID::ARRAY) {
-        return KuzuError;
+        return RyuError;
     }
     try {
         *out_result = ArrayType::getNumElements(*parent_type);
     } catch (Exception& e) {
-        return KuzuError;
+        return RyuError;
     }
-    return KuzuSuccess;
+    return RyuSuccess;
 }

@@ -96,13 +96,13 @@ TINY_SNB_PERSON_IDS_GROUND_TRUTH = [0, 2, 3, 5, 7, 8, 9, 10]
 #
 # def test_remote_backend_20k(conn_db_readwrite: ConnDB) -> None:
 #     _, db = conn_db_readwrite
-#     conn = kuzu.Connection(db, num_threads=1)
+#     conn = ryu.Connection(db, num_threads=1)
 #     conn.execute("CREATE NODE TABLE npy20k (id INT64,f32 FLOAT[10],PRIMARY KEY(id));")
 #     conn.execute(
 #         f"""
 #         COPY npy20k FROM (
-#           "{KUZU_ROOT}/dataset/npy-20k/id_int64.npy",
-#           "{KUZU_ROOT}/dataset/npy-20k/two_dim_float.npy") BY COLUMN;
+#           "{RYU_ROOT}/dataset/npy-20k/id_int64.npy",
+#           "{RYU_ROOT}/dataset/npy-20k/two_dim_float.npy") BY COLUMN;
 #         """
 #     )
 #     del conn

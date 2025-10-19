@@ -4,7 +4,7 @@
 
 #include "common/types/types.h"
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 class FrontierMorsel {
@@ -24,7 +24,7 @@ private:
     common::offset_t endOffset = common::INVALID_OFFSET;
 };
 
-class KUZU_API FrontierMorselDispatcher {
+class RYU_API FrontierMorselDispatcher {
     static constexpr uint64_t MIN_FRONTIER_MORSEL_SIZE = 512;
     // Note: MIN_NUMBER_OF_FRONTIER_MORSELS is the minimum number of morsels we aim to have but we
     // can have fewer than this. See the beginFrontierComputeBetweenTables to see the actual
@@ -46,4 +46,4 @@ private:
 };
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

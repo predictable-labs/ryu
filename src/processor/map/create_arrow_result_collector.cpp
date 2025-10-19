@@ -1,9 +1,9 @@
 #include "processor/operator/arrow_result_collector.h"
 #include "processor/plan_mapper.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 std::unique_ptr<PhysicalOperator> PlanMapper::createArrowResultCollector(
@@ -26,4 +26,4 @@ std::unique_ptr<PhysicalOperator> PlanMapper::createArrowResultCollector(
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

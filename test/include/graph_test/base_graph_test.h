@@ -4,12 +4,12 @@
 
 #include "common/string_format.h"
 #include "gtest/gtest.h"
-#include "main/kuzu.h"
+#include "main/ryu.h"
 #include "test_helper/test_helper.h"
 
 using ::testing::Test;
 
-namespace kuzu {
+namespace ryu {
 namespace testing {
 
 static void removeDir(const std::string& dbPath) {
@@ -137,4 +137,4 @@ public:
     std::string ieDBPath;
 };
 } // namespace testing
-} // namespace kuzu
+} // namespace ryu

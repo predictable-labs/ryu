@@ -14,16 +14,16 @@
 
 #include "common/exception/buffer_manager.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 
 VMRegion::VMRegion(PageSizeClass pageSizeClass, uint64_t maxRegionSize) : numFrameGroups{0} {
     if (maxRegionSize > static_cast<std::size_t>(-1)) {
         throw BufferManagerException("maxRegionSize is beyond the max available mmap region size.");
     }
-    frameSize = pageSizeClass == REGULAR_PAGE ? KUZU_PAGE_SIZE : TEMP_PAGE_SIZE;
+    frameSize = pageSizeClass == REGULAR_PAGE ? RYU_PAGE_SIZE : TEMP_PAGE_SIZE;
     const auto numBytesForFrameGroup = frameSize * StorageConstants::PAGE_GROUP_SIZE;
     maxNumFrameGroups = (maxRegionSize + numBytesForFrameGroup - 1) / numBytesForFrameGroup;
 #ifdef _WIN32
@@ -88,4 +88,4 @@ frame_group_idx_t VMRegion::addNewFrameGroup() {
 }
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

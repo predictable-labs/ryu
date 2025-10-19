@@ -4,9 +4,9 @@
 #include "storage/shadow_file.h"
 #include "transaction/transaction.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 
 ShadowPageAndFrame ShadowUtils::createShadowVersionIfNecessaryAndPinPage(page_idx_t originalPage,
@@ -24,7 +24,7 @@ ShadowPageAndFrame ShadowUtils::createShadowVersionIfNecessaryAndPinPage(page_id
                 shadowFile.getShadowingFH().pinPage(shadowPage, PageReadPolicy::DONT_READ_PAGE);
             if (!skipReadingOriginalPage) {
                 fileHandle.optimisticReadPage(originalPage, [&](const uint8_t* frame) -> void {
-                    memcpy(shadowFrame, frame, KUZU_PAGE_SIZE);
+                    memcpy(shadowFrame, frame, RYU_PAGE_SIZE);
                 });
             }
         }
@@ -85,4 +85,4 @@ void ShadowUtils::readShadowVersionOfPage(const FileHandle& fileHandle, page_idx
 }
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

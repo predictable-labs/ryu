@@ -1,6 +1,6 @@
 add_subdirectory(query_result)
 
-add_library(kuzu_main
+add_library(ryu_main
         OBJECT
         attached_database.cpp
         client_context.cpp
@@ -18,5 +18,5 @@ add_library(kuzu_main
         settings.cpp)
 
 set(ALL_OBJECT_FILES
-        ${ALL_OBJECT_FILES} $<TARGET_OBJECTS:kuzu_main>
+        ${ALL_OBJECT_FILES} $<TARGET_OBJECTS:ryu_main>
         PARENT_SCOPE)

@@ -3,7 +3,7 @@
 #include "base_str_function.h"
 #include "common/types/ku_string.h"
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct Ltrim {
@@ -27,4 +27,4 @@ struct Ltrim {
 };
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

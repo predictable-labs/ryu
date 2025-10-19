@@ -3,14 +3,14 @@
 #include "common/constants.h"
 #include "common/vector/value_vector.h"
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
-using namespace kuzu_parquet::format;
-using namespace kuzu::common;
+using namespace ryu_parquet::format;
+using namespace ryu::common;
 
 std::unique_ptr<ColumnWriterState> StructColumnWriter::initializeWriteState(
-    kuzu_parquet::format::RowGroup& rowGroup) {
+    ryu_parquet::format::RowGroup& rowGroup) {
     auto result = std::make_unique<StructColumnWriterState>(rowGroup, rowGroup.columns.size());
 
     result->childStates.reserve(childWriters.size());
@@ -97,4 +97,4 @@ void StructColumnWriter::finalizeWrite(ColumnWriterState& state_p) {
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

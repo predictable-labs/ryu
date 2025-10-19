@@ -2,7 +2,7 @@
 
 #include "processor/execution_context.h"
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 void Skip::initLocalStateInternal(ResultSet* resultSet, ExecutionContext* /*context*/) {
@@ -58,4 +58,4 @@ bool Skip::getNextTuplesInternal(ExecutionContext* context) {
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

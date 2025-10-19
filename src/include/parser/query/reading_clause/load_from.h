@@ -5,7 +5,7 @@
 #include "parser/scan_source.h"
 #include "reading_clause.h"
 
-namespace kuzu {
+namespace ryu {
 namespace parser {
 
 class LoadFrom : public ReadingClause {
@@ -34,4 +34,4 @@ private:
 };
 
 } // namespace parser
-} // namespace kuzu
+} // namespace ryu

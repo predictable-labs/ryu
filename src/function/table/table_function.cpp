@@ -8,11 +8,11 @@
 #include "processor/operator/table_function_call.h"
 #include "processor/plan_mapper.h"
 
-using namespace kuzu::common;
-using namespace kuzu::planner;
-using namespace kuzu::processor;
+using namespace ryu::common;
+using namespace ryu::planner;
+using namespace ryu::processor;
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 void TableFuncOutput::resetState() {
@@ -112,4 +112,4 @@ offset_t TableFunction::emptyTableFunc(const TableFuncInput&, TableFuncOutput&) 
 }
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

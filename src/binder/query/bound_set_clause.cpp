@@ -1,8 +1,8 @@
 #include "binder/query/updating_clause/bound_set_clause.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
 bool BoundSetClause::hasInfo(const std::function<bool(const BoundSetPropertyInfo&)>& check) const {
@@ -26,4 +26,4 @@ std::vector<BoundSetPropertyInfo> BoundSetClause::getInfos(
 }
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

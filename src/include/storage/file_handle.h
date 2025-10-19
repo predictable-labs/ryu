@@ -18,7 +18,7 @@
 #include "storage/enums/page_read_policy.h"
 #include "storage/page_manager.h"
 
-namespace kuzu {
+namespace ryu {
 namespace main {
 class ClientContext;
 }
@@ -105,7 +105,7 @@ public:
     void resetFileInfo() { fileInfo.reset(); }
 
     uint64_t getPageSize() const {
-        return isLargePaged() ? common::TEMP_PAGE_SIZE : common::KUZU_PAGE_SIZE;
+        return isLargePaged() ? common::TEMP_PAGE_SIZE : common::RYU_PAGE_SIZE;
     }
 
     PageManager* getPageManager() { return pageManager.get(); }
@@ -169,4 +169,4 @@ private:
 };
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

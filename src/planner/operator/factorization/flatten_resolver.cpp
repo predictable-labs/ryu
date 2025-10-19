@@ -9,10 +9,10 @@
 #include "common/exception/not_implemented.h"
 #include "planner/operator/schema.h"
 
-using namespace kuzu::common;
-using namespace kuzu::binder;
+using namespace ryu::common;
+using namespace ryu::binder;
 
-namespace kuzu {
+namespace ryu {
 namespace planner {
 
 std::pair<f_group_pos, f_group_pos_set> FlattenAllButOne::getGroupsPosToFlatten(
@@ -218,4 +218,4 @@ void GroupDependencyAnalyzer::visitSubquery(std::shared_ptr<binder::Expression> 
 }
 
 } // namespace planner
-} // namespace kuzu
+} // namespace ryu

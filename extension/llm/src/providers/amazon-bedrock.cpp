@@ -7,9 +7,9 @@
 #include "function/llm_functions.h"
 #include "main/client_context.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace llm_extension {
 
 std::shared_ptr<EmbeddingProvider> BedrockEmbedding::getInstance() {
@@ -43,7 +43,7 @@ httplib::Headers BedrockEmbedding::getHeaders(const std::string& model,
         if (envAWSSecretAccessKey.empty()) {
             errMsg += envVarAWSSecretAccessKey + '\n';
         }
-        throw(RuntimeException(errMsg + std::string(referenceKuzuDocs)));
+        throw(RuntimeException(errMsg + std::string(referenceRyuDocs)));
     }
     std::string service = "bedrock";
     std::string region = this->region.value_or("");
@@ -136,4 +136,4 @@ void BedrockEmbedding::configure(const std::optional<uint64_t>& dimensions,
 }
 
 } // namespace llm_extension
-} // namespace kuzu
+} // namespace ryu

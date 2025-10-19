@@ -2,7 +2,7 @@
 
 #include "common/vector/value_vector.h"
 
-namespace kuzu::evaluator {
+namespace ryu::evaluator {
 
 class LambdaParamEvaluator;
 
@@ -108,4 +108,4 @@ private:
     std::shared_ptr<common::DataChunkState> sliceListEntryState;
 };
 
-} // namespace kuzu::evaluator
+} // namespace ryu::evaluator

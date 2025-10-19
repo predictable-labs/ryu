@@ -10,10 +10,10 @@
 #include "storage/index/hash_index.h"
 #include "storage/table/node_table.h"
 
-using namespace kuzu::common;
-using namespace kuzu::storage;
+using namespace ryu::common;
+using namespace ryu::storage;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 namespace {
@@ -158,4 +158,4 @@ void IndexLookup::lookup(transaction::Transaction* transaction, const IndexLooku
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

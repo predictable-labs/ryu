@@ -2,7 +2,7 @@
 
 #include "storage/wal/wal_record.h"
 
-namespace kuzu {
+namespace ryu {
 namespace main {
 class ClientContext;
 } // namespace main
@@ -57,4 +57,4 @@ private:
 };
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

@@ -1,1 +1,6 @@
 lcov_excl_line = LCOV_EXCL_LINE|KU_UNREACHABLE
+geninfo_gcov_tool = gcov-13
+
+# Ignore errors that occur due to stricter validation in newer gcov versions (Ubuntu 24.04)
+# These are benign issues related to compiler optimizations and parallel test execution
+geninfo_ignore_errors = negative,mismatch

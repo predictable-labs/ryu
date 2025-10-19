@@ -6,9 +6,9 @@
 #include "processor/execution_context.h"
 #include "storage/buffer_manager/memory_manager.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 ProcessorTask::ProcessorTask(Sink* sink, ExecutionContext* executionContext)
@@ -41,4 +41,4 @@ bool ProcessorTask::terminate() {
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

@@ -6,7 +6,7 @@
 #include "common/api.h"
 #include "common/serializer/writer.h"
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 
 static constexpr uint64_t SERIALIZER_DEFAULT_SIZE = 1024;
@@ -16,7 +16,7 @@ struct BinaryData {
     uint64_t size = 0;
 };
 
-class KUZU_API BufferWriter : public Writer {
+class RYU_API BufferWriter : public Writer {
 public:
     // Serializes to a buffer allocated by the serializer, will expand when
     // writing past the initial threshold.
@@ -62,4 +62,4 @@ private:
 };
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

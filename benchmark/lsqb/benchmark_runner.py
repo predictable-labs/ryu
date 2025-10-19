@@ -7,7 +7,7 @@ import sys
 
 import psutil
 
-from serializer import _get_kuzu_version
+from serializer import _get_ryu_version
 
 # Get the number of CPUs, try to use sched_getaffinity if available to account
 # for Docker CPU limits
@@ -34,9 +34,9 @@ except FileNotFoundError:
 bm_size = int((max_memory / 1024**2) * 0.9)
 base_dir = os.path.dirname(os.path.realpath(__file__))
 
-# import kuzu Python API
+# import ryu Python API
 sys.path.append(os.path.join(base_dir, "..", ".."))
-import tools.python_api.build.kuzu as kuzu
+import tools.python_api.build.ryu as ryu
 
 # dataset registration
 datasets = {"0.1", "0.3", "1", "3", "10", "30", "100"}
@@ -125,9 +125,9 @@ def run_query(conn, query_spec):
     return execution_time, compiling_time, ram_change, result
 
 
-def run_kuzu(sf, serialized_graph_path, num_threads):
-    db = kuzu.Database(os.path.join(serialized_graph_path, "db.kuzu"))
-    conn = kuzu.Connection(db, num_threads=num_threads)
+def run_ryu(sf, serialized_graph_path, num_threads):
+    db = ryu.Database(os.path.join(serialized_graph_path, "db.ryu"))
+    conn = ryu.Connection(db, num_threads=num_threads)
     if timeout is not None:
         conn.set_query_timeout(timeout)
 
@@ -149,7 +149,7 @@ def run_kuzu(sf, serialized_graph_path, num_threads):
                         "Query timed out after " + str(timeout / 1000) + " seconds"
                     )
                     results_file.write(
-                        f"KuzuDB\t{i}\t{num_threads} threads\t{sf}\tTimeout\tNA\tNA\t\n"
+                        f"RyuDB\t{i}\t{num_threads} threads\t{sf}\tTimeout\tNA\tNA\t\n"
                     )
                     results_file.flush()
                     continue
@@ -194,7 +194,7 @@ def run_kuzu(sf, serialized_graph_path, num_threads):
 
                 # Upload the result
                 results_file.write(
-                    f"KuzuDB\t{i}\t{num_threads} threads\t{sf}\t{execution_time / 1000:.4f}\t{memory / (1024 ** 3):.2f} GB\t{result[0]}\n"
+                    f"RyuDB\t{i}\t{num_threads} threads\t{sf}\t{execution_time / 1000:.4f}\t{memory / (1024 ** 3):.2f} GB\t{result[0]}\n"
                 )
                 results_file.flush()
 
@@ -211,7 +211,7 @@ if __name__ == "__main__":
         ],
     )
     logging.info("Running benchmark for scale factor %s", scale_factor)
-    logging.info("Database version: %s", _get_kuzu_version())
+    logging.info("Database version: %s", _get_ryu_version())
     logging.info("CPU cores: %d", cpu_count)
     logging.info("Using %s threads", threads)
     logging.info("Total memory: %d GiB", max_memory / 1024**3)
@@ -225,5 +225,5 @@ if __name__ == "__main__":
     serialize_dataset(dataset_name)
 
     logging.info("Running benchmark...")
-    run_kuzu(scale_factor, serialized_graphs_path[dataset_name], threads)
+    run_ryu(scale_factor, serialized_graphs_path[dataset_name], threads)
     logging.info("Benchmark finished")

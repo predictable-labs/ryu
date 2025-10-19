@@ -7,7 +7,7 @@
 
 #include "common/metric.h"
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 
 class Profiler {
@@ -31,4 +31,4 @@ public:
 };
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

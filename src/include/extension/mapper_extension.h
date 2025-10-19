@@ -3,10 +3,10 @@
 #include "planner/operator/logical_operator.h"
 #include "processor/operator/physical_operator.h"
 
-namespace kuzu {
+namespace ryu {
 namespace extension {
 
-class KUZU_API MapperExtension {
+class RYU_API MapperExtension {
 public:
     MapperExtension() {}
 
@@ -18,4 +18,4 @@ public:
 };
 
 } // namespace extension
-} // namespace kuzu
+} // namespace ryu

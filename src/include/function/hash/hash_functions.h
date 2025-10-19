@@ -11,7 +11,7 @@
 #include "common/types/types.h"
 #include "common/types/uint128_t.h"
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 constexpr const uint64_t NULL_HASH = UINT64_MAX;
@@ -141,14 +141,14 @@ inline void Hash::operation(const std::string_view& key, common::hash_t& result)
     common::hash_t hashValue = 0;
     auto data64 = reinterpret_cast<const uint64_t*>(key.data());
     for (size_t i = 0u; i < key.size() / 8; i++) {
-        auto blockHash = kuzu::function::murmurhash64(*(data64 + i));
-        hashValue = kuzu::function::combineHashScalar(hashValue, blockHash);
+        auto blockHash = ryu::function::murmurhash64(*(data64 + i));
+        hashValue = ryu::function::combineHashScalar(hashValue, blockHash);
     }
     uint64_t last = 0;
     for (size_t i = 0u; i < key.size() % 8; i++) {
         last |= static_cast<uint64_t>(key[key.size() / 8 * 8 + i]) << i * 8;
     }
-    hashValue = kuzu::function::combineHashScalar(hashValue, kuzu::function::murmurhash64(last));
+    hashValue = ryu::function::combineHashScalar(hashValue, ryu::function::murmurhash64(last));
     result = hashValue;
 }
 
@@ -184,4 +184,4 @@ struct InternalIDHasher {
 };
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

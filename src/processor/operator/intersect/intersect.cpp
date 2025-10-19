@@ -5,9 +5,9 @@
 #include "function/hash/hash_functions.h"
 #include "processor/result/factorized_table.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 std::string IntersectPrintInfo::toString() const {
@@ -225,4 +225,4 @@ bool Intersect::getNextTuplesInternal(ExecutionContext* context) {
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

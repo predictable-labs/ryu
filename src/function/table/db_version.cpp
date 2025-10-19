@@ -3,17 +3,17 @@
 #include "function/table/bind_input.h"
 #include "function/table/simple_table_function.h"
 
-using namespace kuzu::common;
-using namespace kuzu::main;
+using namespace ryu::common;
+using namespace ryu::main;
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 static offset_t internalTableFunc(const TableFuncMorsel& /*morsel*/,
     const TableFuncInput& /*input*/, DataChunk& output) {
     auto& outputVector = output.getValueVectorMutable(0);
     auto pos = output.state->getSelVector()[0];
-    outputVector.setValue(pos, std::string(KUZU_VERSION));
+    outputVector.setValue(pos, std::string(RYU_VERSION));
     return 1;
 }
 
@@ -41,4 +41,4 @@ function_set DBVersionFunction::getFunctionSet() {
 }
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

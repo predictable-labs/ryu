@@ -2,7 +2,7 @@
 
 #include "common/vector/value_vector.h"
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct UnionTag {
@@ -25,4 +25,4 @@ struct UnionTag {
 };
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

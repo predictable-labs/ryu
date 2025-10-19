@@ -12,12 +12,12 @@
 #include "httplib.h"
 #include "json.hpp"
 
-namespace kuzu {
+namespace ryu {
 namespace neo4j_extension {
 
-using namespace kuzu::common;
-using namespace kuzu::main;
-using namespace kuzu::function;
+using namespace ryu::common;
+using namespace ryu::main;
+using namespace ryu::function;
 
 struct Neo4jMigrateBindData final : TableFuncBindData {
     std::shared_ptr<httplib::Client> client;
@@ -207,13 +207,13 @@ LogicalType convertFromNeo4jTypeStr(const std::string& neo4jTypeStr) {
     }
 }
 
-static LogicalType inferKuzuType(nlohmann::json types) {
-    auto kuType = convertFromNeo4jTypeStr(types[0].get<std::string>());
+static LogicalType inferRyuType(nlohmann::json types) {
+    auto ryuType = convertFromNeo4jTypeStr(types[0].get<std::string>());
     for (auto i = 1u; i < types.size(); i++) {
-        kuType = LogicalTypeUtils::combineTypes(
-            convertFromNeo4jTypeStr(types[i].get<std::string>()), kuType);
+        ryuType = LogicalTypeUtils::combineTypes(
+            convertFromNeo4jTypeStr(types[i].get<std::string>()), ryuType);
     }
-    return kuType;
+    return ryuType;
 }
 
 std::pair<std::string, std::string> getCreateNodeTableQuery(httplib::Client& cli,
@@ -230,13 +230,13 @@ std::pair<std::string, std::string> getCreateNodeTableQuery(httplib::Client& cli
             continue;
         }
         auto property = item["row"][0].get<std::string>();
-        auto kuType = inferKuzuType(item["row"][1]);
+        auto ryuType = inferRyuType(item["row"][1]);
 
-        auto newNode = stringFormat("['{}','{}','{}','{}']", nodeName, property, kuType.toString(),
+        auto newNode = stringFormat("['{}','{}','{}','{}']", nodeName, property, ryuType.toString(),
             nlohmann::to_string(item["row"][1]));
         outputTables.emplace_back(std::move(newNode));
 
-        propertyDefinitions.emplace_back(property, kuType.copy());
+        propertyDefinitions.emplace_back(property, ryuType.copy());
     }
     // According to neo4j doc: https://neo4j.com/docs/apoc/current/export/csv/:
     // Labels exported are ordered alphabetically. So we have to reorder the properties in the DDL.
@@ -293,10 +293,10 @@ std::string getCreateRelTableQuery(httplib::Client& cli, const std::string& relN
     std::vector<binder::ColumnDefinition> propertyDefinitions;
     for (const auto& item : data) {
         auto property = item["row"][0].get<std::string>();
-        auto kuType = inferKuzuType(item["row"][1]);
-        propertyTypes.emplace(property, kuType.toString());
+        auto ryuType = inferRyuType(item["row"][1]);
+        propertyTypes.emplace(property, ryuType.toString());
         originalTypes.emplace(property, nlohmann::to_string(item["row"][1]));
-        propertyDefinitions.emplace_back(property, kuType.copy());
+        propertyDefinitions.emplace_back(property, ryuType.copy());
     }
     std::sort(propertyDefinitions.begin(), propertyDefinitions.end(),
         [](const binder::ColumnDefinition& left, const binder::ColumnDefinition& right) {
@@ -395,8 +395,8 @@ std::string migrateQuery(ClientContext& /*context*/, const TableFuncBindData& bi
             outputQuery.append(",");
         }
     }
-    outputQuery.append("] as row RETURN row[1] as kuzu_table, row[2] as kuzu_property, row[3] as "
-                       "kuzu_type, row[4] as neo4j_types;");
+    outputQuery.append("] as row RETURN row[1] as ryu_table, row[2] as ryu_property, row[3] as "
+                       "ryu_type, row[4] as neo4j_types;");
     result += outputQuery;
     return result;
 }
@@ -434,4 +434,4 @@ function_set Neo4jMigrateFunction::getFunctionSet() {
 }
 
 } // namespace neo4j_extension
-} // namespace kuzu
+} // namespace ryu

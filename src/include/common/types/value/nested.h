@@ -4,17 +4,17 @@
 
 #include "common/api.h"
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 
 class Value;
 
 class NestedVal {
 public:
-    KUZU_API static uint32_t getChildrenSize(const Value* val);
+    RYU_API static uint32_t getChildrenSize(const Value* val);
 
-    KUZU_API static Value* getChildVal(const Value* val, uint32_t idx);
+    RYU_API static Value* getChildVal(const Value* val, uint32_t idx);
 };
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

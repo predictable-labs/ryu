@@ -16,7 +16,7 @@
 #include "logging.h"
 #include "util.h"
 
-namespace kuzu {
+namespace ryu {
 namespace regex {
 
 class RE2;
@@ -127,6 +127,6 @@ private:
 };
 
 } // namespace regex
-} // namespace kuzu
+} // namespace ryu
 
 #endif // RE2_PREFILTER_H_

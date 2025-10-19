@@ -2,7 +2,7 @@
 
 #include "planner/operator/logical_operator.h"
 
-namespace kuzu {
+namespace ryu {
 namespace planner {
 
 class LogicalSimple : public LogicalOperator {
@@ -18,4 +18,4 @@ public:
 };
 
 } // namespace planner
-} // namespace kuzu
+} // namespace ryu

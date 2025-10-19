@@ -20,7 +20,7 @@
 #ifndef THRIFT_PROTOCOL_TPROTOCOLTYPES_H_
 #define THRIFT_PROTOCOL_TPROTOCOLTYPES_H_ 1
 
-namespace kuzu_apache {
+namespace ryu_apache {
 namespace thrift {
 namespace protocol {
 
@@ -31,6 +31,6 @@ enum PROTOCOL_TYPES {
 };
 }
 }
-} // kuzu_apache::thrift::protocol
+} // ryu_apache::thrift::protocol
 
 #endif // #define _THRIFT_PROTOCOL_TPROTOCOLTYPES_H_ 1

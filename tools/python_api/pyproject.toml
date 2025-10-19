@@ -1,5 +1,5 @@
 [project]
-name = "kuzu"
+name = "ryu"
 description = "Highly scalable, extremely fast, easy-to-use embeddable graph database"
 readme = "README.md"
 license = { text = "MIT" }
@@ -7,10 +7,10 @@ keywords = ["graph", "database"]
 version = "0.0.1"
 
 [project.urls]
-Homepage = "https://kuzudb.com/"
-Documentation = "https://docs.kuzudb.com/"
-Repository = "https://github.com/kuzudb/kuzu"
-Changelog = "https://github.com/kuzudb/kuzu/releases"
+Homepage = "https://ryugraph.com/"
+Documentation = "https://docs.ryugraph.com/"
+Repository = "https://github.com/ryugraph/ryu"
+Changelog = "https://github.com/ryugraph/ryu/releases"
 
 [tool.mypy]
 files = ["src_py", "test"]
@@ -27,7 +27,7 @@ disable_error_code = [
 
 [[tool.mypy.overrides]]
 module = [
-  "_kuzu.*",
+  "_ryu.*",
   "networkx.*",
   "pandas.*",
   "pyarrow.*",

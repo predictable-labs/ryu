@@ -17,11 +17,11 @@
 #include "storage/table/csr_chunked_node_group.h"
 #include "storage/table/rel_table.h"
 
-using namespace kuzu::catalog;
-using namespace kuzu::common;
-using namespace kuzu::storage;
+using namespace ryu::catalog;
+using namespace ryu::common;
+using namespace ryu::storage;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 std::string RelBatchInsertPrintInfo::toString() const {
@@ -276,4 +276,4 @@ void RelBatchInsert::updateProgress(const ExecutionContext* context) const {
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

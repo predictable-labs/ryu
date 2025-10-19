@@ -5,11 +5,11 @@
 
 #include "common/api.h"
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 
 // Type used to represent time (microseconds)
-struct KUZU_API dtime_t {
+struct RYU_API dtime_t {
     int64_t micros;
 
     dtime_t();
@@ -38,24 +38,23 @@ struct KUZU_API dtime_t {
 class Time {
 public:
     // Convert a string in the format "hh:mm:ss" to a time object
-    KUZU_API static dtime_t fromCString(const char* buf, uint64_t len);
-    KUZU_API static bool tryConvertInterval(const char* buf, uint64_t len, uint64_t& pos,
+    RYU_API static dtime_t fromCString(const char* buf, uint64_t len);
+    RYU_API static bool tryConvertInterval(const char* buf, uint64_t len, uint64_t& pos,
         dtime_t& result);
-    KUZU_API static bool tryConvertTime(const char* buf, uint64_t len, uint64_t& pos,
+    RYU_API static bool tryConvertTime(const char* buf, uint64_t len, uint64_t& pos,
         dtime_t& result);
 
     // Convert a time object to a string in the format "hh:mm:ss"
-    KUZU_API static std::string toString(dtime_t time);
+    RYU_API static std::string toString(dtime_t time);
 
-    KUZU_API static dtime_t fromTime(int32_t hour, int32_t minute, int32_t second,
+    RYU_API static dtime_t fromTime(int32_t hour, int32_t minute, int32_t second,
         int32_t microseconds = 0);
 
     // Extract the time from a given timestamp object
-    KUZU_API static void convert(dtime_t time, int32_t& out_hour, int32_t& out_min,
-        int32_t& out_sec, int32_t& out_micros);
+    RYU_API static void convert(dtime_t time, int32_t& out_hour, int32_t& out_min, int32_t& out_sec,
+        int32_t& out_micros);
 
-    KUZU_API static bool isValid(int32_t hour, int32_t minute, int32_t second,
-        int32_t milliseconds);
+    RYU_API static bool isValid(int32_t hour, int32_t minute, int32_t second, int32_t milliseconds);
 
 private:
     static bool tryConvertInternal(const char* buf, uint64_t len, uint64_t& pos, dtime_t& result);
@@ -64,4 +63,4 @@ private:
 };
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

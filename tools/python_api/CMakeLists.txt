@@ -1,14 +1,14 @@
 include(FetchContent)
-project(_kuzu)
+project(_ryu)
 
 set(CMAKE_CXX_STANDARD 20)
 
 file(GLOB SOURCE_PY
         "src_py/*")
 
-pybind11_add_module(_kuzu
+pybind11_add_module(_ryu
         SHARED
-        src_cpp/kuzu_binding.cpp
+        src_cpp/ryu_binding.cpp
         src_cpp/cached_import/py_cached_item.cpp
         src_cpp/cached_import/py_cached_import.cpp
         src_cpp/py_connection.cpp
@@ -27,21 +27,21 @@ pybind11_add_module(_kuzu
         src_cpp/numpy/numpy_type.cpp
         src_cpp/numpy/numpy_scan.cpp)
 
-set_target_properties(_kuzu
+set_target_properties(_ryu
         PROPERTIES
-        LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/build/kuzu"
-        RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/build/kuzu"
-        ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/build/kuzu")
+        LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/build/ryu"
+        RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/build/ryu"
+        ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/build/ryu")
 
-target_link_libraries(_kuzu
+target_link_libraries(_ryu
         PRIVATE
-        kuzu)
+        ryu)
 
 target_include_directories(
-        _kuzu
+        _ryu
         PUBLIC
         src_cpp/include)
 
-get_target_property(PYTHON_DEST _kuzu LIBRARY_OUTPUT_DIRECTORY)
+get_target_property(PYTHON_DEST _ryu LIBRARY_OUTPUT_DIRECTORY)
 
 file(COPY ${SOURCE_PY} DESTINATION ${PYTHON_DEST})

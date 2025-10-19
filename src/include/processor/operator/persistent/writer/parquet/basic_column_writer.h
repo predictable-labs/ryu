@@ -3,17 +3,17 @@
 #include "parquet_types.h"
 #include "processor/operator/persistent/writer/parquet/column_writer.h"
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 class BasicColumnWriterState : public ColumnWriterState {
 public:
-    BasicColumnWriterState(kuzu_parquet::format::RowGroup& rowGroup, uint64_t colIdx)
+    BasicColumnWriterState(ryu_parquet::format::RowGroup& rowGroup, uint64_t colIdx)
         : rowGroup{rowGroup}, colIdx{colIdx} {
         pageInfo.emplace_back();
     }
 
-    kuzu_parquet::format::RowGroup& rowGroup;
+    ryu_parquet::format::RowGroup& rowGroup;
     uint64_t colIdx;
     std::vector<PageInformation> pageInfo;
     std::vector<PageWriteInformation> writeInfo;
@@ -31,7 +31,7 @@ public:
 
 public:
     std::unique_ptr<ColumnWriterState> initializeWriteState(
-        kuzu_parquet::format::RowGroup& rowGroup) override;
+        ryu_parquet::format::RowGroup& rowGroup) override;
     void prepare(ColumnWriterState& state, ColumnWriterState* parent, common::ValueVector* vector,
         uint64_t count) override;
     void beginWrite(ColumnWriterState& state) override;
@@ -42,8 +42,8 @@ protected:
     void writeLevels(common::Serializer& bufferedSerializer, const std::vector<uint16_t>& levels,
         uint64_t maxValue, uint64_t startOffset, uint64_t count);
 
-    virtual kuzu_parquet::format::Encoding::type getEncoding(BasicColumnWriterState& /*state*/) {
-        return kuzu_parquet::format::Encoding::PLAIN;
+    virtual ryu_parquet::format::Encoding::type getEncoding(BasicColumnWriterState& /*state*/) {
+        return ryu_parquet::format::Encoding::PLAIN;
     }
 
     void nextPage(BasicColumnWriterState& state);
@@ -85,9 +85,9 @@ protected:
     }
 
     void setParquetStatistics(BasicColumnWriterState& state,
-        kuzu_parquet::format::ColumnChunk& column);
-    void registerToRowGroup(kuzu_parquet::format::RowGroup& rowGroup);
+        ryu_parquet::format::ColumnChunk& column);
+    void registerToRowGroup(ryu_parquet::format::RowGroup& rowGroup);
 };
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

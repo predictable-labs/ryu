@@ -17,7 +17,7 @@
 #include <stddef.h>   /* size_t */
 
 
-namespace kuzu_zstd {
+namespace ryu_zstd {
 /* --- simple histogram functions --- */
 
 /*! HIST_count():

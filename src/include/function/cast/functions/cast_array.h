@@ -3,9 +3,9 @@
 #include "common/types/types.h"
 #include "common/vector/value_vector.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct CastArrayHelper {
@@ -20,4 +20,4 @@ struct CastArrayHelper {
 };
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

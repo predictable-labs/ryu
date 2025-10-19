@@ -2,7 +2,7 @@
 
 #include "common/types/types.h"
 
-namespace kuzu {
+namespace ryu {
 namespace duckdb_extension {
 
 class DuckDBTypeConverter {
@@ -15,4 +15,4 @@ private:
 };
 
 } // namespace duckdb_extension
-} // namespace kuzu
+} // namespace ryu

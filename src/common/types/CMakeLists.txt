@@ -1,6 +1,6 @@
 add_subdirectory(value)
 
-add_library(kuzu_common_types
+add_library(ryu_common_types
         OBJECT
         blob.cpp
         date_t.cpp
@@ -15,5 +15,5 @@ add_library(kuzu_common_types
         uuid.cpp)
 
 set(ALL_OBJECT_FILES
-        ${ALL_OBJECT_FILES} $<TARGET_OBJECTS:kuzu_common_types>
+        ${ALL_OBJECT_FILES} $<TARGET_OBJECTS:ryu_common_types>
         PARENT_SCOPE)

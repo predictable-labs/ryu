@@ -5,13 +5,13 @@
 #include "common/exception/not_implemented.h"
 #include "function/cast/functions/cast_from_string_functions.h"
 #include "function/cast/functions/cast_string_non_nested_functions.h"
-#include "main/kuzu.h"
+#include "main/ryu.h"
 #include <emscripten/bind.h>
 #include <emscripten/val.h>
 using namespace emscripten;
-using namespace kuzu::main;
-using namespace kuzu::common;
-using namespace kuzu::processor;
+using namespace ryu::main;
+using namespace ryu::common;
+using namespace ryu::processor;
 
 // Dummy main function to make Emscripten happy
 int main() {
@@ -46,7 +46,7 @@ Value valueFromEmscriptenValue(const val& value) {
     if (type == "bigint") {
         auto str = value.call<val>("toString").as<std::string>();
         int128_t int128_val = 0;
-        kuzu::function::CastString::operation(ku_string_t{str.c_str(), str.size()}, int128_val);
+        ryu::function::CastString::operation(ku_string_t{str.c_str(), str.size()}, int128_val);
         return Value(int128_val);
     }
     if (type == "number") {
@@ -411,7 +411,7 @@ std::string getVersion() {
 /**
  * Embind declarations which expose the C++ classes to JavaScript
  */
-EMSCRIPTEN_BINDINGS(kuzu_wasm) {
+EMSCRIPTEN_BINDINGS(ryu_wasm) {
     class_<SystemConfig>("SystemConfig")
         .constructor<uint64_t, uint64_t, bool, bool, uint64_t, bool, uint64_t>()
         .constructor<>()

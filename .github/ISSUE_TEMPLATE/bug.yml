@@ -10,8 +10,8 @@ body:
   - type: input
     id: version
     attributes:
-      label: Kuzu version
-      description: What version of Kuzu are you using?
+      label: Ryu version
+      description: What version of Ryu are you using?
       placeholder: v0.4.0
     validations:
       required: false

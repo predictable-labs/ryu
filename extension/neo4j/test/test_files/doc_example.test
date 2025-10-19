@@ -7,7 +7,7 @@
 # Using DATA B from neo4j.cypher
 
 -CASE MigrateFromNeo4jDocSample
--STATEMENT load extension "${KUZU_ROOT_DIRECTORY}/extension/neo4j/build/libneo4j.kuzu_extension"
+-STATEMENT load extension "${RYU_ROOT_DIRECTORY}/extension/neo4j/build/libneo4j.ryu_extension"
 ---- ok
 -STATEMENT CALL NEO4J_MIGRATE("localhost", "neo4j", "czy990424", ["User", "City"], ["Follows", "LivesIn"]);
 ---- 5
@@ -19,16 +19,16 @@ Follows_User_User|since|INT64|["Long"]
 
 -STATEMENT CALL SHOW_TABLES() RETURN *;
 ---- 4
-0|User|NODE|local(kuzu)|
-1|City|NODE|local(kuzu)|
-2|Follows|REL|local(kuzu)|
-3|LivesIn|REL|local(kuzu)|
+0|User|NODE|local(ryu)|
+1|City|NODE|local(ryu)|
+2|Follows|REL|local(ryu)|
+3|LivesIn|REL|local(ryu)|
 -STATEMENT match (u:User)-[f:Follows]->(u1:User) return max(f.since);
 ---- 1
 2022
 
 -CASE MigrateFromNeo4jDocSampleUsingKleeneStar
--STATEMENT load extension "${KUZU_ROOT_DIRECTORY}/extension/neo4j/build/libneo4j.kuzu_extension"
+-STATEMENT load extension "${RYU_ROOT_DIRECTORY}/extension/neo4j/build/libneo4j.ryu_extension"
 ---- ok
 -STATEMENT CALL NEO4J_MIGRATE("localhost", "neo4j", "czy990424", ["*"], ["*"]);
 ---- 5
@@ -40,14 +40,14 @@ Follows_User_User|since|INT64|["Long"]
 
 -STATEMENT CALL SHOW_TABLES() RETURN *;
 ---- 8
-0|okLabel|NODE|local(kuzu)|
-3|badLabel|NODE|local(kuzu)|
-1|greatLabel|NODE|local(kuzu)|
-6|Follows|REL|local(kuzu)|
-4|User|NODE|local(kuzu)|
-2|City|NODE|local(kuzu)|
-5|LivesIn|REL|local(kuzu)|
-7|RANDOMREl|REL|local(kuzu)|
+0|okLabel|NODE|local(ryu)|
+3|badLabel|NODE|local(ryu)|
+1|greatLabel|NODE|local(ryu)|
+6|Follows|REL|local(ryu)|
+4|User|NODE|local(ryu)|
+2|City|NODE|local(ryu)|
+5|LivesIn|REL|local(ryu)|
+7|RANDOMREl|REL|local(ryu)|
 
 -STATEMENT match (u:User)-[f:Follows]->(u1:User) return max(f.since);
 ---- 1

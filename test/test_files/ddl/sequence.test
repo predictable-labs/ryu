@@ -50,18 +50,18 @@ Sequence test has been dropped.
 
 -STATEMENT CALL SHOW_SEQUENCES() RETURN * ORDER BY name;
 ---- 12
-a|local(kuzu)|1|1|1|9223372036854775807|False
-b|local(kuzu)|10|1|1|9223372036854775807|False
-c|local(kuzu)|20|1|1|9223372036854775807|False
-d|local(kuzu)|1|10|1|9223372036854775807|False
-e|local(kuzu)|-1|-5|-9223372036854775808|-1|False
-f|local(kuzu)|1|1|1|9223372036854775807|False
-g|local(kuzu)|1|1|1|9223372036854775807|False
-h|local(kuzu)|100|1|100|9223372036854775807|False
-i|local(kuzu)|1|1|1|100|False
-j|local(kuzu)|1|1|1|9223372036854775807|False
-k|local(kuzu)|1|1|1|9223372036854775807|True
-l|local(kuzu)|10|5|-100|100|True
+a|local(ryu)|1|1|1|9223372036854775807|False
+b|local(ryu)|10|1|1|9223372036854775807|False
+c|local(ryu)|20|1|1|9223372036854775807|False
+d|local(ryu)|1|10|1|9223372036854775807|False
+e|local(ryu)|-1|-5|-9223372036854775808|-1|False
+f|local(ryu)|1|1|1|9223372036854775807|False
+g|local(ryu)|1|1|1|9223372036854775807|False
+h|local(ryu)|100|1|100|9223372036854775807|False
+i|local(ryu)|1|1|1|100|False
+j|local(ryu)|1|1|1|9223372036854775807|False
+k|local(ryu)|1|1|1|9223372036854775807|True
+l|local(ryu)|10|5|-100|100|True
 
 -CASE ExpectedError
 -STATEMENT CREATE SEQUENCE err START 9223372036854775808;
@@ -220,9 +220,9 @@ Catalog exception: nextval: reached maximum value of sequence "test" 3
 ---- ok
 -STATEMENT create rel table replyOf (FROM Comment TO Comment, MANY_ONE);
 ---- ok
--STATEMENT copy Comment from '${KUZU_ROOT_DIRECTORY}/dataset/lsqb-sf01/Comment.csv' (HEADER=true);
+-STATEMENT copy Comment from '${RYU_ROOT_DIRECTORY}/dataset/lsqb-sf01/Comment.csv' (HEADER=true);
 ---- ok
--STATEMENT copy replyOf from '${KUZU_ROOT_DIRECTORY}/dataset/lsqb-sf01/Comment_replyOf_Comment.csv' (HEADER=true);
+-STATEMENT copy replyOf from '${RYU_ROOT_DIRECTORY}/dataset/lsqb-sf01/Comment_replyOf_Comment.csv' (HEADER=true);
 ---- ok
 -STATEMENT alter table Comment add propx int64 default nextval('test');
 ---- ok

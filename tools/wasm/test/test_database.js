@@ -12,8 +12,8 @@ describe("Database constructor", function () {
         return resolve(path);
       });
     });
-    const dbPath = path.join(tmpDbPath, "db.kz");
-    const testDb = new kuzu.Database(dbPath, 1 << 28 /* 256MB */);
+    const dbPath = path.join(tmpDbPath, "db.ryu");
+    const testDb = new ryu.Database(dbPath, 1 << 28 /* 256MB */);
     assert.exists(testDb);
     assert.equal(testDb.constructor.name, "Database");
     await testDb.init();
@@ -31,8 +31,8 @@ describe("Database constructor", function () {
         return resolve(path);
       });
     });
-    const dbPath = path.join(tmpDbPath, "db.kz");
-    const testDb = new kuzu.Database(dbPath);
+    const dbPath = path.join(tmpDbPath, "db.ryu");
+    const testDb = new ryu.Database(dbPath);
     assert.exists(testDb);
     assert.equal(testDb.constructor.name, "Database");
     await testDb.init();
@@ -42,8 +42,8 @@ describe("Database constructor", function () {
   });
 
   it("should create an in-memory database when no path is provided", async function () {
-    const testDb = new kuzu.Database();
-    const conn = new kuzu.Connection(testDb);
+    const testDb = new ryu.Database();
+    const conn = new ryu.Connection(testDb);
     let res = await conn.query("CREATE NODE TABLE person(name STRING, age INT64, PRIMARY KEY(name));");
     res.close();
     res = await conn.query("CREATE (:person {name: 'Alice', age: 30});");
@@ -63,8 +63,8 @@ describe("Database constructor", function () {
   });
 
   it("should create an in-memory database when empty path is provided", async function () {
-    const testDb = new kuzu.Database("");
-    const conn = new kuzu.Connection(testDb);
+    const testDb = new ryu.Database("");
+    const conn = new ryu.Connection(testDb);
     let res = await conn.query("CREATE NODE TABLE person(name STRING, age INT64, PRIMARY KEY(name));");
     res.close();
     res = await conn.query("CREATE (:person {name: 'Alice', age: 30});");

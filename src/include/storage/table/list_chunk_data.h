@@ -4,11 +4,11 @@
 #include "common/types/types.h"
 #include "storage/table/column_chunk_data.h"
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 class MemoryManager;
 
-class KUZU_API ListChunkData final : public ColumnChunkData {
+class RYU_API ListChunkData final : public ColumnChunkData {
 public:
     static constexpr common::idx_t SIZE_COLUMN_CHILD_READ_STATE_IDX = 0;
     static constexpr common::idx_t DATA_COLUMN_CHILD_READ_STATE_IDX = 1;
@@ -132,4 +132,4 @@ protected:
 };
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

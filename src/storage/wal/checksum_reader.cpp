@@ -8,8 +8,8 @@
 #include "common/serializer/deserializer.h"
 #include <bit>
 
-namespace kuzu::storage {
-static constexpr uint64_t INITIAL_BUFFER_SIZE = common::KUZU_PAGE_SIZE;
+namespace ryu::storage {
+static constexpr uint64_t INITIAL_BUFFER_SIZE = common::RYU_PAGE_SIZE;
 
 ChecksumReader::ChecksumReader(common::FileInfo& fileInfo, MemoryManager& memoryManager,
     std::string_view checksumMismatchMessage)
@@ -59,4 +59,4 @@ uint64_t ChecksumReader::getReadOffset() const {
     return deserializer.getReader()->cast<common::BufferedFileReader>()->getReadOffset();
 }
 
-} // namespace kuzu::storage
+} // namespace ryu::storage

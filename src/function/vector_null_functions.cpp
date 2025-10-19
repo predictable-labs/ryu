@@ -3,9 +3,9 @@
 #include "common/exception/runtime.h"
 #include "function/null/null_functions.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 void VectorNullFunction::bindExecFunction(ExpressionType expressionType,
@@ -47,4 +47,4 @@ void VectorNullFunction::bindSelectFunction(ExpressionType expressionType,
 }
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

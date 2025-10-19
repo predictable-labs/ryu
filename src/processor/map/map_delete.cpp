@@ -6,13 +6,13 @@
 #include "processor/plan_mapper.h"
 #include "storage/storage_manager.h"
 
-using namespace kuzu::binder;
-using namespace kuzu::catalog;
-using namespace kuzu::common;
-using namespace kuzu::planner;
-using namespace kuzu::storage;
+using namespace ryu::binder;
+using namespace ryu::catalog;
+using namespace ryu::common;
+using namespace ryu::planner;
+using namespace ryu::storage;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 std::vector<RelTable*> getFwdRelTables(table_id_t nodeTableID, const main::ClientContext* context) {
@@ -171,4 +171,4 @@ std::unique_ptr<PhysicalOperator> PlanMapper::mapDeleteRel(const LogicalOperator
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

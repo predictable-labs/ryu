@@ -17,13 +17,13 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: kuzu; Type: SCHEMA; Schema: -; Owner: ci
+-- Name: ryu; Type: SCHEMA; Schema: -; Owner: ci
 --
 
-CREATE SCHEMA kuzu;
+CREATE SCHEMA ryu;
 
 
-ALTER SCHEMA kuzu OWNER TO ci;
+ALTER SCHEMA ryu OWNER TO ci;
 
 --
 -- Name: audience_type; Type: TYPE; Schema: public; Owner: ci
@@ -103,17 +103,17 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: user; Type: TABLE; Schema: kuzu; Owner: ci
+-- Name: user; Type: TABLE; Schema: ryu; Owner: ci
 --
 
-CREATE TABLE kuzu."user" (
+CREATE TABLE ryu."user" (
     id integer,
     org character varying,
     rate integer
 );
 
 
-ALTER TABLE kuzu."user" OWNER TO ci;
+ALTER TABLE ryu."user" OWNER TO ci;
 
 --
 -- Name: movies; Type: TABLE; Schema: public; Owner: ci
@@ -188,10 +188,10 @@ CREATE TABLE public.persontest (
 ALTER TABLE public.persontest OWNER TO ci;
 
 --
--- Data for Name: user; Type: TABLE DATA; Schema: kuzu; Owner: ci
+-- Data for Name: user; Type: TABLE DATA; Schema: ryu; Owner: ci
 --
 
-COPY kuzu."user" (id, org, rate) FROM stdin;
+COPY ryu."user" (id, org, rate) FROM stdin;
 5	apple	4
 7	ms	5
 9	blackberry	7

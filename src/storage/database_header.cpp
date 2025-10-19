@@ -12,7 +12,7 @@
 #include "storage/page_manager.h"
 #include "storage/storage_version_info.h"
 
-namespace kuzu::storage {
+namespace ryu::storage {
 static void validateStorageVersion(common::Deserializer& deSer) {
     std::string key;
     deSer.validateDebuggingInfo(key, "storage_version");
@@ -38,7 +38,7 @@ static void validateMagicBytes(common::Deserializer& deSer) {
     }
     if (memcmp(magicBytes, StorageVersionInfo::MAGIC_BYTES, numMagicBytes) != 0) {
         throw common::RuntimeException(
-            "Unable to open database. The file is not a valid Kuzu database file!");
+            "Unable to open database. The file is not a valid Ryu database file!");
     }
 }
 
@@ -100,7 +100,7 @@ DatabaseHeader DatabaseHeader::createInitialHeader(common::RandomEngine* randomE
 }
 
 std::optional<DatabaseHeader> DatabaseHeader::readDatabaseHeader(common::FileInfo& dataFileInfo) {
-    if (dataFileInfo.getFileSize() < common::KUZU_PAGE_SIZE) {
+    if (dataFileInfo.getFileSize() < common::RYU_PAGE_SIZE) {
         // If the data file hasn't been written to there is no existing database header
         return std::nullopt;
     }
@@ -114,4 +114,4 @@ std::optional<DatabaseHeader> DatabaseHeader::readDatabaseHeader(common::FileInf
         return std::nullopt;
     }
 }
-} // namespace kuzu::storage
+} // namespace ryu::storage

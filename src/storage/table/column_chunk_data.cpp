@@ -27,11 +27,11 @@
 #include "storage/table/string_chunk_data.h"
 #include "storage/table/struct_chunk_data.h"
 
-using namespace kuzu::common;
-using namespace kuzu::evaluator;
-using namespace kuzu::transaction;
+using namespace ryu::common;
+using namespace ryu::evaluator;
+using namespace ryu::transaction;
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 
 void SegmentState::reclaimAllocatedPages(PageAllocator& pageAllocator) const {
@@ -365,7 +365,7 @@ void ColumnChunkData::initializeScanState(SegmentState& state, const Column* col
     state.column = column;
     if (residencyState == ResidencyState::ON_DISK) {
         state.metadata = metadata;
-        state.numValuesPerPage = state.metadata.compMeta.numValues(KUZU_PAGE_SIZE, dataType);
+        state.numValuesPerPage = state.metadata.compMeta.numValues(RYU_PAGE_SIZE, dataType);
 
         state.column->populateExtraChunkState(state);
     }
@@ -1030,7 +1030,7 @@ uint64_t ColumnChunkData::getSizeOnDisk() const {
     if (nullData) {
         nullSize = nullData->getSizeOnDisk();
     }
-    return metadata.getNumDataPages(dataType.getPhysicalType()) * common::KUZU_PAGE_SIZE + nullSize;
+    return metadata.getNumDataPages(dataType.getPhysicalType()) * common::RYU_PAGE_SIZE + nullSize;
 }
 
 uint64_t ColumnChunkData::getSizeOnDiskInMemoryStats() const {
@@ -1043,7 +1043,7 @@ uint64_t ColumnChunkData::getSizeOnDiskInMemoryStats() const {
     }
     auto metadata = getMetadataFunction(buffer->getBuffer(), numValues,
         inMemoryStats.min.value_or(StorageValue{}), inMemoryStats.max.value_or(StorageValue{}));
-    return metadata.getNumDataPages(dataType.getPhysicalType()) * common::KUZU_PAGE_SIZE + nullSize;
+    return metadata.getNumDataPages(dataType.getPhysicalType()) * common::RYU_PAGE_SIZE + nullSize;
 }
 
 std::vector<std::unique_ptr<ColumnChunkData>> ColumnChunkData::split(bool targetMaxSize) const {
@@ -1085,10 +1085,10 @@ ColumnChunkData::~ColumnChunkData() = default;
 
 uint64_t ColumnChunkData::getMinimumSizeOnDisk() const {
     if (hasNullData() && nullData->getSizeOnDisk() > 0) {
-        return 2 * KUZU_PAGE_SIZE;
+        return 2 * RYU_PAGE_SIZE;
     }
-    return KUZU_PAGE_SIZE;
+    return RYU_PAGE_SIZE;
 }
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

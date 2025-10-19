@@ -47,7 +47,7 @@
 #include <limits>
 #include <string>
 
-// kuzu - LNK: define here instead of in CMake
+// ryu - LNK: define here instead of in CMake
 #ifdef __GNUC__
 #define HAVE_BUILTIN_EXPECT 1
 #define HAVE_BUILTIN_CTZ 1
@@ -129,7 +129,7 @@
 #define SNAPPY_FLAG(flag_type, flag_name, default_value, help) \
   flag_type FLAGS_ ## flag_name = default_value
 
-namespace kuzu_snappy {
+namespace ryu_snappy {
 
 // Stubbed version of absl::GetFlag().
 template <typename T>
@@ -538,7 +538,7 @@ inline char* string_as_array(std::string* str) {
   return str->empty() ? NULL : &*str->begin();
 }
 
-}  // namespace kuzu_snappy
+}  // namespace ryu_snappy
 
 #else // #if SNAPPY_NEW_VERSION
 
@@ -552,7 +552,7 @@ inline char* string_as_array(std::string* str) {
 #include <stdlib.h>
 #include <string.h>
 
-// kuzu - LNK: define here instead of in CMake
+// ryu - LNK: define here instead of in CMake
 #ifdef __GNUC__
 #define HAVE_BUILTIN_EXPECT
 #define HAVE_BUILTIN_CTZ
@@ -631,7 +631,7 @@ inline char* string_as_array(std::string* str) {
 #define DECLARE_bool(flag_name) \
   extern bool FLAGS_ ## flag_name
 
-namespace kuzu_snappy {
+namespace ryu_snappy {
 
 //static const uint32 kuint32max = static_cast<uint32>(0xFFFFFFFF);
 //static const int64 kint64max = static_cast<int64>(0x7FFFFFFFFFFFFFFFLL);
@@ -1021,7 +1021,7 @@ inline char* string_as_array(string* str) {
   return str->empty() ? NULL : &*str->begin();
 }
 
-}  // namespace kuzu_snappy
+}  // namespace ryu_snappy
 
 #endif  // #if SNAPPY_NEW_VERSION # else
 

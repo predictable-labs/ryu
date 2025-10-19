@@ -2,7 +2,7 @@
 
 #include "column_reader.h"
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 class ListColumnReader : public ColumnReader {
@@ -11,13 +11,13 @@ public:
 
 public:
     ListColumnReader(ParquetReader& reader, common::LogicalType type,
-        const kuzu_parquet::format::SchemaElement& schema, uint64_t schemaIdx, uint64_t maxDefine,
+        const ryu_parquet::format::SchemaElement& schema, uint64_t schemaIdx, uint64_t maxDefine,
         uint64_t maxRepeat, std::unique_ptr<ColumnReader> childColumnReader,
         storage::MemoryManager* memoryManager);
 
     inline void initializeRead(uint64_t rowGroupIdx,
-        const std::vector<kuzu_parquet::format::ColumnChunk>& columns,
-        kuzu_apache::thrift::protocol::TProtocol& protocol) override {
+        const std::vector<ryu_parquet::format::ColumnChunk>& columns,
+        ryu_apache::thrift::protocol::TProtocol& protocol) override {
         childColumnReader->initializeRead(rowGroupIdx, columns, protocol);
     }
 
@@ -51,4 +51,4 @@ private:
 };
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

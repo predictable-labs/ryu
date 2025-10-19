@@ -7,7 +7,7 @@
 #include "common/serializer/writer.h"
 #include "storage/buffer_manager/memory_manager.h"
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 class ChecksumWriter;
 
@@ -37,4 +37,4 @@ private:
 };
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

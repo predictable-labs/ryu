@@ -34,29 +34,29 @@ jobs:
 
       - name: Collect artifacts
         run: |
-          mv install/include/kuzu.h .
-          mv install/include/kuzu.hpp .
-          mv install/lib/libkuzu.dylib .
-          mv install/bin/kuzu .
+          mv install/include/ryu.h .
+          mv install/include/ryu.hpp .
+          mv install/lib/libryu.dylib .
+          mv install/bin/ryu .
 
       - name: Verify binary information
         run: |
-          file -b kuzu
-          otool -l kuzu | grep minos
-          file -b libkuzu.dylib
-          otool -l libkuzu.dylib | grep minos
+          file -b ryu
+          otool -l ryu | grep minos
+          file -b libryu.dylib
+          otool -l libryu.dylib | grep minos
 
       - name: Create tarball
         run: |
-          tar -czvf libkuzu-osx-universal.tar.gz kuzu.h kuzu.hpp libkuzu.dylib
-          tar -czvf kuzu_cli-osx-universal.tar.gz kuzu
+          tar -czvf libryu-osx-universal.tar.gz ryu.h ryu.hpp libryu.dylib
+          tar -czvf ryu_cli-osx-universal.tar.gz ryu
 
       - uses: actions/upload-artifact@v4
         with:
-          name: libkuzu-osx-universal
-          path: libkuzu-osx-universal.tar.gz
+          name: libryu-osx-universal
+          path: libryu-osx-universal.tar.gz
 
       - uses: actions/upload-artifact@v4
         with:
-          name: kuzu_cli-osx-universal
-          path: kuzu_cli-osx-universal.tar.gz
+          name: ryu_cli-osx-universal
+          path: ryu_cli-osx-universal.tar.gz

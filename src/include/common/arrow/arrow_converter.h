@@ -8,7 +8,7 @@
 
 struct ArrowSchema;
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 
 struct ArrowSchemaHolder {
@@ -45,4 +45,4 @@ private:
 };
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

@@ -16,34 +16,34 @@ Catalog exception: function TO_JSON is not defined. This function exists in the 
 
 -CASE LoadFromError
 -LOAD_DYNAMIC_EXTENSION json
--STATEMENT LOAD FROM '${KUZU_ROOT_DIRECTORY}/dataset/json-error/structured.json' RETURN *;
+-STATEMENT LOAD FROM '${RYU_ROOT_DIRECTORY}/dataset/json-error/structured.json' RETURN *;
 ---- error
-Copy exception: Error in file ${KUZU_ROOT_DIRECTORY}/dataset/json-error/structured.json on line 3: Malformed JSON: unexpected character, expected a valid JSON value. Line/record containing the error: '{"c":}...'
+Copy exception: Error in file ${RYU_ROOT_DIRECTORY}/dataset/json-error/structured.json on line 3: Malformed JSON: unexpected character, expected a valid JSON value. Line/record containing the error: '{"c":}...'
 
--STATEMENT LOAD FROM '${KUZU_ROOT_DIRECTORY}/dataset/json-error/structured_trailing_comma.json' RETURN *;
+-STATEMENT LOAD FROM '${RYU_ROOT_DIRECTORY}/dataset/json-error/structured_trailing_comma.json' RETURN *;
 ---- error
-Copy exception: Error in file ${KUZU_ROOT_DIRECTORY}/dataset/json-error/structured_trailing_comma.json on line 11: Malformed JSON: unexpected character, expected a valid root value. Line/record containing the error: ']...'
--STATEMENT LOAD FROM '${KUZU_ROOT_DIRECTORY}/dataset/json-error/newline_delimited_invalid_value.json' RETURN *;
+Copy exception: Error in file ${RYU_ROOT_DIRECTORY}/dataset/json-error/structured_trailing_comma.json on line 11: Malformed JSON: unexpected character, expected a valid root value. Line/record containing the error: ']...'
+-STATEMENT LOAD FROM '${RYU_ROOT_DIRECTORY}/dataset/json-error/newline_delimited_invalid_value.json' RETURN *;
 ---- error
-Copy exception: Error in file ${KUZU_ROOT_DIRECTORY}/dataset/json-error/newline_delimited_invalid_value.json on line 2: Malformed JSON: unexpected character, expected a comma or a closing brace. Line/record containing the error: '{"b": 2a...'
--STATEMENT LOAD FROM '${KUZU_ROOT_DIRECTORY}/dataset/json-error/newline_delimited_invalid_format.json' RETURN *;
+Copy exception: Error in file ${RYU_ROOT_DIRECTORY}/dataset/json-error/newline_delimited_invalid_value.json on line 2: Malformed JSON: unexpected character, expected a comma or a closing brace. Line/record containing the error: '{"b": 2a...'
+-STATEMENT LOAD FROM '${RYU_ROOT_DIRECTORY}/dataset/json-error/newline_delimited_invalid_format.json' RETURN *;
 ---- error
-Copy exception: Error in file ${KUZU_ROOT_DIRECTORY}/dataset/json-error/newline_delimited_invalid_format.json on line 1: Malformed JSON: unexpected character, expected a valid root value. Line/record containing the error: ',...'
--STATEMENT LOAD FROM '${KUZU_ROOT_DIRECTORY}/dataset/json-error/unstructured.json'(format='unstructured') RETURN *;
+Copy exception: Error in file ${RYU_ROOT_DIRECTORY}/dataset/json-error/newline_delimited_invalid_format.json on line 1: Malformed JSON: unexpected character, expected a valid root value. Line/record containing the error: ',...'
+-STATEMENT LOAD FROM '${RYU_ROOT_DIRECTORY}/dataset/json-error/unstructured.json'(format='unstructured') RETURN *;
 ---- error(regex)
-Copy exception: Error in file ${KUZU_ROOT_DIRECTORY}/dataset/json-error/unstructured.json on line 5: Malformed JSON: unexpected character, expected a valid JSON value. Line/record containing the error: '\{\s*"c":3,\s*"d":,...'
--STATEMENT LOAD FROM "${KUZU_ROOT_DIRECTORY}/dataset/tinysnb_json/vMovies.json"(IGNORE_ERRORS="abc") RETURN *;
+Copy exception: Error in file ${RYU_ROOT_DIRECTORY}/dataset/json-error/unstructured.json on line 5: Malformed JSON: unexpected character, expected a valid JSON value. Line/record containing the error: '\{\s*"c":3,\s*"d":,...'
+-STATEMENT LOAD FROM "${RYU_ROOT_DIRECTORY}/dataset/tinysnb_json/vMovies.json"(IGNORE_ERRORS="abc") RETURN *;
 ---- error
 Binder exception: IGNORE_ERRORS parameter must be a bool.
--STATEMENT LOAD FROM "${KUZU_ROOT_DIRECTORY}/dataset/tinysnb_json/vMovies.json"(AUTO_DETECT=false) RETURN *;
+-STATEMENT LOAD FROM "${RYU_ROOT_DIRECTORY}/dataset/tinysnb_json/vMovies.json"(AUTO_DETECT=false) RETURN *;
 ---- error
-Binder exception: When auto-detect is set to false, Kuzu requires the user to provide column names and types in the LOAD FROM clause.
--STATEMENT LOAD FROM "${KUZU_ROOT_DIRECTORY}/dataset/tinysnb_json/vMovies.json"(AUTO_DETECT=false) RETURN *;
+Binder exception: When auto-detect is set to false, Ryu requires the user to provide column names and types in the LOAD FROM clause.
+-STATEMENT LOAD FROM "${RYU_ROOT_DIRECTORY}/dataset/tinysnb_json/vMovies.json"(AUTO_DETECT=false) RETURN *;
 ---- error
-Binder exception: When auto-detect is set to false, Kuzu requires the user to provide column names and types in the LOAD FROM clause.
--STATEMENT LOAD FROM "${KUZU_ROOT_DIRECTORY}/dataset/tinysnb_json/vMovies_unstructured.json"(FORMAT='ARRAY') RETURN *;
+Binder exception: When auto-detect is set to false, Ryu requires the user to provide column names and types in the LOAD FROM clause.
+-STATEMENT LOAD FROM "${RYU_ROOT_DIRECTORY}/dataset/tinysnb_json/vMovies_unstructured.json"(FORMAT='ARRAY') RETURN *;
 ---- error
-Expected top-level JSON array with format='array', but first character is '{' in file "${KUZU_ROOT_DIRECTORY}/dataset/tinysnb_json/vMovies_unstructured.json".
+Expected top-level JSON array with format='array', but first character is '{' in file "${RYU_ROOT_DIRECTORY}/dataset/tinysnb_json/vMovies_unstructured.json".
 Try setting format='auto' or format='newline_delimited'.
 
 -CASE JsonTypeInvalidUsage
@@ -53,9 +53,9 @@ Try setting format='auto' or format='newline_delimited'.
 Binder exception: Invalid primary key column type json. Primary keys must be either STRING or a numeric type.
 -STATEMENT CREATE NODE TABLE PERSON (ID INT64, NAME JSON, description STRING, PRIMARY KEY(ID));
 ---- ok
--STATEMENT CREATE (p:PERSON {ID: 52, NAME: 'KUZU', DESCRIPTION: 'good'});
+-STATEMENT CREATE (p:PERSON {ID: 52, NAME: 'RYU', DESCRIPTION: 'good'});
 ---- error
-Conversion exception: Cannot convert KUZU to JSON.
+Conversion exception: Cannot convert RYU to JSON.
 -STATEMENT CREATE (p:PERSON {ID: 52, NAME: '', DESCRIPTION: 'good'});
 ---- error
 Conversion exception: Cannot convert  to JSON.

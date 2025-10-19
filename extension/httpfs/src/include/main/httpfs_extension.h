@@ -2,7 +2,7 @@
 
 #include "extension/extension.h"
 
-namespace kuzu {
+namespace ryu {
 namespace httpfs_extension {
 
 class HttpfsExtension : public extension::Extension {
@@ -14,4 +14,4 @@ public:
 };
 
 } // namespace httpfs_extension
-} // namespace kuzu
+} // namespace ryu

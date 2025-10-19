@@ -7,12 +7,12 @@
 #include "function/built_in_function_utils.h"
 #include "transaction/transaction.h"
 
-using namespace kuzu::common;
-using namespace kuzu::catalog;
-using namespace kuzu::parser;
-using namespace kuzu::function;
+using namespace ryu::common;
+using namespace ryu::catalog;
+using namespace ryu::parser;
+using namespace ryu::function;
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
 std::shared_ptr<Expression> ExpressionBinder::bindComparisonExpression(
@@ -93,4 +93,4 @@ std::shared_ptr<Expression> ExpressionBinder::createEqualityComparisonExpression
 }
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

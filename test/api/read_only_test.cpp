@@ -1,7 +1,7 @@
 #include "api_test/api_test.h"
 
-using namespace kuzu::common;
-using namespace kuzu::testing;
+using namespace ryu::common;
+using namespace ryu::testing;
 
 class ReadOnlyTest : public ApiTest {};
 

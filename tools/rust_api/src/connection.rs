@@ -30,7 +30,7 @@ pub struct PreparedStatement {
 /// [error](Error::FailedQuery) if another write query is in progress.
 ///
 /// ```
-/// # use kuzu::{Connection, Database, SystemConfig, Value, Error};
+/// # use ryu::{Connection, Database, SystemConfig, Value, Error};
 /// # fn main() -> anyhow::Result<()> {
 /// # let temp_dir = tempfile::tempdir()?;
 /// # let db = Database::new(temp_dir.path().join("testdb"), SystemConfig::default())?;
@@ -106,7 +106,7 @@ impl<'a> Connection<'a> {
     /// using [`Connection::execute`]
     ///
     /// # Arguments
-    /// * `query`: The query to prepare. See <https://kuzudb.com/docs/cypher> for details on the
+    /// * `query`: The query to prepare. See <https://ryugraph.com/docs/cypher> for details on the
     ///   query format.
     pub fn prepare(&self, query: &str) -> Result<PreparedStatement, Error> {
         let statement =
@@ -123,14 +123,14 @@ impl<'a> Connection<'a> {
     /// Executes the given query and returns the result.
     ///
     /// # Arguments
-    /// * `query`: The query to execute. See <https://kuzudb.com/docs/cypher> for details on the
+    /// * `query`: The query to execute. See <https://ryugraph.com/docs/cypher> for details on the
     ///   query format.
     // TODO(bmwinger): Instead of having a Value enum in the results, perhaps QueryResult, and thus query
     // should be generic.
     //
     // E.g.
-    // let result: QueryResult<kuzu::value::List<kuzu::value::String>> = conn.query("...")?;
-    // let result: QueryResult<kuzu::value::Int64> = conn.query("...")?;
+    // let result: QueryResult<ryu::value::List<ryu::value::String>> = conn.query("...")?;
+    // let result: QueryResult<ryu::value::Int64> = conn.query("...")?;
     //
     // But this would really just be syntactic sugar wrapping the current system
     pub fn query(&self, query: &str) -> Result<QueryResult<'a>, Error> {
@@ -150,7 +150,7 @@ impl<'a> Connection<'a> {
     /// # Arguments
     /// * `prepared_statement`: The prepared statement to execute
     ///```
-    /// # use kuzu::{Database, SystemConfig, Connection, Value};
+    /// # use ryu::{Database, SystemConfig, Connection, Value};
     /// # use anyhow::Error;
     /// #
     /// # fn main() -> Result<(), Error> {
@@ -372,12 +372,12 @@ Invalid input <MATCH (a:Person RETURN>: expected rule oC_SingleQuery (line: 1, o
                 let db = Database::new(temp_dir.path().join("testdb"), SYSTEM_CONFIG_FOR_TESTS)?;
                 let conn = Connection::new(&db)?;
                 let directory: String = if cfg!(windows) {
-                    std::env::var("KUZU_LOCAL_EXTENSIONS")?.replace("\\", "/")
+                    std::env::var("RYU_LOCAL_EXTENSIONS")?.replace("\\", "/")
                 } else {
-                    std::env::var("KUZU_LOCAL_EXTENSIONS")?
+                    std::env::var("RYU_LOCAL_EXTENSIONS")?
                 };
                 let name = stringify!($name);
-                conn.query(&format!("LOAD EXTENSION '{directory}/{name}/build/lib{name}.kuzu_extension'"))?;
+                conn.query(&format!("LOAD EXTENSION '{directory}/{name}/build/lib{name}.ryu_extension'"))?;
                 Ok(())
             }
         )*

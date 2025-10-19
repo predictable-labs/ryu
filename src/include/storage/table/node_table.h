@@ -5,7 +5,7 @@
 #include "storage/table/node_group_collection.h"
 #include "storage/table/table.h"
 
-namespace kuzu {
+namespace ryu {
 namespace evaluator {
 class ExpressionEvaluator;
 } // namespace evaluator
@@ -20,7 +20,7 @@ class Transaction;
 
 namespace storage {
 
-struct KUZU_API NodeTableScanState : TableScanState {
+struct RYU_API NodeTableScanState : TableScanState {
     NodeTableScanState(common::ValueVector* nodeIDVector,
         std::vector<common::ValueVector*> outputVectors,
         std::shared_ptr<common::DataChunkState> outChunkState)
@@ -41,7 +41,7 @@ struct KUZU_API NodeTableScanState : TableScanState {
 
 // There is a vtable bug related to the Apple clang v15.0.0+. Adding the `FINAL` specifier to
 // derived class causes casting failures in Apple platform.
-struct KUZU_API NodeTableInsertState : TableInsertState {
+struct RYU_API NodeTableInsertState : TableInsertState {
     common::ValueVector& nodeIDVector;
     const common::ValueVector& pkVector;
     std::vector<std::unique_ptr<Index::InsertState>> indexInsertStates;
@@ -54,7 +54,7 @@ struct KUZU_API NodeTableInsertState : TableInsertState {
     NodeTableInsertState(const NodeTableInsertState&) = delete;
 };
 
-struct KUZU_API NodeTableUpdateState : TableUpdateState {
+struct RYU_API NodeTableUpdateState : TableUpdateState {
     common::ValueVector& nodeIDVector;
     std::vector<std::unique_ptr<Index::UpdateState>> indexUpdateState;
 
@@ -69,7 +69,7 @@ struct KUZU_API NodeTableUpdateState : TableUpdateState {
     }
 };
 
-struct KUZU_API NodeTableDeleteState : TableDeleteState {
+struct RYU_API NodeTableDeleteState : TableDeleteState {
     common::ValueVector& nodeIDVector;
     common::ValueVector& pkVector;
 
@@ -107,7 +107,7 @@ private:
 
 class StorageManager;
 
-class KUZU_API NodeTable final : public Table {
+class RYU_API NodeTable final : public Table {
 public:
     NodeTable(const StorageManager* storageManager,
         const catalog::NodeTableCatalogEntry* nodeTableEntry, MemoryManager* mm);
@@ -227,4 +227,4 @@ private:
 };
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

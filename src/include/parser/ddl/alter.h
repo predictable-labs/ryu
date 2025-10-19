@@ -3,7 +3,7 @@
 #include "alter_info.h"
 #include "parser/statement.h"
 
-namespace kuzu {
+namespace ryu {
 namespace parser {
 
 class Alter : public Statement {
@@ -19,4 +19,4 @@ private:
 };
 
 } // namespace parser
-} // namespace kuzu
+} // namespace ryu

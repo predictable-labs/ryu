@@ -20,15 +20,15 @@
 #include "processor/execution_context.h"
 #include "transaction/transaction.h"
 
-using namespace kuzu::binder;
-using namespace kuzu::common;
-using namespace kuzu::processor;
-using namespace kuzu::storage;
-using namespace kuzu::graph;
-using namespace kuzu::function;
-using namespace kuzu::planner;
+using namespace ryu::binder;
+using namespace ryu::common;
+using namespace ryu::processor;
+using namespace ryu::storage;
+using namespace ryu::graph;
+using namespace ryu::function;
+using namespace ryu::planner;
 
-namespace kuzu {
+namespace ryu {
 namespace algo_extension {
 
 // Computes a spanning forest using Kruskal's algorithm:
@@ -467,4 +467,4 @@ function_set SpanningForest::getFunctionSet() {
 }
 
 } // namespace algo_extension
-} // namespace kuzu
+} // namespace ryu

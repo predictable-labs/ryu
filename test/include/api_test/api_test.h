@@ -2,7 +2,7 @@
 
 #include "graph_test/base_graph_test.h"
 
-namespace kuzu {
+namespace ryu {
 namespace testing {
 
 class ApiTest : public BaseGraphTest {
@@ -13,10 +13,8 @@ public:
         initGraph();
     }
 
-    std::string getInputDir() override {
-        return TestHelper::appendKuzuRootPath("dataset/tinysnb/");
-    }
+    std::string getInputDir() override { return TestHelper::appendRyuRootPath("dataset/tinysnb/"); }
 };
 
 } // namespace testing
-} // namespace kuzu
+} // namespace ryu
