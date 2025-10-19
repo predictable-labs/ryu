@@ -5,7 +5,7 @@
 #include "common/vector/value_vector.h"
 #include "parquet_types.h"
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 class ParquetWriter;
 
@@ -22,7 +22,7 @@ public:
 };
 
 struct PageWriteInformation {
-    kuzu_parquet::format::PageHeader pageHeader;
+    ryu_parquet::format::PageHeader pageHeader;
     std::shared_ptr<common::BufferWriter> bufferWriter;
     std::unique_ptr<common::Serializer> writer;
     std::unique_ptr<ColumnWriterPageState> pageState;
@@ -63,14 +63,14 @@ public:
     // TODO(Ziyi): We currently don't have statistics to indicate whether a column
     // has null value or not. So canHaveNullsToCreate is always true.
     static std::unique_ptr<ColumnWriter> createWriterRecursive(
-        std::vector<kuzu_parquet::format::SchemaElement>& schemas, ParquetWriter& writer,
+        std::vector<ryu_parquet::format::SchemaElement>& schemas, ParquetWriter& writer,
         const common::LogicalType& type, const std::string& name,
         std::vector<std::string> schemaPathToCreate, storage::MemoryManager* mm,
         uint64_t maxRepeatToCreate = 0, uint64_t maxDefineToCreate = 1,
         bool canHaveNullsToCreate = true);
 
     virtual std::unique_ptr<ColumnWriterState> initializeWriteState(
-        kuzu_parquet::format::RowGroup& rowGroup) = 0;
+        ryu_parquet::format::RowGroup& rowGroup) = 0;
     // Indicates whether the write need to analyse the data before preparing it.
     virtual bool hasAnalyze() { return false; }
     virtual void analyze(ColumnWriterState& /*state*/, ColumnWriterState* /*parent*/,
@@ -106,4 +106,4 @@ protected:
 };
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

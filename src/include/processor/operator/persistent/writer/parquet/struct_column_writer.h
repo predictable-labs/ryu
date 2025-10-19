@@ -2,7 +2,7 @@
 
 #include "processor/operator/persistent/writer/parquet/column_writer.h"
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 class StructColumnWriter : public ColumnWriter {
@@ -17,7 +17,7 @@ public:
 
 public:
     std::unique_ptr<ColumnWriterState> initializeWriteState(
-        kuzu_parquet::format::RowGroup& rowGroup) override;
+        ryu_parquet::format::RowGroup& rowGroup) override;
     bool hasAnalyze() override;
     void analyze(ColumnWriterState& state, ColumnWriterState* parent, common::ValueVector* vector,
         uint64_t count) override;
@@ -32,13 +32,13 @@ public:
 
 class StructColumnWriterState : public ColumnWriterState {
 public:
-    StructColumnWriterState(kuzu_parquet::format::RowGroup& rowGroup, uint64_t colIdx)
+    StructColumnWriterState(ryu_parquet::format::RowGroup& rowGroup, uint64_t colIdx)
         : rowGroup(rowGroup), colIdx(colIdx) {}
 
-    kuzu_parquet::format::RowGroup& rowGroup;
+    ryu_parquet::format::RowGroup& rowGroup;
     uint64_t colIdx;
     std::vector<std::unique_ptr<ColumnWriterState>> childStates;
 };
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

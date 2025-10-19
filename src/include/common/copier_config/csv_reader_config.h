@@ -5,7 +5,7 @@
 #include "common/copy_constructors.h"
 #include "common/types/value/value.h"
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 
 struct CSVOption {
@@ -109,4 +109,4 @@ private:
 };
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

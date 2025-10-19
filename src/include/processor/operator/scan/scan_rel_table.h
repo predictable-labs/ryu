@@ -6,7 +6,7 @@
 #include "storage/predicate/column_predicate.h"
 #include "storage/table/rel_table.h"
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 class MemoryManager;
 }
@@ -84,4 +84,4 @@ protected:
 };
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

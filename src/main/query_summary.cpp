@@ -2,9 +2,9 @@
 
 #include "common/enums/statement_type.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace main {
 
 double QuerySummary::getCompilingTime() const {
@@ -36,4 +36,4 @@ StatementType QuerySummary::getStatementType() const {
 }
 
 } // namespace main
-} // namespace kuzu
+} // namespace ryu

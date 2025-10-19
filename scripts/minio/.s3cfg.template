@@ -1,0 +1,43 @@
+# s3cmd configuration for local MinIO
+# This file is used to configure s3cmd to work with MinIO instead of AWS S3
+
+[default]
+# MinIO access credentials (default)
+access_key = minioadmin
+secret_key = minioadmin
+
+# MinIO endpoint
+host_base = localhost:9000
+host_bucket = localhost:9000
+bucket_location = us-east-1
+
+# Use path-style requests (required for MinIO)
+use_https = False
+
+# Signature version
+signature_v2 = False
+
+# For MinIO, we don't need these AWS-specific settings
+cloudfront_host =
+website_endpoint =
+website_index = index.html
+website_error = error.html
+
+# Misc settings
+encoding = UTF-8
+encrypt = False
+follow_symlinks = False
+guess_mime_type = True
+multipart_chunk_size_mb = 15
+multipart_max_chunks = 10000
+recursive = False
+recv_chunk_size = 65536
+send_chunk_size = 65536
+skip_existing = False
+socket_timeout = 300
+urlencoding_mode = normal
+verbosity = WARNING
+
+# Proxy settings (leave empty if not using proxy)
+proxy_host =
+proxy_port = 0

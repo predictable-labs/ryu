@@ -2,11 +2,11 @@
 
 #include <cstdlib>
 
-#include "c_api/kuzu.h"
+#include "c_api/ryu.h"
 
-using namespace kuzu::main;
+using namespace ryu::main;
 
-void kuzu_query_summary_destroy(kuzu_query_summary* query_summary) {
+void ryu_query_summary_destroy(ryu_query_summary* query_summary) {
     if (query_summary == nullptr) {
         return;
     }
@@ -14,10 +14,10 @@ void kuzu_query_summary_destroy(kuzu_query_summary* query_summary) {
     query_summary->_query_summary = nullptr;
 }
 
-double kuzu_query_summary_get_compiling_time(kuzu_query_summary* query_summary) {
+double ryu_query_summary_get_compiling_time(ryu_query_summary* query_summary) {
     return static_cast<QuerySummary*>(query_summary->_query_summary)->getCompilingTime();
 }
 
-double kuzu_query_summary_get_execution_time(kuzu_query_summary* query_summary) {
+double ryu_query_summary_get_execution_time(ryu_query_summary* query_summary) {
     return static_cast<QuerySummary*>(query_summary->_query_summary)->getExecutionTime();
 }

@@ -3,9 +3,9 @@
 #include "processor/execution_context.h"
 #include "storage/table/node_table.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 NodeBatchInsertErrorHandler::NodeBatchInsertErrorHandler(ExecutionContext* context,
@@ -34,4 +34,4 @@ void NodeBatchInsertErrorHandler::flushStoredErrors() {
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

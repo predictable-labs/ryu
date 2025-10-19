@@ -5,9 +5,9 @@
 #include "common/system_config.h"
 #include "function/comparison/comparison_functions.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 static constexpr uint16_t COUNTING_ARRAY_SIZE = 256;
@@ -280,4 +280,4 @@ void RadixSort::solveStringTies(TieRange& keyBlockTie, uint8_t* keyBlockPtr,
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

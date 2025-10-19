@@ -4,10 +4,10 @@
 #include "function/table/simple_table_function.h"
 #include "graph/graph_entry_set.h"
 
-using namespace kuzu::common;
-using namespace kuzu::main;
+using namespace ryu::common;
+using namespace ryu::main;
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct ProjectedGraphData {
@@ -75,4 +75,4 @@ function_set ShowProjectedGraphsFunction::getFunctionSet() {
 }
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

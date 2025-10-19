@@ -15,13 +15,13 @@
 #include "storage/table/node_table.h"
 #include "storage/table/rel_table.h"
 
-using namespace kuzu::binder;
-using namespace kuzu::catalog;
-using namespace kuzu::common;
-using namespace kuzu::planner;
-using namespace kuzu::storage;
+using namespace ryu::binder;
+using namespace ryu::catalog;
+using namespace ryu::common;
+using namespace ryu::planner;
+using namespace ryu::storage;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 std::unique_ptr<PhysicalOperator> PlanMapper::mapCopyFrom(const LogicalOperator* logicalOperator) {
@@ -162,4 +162,4 @@ std::unique_ptr<PhysicalOperator> PlanMapper::mapCopyRelFrom(
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

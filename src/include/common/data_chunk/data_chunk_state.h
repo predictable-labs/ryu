@@ -2,7 +2,7 @@
 
 #include "common/data_chunk/sel_vector.h"
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 
 // F stands for Factorization
@@ -11,7 +11,7 @@ enum class FStateType : uint8_t {
     UNFLAT = 1,
 };
 
-class KUZU_API DataChunkState {
+class RYU_API DataChunkState {
 public:
     DataChunkState();
     explicit DataChunkState(sel_t capacity) : fStateType{FStateType::UNFLAT} {
@@ -41,4 +41,4 @@ private:
 };
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

@@ -21,11 +21,11 @@
 #include "function/scalar_function.h"
 #include "function/string/vector_string_functions.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 using std::max;
 using std::min;
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct DecimalFunction {
@@ -872,4 +872,4 @@ std::unique_ptr<FunctionBindData> DecimalFunction::bindCeilFunc(ScalarBindFuncIn
 }
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

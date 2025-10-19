@@ -3,22 +3,22 @@ const fs = require("fs/promises");
 const fsCallback = require("fs");
 const path = require("path");
 
-const KUZU_ROOT = path.resolve(path.join(__dirname, "..", ".."));
+const RYU_ROOT = path.resolve(path.join(__dirname, "..", ".."));
 const CURRENT_DIR = path.resolve(__dirname);
-const ARCHIVE_PATH = path.resolve(path.join(__dirname, "kuzu-source.tar"));
+const ARCHIVE_PATH = path.resolve(path.join(__dirname, "ryu-source.tar"));
 const PREBUILT_DIR = path.join(CURRENT_DIR, "prebuilt");
 const ARCHIVE_DIR_PATH = path.join(CURRENT_DIR, "package");
-const KUZU_VERSION_TEXT = "Kuzu VERSION";
+const RYU_VERSION_TEXT = "Ryu VERSION";
 
 (async () => {
-  console.log("Gathering Kuzu source code...");
+  console.log("Gathering Ryu source code...");
   // Create the git archive
   await new Promise((resolve, reject) => {
     childProcess.execFile(
       "git",
       ["archive", "--format=tar", "--output=" + ARCHIVE_PATH, "HEAD"],
       {
-        cwd: KUZU_ROOT,
+        cwd: RYU_ROOT,
       },
       (err) => {
         if (err) {
@@ -30,21 +30,21 @@ const KUZU_VERSION_TEXT = "Kuzu VERSION";
     );
   });
 
-  // Remove the old kuzu-source directory
+  // Remove the old ryu-source directory
   try {
-    await fs.rm(path.join(CURRENT_DIR, "kuzu-source"), { recursive: true });
+    await fs.rm(path.join(CURRENT_DIR, "ryu-source"), { recursive: true });
   } catch (e) {
     // Ignore
   }
 
-  // Create the kuzu-source directory
-  await fs.mkdir(path.join(CURRENT_DIR, "kuzu-source"));
+  // Create the ryu-source directory
+  await fs.mkdir(path.join(CURRENT_DIR, "ryu-source"));
 
-  // Extract the archive to kuzu-source
+  // Extract the archive to ryu-source
   await new Promise((resolve, reject) => {
     childProcess.execFile(
       "tar",
-      ["-xf", ARCHIVE_PATH, "-C", "kuzu-source"],
+      ["-xf", ARCHIVE_PATH, "-C", "ryu-source"],
       { cwd: CURRENT_DIR },
       (err) => {
         if (err) {
@@ -69,10 +69,10 @@ const KUZU_VERSION_TEXT = "Kuzu VERSION";
   // Create the archive directory
   await fs.mkdir(ARCHIVE_DIR_PATH);
 
-  // Move kuzu-source to archive
+  // Move ryu-source to archive
   await fs.rename(
-    path.join(CURRENT_DIR, "kuzu-source"),
-    path.join(ARCHIVE_DIR_PATH, "kuzu-source")
+    path.join(CURRENT_DIR, "ryu-source"),
+    path.join(ARCHIVE_DIR_PATH, "ryu-source")
   );
 
   // Copy package.json to archive
@@ -89,13 +89,13 @@ const KUZU_VERSION_TEXT = "Kuzu VERSION";
 
   // Copy LICENSE to archive
   await fs.copyFile(
-    path.join(KUZU_ROOT, "LICENSE"),
+    path.join(RYU_ROOT, "LICENSE"),
     path.join(ARCHIVE_DIR_PATH, "LICENSE")
   );
 
   // Copy README.md to archive
   await fs.copyFile(
-    path.join(KUZU_ROOT, "README.md"),
+    path.join(RYU_ROOT, "README.md"),
     path.join(ARCHIVE_DIR_PATH, "README.md")
   );
 
@@ -151,14 +151,14 @@ const KUZU_VERSION_TEXT = "Kuzu VERSION";
   );
 
   const CMakeListsTxt = await fs.readFile(
-    path.join(KUZU_ROOT, "CMakeLists.txt"),
+    path.join(RYU_ROOT, "CMakeLists.txt"),
     { encoding: "utf-8" }
   );
 
   // Get the version from CMakeLists.txt
   const lines = CMakeListsTxt.split("\n");
   for (const line of lines) {
-    if (line.includes(KUZU_VERSION_TEXT)) {
+    if (line.includes(RYU_VERSION_TEXT)) {
       const versionSplit = line.split(" ")[2].trim().split(".");
       let version = versionSplit.slice(0, 3).join(".");
       if (versionSplit.length >= 4) {
@@ -181,7 +181,7 @@ const KUZU_VERSION_TEXT = "Kuzu VERSION";
   // There is a symlink in the rust_api directory, so we need to remove it.
   // Otherwise, the tarball will be rejected by npm.
   await fs.unlink(
-    path.join(ARCHIVE_DIR_PATH, "kuzu-source", "tools", "rust_api", "kuzu-src")
+    path.join(ARCHIVE_DIR_PATH, "ryu-source", "tools", "rust_api", "ryu-src")
   );
 
   console.log("Creating tarball...");
@@ -189,7 +189,7 @@ const KUZU_VERSION_TEXT = "Kuzu VERSION";
   await new Promise((resolve, reject) => {
     childProcess.execFile(
       "tar",
-      ["-czf", "kuzu-source.tar.gz", "package"],
+      ["-czf", "ryu-source.tar.gz", "package"],
       { cwd: CURRENT_DIR },
       (err) => {
         if (err) {

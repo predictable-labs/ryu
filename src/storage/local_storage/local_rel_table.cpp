@@ -7,10 +7,10 @@
 #include "storage/table/rel_table.h"
 #include "transaction/transaction.h"
 
-using namespace kuzu::common;
-using namespace kuzu::transaction;
+using namespace ryu::common;
+using namespace ryu::transaction;
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 
 static std::vector<LogicalType> getTypesForLocalRelTable(const catalog::TableCatalogEntry& table) {
@@ -295,4 +295,4 @@ row_idx_t LocalRelTable::findMatchingRow(const Transaction* transaction,
 }
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

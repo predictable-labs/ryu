@@ -1,10 +1,10 @@
 #include "processor/operator/persistent/reader/parquet/list_column_reader.h"
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 ListColumnReader::ListColumnReader(ParquetReader& reader, common::LogicalType type,
-    const kuzu_parquet::format::SchemaElement& schema, uint64_t schemaIdx, uint64_t maxDefine,
+    const ryu_parquet::format::SchemaElement& schema, uint64_t schemaIdx, uint64_t maxDefine,
     uint64_t maxRepeat, std::unique_ptr<ColumnReader> childColumnReader,
     storage::MemoryManager* memoryManager)
     : ColumnReader(reader, std::move(type), schema, schemaIdx, maxDefine, maxRepeat),
@@ -128,4 +128,4 @@ uint64_t ListColumnReader::read(uint64_t numValues, parquet_filter_t& /*filter*/
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

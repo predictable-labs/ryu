@@ -4,7 +4,7 @@
 #include "planner/operator/logical_plan.h"
 #include "storage/stats/table_stats.h"
 
-namespace kuzu {
+namespace ryu {
 namespace main {
 class ClientContext;
 } // namespace main
@@ -23,7 +23,7 @@ public:
     DELETE_COPY_DEFAULT_MOVE(CardinalityEstimator);
 
     void init(const binder::QueryGraph& queryGraph);
-    KUZU_API void init(const binder::NodeExpression& node);
+    RYU_API void init(const binder::NodeExpression& node);
 
     void rectifyCardinality(const binder::Expression& nodeID, cardinality_t card);
 
@@ -60,4 +60,4 @@ private:
 };
 
 } // namespace planner
-} // namespace kuzu
+} // namespace ryu

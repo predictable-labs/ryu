@@ -4,7 +4,7 @@
 
 #include "common/api.h"
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 enum class StatementType : uint8_t;
 }
@@ -31,11 +31,11 @@ public:
     /**
      * @return query compiling time in milliseconds.
      */
-    KUZU_API double getCompilingTime() const;
+    RYU_API double getCompilingTime() const;
     /**
      * @return query execution time in milliseconds.
      */
-    KUZU_API double getExecutionTime() const;
+    RYU_API double getExecutionTime() const;
 
     void setExecutionTime(double time);
 
@@ -59,4 +59,4 @@ private:
 };
 
 } // namespace main
-} // namespace kuzu
+} // namespace ryu

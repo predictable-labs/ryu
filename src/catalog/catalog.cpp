@@ -19,12 +19,12 @@
 #include "main/client_context.h"
 #include "transaction/transaction.h"
 
-using namespace kuzu::binder;
-using namespace kuzu::common;
-using namespace kuzu::storage;
-using namespace kuzu::transaction;
+using namespace ryu::binder;
+using namespace ryu::common;
+using namespace ryu::storage;
+using namespace ryu::transaction;
 
-namespace kuzu {
+namespace ryu {
 namespace catalog {
 
 Catalog::Catalog() : version{0} {
@@ -170,7 +170,7 @@ void Catalog::dropTableEntry(Transaction* transaction, const TableCatalogEntry* 
         internalTables->dropEntry(transaction, entry->getName(), entry->getOID());
     }
 }
-void Catalog::dropMacroEntry(Transaction* transaction, const kuzu::common::oid_t macroID) {
+void Catalog::dropMacroEntry(Transaction* transaction, const ryu::common::oid_t macroID) {
     dropMacroEntry(transaction, getScalarMacroCatalogEntry(transaction, macroID));
 }
 
@@ -486,7 +486,7 @@ void Catalog::addScalarMacroFunction(Transaction* transaction, std::string name,
 }
 
 ScalarMacroCatalogEntry* Catalog::getScalarMacroCatalogEntry(const Transaction* transaction,
-    kuzu::common::oid_t macroID) const {
+    ryu::common::oid_t macroID) const {
     auto result = functions->getEntryOfOID(transaction, macroID);
     if (result == nullptr) {
         throw RuntimeException(
@@ -604,4 +604,4 @@ void Catalog::deserialize(Deserializer& deSer) {
 }
 
 } // namespace catalog
-} // namespace kuzu
+} // namespace ryu

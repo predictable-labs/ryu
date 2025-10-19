@@ -3,7 +3,7 @@
 #include "column_reader.h"
 #include "processor/operator/persistent/reader/parquet/templated_column_reader.h"
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 struct StringParquetValueConversion {
@@ -21,7 +21,7 @@ public:
 
 public:
     StringColumnReader(ParquetReader& reader, common::LogicalType type,
-        const kuzu_parquet::format::SchemaElement& schema, uint64_t schemaIdx, uint64_t maxDefine,
+        const ryu_parquet::format::SchemaElement& schema, uint64_t schemaIdx, uint64_t maxDefine,
         uint64_t maxRepeat);
 
     std::unique_ptr<common::ku_string_t[]> dictStrs;
@@ -35,4 +35,4 @@ public:
 };
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

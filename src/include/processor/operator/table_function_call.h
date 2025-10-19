@@ -4,7 +4,7 @@
 #include "function/table/table_function.h"
 #include "processor/operator/physical_operator.h"
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 struct TableFunctionCallInfo {
@@ -41,7 +41,7 @@ private:
         : OPPrintInfo(other), funcName(other.funcName), exprs(other.exprs) {}
 };
 
-class KUZU_API TableFunctionCall final : public PhysicalOperator {
+class RYU_API TableFunctionCall final : public PhysicalOperator {
     static constexpr PhysicalOperatorType type_ = PhysicalOperatorType::TABLE_FUNCTION_CALL;
 
 public:
@@ -79,4 +79,4 @@ private:
 };
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

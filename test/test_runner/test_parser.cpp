@@ -25,16 +25,16 @@
 #include "common/types/timestamp_t.h"
 #include "test_helper/test_helper.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace testing {
 
 TestParser::TestParser(std::string path)
     : path(std::move(path)), testGroup(std::make_unique<TestGroup>()), currentToken() {
-    variableMap.insert({"KUZU_ROOT_DIRECTORY", Value(KUZU_ROOT_DIRECTORY)});
-    variableMap.insert({"KUZU_VERSION", Value(KUZU_VERSION)});
-    variableMap.insert({"KUZU_EXPORT_DB_DIRECTORY", Value(exportDBPath)});
+    variableMap.insert({"RYU_ROOT_DIRECTORY", Value(RYU_ROOT_DIRECTORY)});
+    variableMap.insert({"RYU_VERSION", Value(RYU_VERSION)});
+    variableMap.insert({"RYU_EXPORT_DB_DIRECTORY", Value(exportDBPath)});
 }
 
 std::unique_ptr<TestGroup> TestParser::parseTestFile() {
@@ -50,7 +50,7 @@ std::unique_ptr<TestGroup> TestParser::parseTestFile() {
 
 void TestParser::genGroupName() const {
     const std::size_t subStart =
-        TestHelper::appendKuzuRootPath(std::string(TestHelper::E2E_TEST_FILES_DIRECTORY)).length() +
+        TestHelper::appendRyuRootPath(std::string(TestHelper::E2E_TEST_FILES_DIRECTORY)).length() +
         1;
     const std::size_t subEnd = path.find_last_of('.') - 1;
     std::string relPath = path.substr(subStart, subEnd - subStart + 1);
@@ -76,8 +76,8 @@ void TestParser::extractDataset() {
     } else if (datasetType == "NPY") {
         testGroup->datasetType = TestGroup::DatasetType::NPY;
         testGroup->dataset = currentToken.params[2];
-    } else if (datasetType == "KUZU") {
-        testGroup->datasetType = TestGroup::DatasetType::KUZU;
+    } else if (datasetType == "RYU") {
+        testGroup->datasetType = TestGroup::DatasetType::RYU;
         testGroup->dataset = currentToken.params[2];
     } else if (datasetType == "JSON") {
         if (params.starts_with("CSV_TO_JSON(") && params.back() == ')') {
@@ -252,7 +252,7 @@ TestQueryResult TestParser::extractExpectedResultFromToken() {
         nextLine();
         if (line.starts_with("<FILE>:")) {
             queryResult.type = ResultType::CSV_FILE;
-            queryResult.expectedResult.push_back(TestHelper::appendKuzuRootPath(
+            queryResult.expectedResult.push_back(TestHelper::appendRyuRootPath(
                 (std::filesystem::path(TestHelper::TEST_ANSWERS_PATH) / line.substr(7)).string()));
         } else {
             queryResult.type = ResultType::TUPLES;
@@ -414,7 +414,7 @@ TestStatement TestParser::parseStatement(const std::string& testCaseName) {
         case TokenType::BATCH_STATEMENTS: {
             std::string query = paramsToString(1);
             extractConnName(query, statement);
-            statement.batchStatementsCSVFile = TestHelper::appendKuzuRootPath(
+            statement.batchStatementsCSVFile = TestHelper::appendRyuRootPath(
                 (std::filesystem::path(TestHelper::TEST_STATEMENTS_PATH) / query.substr(7))
                     .string());
         } break;
@@ -610,8 +610,8 @@ void TestParser::parseBody() {
             auto extensionName = currentToken.params[1];
             loadExtensionStatement.connName = TestHelper::DEFAULT_CONN_NAME;
             loadExtensionStatement.query =
-                stringFormat("LOAD EXTENSION '{}/extension/{}/build/lib{}.kuzu_extension'",
-                    KUZU_ROOT_DIRECTORY, extensionName, extensionName);
+                stringFormat("LOAD EXTENSION '{}/extension/{}/build/lib{}.ryu_extension'",
+                    RYU_ROOT_DIRECTORY, extensionName, extensionName);
             loadExtensionStatement.logMessage = "Dynamic load extension: " + extensionName;
             loadExtensionStatement.testResultType = ResultType::OK;
             loadExtensionStatement.result.emplace_back(ResultType::OK, 0,
@@ -787,4 +787,4 @@ void TestParser::extractConnName(std::string& query, TestStatement& statement) {
 }
 
 } // namespace testing
-} // namespace kuzu
+} // namespace ryu

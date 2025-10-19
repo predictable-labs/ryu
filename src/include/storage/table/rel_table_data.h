@@ -8,7 +8,7 @@
 #include "storage/table/csr_node_group.h"
 #include "storage/table/node_group_collection.h"
 
-namespace kuzu {
+namespace ryu {
 namespace catalog {
 class RelGroupCatalogEntry;
 }
@@ -164,4 +164,4 @@ private:
 };
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

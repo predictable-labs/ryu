@@ -3,7 +3,7 @@
 #include "binder/bound_statement.h"
 #include "function/export/export_function.h"
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
 class BoundCopyTo final : public BoundStatement {
@@ -29,4 +29,4 @@ private:
 };
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

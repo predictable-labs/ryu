@@ -37,13 +37,13 @@ jobs:
     
       - name: Set environment variables
         run: |
-          echo "KUZU_CSV_DIR=$CSV_DIR/bi-dataset/bi-sf${SCALE_FACTOR}-composite-projected-fk/graphs/csv/bi/composite-projected-fk/" >> $GITHUB_ENV
-          echo "KUZU_DIR=$(pwd)" >> $GITHUB_ENV
-          echo "KUZU_BUILD_PATH=$(pwd)/tools/python_api/build" >> $GITHUB_ENV
+          echo "RYU_CSV_DIR=$CSV_DIR/bi-dataset/bi-sf${SCALE_FACTOR}-composite-projected-fk/graphs/csv/bi/composite-projected-fk/" >> $GITHUB_ENV
+          echo "RYU_DIR=$(pwd)" >> $GITHUB_ENV
+          echo "RYU_BUILD_PATH=$(pwd)/tools/python_api/build" >> $GITHUB_ENV
 
       - uses: actions/checkout@v4
 
-      - name: Build kuzu
+      - name: Build ryu
         run: |
           pip3 install -r tools/python_api/requirements_dev.txt
           make python
@@ -51,7 +51,7 @@ jobs:
       - name: Clone implementation
         uses: actions/checkout@v4
         with:
-          repository: kuzudb/ldbc_snb_bi
+          repository: ryugraph/ldbc_snb_bi
           path: ldbc_snb_bi
           token: ${{ secrets.DOC_PUSH_TOKEN }}
     
@@ -62,22 +62,22 @@ jobs:
           ln -s $CSV_DIR/bi-dataset/ldbc-snb-bi-parameters-sf1-to-sf30000 parameters
     
       - name: Load database
-        working-directory: ldbc_snb_bi/kuzu
+        working-directory: ldbc_snb_bi/ryu
         run: |
           workflow-scripts/decompress-gz.sh
           workflow-scripts/load-database.sh
     
       - name: Run benchmark
-        working-directory: ldbc_snb_bi/kuzu
+        working-directory: ldbc_snb_bi/ryu
         run: workflow-scripts/benchmark.sh
     
       - name: Upload results
         uses: actions/upload-artifact@v4
         with:
           name: LDBC-SNB-Business-Intelligence-results
-          path: ldbc_snb_bi/kuzu/output/
+          path: ldbc_snb_bi/ryu/output/
 
       - name: Report result to server
-        working-directory: ldbc_snb_bi/kuzu/
+        working-directory: ldbc_snb_bi/ryu/
         run: |
           python3 workflow-scripts/report_results.py

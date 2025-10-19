@@ -12,13 +12,13 @@
 #include "planner/planner.h"
 #include "transaction/transaction.h"
 
-using namespace kuzu::common;
-using namespace kuzu::binder;
-using namespace kuzu::catalog;
-using namespace kuzu::transaction;
-using namespace kuzu::function;
+using namespace ryu::common;
+using namespace ryu::binder;
+using namespace ryu::catalog;
+using namespace ryu::transaction;
+using namespace ryu::function;
 
-namespace kuzu {
+namespace ryu {
 namespace planner {
 
 static std::unordered_set<table_id_t> getBoundNodeTableIDSet(const RelExpression& rel,
@@ -188,4 +188,4 @@ void Planner::appendNodeLabelFilter(std::shared_ptr<Expression> nodeID,
 }
 
 } // namespace planner
-} // namespace kuzu
+} // namespace ryu

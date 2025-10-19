@@ -4,7 +4,7 @@
 #include "parquet_reader.h"
 #include "templated_column_reader.h"
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 template<class PARQUET_PHYSICAL_TYPE, class KU_PHYSICAL_TYPE,
@@ -20,7 +20,7 @@ public:
 
 public:
     CallbackColumnReader(ParquetReader& reader, common::LogicalType type_p,
-        const kuzu_parquet::format::SchemaElement& schema_p, uint64_t file_idx_p,
+        const ryu_parquet::format::SchemaElement& schema_p, uint64_t file_idx_p,
         uint64_t max_define_p, uint64_t max_repeat_p)
         : TemplatedColumnReader<KU_PHYSICAL_TYPE,
               CallbackParquetValueConversion<PARQUET_PHYSICAL_TYPE, KU_PHYSICAL_TYPE, FUNC>>(reader,
@@ -38,4 +38,4 @@ protected:
 };
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

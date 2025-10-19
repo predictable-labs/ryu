@@ -3,10 +3,10 @@
 #include "function/table/simple_table_function.h"
 #include "processor/result/factorized_table.h"
 
-using namespace kuzu::common;
-using namespace kuzu::function;
+using namespace ryu::common;
+using namespace ryu::function;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 struct FTableScanSharedState final : public SimpleTableFuncSharedState {
@@ -75,4 +75,4 @@ std::unique_ptr<TableFunction> FTableScan::getFunction() {
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

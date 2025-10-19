@@ -4,14 +4,14 @@
 #include "optional_params.h"
 #include "storage/predicate/column_predicate.h"
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 class FileSystem;
 }
 
 namespace function {
 
-struct KUZU_API TableFuncBindData {
+struct RYU_API TableFuncBindData {
     binder::expression_vector columns;
     common::row_idx_t numRows;
     std::unique_ptr<OptionalParams> optionalParams = nullptr;
@@ -66,4 +66,4 @@ protected:
 };
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

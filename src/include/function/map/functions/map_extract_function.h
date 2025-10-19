@@ -3,7 +3,7 @@
 #include "common/vector/value_vector.h"
 #include "function/comparison/comparison_functions.h"
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct MapExtract {
@@ -36,4 +36,4 @@ struct MapExtract {
 };
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

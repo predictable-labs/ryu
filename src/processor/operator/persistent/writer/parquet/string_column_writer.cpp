@@ -5,11 +5,11 @@
 #include "function/hash/hash_functions.h"
 #include "processor/operator/persistent/reader/parquet/parquet_rle_bp_decoder.h"
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
-using namespace kuzu::common;
-using namespace kuzu_parquet::format;
+using namespace ryu::common;
+using namespace ryu_parquet::format;
 
 std::size_t StringHash::operator()(const ku_string_t& k) const {
     hash_t result = 0;
@@ -207,4 +207,4 @@ uint64_t StringColumnWriter::getRowSize(ValueVector* vector, uint64_t index,
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

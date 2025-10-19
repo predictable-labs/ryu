@@ -4,7 +4,7 @@
 #include "common/system_config.h"
 #include "expression_evaluator/lambda_evaluator.h"
 
-namespace kuzu {
+namespace ryu {
 namespace evaluator {
 
 ListEntryTracker::ListEntryTracker(common::ValueVector* listVector)
@@ -103,4 +103,4 @@ void ListSliceInfo::updateSelVector() {
 }
 
 } // namespace evaluator
-} // namespace kuzu
+} // namespace ryu

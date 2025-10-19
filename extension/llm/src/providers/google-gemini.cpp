@@ -4,9 +4,9 @@
 #include "function/llm_functions.h"
 #include "main/client_context.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace llm_extension {
 
 std::shared_ptr<EmbeddingProvider> GoogleGeminiEmbedding::getInstance() {
@@ -22,7 +22,7 @@ std::string GoogleGeminiEmbedding::getPath(const std::string& model) const {
     auto env_key = main::ClientContext::getEnvVariable(envVar);
     if (env_key.empty()) {
         throw(RuntimeException("Could not read environment variable: " + envVar + "\n" +
-                               std::string(referenceKuzuDocs)));
+                               std::string(referenceRyuDocs)));
     }
     return "/v1beta/models/" + model + ":embedContent?key=" + env_key;
 }
@@ -51,4 +51,4 @@ void GoogleGeminiEmbedding::configure(const std::optional<uint64_t>& dimensions,
 }
 
 } // namespace llm_extension
-} // namespace kuzu
+} // namespace ryu

@@ -1,10 +1,10 @@
 #pragma once
 
-#include "main/kuzu.h"
 #include "main/prepared_statement.h"
+#include "main/ryu.h"
 #include "pybind_include.h"
 
-using namespace kuzu::main;
+using namespace ryu::main;
 
 class PyPreparedStatement {
     friend class PyConnection;

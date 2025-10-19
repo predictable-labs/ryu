@@ -6,7 +6,7 @@
 #include "main/database.h"
 #include "storage/storage_manager.h"
 
-namespace kuzu {
+namespace ryu {
 namespace vector_extension {
 
 static void initHNSWEntries(main::ClientContext* context) {
@@ -42,23 +42,23 @@ void VectorExtension::load(main::ClientContext* context) {
 }
 
 } // namespace vector_extension
-} // namespace kuzu
+} // namespace ryu
 
 #if defined(BUILD_DYNAMIC_LOAD)
 extern "C" {
-// Because we link against the static library on windows, we implicitly inherit KUZU_STATIC_DEFINE,
-// which cancels out any exporting, so we can't use KUZU_API.
+// Because we link against the static library on windows, we implicitly inherit RYU_STATIC_DEFINE,
+// which cancels out any exporting, so we can't use RYU_API.
 #if defined(_WIN32)
 #define INIT_EXPORT __declspec(dllexport)
 #else
 #define INIT_EXPORT __attribute__((visibility("default")))
 #endif
-INIT_EXPORT void init(kuzu::main::ClientContext* context) {
-    kuzu::vector_extension::VectorExtension::load(context);
+INIT_EXPORT void init(ryu::main::ClientContext* context) {
+    ryu::vector_extension::VectorExtension::load(context);
 }
 
 INIT_EXPORT const char* name() {
-    return kuzu::vector_extension::VectorExtension::EXTENSION_NAME;
+    return ryu::vector_extension::VectorExtension::EXTENSION_NAME;
 }
 }
 #endif

@@ -5,7 +5,7 @@
 
 #include "common/api.h"
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 
 enum class TableType : uint8_t {
@@ -15,9 +15,9 @@ enum class TableType : uint8_t {
     FOREIGN = 5,
 };
 
-struct KUZU_API TableTypeUtils {
+struct RYU_API TableTypeUtils {
     static std::string toString(TableType tableType);
 };
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

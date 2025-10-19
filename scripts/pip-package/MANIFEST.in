@@ -1,2 +1,2 @@
-include kuzu/*.so
-include kuzu/*.pyd
+include ryu/*.so
+include ryu/*.pyd

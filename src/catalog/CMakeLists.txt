@@ -1,11 +1,11 @@
 add_subdirectory(catalog_entry)
 
-add_library(kuzu_catalog
+add_library(ryu_catalog
         OBJECT
         catalog.cpp
         catalog_set.cpp
         property_definition_collection.cpp)
 
 set(ALL_OBJECT_FILES
-        ${ALL_OBJECT_FILES} $<TARGET_OBJECTS:kuzu_catalog>
+        ${ALL_OBJECT_FILES} $<TARGET_OBJECTS:ryu_catalog>
         PARENT_SCOPE)

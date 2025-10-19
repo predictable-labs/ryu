@@ -3,11 +3,11 @@
 #include "processor/plan_mapper.h"
 #include "storage/buffer_manager/memory_manager.h"
 
-using namespace kuzu::common;
-using namespace kuzu::planner;
-using namespace kuzu::storage;
+using namespace ryu::common;
+using namespace ryu::planner;
+using namespace ryu::storage;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 std::unique_ptr<PhysicalOperator> PlanMapper::mapCopyTo(const LogicalOperator* logicalOperator) {
@@ -40,4 +40,4 @@ std::unique_ptr<PhysicalOperator> PlanMapper::mapCopyTo(const LogicalOperator* l
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

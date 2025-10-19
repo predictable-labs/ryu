@@ -2,7 +2,7 @@
 
 #include "main/db_config.h"
 
-namespace kuzu {
+namespace ryu {
 namespace planner {
 
 std::string LogicalStandaloneCall::getExpressionsForPrinting() const {
@@ -10,4 +10,4 @@ std::string LogicalStandaloneCall::getExpressionsForPrinting() const {
 }
 
 } // namespace planner
-} // namespace kuzu
+} // namespace ryu

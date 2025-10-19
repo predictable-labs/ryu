@@ -7,9 +7,9 @@
 #include "parser/standalone_call_function.h"
 #include "transaction/transaction.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
 std::unique_ptr<BoundStatement> Binder::bindStandaloneCallFunction(
@@ -32,4 +32,4 @@ std::unique_ptr<BoundStatement> Binder::bindStandaloneCallFunction(
 }
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

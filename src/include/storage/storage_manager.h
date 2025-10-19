@@ -7,7 +7,7 @@
 #include "storage/index/index.h"
 #include "storage/wal/wal.h"
 
-namespace kuzu {
+namespace ryu {
 namespace main {
 class Database;
 } // namespace main
@@ -26,7 +26,7 @@ class RelTable;
 class DiskArrayCollection;
 struct DatabaseHeader;
 
-class KUZU_API StorageManager {
+class RYU_API StorageManager {
 public:
     StorageManager(const std::string& databasePath, bool readOnly, bool enableChecksums,
         MemoryManager& memoryManager, bool enableCompression, common::VirtualFileSystem* vfs);
@@ -100,4 +100,4 @@ private:
 };
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

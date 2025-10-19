@@ -5,10 +5,10 @@
 #include "processor/result/factorized_table.h"
 #include "processor/result/flat_tuple.h"
 
-using namespace kuzu::common;
-using namespace kuzu::processor;
+using namespace ryu::common;
+using namespace ryu::processor;
 
-namespace kuzu {
+namespace ryu {
 namespace main {
 
 MaterializedQueryResult::MaterializedQueryResult() = default;
@@ -107,4 +107,4 @@ std::unique_ptr<ArrowArray> MaterializedQueryResult::getNextArrowChunk(int64_t c
 }
 
 } // namespace main
-} // namespace kuzu
+} // namespace ryu

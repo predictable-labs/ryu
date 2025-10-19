@@ -10,7 +10,7 @@
 #include "storage/buffer_manager/spill_result.h"
 #include <span>
 
-namespace kuzu {
+namespace ryu {
 
 namespace common {
 class VirtualFileSystem;
@@ -29,9 +29,9 @@ class MemoryBuffer {
     friend class Spiller;
 
 public:
-    KUZU_API MemoryBuffer(MemoryManager* mm, common::page_idx_t blockIdx, uint8_t* buffer,
+    RYU_API MemoryBuffer(MemoryManager* mm, common::page_idx_t blockIdx, uint8_t* buffer,
         uint64_t size = common::TEMP_PAGE_SIZE);
-    KUZU_API ~MemoryBuffer();
+    RYU_API ~MemoryBuffer();
     DELETE_COPY_AND_MOVE(MemoryBuffer);
 
     std::span<uint8_t> getBuffer() const {
@@ -75,7 +75,7 @@ private:
  * MM will return a MemoryBuffer to the caller, which is a wrapper of the allocated memory block,
  * and it will automatically call its allocator to reclaim the memory block when it is destroyed.
  */
-class KUZU_API MemoryManager {
+class RYU_API MemoryManager {
     friend class MemoryBuffer;
     template<class T>
     friend class MmAllocator;
@@ -107,4 +107,4 @@ private:
 };
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

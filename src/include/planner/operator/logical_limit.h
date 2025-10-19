@@ -2,7 +2,7 @@
 
 #include "planner/operator/logical_operator.h"
 
-namespace kuzu {
+namespace ryu {
 namespace planner {
 
 class LogicalLimit final : public LogicalOperator {
@@ -43,4 +43,4 @@ private:
 };
 
 } // namespace planner
-} // namespace kuzu
+} // namespace ryu

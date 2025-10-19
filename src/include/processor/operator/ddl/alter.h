@@ -4,7 +4,7 @@
 #include "expression_evaluator/expression_evaluator.h"
 #include "processor/operator/sink.h"
 
-namespace kuzu {
+namespace ryu {
 namespace catalog {
 class TableCatalogEntry;
 class RelGroupCatalogEntry;
@@ -62,4 +62,4 @@ private:
 };
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

@@ -14,19 +14,20 @@ unsafe impl cxx::ExternType for ArrowSchema {
     type Kind = cxx::kind::Trivial;
 }
 
+#[allow(unused_attributes)]
 #[cxx::bridge]
 pub(crate) mod ffi_arrow {
     unsafe extern "C++" {
-        include!("kuzu/include/kuzu_arrow.h");
+        include!("ryu_arrow.h");
 
-        #[namespace = "kuzu::main"]
+        #[namespace = "ryu::main"]
         type QueryResult<'db> = crate::ffi::ffi::QueryResult<'db>;
     }
 
     unsafe extern "C++" {
         type ArrowArray = crate::ffi::arrow::ArrowArray;
 
-        #[namespace = "kuzu_arrow"]
+        #[namespace = "ryu_arrow"]
         fn query_result_get_next_arrow_chunk<'db>(
             result: Pin<&mut QueryResult<'db>>,
             chunk_size: u64,
@@ -36,7 +37,7 @@ pub(crate) mod ffi_arrow {
     unsafe extern "C++" {
         type ArrowSchema = crate::ffi::arrow::ArrowSchema;
 
-        #[namespace = "kuzu_arrow"]
+        #[namespace = "ryu_arrow"]
         fn query_result_get_arrow_schema<'db>(result: &QueryResult<'db>) -> Result<ArrowSchema>;
     }
 }

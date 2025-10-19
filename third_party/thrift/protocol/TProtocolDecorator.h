@@ -24,7 +24,7 @@
 #include <memory>
 #include "duckdb/common/vector.hpp"
 
-namespace kuzu_apache {
+namespace ryu_apache {
 namespace thrift {
 namespace protocol {
 using std::shared_ptr;
@@ -36,7 +36,7 @@ using std::shared_ptr;
  *
  * <p>See p.175 of Design Patterns (by Gamma et al.)</p>
  *
- * @see kuzu_apache::thrift::protocol::TMultiplexedProtocol
+ * @see ryu_apache::thrift::protocol::TMultiplexedProtocol
  */
 class TProtocolDecorator : public TProtocol {
 public:
@@ -127,7 +127,7 @@ public:
   uint32_t readSetEnd_virt() override { return protocol->readSetEnd(); }
 
   uint32_t readBool_virt(bool& value) override { return protocol->readBool(value); }
-  uint32_t readBool_virt(kuzu::vector<bool>::reference value) override {
+  uint32_t readBool_virt(ryu::vector<bool>::reference value) override {
     return protocol->readBool(value);
   }
 

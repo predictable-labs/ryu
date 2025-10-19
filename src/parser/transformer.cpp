@@ -8,9 +8,9 @@
 #include "parser/explain_statement.h"
 #include "parser/query/regular_query.h" // IWYU pragma: keep (fixes a forward declaration error)
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace parser {
 
 std::vector<std::shared_ptr<Statement>> Transformer::transform() {
@@ -210,4 +210,4 @@ std::unique_ptr<Statement> Transformer::transformExtensionStatement(
 }
 
 } // namespace parser
-} // namespace kuzu
+} // namespace ryu

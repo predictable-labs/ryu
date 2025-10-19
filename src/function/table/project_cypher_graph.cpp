@@ -7,10 +7,10 @@
 #include "parser/parser.h"
 #include "processor/execution_context.h"
 
-using namespace kuzu::common;
-using namespace kuzu::graph;
+using namespace ryu::common;
+using namespace ryu::graph;
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct ProjectGraphCypherBindData final : TableFuncBindData {
@@ -60,4 +60,4 @@ function_set ProjectGraphCypherFunction::getFunctionSet() {
 }
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

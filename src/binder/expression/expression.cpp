@@ -2,9 +2,9 @@
 
 #include "common/exception/binder.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
 Expression::~Expression() = default;
@@ -31,4 +31,4 @@ expression_vector Expression::splitOnAND() {
 }
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

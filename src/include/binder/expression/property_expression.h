@@ -3,7 +3,7 @@
 #include "common/constants.h"
 #include "expression.h"
 
-namespace kuzu {
+namespace ryu {
 namespace catalog {
 class TableCatalogEntry;
 }
@@ -22,7 +22,7 @@ private:
         : exists{other.exists}, isPrimaryKey{other.isPrimaryKey} {}
 };
 
-class KUZU_API PropertyExpression final : public Expression {
+class RYU_API PropertyExpression final : public Expression {
     static constexpr common::ExpressionType expressionType_ = common::ExpressionType::PROPERTY;
 
 public:
@@ -73,4 +73,4 @@ private:
 };
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

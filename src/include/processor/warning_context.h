@@ -8,7 +8,7 @@
 #include "common/types/types.h"
 #include "processor/operator/persistent/reader/copy_from_error.h"
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 class ValueVector;
 }
@@ -33,7 +33,7 @@ struct WarningInfo {
 using populate_func_t = std::function<PopulatedCopyFromError(CopyFromFileError, common::idx_t)>;
 using get_file_idx_func_t = std::function<common::idx_t(const CopyFromFileError&)>;
 
-class KUZU_API WarningContext {
+class RYU_API WarningContext {
 public:
     explicit WarningContext(main::ClientConfig* clientConfig);
 
@@ -65,4 +65,4 @@ private:
 };
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

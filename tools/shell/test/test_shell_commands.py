@@ -22,7 +22,7 @@ def test_help(temp_db) -> None:
             "    Note: you can change and see several system configurations, such as num-threads, ",
             "          timeout, and progress_bar using Cypher CALL statements.",
             "          e.g. CALL THREADS=5; or CALL current_setting('threads') return *;",
-            "          See: \x1b]8;;https://docs.kuzudb.com/cypher/configuration\x1b\\https://docs.kuzudb.com/cypher/configuration\x1b]8;;\x1b\\",
+            "          See: \x1b]8;;https://docs.ryugraph.com/cypher/configuration\x1b\\https://docs.ryugraph.com/cypher/configuration\x1b]8;;\x1b\\",
         ],
     )
 
@@ -214,33 +214,33 @@ def test_set_mode(temp_db) -> None:
     test = (
         ShellTest()
         .add_argument(temp_db)
-        .statement('RETURN "Databases Rule" AS a, "kuzu is cool" AS b;')
+        .statement('RETURN "Databases Rule" AS a, "ryu is cool" AS b;')
     )
     result = test.run()
-    result.check_stdout("\u2502 a              \u2502 b            \u2502")
-    result.check_stdout("\u2502 Databases Rule \u2502 kuzu is cool \u2502")
+    result.check_stdout("\u2502 a              \u2502 b           \u2502")
+    result.check_stdout("\u2502 Databases Rule \u2502 ryu is cool \u2502")
 
     # test column mode
     test = (
         ShellTest()
         .add_argument(temp_db)
         .statement(":mode column")
-        .statement('RETURN "Databases Rule" AS a, "kuzu is cool" AS b;')
+        .statement('RETURN "Databases Rule" AS a, "ryu is cool" AS b;')
     )
     result = test.run()
     result.check_stdout("a                b")
-    result.check_stdout("Databases Rule   kuzu is cool")
+    result.check_stdout("Databases Rule   ryu is cool")
 
     # test csv mode
     test = (
         ShellTest()
         .add_argument(temp_db)
         .statement(":mode csv")
-        .statement('RETURN "Databases Rule" AS a, "kuzu is cool" AS b;')
+        .statement('RETURN "Databases Rule" AS a, "ryu is cool" AS b;')
     )
     result = test.run()
     result.check_stdout("a,b")
-    result.check_stdout("Databases Rule,kuzu is cool")
+    result.check_stdout("Databases Rule,ryu is cool")
 
     # test csv escaping
     test = (
@@ -261,18 +261,18 @@ def test_set_mode(temp_db) -> None:
         # box is default so need to switch to another mode first
         .statement(":mode csv")
         .statement(":mode box")
-        .statement('RETURN "Databases Rule" AS a, "kuzu is cool" AS b;')
+        .statement('RETURN "Databases Rule" AS a, "ryu is cool" AS b;')
     )
     result = test.run()
-    result.check_stdout("\u2502 a              \u2502 b            \u2502")
-    result.check_stdout("\u2502 Databases Rule \u2502 kuzu is cool \u2502")
+    result.check_stdout("\u2502 a              \u2502 b           \u2502")
+    result.check_stdout("\u2502 Databases Rule \u2502 ryu is cool \u2502")
 
     # test html mode
     test = (
         ShellTest()
         .add_argument(temp_db)
         .statement(":mode html")
-        .statement('RETURN "Databases Rule" AS a, "kuzu is cool" AS b;')
+        .statement('RETURN "Databases Rule" AS a, "ryu is cool" AS b;')
     )
     result = test.run()
     result.check_stdout("<table>")
@@ -280,7 +280,7 @@ def test_set_mode(temp_db) -> None:
     result.check_stdout("<th>a</th><th>b</th>")
     result.check_stdout("</tr>")
     result.check_stdout("<tr>")
-    result.check_stdout("<td>Databases Rule</td><td>kuzu is cool</td>")
+    result.check_stdout("<td>Databases Rule</td><td>ryu is cool</td>")
     result.check_stdout("</tr>")
     result.check_stdout("</table>")
 
@@ -310,10 +310,10 @@ def test_set_mode(temp_db) -> None:
         ShellTest()
         .add_argument(temp_db)
         .statement(":mode json")
-        .statement('RETURN "Databases Rule" AS a, "kuzu is cool" AS b;')
+        .statement('RETURN "Databases Rule" AS a, "ryu is cool" AS b;')
     )
     result = test.run()
-    result.check_stdout('[\n{"a":"Databases Rule","b":"kuzu is cool"}\n]')
+    result.check_stdout('[\n{"a":"Databases Rule","b":"ryu is cool"}\n]')
 
     # test json escaping
     test = (
@@ -334,10 +334,10 @@ def test_set_mode(temp_db) -> None:
         ShellTest()
         .add_argument(temp_db)
         .statement(":mode jsonlines")
-        .statement('RETURN "Databases Rule" AS a, "kuzu is cool" AS b;')
+        .statement('RETURN "Databases Rule" AS a, "ryu is cool" AS b;')
     )
     result = test.run()
-    result.check_stdout('{"a":"Databases Rule","b":"kuzu is cool"}')
+    result.check_stdout('{"a":"Databases Rule","b":"ryu is cool"}')
 
     # test jsonlines escaping
     test = (
@@ -358,14 +358,14 @@ def test_set_mode(temp_db) -> None:
         ShellTest()
         .add_argument(temp_db)
         .statement(":mode latex")
-        .statement('RETURN "Databases Rule" AS a, "kuzu is cool" AS b;')
+        .statement('RETURN "Databases Rule" AS a, "ryu is cool" AS b;')
     )
     result = test.run()
     result.check_stdout("\\begin{tabular}{ll}")
     result.check_stdout("\\hline")
     result.check_stdout("a&b\\\\")
     result.check_stdout("\\hline")
-    result.check_stdout("Databases Rule&kuzu is cool\\\\")
+    result.check_stdout("Databases Rule&ryu is cool\\\\")
     result.check_stdout("\\hline")
     result.check_stdout("\\end{tabular}")
 
@@ -394,22 +394,22 @@ def test_set_mode(temp_db) -> None:
         ShellTest()
         .add_argument(temp_db)
         .statement(":mode line")
-        .statement('RETURN "Databases Rule" AS a, "kuzu is cool" AS b;')
+        .statement('RETURN "Databases Rule" AS a, "ryu is cool" AS b;')
     )
     result = test.run()
     result.check_stdout("a = Databases Rule")
-    result.check_stdout("b = kuzu is cool")
+    result.check_stdout("b = ryu is cool")
 
     # test list mode
     test = (
         ShellTest()
         .add_argument(temp_db)
         .statement(":mode list")
-        .statement('RETURN "Databases Rule" AS a, "kuzu is cool" AS b;')
+        .statement('RETURN "Databases Rule" AS a, "ryu is cool" AS b;')
     )
     result = test.run()
     result.check_stdout("a|b")
-    result.check_stdout("Databases Rule|kuzu is cool")
+    result.check_stdout("Databases Rule|ryu is cool")
 
     # test list escaping
     test = (
@@ -430,33 +430,33 @@ def test_set_mode(temp_db) -> None:
         ShellTest()
         .add_argument(temp_db)
         .statement(":mode markdown")
-        .statement('RETURN "Databases Rule" AS a, "kuzu is cool" AS b;')
+        .statement('RETURN "Databases Rule" AS a, "ryu is cool" AS b;')
     )
     result = test.run()
-    result.check_stdout("| a              | b            |")
-    result.check_stdout("| Databases Rule | kuzu is cool |")
+    result.check_stdout("| a              | b           |")
+    result.check_stdout("| Databases Rule | ryu is cool |")
 
     # test table mode
     test = (
         ShellTest()
         .add_argument(temp_db)
         .statement(":mode table")
-        .statement('RETURN "Databases Rule" AS a, "kuzu is cool" AS b;')
+        .statement('RETURN "Databases Rule" AS a, "ryu is cool" AS b;')
     )
     result = test.run()
-    result.check_stdout("| a              | b            |")
-    result.check_stdout("| Databases Rule | kuzu is cool |")
+    result.check_stdout("| a              | b           |")
+    result.check_stdout("| Databases Rule | ryu is cool |")
 
     # test tsv mode
     test = (
         ShellTest()
         .add_argument(temp_db)
         .statement(":mode tsv")
-        .statement('RETURN "Databases Rule" AS a, "kuzu is cool" AS b;')
+        .statement('RETURN "Databases Rule" AS a, "ryu is cool" AS b;')
     )
     result = test.run()
     result.check_stdout("a\tb")
-    result.check_stdout("Databases Rule\tkuzu is cool")
+    result.check_stdout("Databases Rule\tryu is cool")
 
     # test tsv escaping
     test = (
@@ -487,7 +487,7 @@ def test_set_mode(temp_db) -> None:
         ShellTest()
         .add_argument(temp_db)
         .statement(":mode invalid")
-        .statement('RETURN "Databases Rule" AS a, "kuzu is cool" AS b;')
+        .statement('RETURN "Databases Rule" AS a, "ryu is cool" AS b;')
     )
     result = test.run()
     output_mode_verification(result)
@@ -497,7 +497,7 @@ def test_set_mode(temp_db) -> None:
         ShellTest()
         .add_argument(temp_db)
         .statement(":mode invalid")
-        .statement('RETURN "Databases Rule" AS a, "kuzu is cool" AS b;')
+        .statement('RETURN "Databases Rule" AS a, "ryu is cool" AS b;')
     )
     result = test.run()
     result.check_stdout("Cannot parse 'invalid' as output mode.")

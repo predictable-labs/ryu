@@ -13,11 +13,11 @@ random_key_id
 -STATEMENT call current_setting('s3_region') return *;
 ---- 1
 random_region
--STATEMENT CALL s3_access_key_id='kuzuS3keyid'
+-STATEMENT CALL s3_access_key_id='ryuS3keyid'
 ---- ok
 -STATEMENT call current_setting('s3_accesS_key_id') return *;
 ---- 1
-kuzuS3keyid
+ryuS3keyid
 -STATEMENT CALL s3_access_key_id='anotherkey'
 ---- ok
 -STATEMENT call current_setting('s3_access_Key_id') return *;
@@ -38,7 +38,7 @@ anotherkey
 ---- ok
 -STATEMENT CALL s3_region='us-east-1'
 ---- ok
--STATEMENT load from 's3://kuzu-dataset-us/user.csv' return *;
+-STATEMENT load from 's3://ryu-dataset-us/user.csv' return *;
 ---- 4
 Adam|30
 Karissa|40
@@ -50,7 +50,7 @@ Zhang|50
 ---- ok
 -STATEMENT CREATE NODE TABLE City(name STRING, population INT64, PRIMARY KEY (name))
 ---- ok
--STATEMENT copy City from 's3://kuzu-dataset-eu/city.csv';
+-STATEMENT copy City from 's3://ryu-dataset-eu/city.csv';
 ---- ok
 -STATEMENT match (c:City) return c.name, c.population;
 ---- 3

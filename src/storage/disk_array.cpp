@@ -9,10 +9,10 @@
 #include "storage/storage_utils.h"
 #include "transaction/transaction.h"
 
-using namespace kuzu::common;
-using namespace kuzu::transaction;
+using namespace ryu::common;
+using namespace ryu::transaction;
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 
 // Header can be read or write since it just needs the sizes
@@ -27,8 +27,8 @@ static PageCursor getAPIdxAndOffsetInAP(const PageStorageInfo& info, uint64_t id
 
 PageStorageInfo::PageStorageInfo(uint64_t elementSize)
     : alignedElementSize{std::bit_ceil(elementSize)},
-      numElementsPerPage{KUZU_PAGE_SIZE / alignedElementSize} {
-    KU_ASSERT(elementSize <= KUZU_PAGE_SIZE);
+      numElementsPerPage{RYU_PAGE_SIZE / alignedElementSize} {
+    KU_ASSERT(elementSize <= RYU_PAGE_SIZE);
 }
 
 PIPWrapper::PIPWrapper(const FileHandle& fileHandle, page_idx_t pipPageIdx)
@@ -389,7 +389,7 @@ void BlockVectorInternal::resize(uint64_t newNumElements,
     uint64_t newNumArrayPages = getNumArrayPagesNeededForElements(newNumElements);
     for (auto i = oldNumArrayPages; i < newNumArrayPages; ++i) {
         inMemArrayPages.emplace_back(
-            memoryManager.allocateBuffer(true /*initializeToZero*/, KUZU_PAGE_SIZE));
+            memoryManager.allocateBuffer(true /*initializeToZero*/, RYU_PAGE_SIZE));
     }
     for (uint64_t i = 0; i < newNumElements - oldNumElements; i++) {
         auto* dest = operator[](oldNumElements + i);
@@ -398,4 +398,4 @@ void BlockVectorInternal::resize(uint64_t newNumElements,
     numElements = newNumElements;
 }
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

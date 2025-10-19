@@ -21,12 +21,12 @@
 #include "storage/table/struct_column.h"
 #include <concepts>
 
-using namespace kuzu::common;
-using namespace kuzu::catalog;
-using namespace kuzu::storage;
-using namespace kuzu::main;
+using namespace ryu::common;
+using namespace ryu::catalog;
+using namespace ryu::storage;
+using namespace ryu::main;
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct StorageInfoLocalState final : TableFuncLocalState {
@@ -345,4 +345,4 @@ function_set StorageInfoFunction::getFunctionSet() {
 }
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

@@ -51,7 +51,7 @@ jobs:
 
       - name: Detect release version
         run: |
-          echo "RELEASE_VERSION=v$(cat CMakeLists.txt | grep "DKUZU_EXTENSION_VERSION" | cut -d '"' -f 2 )" >> $GITHUB_ENV
+          echo "RELEASE_VERSION=v$(cat CMakeLists.txt | grep "DRYU_EXTENSION_VERSION" | cut -d '"' -f 2 )" >> $GITHUB_ENV
 
       - name: Delete checked out repository
         run: rm -rf ./*
@@ -76,31 +76,31 @@ jobs:
       - name: Download built artifacts for linux-x86_64
         uses: actions/download-artifact@v4
         with:
-          name: kuzu-extensions_linux-x86_64
+          name: ryu-extensions_linux-x86_64
           path: extension-artifacts/linux_amd64
 
       - name: Download built artifacts for linux-aarch64
         uses: actions/download-artifact@v4
         with:
-          name: kuzu-extensions_linux-aarch64
+          name: ryu-extensions_linux-aarch64
           path: extension-artifacts/linux_arm64
 
       - name: Download built artifacts for osx-x86_64
         uses: actions/download-artifact@v4
         with:
-          name: kuzu-extensions_osx-x86_64
+          name: ryu-extensions_osx-x86_64
           path: extension-artifacts/osx_amd64
 
       - name: Download built artifacts for osx-aarch64
         uses: actions/download-artifact@v4
         with:
-          name: kuzu-extensions_osx-arm64
+          name: ryu-extensions_osx-arm64
           path: extension-artifacts/osx_arm64
 
       - name: Download built artifacts for windows-x86_64
         uses: actions/download-artifact@v4
         with:
-          name: kuzu-extensions_win-x86_64
+          name: ryu-extensions_win-x86_64
           path: extension-artifacts/win_amd64
 
       - name: Copy built artifacts
@@ -120,7 +120,7 @@ jobs:
       - name: Upload new artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: kuzu-extensions
+          name: ryu-extensions
           path: |
             releases
             dataset

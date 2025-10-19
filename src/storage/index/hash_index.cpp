@@ -23,10 +23,10 @@
 #include "storage/storage_manager.h"
 #include "transaction/transaction.h"
 
-using namespace kuzu::common;
-using namespace kuzu::transaction;
+using namespace ryu::common;
+using namespace ryu::transaction;
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 
 template<typename T>
@@ -217,7 +217,7 @@ void HashIndex<T>::reserve(PageAllocator& pageAllocator, const Transaction* tran
     // Always start with at least one page worth of slots.
     // This guarantees that when splitting the source and destination slot are never on the same
     // page, which allows safe use of multiple disk array iterators.
-    numRequiredSlots = std::max(numRequiredSlots, KUZU_PAGE_SIZE / pSlots->getAlignedElementSize());
+    numRequiredSlots = std::max(numRequiredSlots, RYU_PAGE_SIZE / pSlots->getAlignedElementSize());
     // If there are no entries, we can just re-size the number of primary slots and re-calculate the
     // levels
     if (this->indexHeaderForWriteTrx.numEntries == 0) {
@@ -297,7 +297,7 @@ void HashIndex<T>::mergeBulkInserts(PageAllocator& pageAllocator, const Transact
     // Store sorted slot positions. Re-use to avoid re-allocating memory
     // TODO: Unify implementations to make sure this matches the size used by the disk array
     constexpr size_t NUM_SLOTS_PER_PAGE =
-        KUZU_PAGE_SIZE / DiskArray<OnDiskSlotType>::getAlignedElementSize();
+        RYU_PAGE_SIZE / DiskArray<OnDiskSlotType>::getAlignedElementSize();
     std::array<std::vector<HashIndexEntryView>, NUM_SLOTS_PER_PAGE> partitionedEntries;
     // Sort entries for a page of slots at a time, then move vertically and process all entries
     // which map to a given page on disk, then horizontally to the next page in the set. These pages
@@ -732,4 +732,4 @@ page_idx_t PrimaryKeyIndex::getFirstHeaderPage() const {
 }
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

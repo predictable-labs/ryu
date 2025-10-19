@@ -1,12 +1,12 @@
 ## Contributor Agreement
 
-Thank you for your interest in contributing to Xiyang Feng's, Guodong Jin's, Chang Liu's, Ziyi Chen's, and Semih Salihoğlu's Kùzu ("We" or "Us").
+Thank you for your interest in contributing to Xiyang Feng's, Guodong Jin's, Chang Liu's, Ziyi Chen's, and Semih Salihoğlu's Ryu ("We" or "Us").
 
 The purpose of this contributor agreement ("Agreement") is to clarify and document the rights granted by contributors to Us.
 
 ### How to use this Contributor Agreement
 
-If You are an employee and have created the Contribution as part of your employment, You need to have Your employer approve this Agreement. If You do not own the Copyright in the entire work of authorship, any other author of the Contribution should also sign this – in any event, please contact Us at contact@kuzudb.com
+If You are an employee and have created the Contribution as part of your employment, You need to have Your employer approve this Agreement. If You do not own the Copyright in the entire work of authorship, any other author of the Contribution should also sign this – in any event, please contact Us at contact@ryugraph.com
 
 ### 1\. Definitions
 

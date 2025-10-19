@@ -3,31 +3,31 @@ import sys
 from enum import Enum
 from pathlib import Path
 
-KUZU_ROOT = Path(__file__).parent.parent.parent.parent
+RYU_ROOT = Path(__file__).parent.parent.parent.parent
 if sys.platform == "win32":
-    # \ in paths is not supported by kuzu's parser
-    KUZU_ROOT = str(KUZU_ROOT).replace("\\", "/")
+    # \ in paths is not supported by ryu's parser
+    RYU_ROOT = str(RYU_ROOT).replace("\\", "/")
 
-KUZU_EXEC_PATH = os.path.join(
-    KUZU_ROOT,
+RYU_EXEC_PATH = os.path.join(
+    RYU_ROOT,
     "build",
     "release",
     "tools",
     "shell",
-    "kuzu",
+    "ryu",
 )
 
 
-def _get_kuzu_version():
-    cmake_file = os.path.join(KUZU_ROOT, "CMakeLists.txt")
+def _get_ryu_version():
+    cmake_file = os.path.join(RYU_ROOT, "CMakeLists.txt")
     with open(cmake_file) as f:
         for line in f:
-            if line.startswith("project(Kuzu VERSION"):
+            if line.startswith("project(Ryu VERSION"):
                 return line.split(" ")[2].strip()
         return None
 
 
-KUZU_VERSION = _get_kuzu_version()
+RYU_VERSION = _get_ryu_version()
 
 
 class KEY_ACTION(Enum):

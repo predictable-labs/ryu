@@ -4,9 +4,9 @@
 #include "storage/buffer_manager/memory_manager.h"
 #include <bit>
 
-using namespace kuzu::storage;
+using namespace ryu::storage;
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 
 BufferBlock::BufferBlock(std::unique_ptr<storage::MemoryBuffer> block)
@@ -66,4 +66,4 @@ void InMemOverflowBuffer::allocateNewBlock(uint64_t size) {
 }
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

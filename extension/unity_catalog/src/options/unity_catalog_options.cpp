@@ -4,7 +4,7 @@
 #include "main/client_context.h"
 #include "main/database.h"
 
-namespace kuzu {
+namespace ryu {
 namespace unity_catalog_extension {
 
 using namespace common;
@@ -29,8 +29,8 @@ static std::string getUnityCatalogOptions(main::ClientContext* context, std::str
     static common::case_insensitive_map_t<std::string> UNITY_CATALOG_OPTIONS = {
         {UnityCatalogToken::NAME, "TOKEN"}, {UnityCatalogEndPoint::NAME, "ENDPOINT"}};
     auto optionNameInDuckDB = UNITY_CATALOG_OPTIONS.at(optionName);
-    auto optionValueInKuzu = context->getCurrentSetting(optionName).toString();
-    return common::stringFormat("{} '{}',", optionNameInDuckDB, optionValueInKuzu);
+    auto optionValueInRyu = context->getCurrentSetting(optionName).toString();
+    return common::stringFormat("{} '{}',", optionNameInDuckDB, optionValueInRyu);
 }
 
 std::string DuckDBUnityCatalogSecretManager::getSecret(main::ClientContext* context) {
@@ -45,4 +45,4 @@ std::string DuckDBUnityCatalogSecretManager::getSecret(main::ClientContext* cont
 }
 
 } // namespace unity_catalog_extension
-} // namespace kuzu
+} // namespace ryu

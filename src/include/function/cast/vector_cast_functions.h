@@ -2,7 +2,7 @@
 
 #include "function/scalar_function.h"
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 /**
@@ -191,4 +191,4 @@ struct CastAnyFunction {
 };
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

@@ -3,7 +3,7 @@
 #include "expression.h"
 #include "function/scalar_function.h"
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
 class ScalarFunctionExpression final : public Expression {
@@ -30,4 +30,4 @@ private:
 };
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

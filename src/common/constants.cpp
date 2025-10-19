@@ -1,6 +1,7 @@
-namespace kuzu {
+namespace ryu {
 namespace common {
 
-const char* KUZU_VERSION = KUZU_CMAKE_VERSION;
+const char* RYU_VERSION = RYU_CMAKE_VERSION;
+
 }
-} // namespace kuzu
+} // namespace ryu

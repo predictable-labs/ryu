@@ -4,10 +4,10 @@
 #include "main/query_result/materialized_query_result.h"
 #include "processor/result/flat_tuple.h"
 
-using namespace kuzu::common;
-using namespace kuzu::processor;
+using namespace ryu::common;
+using namespace ryu::processor;
 
-namespace kuzu {
+namespace ryu {
 namespace main {
 
 QueryResult::QueryResult()
@@ -129,4 +129,4 @@ std::unique_ptr<QueryResult> QueryResult::getQueryResultWithError(const std::str
 }
 
 } // namespace main
-} // namespace kuzu
+} // namespace ryu

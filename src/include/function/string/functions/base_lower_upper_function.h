@@ -4,12 +4,12 @@
 #include "common/types/ku_string.h"
 #include "common/vector/value_vector.h"
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct BaseLowerUpperFunction {
 
-    KUZU_API static void operation(common::ku_string_t& input, common::ku_string_t& result,
+    RYU_API static void operation(common::ku_string_t& input, common::ku_string_t& result,
         common::ValueVector& resultValueVector, bool isUpper);
 
     static void convertCharCase(char* result, const char* input, int32_t charPos, bool toUpper,
@@ -19,4 +19,4 @@ struct BaseLowerUpperFunction {
 };
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

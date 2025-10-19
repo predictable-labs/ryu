@@ -6,7 +6,7 @@
 #include "processor/operator/sink.h"
 #include "processor/result/flat_tuple.h"
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 class ArrowResultCollectorSharedState {
@@ -84,4 +84,4 @@ private:
 };
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

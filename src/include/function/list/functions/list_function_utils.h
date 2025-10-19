@@ -2,7 +2,7 @@
 
 #include "function/function.h"
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 enum class ListOp { Append, Prepend, Concat };
@@ -55,4 +55,4 @@ public:
 };
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

@@ -3,7 +3,7 @@
 #include "common/types/uuid.h"
 #include "storage/file_handle.h"
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 
 struct ShadowPageRecord {
@@ -69,4 +69,4 @@ private:
 };
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

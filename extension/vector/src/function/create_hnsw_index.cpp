@@ -18,12 +18,12 @@
 #include "storage/storage_manager.h"
 #include "storage/table/node_table.h"
 
-using namespace kuzu::common;
-using namespace kuzu::function;
-using namespace kuzu::processor;
-using namespace kuzu::processor;
+using namespace ryu::common;
+using namespace ryu::function;
+using namespace ryu::processor;
+using namespace ryu::processor;
 
-namespace kuzu {
+namespace ryu {
 namespace vector_extension {
 
 CreateInMemHNSWSharedState::CreateInMemHNSWSharedState(const CreateHNSWIndexBindData& bindData)
@@ -380,4 +380,4 @@ function_set CreateVectorIndexFunction::getFunctionSet() {
 }
 
 } // namespace vector_extension
-} // namespace kuzu
+} // namespace ryu

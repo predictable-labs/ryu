@@ -7,7 +7,7 @@
 #include "processor/operator/sink.h"
 #include "storage/table/in_mem_chunked_node_group_collection.h"
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 class MemoryManager;
 } // namespace storage
@@ -197,4 +197,4 @@ private:
 };
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

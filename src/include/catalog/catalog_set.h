@@ -6,7 +6,7 @@
 #include "catalog_entry/catalog_entry.h"
 #include "common/case_insensitive_map.h"
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 struct BoundAlterInfo;
 } // namespace binder
@@ -22,7 +22,7 @@ class Transaction;
 using CatalogEntrySet = common::case_insensitive_map_t<catalog::CatalogEntry*>;
 
 namespace catalog {
-class KUZU_API CatalogSet {
+class RYU_API CatalogSet {
     friend class storage::UndoBuffer;
 
 public:
@@ -89,4 +89,4 @@ private:
 };
 
 } // namespace catalog
-} // namespace kuzu
+} // namespace ryu

@@ -5,10 +5,10 @@
 #include "planner/operator/persistent/logical_merge.h"
 #include "planner/planner.h"
 
-using namespace kuzu::common;
-using namespace kuzu::binder;
+using namespace ryu::common;
+using namespace ryu::binder;
 
-namespace kuzu {
+namespace ryu {
 namespace planner {
 
 void Planner::planUpdatingClause(const BoundUpdatingClause& updatingClause, LogicalPlan& plan) {
@@ -134,4 +134,4 @@ void Planner::planDeleteClause(const BoundUpdatingClause& updatingClause, Logica
 }
 
 } // namespace planner
-} // namespace kuzu
+} // namespace ryu

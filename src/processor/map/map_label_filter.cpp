@@ -2,9 +2,9 @@
 #include "processor/operator/filter.h"
 #include "processor/plan_mapper.h"
 
-using namespace kuzu::planner;
+using namespace ryu::planner;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 std::unique_ptr<PhysicalOperator> PlanMapper::mapNodeLabelFilter(
@@ -21,4 +21,4 @@ std::unique_ptr<PhysicalOperator> PlanMapper::mapNodeLabelFilter(
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

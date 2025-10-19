@@ -2,7 +2,7 @@
 
 #include "common/vector/value_vector.h"
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 template<typename T>
@@ -21,4 +21,4 @@ struct ArrayCrossProduct {
 };
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

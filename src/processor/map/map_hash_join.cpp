@@ -5,11 +5,11 @@
 #include "processor/plan_mapper.h"
 #include "storage/buffer_manager/memory_manager.h"
 
-using namespace kuzu::binder;
-using namespace kuzu::planner;
-using namespace kuzu::common;
+using namespace ryu::binder;
+using namespace ryu::planner;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 HashJoinBuildInfo PlanMapper::createHashBuildInfo(const Schema& buildSideSchema,
@@ -122,4 +122,4 @@ std::unique_ptr<PhysicalOperator> PlanMapper::mapHashJoin(const LogicalOperator*
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

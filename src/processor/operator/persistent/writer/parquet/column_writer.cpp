@@ -16,11 +16,11 @@
 #include "snappy.h"
 #include "zstd.h"
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
-using namespace kuzu_parquet::format;
-using namespace kuzu::common;
+using namespace ryu_parquet::format;
+using namespace ryu::common;
 
 struct ParquetInt128Operator {
     template<class SRC, class TGT>
@@ -57,7 +57,7 @@ ColumnWriter::ColumnWriter(ParquetWriter& writer, uint64_t schemaIdx,
       maxDefine{maxDefine}, canHaveNulls{canHaveNulls}, nullCount{0} {}
 
 std::unique_ptr<ColumnWriter> ColumnWriter::createWriterRecursive(
-    std::vector<kuzu_parquet::format::SchemaElement>& schemas, ParquetWriter& writer,
+    std::vector<ryu_parquet::format::SchemaElement>& schemas, ParquetWriter& writer,
     const LogicalType& type, const std::string& name, std::vector<std::string> schemaPathToCreate,
     storage::MemoryManager* mm, uint64_t maxRepeatToCreate, uint64_t maxDefineToCreate,
     bool canHaveNullsToCreate) {
@@ -72,7 +72,7 @@ std::unique_ptr<ColumnWriter> ColumnWriter::createWriterRecursive(
     case LogicalTypeID::STRUCT: {
         const auto& fields = StructType::getFields(type);
         // set up the schema element for this struct
-        kuzu_parquet::format::SchemaElement schema_element;
+        ryu_parquet::format::SchemaElement schema_element;
         schema_element.repetition_type = nullType;
         schema_element.num_children = fields.size();
         schema_element.__isset.num_children = true;
@@ -99,7 +99,7 @@ std::unique_ptr<ColumnWriter> ColumnWriter::createWriterRecursive(
         // Set up the two schema elements for the list
         // for some reason we only set the converted type in the OPTIONAL element
         // first an OPTIONAL element.
-        kuzu_parquet::format::SchemaElement optionalElem;
+        ryu_parquet::format::SchemaElement optionalElem;
         optionalElem.repetition_type = nullType;
         optionalElem.num_children = 1;
         optionalElem.converted_type = ConvertedType::LIST;
@@ -112,7 +112,7 @@ std::unique_ptr<ColumnWriter> ColumnWriter::createWriterRecursive(
         schemaPathToCreate.push_back(name);
 
         // Then a REPEATED element.
-        kuzu_parquet::format::SchemaElement repeatedElem;
+        ryu_parquet::format::SchemaElement repeatedElem;
         repeatedElem.repetition_type = FieldRepetitionType::REPEATED;
         repeatedElem.num_children = 1;
         repeatedElem.__isset.num_children = true;
@@ -135,7 +135,7 @@ std::unique_ptr<ColumnWriter> ColumnWriter::createWriterRecursive(
         // 		<value-repetition> <value-type> value;
         // 	}
         // }
-        kuzu_parquet::format::SchemaElement topElement;
+        ryu_parquet::format::SchemaElement topElement;
         topElement.repetition_type = nullType;
         topElement.num_children = 1;
         topElement.converted_type = ConvertedType::MAP;
@@ -148,7 +148,7 @@ std::unique_ptr<ColumnWriter> ColumnWriter::createWriterRecursive(
         schemaPathToCreate.push_back(name);
 
         // key_value element
-        kuzu_parquet::format::SchemaElement kv_element;
+        ryu_parquet::format::SchemaElement kv_element;
         kv_element.repetition_type = FieldRepetitionType::REPEATED;
         kv_element.num_children = 2;
         kv_element.__isset.repetition_type = true;
@@ -329,18 +329,18 @@ void ColumnWriter::compressPage(common::BufferWriter& bufferedSerializer, size_t
         compressedData = bufferedSerializer.getBlobData();
     } break;
     case CompressionCodec::SNAPPY: {
-        compressedSize = kuzu_snappy::MaxCompressedLength(bufferedSerializer.getSize());
+        compressedSize = ryu_snappy::MaxCompressedLength(bufferedSerializer.getSize());
         compressedBuf = std::unique_ptr<uint8_t[]>(new uint8_t[compressedSize]);
-        kuzu_snappy::RawCompress(reinterpret_cast<const char*>(bufferedSerializer.getBlobData()),
+        ryu_snappy::RawCompress(reinterpret_cast<const char*>(bufferedSerializer.getBlobData()),
             bufferedSerializer.getSize(), reinterpret_cast<char*>(compressedBuf.get()),
             &compressedSize);
         compressedData = compressedBuf.get();
-        KU_ASSERT(compressedSize <= kuzu_snappy::MaxCompressedLength(bufferedSerializer.getSize()));
+        KU_ASSERT(compressedSize <= ryu_snappy::MaxCompressedLength(bufferedSerializer.getSize()));
     } break;
     case CompressionCodec::ZSTD: {
-        compressedSize = kuzu_zstd::ZSTD_compressBound(bufferedSerializer.getSize());
+        compressedSize = ryu_zstd::ZSTD_compressBound(bufferedSerializer.getSize());
         compressedBuf = std::unique_ptr<uint8_t[]>(new uint8_t[compressedSize]);
-        compressedSize = kuzu_zstd::ZSTD_compress((void*)compressedBuf.get(), compressedSize,
+        compressedSize = ryu_zstd::ZSTD_compress((void*)compressedBuf.get(), compressedSize,
             reinterpret_cast<const char*>(bufferedSerializer.getBlobData()),
             bufferedSerializer.getSize(), ZSTD_CLEVEL_DEFAULT);
         compressedData = compressedBuf.get();
@@ -355,9 +355,9 @@ void ColumnWriter::compressPage(common::BufferWriter& bufferedSerializer, size_t
         compressedData = compressedBuf.get();
     } break;
     case CompressionCodec::LZ4_RAW: {
-        compressedSize = kuzu_lz4::LZ4_compressBound(bufferedSerializer.getSize());
+        compressedSize = ryu_lz4::LZ4_compressBound(bufferedSerializer.getSize());
         compressedBuf = std::unique_ptr<uint8_t[]>(new uint8_t[compressedSize]);
-        compressedSize = kuzu_lz4::LZ4_compress_default(
+        compressedSize = ryu_lz4::LZ4_compress_default(
             reinterpret_cast<const char*>(bufferedSerializer.getBlobData()),
             reinterpret_cast<char*>(compressedBuf.get()), bufferedSerializer.getSize(),
             compressedSize);
@@ -375,4 +375,4 @@ void ColumnWriter::compressPage(common::BufferWriter& bufferedSerializer, size_t
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

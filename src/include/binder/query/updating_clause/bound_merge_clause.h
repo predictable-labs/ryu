@@ -5,7 +5,7 @@
 #include "bound_set_info.h"
 #include "bound_updating_clause.h"
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
 class BoundMergeClause final : public BoundUpdatingClause {
@@ -138,4 +138,4 @@ private:
 };
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

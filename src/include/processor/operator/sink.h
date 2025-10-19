@@ -6,13 +6,13 @@
 #include "processor/result/factorized_table.h"
 #include "processor/result/result_set_descriptor.h"
 
-namespace kuzu {
+namespace ryu {
 namespace main {
 class QueryResult;
 }
 namespace processor {
 
-class KUZU_API Sink : public PhysicalOperator {
+class RYU_API Sink : public PhysicalOperator {
 public:
     Sink(PhysicalOperatorType operatorType, physical_op_id id,
         std::unique_ptr<OPPrintInfo> printInfo)
@@ -64,7 +64,7 @@ protected:
     std::unique_ptr<ResultSetDescriptor> resultSetDescriptor;
 };
 
-class KUZU_API DummySink final : public Sink {
+class RYU_API DummySink final : public Sink {
     static constexpr PhysicalOperatorType type_ = PhysicalOperatorType::DUMMY_SINK;
 
 public:
@@ -120,4 +120,4 @@ public:
 };
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

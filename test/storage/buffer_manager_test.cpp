@@ -14,17 +14,15 @@
 #include "storage/table/chunked_node_group.h"
 #include "storage/table/column_chunk.h"
 
-using namespace kuzu::common;
-using namespace kuzu::storage;
+using namespace ryu::common;
+using namespace ryu::storage;
 
-namespace kuzu {
+namespace ryu {
 namespace testing {
 
 class BufferManagerTest : public DBTest {
 public:
-    std::string getInputDir() override {
-        return TestHelper::appendKuzuRootPath("dataset/tinysnb/");
-    }
+    std::string getInputDir() override { return TestHelper::appendRyuRootPath("dataset/tinysnb/"); }
     void reserveAll() {
         auto* bm = getBufferManager(*database);
         // Can't use UINT64_MAX since it will overflow the usedMemory
@@ -55,7 +53,7 @@ TEST_F(BufferManagerTest, TestBMUsageForIdenticalQueries) {
 class EmptyBufferManagerTest : public DBTest {
 public:
     std::string getInputDir() override {
-        return TestHelper::appendKuzuRootPath("dataset/empty-db/");
+        return TestHelper::appendRyuRootPath("dataset/empty-db/");
     }
 };
 
@@ -161,4 +159,4 @@ TEST_F(BufferManagerTest, TestBMEvictionSlowRead) {
 }
 
 } // namespace testing
-} // namespace kuzu
+} // namespace ryu

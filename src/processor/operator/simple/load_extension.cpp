@@ -5,12 +5,12 @@
 #include "processor/execution_context.h"
 #include "storage/buffer_manager/memory_manager.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
-using namespace kuzu::extension;
+using namespace ryu::extension;
 
 std::string LoadExtensionPrintInfo::toString() const {
     return "Load " + extensionName;
@@ -24,4 +24,4 @@ void LoadExtension::executeInternal(ExecutionContext* context) {
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

@@ -3,7 +3,7 @@
 #include "main/database.h"
 #include "storage/storage_extension.h"
 
-namespace kuzu {
+namespace ryu {
 namespace sqlite_extension {
 
 class SqliteStorageExtension final : public storage::StorageExtension {
@@ -18,4 +18,4 @@ public:
 };
 
 } // namespace sqlite_extension
-} // namespace kuzu
+} // namespace ryu

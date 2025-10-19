@@ -1,10 +1,10 @@
 #pragma once
 
-#include "main/kuzu.h"
+#include "main/ryu.h"
 #include "node_connection.h"
 #include <napi.h>
 
-using namespace kuzu::main;
+using namespace ryu::main;
 
 class NodePreparedStatement : public Napi::ObjectWrap<NodePreparedStatement> {
     friend class NodeConnection;

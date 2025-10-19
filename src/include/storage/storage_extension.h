@@ -2,7 +2,7 @@
 
 #include "main/attached_database.h"
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 struct AttachOption;
 }
@@ -30,4 +30,4 @@ private:
 };
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

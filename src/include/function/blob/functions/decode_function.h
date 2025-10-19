@@ -5,7 +5,7 @@
 #include "common/vector/value_vector.h"
 #include "utf8proc_wrapper.h"
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct Decode {
@@ -22,4 +22,4 @@ struct Decode {
 };
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

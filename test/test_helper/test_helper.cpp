@@ -6,11 +6,11 @@
 
 #include "spdlog/spdlog.h"
 
-using namespace kuzu::common;
-using namespace kuzu::planner;
-using namespace kuzu::main;
+using namespace ryu::common;
+using namespace ryu::planner;
+using namespace ryu::main;
 
-namespace kuzu {
+namespace ryu {
 namespace testing {
 
 std::vector<std::string> TestHelper::convertResultToString(QueryResult& queryResult,
@@ -38,7 +38,7 @@ void TestHelper::executeScript(const std::string& cypherScript, Connection& conn
     }
     std::string line;
     while (getline(file, line)) {
-        // If this is a COPY statement, we need to append the KUZU_ROOT_DIRECTORY to the csv
+        // If this is a COPY statement, we need to append the RYU_ROOT_DIRECTORY to the csv
         // file path. There maybe multiple csv files in the line, so we need to find all of them.
         std::vector<std::string> csvFilePaths;
         size_t index = 0;
@@ -62,13 +62,13 @@ void TestHelper::executeScript(const std::string& cypherScript, Connection& conn
                 substrLower.find(".ttl") != std::string::npos ||
                 substrLower.find(".nq") != std::string::npos ||
                 substrLower.find(".json") != std::string::npos ||
-                substrLower.find(".kuzu_extension") != std::string::npos) {
+                substrLower.find(".ryu_extension") != std::string::npos) {
                 csvFilePaths.push_back(substr);
             }
             index = end + 1;
         }
         for (auto& csvFilePath : csvFilePaths) {
-            auto fullPath = appendKuzuRootPath(csvFilePath);
+            auto fullPath = appendRyuRootPath(csvFilePath);
             line.replace(line.find(csvFilePath), csvFilePath.length(), fullPath);
         }
 #ifdef __STATIC_LINK_EXTENSION_TEST__
@@ -124,4 +124,4 @@ std::string TestHelper::getTempSuffix() {
 }
 
 } // namespace testing
-} // namespace kuzu
+} // namespace ryu

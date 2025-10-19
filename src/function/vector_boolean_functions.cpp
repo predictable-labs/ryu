@@ -3,9 +3,9 @@
 #include "common/exception/runtime.h"
 #include "function/boolean/boolean_functions.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 void VectorBooleanFunction::bindExecFunction(ExpressionType expressionType,
@@ -121,4 +121,4 @@ void VectorBooleanFunction::bindUnarySelectFunction(ExpressionType expressionTyp
 }
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

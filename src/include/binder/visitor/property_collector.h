@@ -2,11 +2,11 @@
 
 #include "binder/bound_statement_visitor.h"
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
 // Collect all property expressions for a given statement.
-class KUZU_API PropertyCollector final : public BoundStatementVisitor {
+class RYU_API PropertyCollector final : public BoundStatementVisitor {
 public:
     expression_vector getProperties() const;
 
@@ -39,4 +39,4 @@ private:
 };
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

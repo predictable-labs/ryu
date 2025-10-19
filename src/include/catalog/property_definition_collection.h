@@ -3,10 +3,10 @@
 #include "binder/ddl/property_definition.h"
 #include "common/case_insensitive_map.h"
 
-namespace kuzu {
+namespace ryu {
 namespace catalog {
 
-class KUZU_API PropertyDefinitionCollection {
+class RYU_API PropertyDefinitionCollection {
 public:
     PropertyDefinitionCollection() : nextColumnID{0}, nextPropertyID{0} {}
     explicit PropertyDefinitionCollection(common::column_id_t nextColumnID)
@@ -50,4 +50,4 @@ private:
 };
 
 } // namespace catalog
-} // namespace kuzu
+} // namespace ryu

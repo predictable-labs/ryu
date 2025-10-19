@@ -24,7 +24,7 @@
 #include "sparse_set.h"
 #include "util.h"
 
-namespace kuzu {
+namespace ryu {
 namespace regex {
 
 // Opcodes for Inst
@@ -470,6 +470,6 @@ static inline const char* EndPtr(const StringPiece& s) {
 }
 
 } // namespace regex
-} // namespace kuzu
+} // namespace ryu
 
 #endif // RE2_PROG_H_

@@ -8,11 +8,11 @@
 #include "storage/table/null_column.h"
 #include "storage/table/struct_chunk_data.h"
 
-using namespace kuzu::catalog;
-using namespace kuzu::common;
-using namespace kuzu::transaction;
+using namespace ryu::catalog;
+using namespace ryu::common;
+using namespace ryu::transaction;
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 
 StructColumn::StructColumn(std::string name, LogicalType dataType, FileHandle* dataFH,
@@ -145,4 +145,4 @@ bool StructColumn::canCheckpointInPlace(const SegmentState& state,
 }
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

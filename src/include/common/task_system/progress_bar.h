@@ -6,7 +6,7 @@
 #include "common/api.h"
 #include "progress_bar_display.h"
 
-namespace kuzu {
+namespace ryu {
 namespace main {
 class ClientContext;
 }
@@ -34,7 +34,7 @@ public:
 
     void toggleProgressBarPrinting(bool enable);
 
-    KUZU_API void updateProgress(uint64_t queryID, double curPipelineProgress);
+    RYU_API void updateProgress(uint64_t queryID, double curPipelineProgress);
 
     void setDisplay(std::shared_ptr<ProgressBarDisplay> progressBarDipslay);
 
@@ -42,7 +42,7 @@ public:
 
     bool getProgressBarPrinting() const { return trackProgress; }
 
-    KUZU_API static ProgressBar* Get(const main::ClientContext& context);
+    RYU_API static ProgressBar* Get(const main::ClientContext& context);
 
 private:
     void resetProgressBar(uint64_t queryID);
@@ -58,4 +58,4 @@ private:
 };
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

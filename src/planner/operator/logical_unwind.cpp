@@ -2,10 +2,10 @@
 
 #include "planner/operator/factorization/flatten_resolver.h"
 
-using namespace kuzu::binder;
-using namespace kuzu::common;
+using namespace ryu::binder;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace planner {
 
 f_group_pos_set LogicalUnwind::getGroupsPosToFlatten() {
@@ -31,4 +31,4 @@ void LogicalUnwind::computeFlatSchema() {
 }
 
 } // namespace planner
-} // namespace kuzu
+} // namespace ryu

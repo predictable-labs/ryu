@@ -9,7 +9,7 @@
 #include "common/task_system/task.h"
 #include "processor/execution_context.h"
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 
 struct ScheduledTask {
@@ -40,7 +40,7 @@ struct ScheduledTask {
  * completion.
  */
 #ifndef __SINGLE_THREADED__
-class KUZU_API TaskScheduler {
+class RYU_API TaskScheduler {
 public:
 #if defined(__APPLE__)
     explicit TaskScheduler(uint64_t numWorkerThreads, uint32_t threadQos);
@@ -109,4 +109,4 @@ private:
 };
 #endif
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

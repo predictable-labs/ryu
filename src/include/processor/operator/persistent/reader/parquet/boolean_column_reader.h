@@ -3,7 +3,7 @@
 #include "column_reader.h"
 #include "templated_column_reader.h"
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 struct BooleanParquetValueConversion;
@@ -14,7 +14,7 @@ public:
 
 public:
     BooleanColumnReader(ParquetReader& reader, common::LogicalType type,
-        const kuzu_parquet::format::SchemaElement& schema, uint64_t schemaIdx, uint64_t maxDefine,
+        const ryu_parquet::format::SchemaElement& schema, uint64_t schemaIdx, uint64_t maxDefine,
         uint64_t maxRepeat)
         : TemplatedColumnReader<bool, BooleanParquetValueConversion>(reader, std::move(type),
               schema, schemaIdx, maxDefine, maxRepeat),
@@ -23,8 +23,8 @@ public:
     uint8_t bytePos;
 
     void initializeRead(uint64_t rowGroupIdx,
-        const std::vector<kuzu_parquet::format::ColumnChunk>& columns,
-        kuzu_apache::thrift::protocol::TProtocol& protocol) override;
+        const std::vector<ryu_parquet::format::ColumnChunk>& columns,
+        ryu_apache::thrift::protocol::TProtocol& protocol) override;
 
     inline void resetPage() override { bytePos = 0; }
 };
@@ -42,4 +42,4 @@ struct BooleanParquetValueConversion {
 };
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

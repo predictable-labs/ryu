@@ -3,10 +3,10 @@
 #include "binder/expression_binder.h"
 #include "parser/expression/parsed_literal_expression.h"
 
-using namespace kuzu::parser;
-using namespace kuzu::common;
+using namespace ryu::parser;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
 std::shared_ptr<Expression> ExpressionBinder::bindLiteralExpression(
@@ -40,4 +40,4 @@ std::shared_ptr<Expression> ExpressionBinder::createNullLiteralExpression(
 }
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

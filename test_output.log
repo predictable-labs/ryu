@@ -1,0 +1,321 @@
+Testing Rust API build in Docker container...
+
+=== Installing build dependencies ===
+=== Cargo version ===
+cargo 1.81.0 (2dbb1af80 2024-08-20)
+
+=== Checking package name ===
+Package name in Cargo.toml:
+name = "ryugraph"
+
+Package name in Cargo.lock:
+name = "ryugraph"
+
+=== Running cargo test with --locked flag (like CI) ===
+    Updating crates.io index
+ Downloading crates ...
+  Downloaded ahash v0.8.12
+  Downloaded atoi v2.0.0
+  Downloaded autocfg v1.5.0
+  Downloaded cxxbridge-flags v1.0.138
+  Downloaded const-random v0.1.18
+  Downloaded crunchy v0.2.4
+  Downloaded const-random-macro v0.1.16
+  Downloaded cmake v0.1.54
+  Downloaded cfg-if v1.0.3
+  Downloaded num-integer v0.1.46
+  Downloaded arrayvec v0.7.6
+  Downloaded errno v0.3.13
+  Downloaded powerfmt v0.2.0
+  Downloaded foldhash v0.1.5
+  Downloaded deranged v0.5.3
+  Downloaded num-conv v0.1.0
+  Downloaded time-core v0.1.6
+  Downloaded scratch v1.0.9
+  Downloaded static_assertions v1.1.0
+  Downloaded bitflags v2.9.4
+  Downloaded termcolor v1.4.1
+  Downloaded arrow-arith v55.2.0
+  Downloaded num-rational v0.4.2
+  Downloaded iana-time-zone v0.1.63
+  Downloaded link-cplusplus v1.0.12
+  Downloaded version_check v0.9.5
+  Downloaded shlex v1.3.0
+  Downloaded rust_decimal_macros v1.37.1
+  Downloaded find-msvc-tools v0.1.1
+  Downloaded codespan-reporting v0.11.1
+  Downloaded tiny-keccak v2.0.2
+  Downloaded num-iter v0.1.45
+  Downloaded fastrand v2.3.0
+  Downloaded num v0.4.3
+  Downloaded quote v1.0.40
+  Downloaded lexical-parse-integer v1.0.5
+  Downloaded once_cell v1.21.3
+  Downloaded arrow-row v55.2.0
+  Downloaded anyhow v1.0.99
+  Downloaded arrow-string v55.2.0
+  Downloaded arrow-ord v55.2.0
+  Downloaded arrow-data v55.2.0
+  Downloaded tempfile v3.21.0
+  Downloaded unicode-ident v1.0.18
+  Downloaded rustversion v1.0.22
+  Downloaded num-traits v0.2.19
+  Downloaded lexical-core v1.0.5
+  Downloaded time-macros v0.2.24
+  Downloaded base64 v0.22.1
+  Downloaded arrow-select v55.2.0
+  Downloaded arrow-buffer v55.2.0
+  Downloaded arrow v55.2.0
+  Downloaded getrandom v0.2.16
+  Downloaded bytes v1.10.1
+  Downloaded half v2.6.0
+  Downloaded num-complex v0.4.6
+  Downloaded getrandom v0.3.3
+  Downloaded uuid v1.18.1
+  Downloaded arrow-schema v55.2.0
+  Downloaded arrow-cast v55.2.0
+  Downloaded ryu v1.0.20
+  Downloaded cxxbridge-macro v1.0.138
+  Downloaded lexical-write-integer v1.0.5
+  Downloaded proc-macro2 v1.0.101
+  Downloaded cc v1.2.36
+  Downloaded aho-corasick v1.1.3
+  Downloaded serde v1.0.219
+  Downloaded num-bigint v0.4.6
+  Downloaded memchr v2.7.5
+  Downloaded hashbrown v0.15.5
+  Downloaded lexical-util v1.0.6
+  Downloaded rust_decimal v1.37.2
+  Downloaded lexical-write-float v1.0.5
+  Downloaded time v0.3.43
+  Downloaded libm v0.2.15
+  Downloaded cxx-build v1.0.138
+  Downloaded regex v1.11.2
+  Downloaded lexical-parse-float v1.0.5
+  Downloaded arrow-array v55.2.0
+  Downloaded chrono v0.4.42
+  Downloaded cxx v1.0.138
+  Downloaded zerocopy v0.8.27
+  Downloaded unicode-width v0.1.14
+  Downloaded syn v2.0.106
+  Downloaded regex-syntax v0.8.6
+  Downloaded rustix v1.0.8
+  Downloaded regex-automata v0.4.10
+  Downloaded libc v0.2.175
+  Downloaded linux-raw-sys v0.9.4
+   Compiling ryugraph v0.11.1 (/workspace/tools/rust_api)
+    Finished `release` profile [optimized] target(s) in 22.46s
+     Running unittests src/lib.rs (target/release/deps/ryugraph-af170683c1945f7a)
+
+running 166 tests
+test connection::tests::test_connection_threads ... ok
+test connection::tests::fts ... FAILED
+test connection::tests::delta ... FAILED
+test connection::tests::postgres ... FAILED
+test connection::tests::duckdb ... FAILED
+test connection::tests::sqlite ... FAILED
+test connection::tests::json ... FAILED
+test connection::tests::iceberg ... FAILED
+test connection::tests::httpfs ... FAILED
+test database::tests::create_database ... ok
+test connection::tests::vector ... FAILED
+test database::tests::create_database_no_compression ... ok
+test database::tests::test_database_in_memory ... ok
+test connection::tests::test_multithreaded_multiple_conn ... ok
+test connection::tests::test_query_result ... ok
+test connection::tests::test_multithreaded_single_conn ... ok
+test connection::tests::test_params ... ok
+test database::tests::test_database_auto_checkpoint ... ok
+test database::tests::test_database_checkpoint_threshold ... ok
+test value::tests::convert_array ... ok
+test value::tests::convert_array_type ... ok
+test value::tests::convert_blob ... ok
+test value::tests::convert_blob_type ... ok
+test value::tests::convert_bool ... ok
+test database::tests::test_database_enable_checksums ... ok
+test value::tests::convert_bool_type ... ok
+test value::tests::convert_date ... ok
+test value::tests::convert_decimal128 ... ok
+test value::tests::convert_date_type ... ok
+test value::tests::convert_decimal32 ... ok
+test value::tests::convert_decimal16 ... ok
+test value::tests::convert_decimal64 ... ok
+test value::tests::convert_decimal_type ... ok
+test value::tests::convert_double_type ... ok
+test value::tests::convert_double ... ok
+test connection::tests::test_invalid_query ... ok
+test value::tests::convert_float ... ok
+test value::tests::convert_float_type ... ok
+test value::tests::convert_int128_large ... ok
+test value::tests::convert_int128_large_negative ... ok
+test value::tests::convert_int128 ... ok
+test value::tests::convert_int128_negative ... ok
+test value::tests::convert_int128_type ... ok
+test value::tests::convert_int16_type ... ok
+test value::tests::convert_int16 ... ok
+test value::tests::convert_int32 ... ok
+test value::tests::convert_int32_type ... ok
+test value::tests::convert_int64 ... ok
+test value::tests::convert_int8 ... ok
+test value::tests::convert_int8_type ... ok
+test value::tests::convert_internal_id ... ok
+test value::tests::convert_int64_type ... ok
+test value::tests::convert_internal_id_type ... ok
+test value::tests::convert_interval ... ok
+test value::tests::convert_interval_type ... ok
+test value::tests::convert_list ... ok
+test value::tests::convert_list_empty ... ok
+test value::tests::convert_list_type ... ok
+test value::tests::convert_map ... ok
+test value::tests::convert_map_type ... ok
+test value::tests::convert_node_type ... ok
+test value::tests::convert_null ... ok
+test value::tests::convert_recursive_rel_type ... ok
+test value::tests::convert_rel_type ... ok
+test value::tests::convert_string ... ok
+test value::tests::convert_string_type ... ok
+test value::tests::convert_struct ... ok
+test value::tests::convert_struct_type ... ok
+test value::tests::convert_timestamp ... ok
+test value::tests::convert_timestamp_ms ... ok
+test value::tests::convert_timestamp_ms_type ... ok
+test value::tests::convert_timestamp_ns ... ok
+test value::tests::convert_timestamp_ns_type ... ok
+test value::tests::convert_timestamp_sec_type ... ok
+test value::tests::convert_timestamp_sec ... ok
+test value::tests::convert_timestamp_type ... ok
+test value::tests::convert_timestamp_tz ... ok
+test value::tests::convert_timestamp_tz_type ... ok
+test value::tests::convert_uint16 ... ok
+test value::tests::convert_uint16_type ... ok
+test value::tests::convert_uint32 ... ok
+test value::tests::convert_uint32_type ... ok
+test value::tests::convert_uint8 ... ok
+test value::tests::convert_uint64 ... ok
+test value::tests::convert_uint8_type ... ok
+test value::tests::convert_union ... ok
+test value::tests::convert_uint64_type ... ok
+test value::tests::convert_union_type ... ok
+test value::tests::convert_uuid ... ok
+test value::tests::convert_uuid_type ... ok
+test value::tests::convert_uuid2 ... ok
+test database::tests::test_database_max_size ... ok
+test connection::tests::test_multiple_statement_query ... ok
+test query_result::tests::test_query_result_metadata ... ok
+test database::tests::test_database_read_only ... ok
+test query_result::tests::test_arrow ... ok
+test database::tests::test_database_throw_on_wal_replay_failure ... ok
+test query_result::tests::test_query_result_move ... ok
+test value::tests::db_date ... ok
+test value::tests::db_array ... ok
+test value::tests::db_bool ... ok
+test value::tests::db_blob ... ok
+test value::tests::db_decimal16 ... ok
+test value::tests::db_int16 ... ok
+test value::tests::db_decimal32 ... ok
+test value::tests::db_int128 ... ok
+test value::tests::db_double ... ok
+test value::tests::db_decimal64 ... ok
+test value::tests::db_decimal128 ... ok
+test value::tests::db_float ... ok
+test value::tests::db_int64 ... ok
+test value::tests::db_int32 ... ok
+test value::tests::db_list_int ... ok
+test value::tests::db_int8 ... ok
+test value::tests::db_null_int ... ok
+test value::tests::db_map ... ok
+test value::tests::db_list_string ... ok
+test value::tests::db_interval ... ok
+test value::tests::db_string ... ok
+test value::tests::db_null_string ... ok
+test value::tests::db_null_list ... ok
+test value::tests::db_struct ... ok
+test value::tests::db_timestamp ... ok
+test value::tests::db_timestamp_ms ... ok
+test value::tests::display_array ... ok
+test value::tests::db_timestamp_ns ... ok
+test value::tests::display_bool ... ok
+test value::tests::display_date ... ok
+test value::tests::display_decimal128 ... ok
+test value::tests::display_decimal16 ... ok
+test value::tests::display_decimal64 ... ok
+test value::tests::display_int16 ... ok
+test value::tests::display_decimal32 ... ok
+test value::tests::display_int32 ... ok
+test value::tests::display_int64 ... ok
+test value::tests::display_int8 ... ok
+test value::tests::db_uint16 ... ok
+test value::tests::display_list ... ok
+test value::tests::display_list_empty ... ok
+test value::tests::display_internal_id ... ok
+test value::tests::db_timestamp_sec ... ok
+test value::tests::display_map ... ok
+test value::tests::display_null ... ok
+test value::tests::display_string ... ok
+test value::tests::display_struct ... ok
+test value::tests::display_uint32 ... ok
+test value::tests::display_uint64 ... ok
+test value::tests::display_uuid ... ok
+test value::tests::db_uint8 ... ok
+test value::tests::display_uint8 ... ok
+test value::tests::display_union ... ok
+test value::tests::db_uint32 ... ok
+test value::tests::display_uint16 ... ok
+test value::tests::display_uuid2 ... ok
+test value::tests::display_uuid3 ... ok
+test value::tests::db_uint64 ... ok
+test value::tests::db_timestamp_tz ... ok
+test value::tests::db_uuid ... ok
+test value::tests::test_null ... ok
+test value::tests::db_uuid2 ... ok
+test value::tests::test_list_get ... ok
+test value::tests::test_node ... ok
+test value::tests::test_serial ... ok
+test value::tests::test_timestamp ... ok
+test value::tests::test_union ... ok
+test value::tests::test_recursive_rel ... ok
+
+failures:
+
+---- connection::tests::fts stdout ----
+Error: environment variable not found
+
+---- connection::tests::delta stdout ----
+Error: environment variable not found
+
+---- connection::tests::postgres stdout ----
+Error: environment variable not found
+
+---- connection::tests::duckdb stdout ----
+Error: environment variable not found
+
+---- connection::tests::sqlite stdout ----
+Error: environment variable not found
+
+---- connection::tests::json stdout ----
+Error: environment variable not found
+
+---- connection::tests::iceberg stdout ----
+Error: environment variable not found
+
+---- connection::tests::httpfs stdout ----
+Error: environment variable not found
+
+---- connection::tests::vector stdout ----
+Error: environment variable not found
+
+
+failures:
+    connection::tests::delta
+    connection::tests::duckdb
+    connection::tests::fts
+    connection::tests::httpfs
+    connection::tests::iceberg
+    connection::tests::json
+    connection::tests::postgres
+    connection::tests::sqlite
+    connection::tests::vector
+
+test result: FAILED. 157 passed; 9 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.22s
+
+error: test failed, to rerun pass `--lib`

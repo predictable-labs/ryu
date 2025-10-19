@@ -16,13 +16,13 @@
 #include "providers/provider.h"
 #include "providers/voyage-ai.h"
 
-using namespace kuzu::common;
-using namespace kuzu::binder;
-using namespace kuzu::function;
-using namespace kuzu::catalog;
-using namespace kuzu::processor;
+using namespace ryu::common;
+using namespace ryu::binder;
+using namespace ryu::function;
+using namespace ryu::catalog;
+using namespace ryu::processor;
 
-namespace kuzu {
+namespace ryu {
 namespace llm_extension {
 
 class EmbeddingProviderFactory {
@@ -44,7 +44,7 @@ public:
         auto providerInstanceIter = providerInstanceMap.find(provider);
         if (providerInstanceIter == providerInstanceMap.end()) {
             throw BinderException("Provider not found: " + provider + "\n" +
-                                  std::string(EmbeddingProvider::referenceKuzuDocs));
+                                  std::string(EmbeddingProvider::referenceRyuDocs));
         }
         return providerInstanceIter->second();
     };
@@ -87,11 +87,11 @@ static void execFunc(const std::vector<std::shared_ptr<common::ValueVector>>& pa
         if (!res) {
             throw ConnectionException("Request failed: Could not connect to server <" +
                                       provider->getClient() + "> \n" +
-                                      std::string(EmbeddingProvider::referenceKuzuDocs));
+                                      std::string(EmbeddingProvider::referenceRyuDocs));
         } else if (res->status != 200) {
             throw ConnectionException("Request failed with status " + std::to_string(res->status) +
                                       "\n Body: " + res->body + "\n" +
-                                      std::string(EmbeddingProvider::referenceKuzuDocs));
+                                      std::string(EmbeddingProvider::referenceRyuDocs));
         }
         auto embeddingVec = provider->parseResponse(res);
         auto pos = (*resultSelVector)[selectedPos];
@@ -109,7 +109,7 @@ void validateValAsPositive(int64_t val) {
     if (val <= 0) {
         throw(BinderException(
             common::stringFormat("Dimensions should be greater than 0. Got: {}.\n{}", val,
-                std::string(EmbeddingProvider::referenceKuzuDocs))));
+                std::string(EmbeddingProvider::referenceRyuDocs))));
     }
 }
 
@@ -169,7 +169,7 @@ static std::unique_ptr<FunctionBindData> bindFunc(const ScalarBindFuncInput& inp
             StringUtils::rtrimNewlines(BuiltInFunctionsUtils::getFunctionMatchFailureMsg(
                 std::string(CreateEmbedding::name) + " for " + providerName,
                 ExpressionUtil::getDataTypes(input.arguments), supportedInputs)) +
-            '\n' + EmbeddingProvider::referenceKuzuDocs));
+            '\n' + EmbeddingProvider::referenceRyuDocs));
     }
     return std::make_unique<CreateEmbeddingBindData>(ExpressionUtil::getDataTypes(input.arguments),
         LogicalType::LIST(LogicalType(LogicalTypeID::FLOAT)), std::move(provider),
@@ -215,4 +215,4 @@ function_set CreateEmbedding::getFunctionSet() {
 }
 
 } // namespace llm_extension
-} // namespace kuzu
+} // namespace ryu

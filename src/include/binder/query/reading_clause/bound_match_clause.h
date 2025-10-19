@@ -4,10 +4,10 @@
 #include "bound_join_hint.h"
 #include "bound_reading_clause.h"
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
-class KUZU_API BoundMatchClause final : public BoundReadingClause {
+class RYU_API BoundMatchClause final : public BoundReadingClause {
     static constexpr common::ClauseType clauseType_ = common::ClauseType::MATCH;
 
 public:
@@ -31,4 +31,4 @@ private:
 };
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

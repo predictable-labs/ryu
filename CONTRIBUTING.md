@@ -1,6 +1,6 @@
 # Contributing
 
-Welcome! We are excited that you are interested in contributing to Kuzu.
+Welcome! We are excited that you are interested in contributing to Ryu.
 Before submitting your contribution though, please make sure to take a moment and read through the following guidelines.
 
 Join our project's [Discord community](https://discord.gg/VtX2gw9Rug) for real-time communication with the core team and other contributors.
@@ -10,7 +10,7 @@ If you have a question or need help, feel free to ask in the appropriate channel
 
 This project and everyone participating in it is governed by a [Code of Conduct](CODE_OF_CONDUCT.md).
 By participating, you are expected to uphold this code. 
-Please report unacceptable behavior to [contact@kuzudb.com](mailto:contact@kuzudb.com).
+Please report unacceptable behavior to [contact@ryugraph.com](mailto:contact@ryugraph.com).
 
 ## Agreeing to the Contributor Agreement
 When you contribute code, you affirm that the contribution is your original work and that you have read and agreed to the project's [Contributor Agreement (CLA) document  here](CLA.md). 
@@ -24,4 +24,4 @@ Whether or not you state this explicitly, by submitting any copyrighted material
 * Avoid large pull requests - they are much less likely to be merged as they are incredibly hard to review.
 * We reserve full and final discretion over whether or not we will merge a pull request. Adhering to these guidelines is not a complete guarantee that your pull request will be merged.
 
-Thank you for your contribution to Kuzu! We're grateful for your time and effort, and we look forward to working with you.
+Thank you for your contribution to Ryu! We're grateful for your time and effort, and we look forward to working with you.

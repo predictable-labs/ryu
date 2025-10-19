@@ -8,15 +8,15 @@
 #include "storage/storage_manager.h"
 #include "storage/table/table.h"
 
-using namespace kuzu::binder;
-using namespace kuzu::common;
-using namespace kuzu::catalog;
-using namespace kuzu::planner;
-using namespace kuzu::evaluator;
-using namespace kuzu::transaction;
-using namespace kuzu::storage;
+using namespace ryu::binder;
+using namespace ryu::common;
+using namespace ryu::catalog;
+using namespace ryu::planner;
+using namespace ryu::evaluator;
+using namespace ryu::transaction;
+using namespace ryu::storage;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 static column_id_t getColumnID(const TableCatalogEntry& entry,
@@ -167,4 +167,4 @@ std::unique_ptr<PhysicalOperator> PlanMapper::mapSetRelProperty(
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

@@ -16,10 +16,10 @@
 #include "storage/table/combined_chunk_scanner.h"
 #include "transaction/transaction.h"
 
-using namespace kuzu::common;
-using namespace kuzu::transaction;
+using namespace ryu::common;
+using namespace ryu::transaction;
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 
 void ChunkState::reclaimAllocatedPages(PageAllocator& pageAllocator) const {
@@ -331,4 +331,4 @@ void ColumnChunk::checkpoint(Column& column,
 }
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

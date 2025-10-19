@@ -2,10 +2,10 @@
 #include "planner/operator/logical_unwind.h"
 #include "planner/planner.h"
 
-using namespace kuzu::binder;
-using namespace kuzu::common;
+using namespace ryu::binder;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace planner {
 
 void Planner::appendUnwind(const BoundReadingClause& readingClause, LogicalPlan& plan) {
@@ -19,4 +19,4 @@ void Planner::appendUnwind(const BoundReadingClause& readingClause, LogicalPlan&
 }
 
 } // namespace planner
-} // namespace kuzu
+} // namespace ryu

@@ -7,7 +7,7 @@
 #include "common/data_chunk/data_chunk_state.h"
 #include "common/vector/value_vector.h"
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 
 // A DataChunk represents tuples as a set of value vectors and a selector array.
@@ -17,7 +17,7 @@ namespace common {
 // A data chunk further contains a DataChunkState, which keeps the data chunk's size, selector, and
 // currIdx (used when flattening and implies the value vector only contains the elements at currIdx
 // of each value vector).
-class KUZU_API DataChunk {
+class RYU_API DataChunk {
 public:
     DataChunk() : DataChunk{0} {}
     explicit DataChunk(uint32_t numValueVectors)
@@ -46,4 +46,4 @@ public:
 };
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

@@ -2,9 +2,9 @@
 #include "binder/bound_transaction_statement.h"
 #include "parser/transaction_statement.h"
 
-using namespace kuzu::parser;
+using namespace ryu::parser;
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
 std::unique_ptr<BoundStatement> Binder::bindTransaction(const Statement& statement) {
@@ -13,4 +13,4 @@ std::unique_ptr<BoundStatement> Binder::bindTransaction(const Statement& stateme
 }
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

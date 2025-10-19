@@ -2,7 +2,7 @@
 
 #include "function/function.h"
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct OctetLengthFunctions {
@@ -24,4 +24,4 @@ struct DecodeFunctions {
 };
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

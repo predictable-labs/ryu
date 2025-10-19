@@ -12,10 +12,10 @@
 #include "spdlog/spdlog.h"
 #include "test_helper/test_helper.h"
 
-using namespace kuzu::main;
-using namespace kuzu::common;
+using namespace ryu::main;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace testing {
 
 template<typename T>
@@ -81,7 +81,7 @@ void TestRunner::testStatement(TestStatement& statement, Connection& conn,
     }
     spdlog::info("QUERY: {}", statement.query);
     StringUtils::replaceAll(statement.query, "${DATABASE_PATH}", getParentPath(databasePath));
-    StringUtils::replaceAll(statement.query, "${KUZU_ROOT_DIRECTORY}", KUZU_ROOT_DIRECTORY);
+    StringUtils::replaceAll(statement.query, "${RYU_ROOT_DIRECTORY}", RYU_ROOT_DIRECTORY);
     replaceEnv(statement.query, "AZURE_PUBLIC_CONTAINER");
     replaceEnv(statement.query, "AZURE_ACCOUNT_NAME");
     replaceEnv(statement.query, "UW_S3_ACCESS_KEY_ID");
@@ -369,4 +369,4 @@ std::unique_ptr<planner::LogicalPlan> TestRunner::getLogicalPlan(const std::stri
 }
 
 } // namespace testing
-} // namespace kuzu
+} // namespace ryu

@@ -5,9 +5,9 @@
 #include "storage/file_handle.h"
 #include "storage/shadow_utils.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 
 DiskArrayCollection::DiskArrayCollection(FileHandle& fileHandle, ShadowFile& shadowFile,
@@ -55,9 +55,9 @@ void DiskArrayCollection::checkpoint(page_idx_t firstHeaderPage, PageAllocator& 
             ShadowUtils::updatePage(*pageAllocator.getDataFH(), headerPage,
                 true /*writing full page*/, shadowFile, [&](auto* frame) {
                     memcpy(frame, headersForWriteTrx[indexInMemory].get(), sizeof(HeaderPage));
-                    if constexpr (sizeof(HeaderPage) < KUZU_PAGE_SIZE) {
+                    if constexpr (sizeof(HeaderPage) < RYU_PAGE_SIZE) {
                         // Zero remaining data in the page
-                        std::fill(frame + sizeof(HeaderPage), frame + KUZU_PAGE_SIZE, 0);
+                        std::fill(frame + sizeof(HeaderPage), frame + RYU_PAGE_SIZE, 0);
                     }
                 });
         }
@@ -112,4 +112,4 @@ void DiskArrayCollection::reclaimStorage(PageAllocator& pageAllocator,
 }
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

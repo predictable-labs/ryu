@@ -1,4 +1,4 @@
-#ifdef KUZU_BACKTRACE
+#ifdef RYU_BACKTRACE
 #include <csignal>
 #include <cstdlib>
 #include <cstring>

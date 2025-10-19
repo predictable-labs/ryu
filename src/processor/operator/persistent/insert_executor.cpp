@@ -2,10 +2,10 @@
 
 #include "transaction/transaction.h"
 
-using namespace kuzu::common;
-using namespace kuzu::transaction;
+using namespace ryu::common;
+using namespace ryu::transaction;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 void NodeInsertInfo::init(const ResultSet& resultSet) {
@@ -190,4 +190,4 @@ void RelInsertExecutor::skipInsert() const {
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

@@ -29,7 +29,7 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: kuzu-extensions
+          name: ryu-extensions
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -47,4 +47,4 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ghcr.io/kuzudb/extension-repo:latest
+          tags: ghcr.io/ryugraph/extension-repo:latest

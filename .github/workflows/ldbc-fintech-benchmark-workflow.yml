@@ -35,11 +35,11 @@ jobs:
 
       - name: Set checkout dir
         run: |
-          echo "KUZU_DIR=$(pwd)" >> $GITHUB_ENV
+          echo "RYU_DIR=$(pwd)" >> $GITHUB_ENV
 
       - uses: actions/checkout@v4
 
-      - name: Build kuzu
+      - name: Build ryu
         run: |
           pip3 install -r tools/python_api/requirements_dev.txt
           make python
@@ -48,41 +48,41 @@ jobs:
       - name: Clone implementation
         uses: actions/checkout@v4
         with:
-          repository: kuzudb/ldbc_finbench_transaction_impls
+          repository: ryugraph/ldbc_finbench_transaction_impls
           token: ${{ secrets.DOC_PUSH_TOKEN }}
           path: ldbc_finbench_transaction_impls
       
       - name: Update implementation
         working-directory: ldbc_finbench_transaction_impls
         run: |
-          ln -s $KUZU_DIR/tools/java_api/build/kuzu_java.jar kuzu/src/main/resources/kuzu_java.jar
-          ln -s $KUZU_DIR/tools/python_api/build/kuzu kuzu/scripts/kuzu
-          mkdir -p kuzu/src/main/resources/data
-          ln -s $CSV_DIR/finbench-datasets/sf${SCALE_FACTOR} kuzu/src/main/resources/data/sf${SCALE_FACTOR}
+          ln -s $RYU_DIR/tools/java_api/build/ryu_java.jar ryu/src/main/resources/ryu_java.jar
+          ln -s $RYU_DIR/tools/python_api/build/ryu ryu/scripts/ryu
+          mkdir -p ryu/src/main/resources/data
+          ln -s $CSV_DIR/finbench-datasets/sf${SCALE_FACTOR} ryu/src/main/resources/data/sf${SCALE_FACTOR}
           mvn clean package -DskipTests
 
       - name: Load data
         working-directory: ldbc_finbench_transaction_impls
-        run: python3 kuzu/scripts/import_data.py sf${SCALE_FACTOR}
+        run: python3 ryu/scripts/import_data.py sf${SCALE_FACTOR}
 
       - name: Run benchmark
-        working-directory: ldbc_finbench_transaction_impls/kuzu
+        working-directory: ldbc_finbench_transaction_impls/ryu
         run:
-          java -cp target/kuzu-0.1.0-alpha.jar:target/classes/kuzu_java.jar org.ldbcouncil.finbench.driver.driver.Driver -P sf${SCALE_FACTOR}_finbench_benchmark.properties | tee LDBC-FinBench.log
+          java -cp target/ryu-0.1.0-alpha.jar:target/classes/ryu_java.jar org.ldbcouncil.finbench.driver.driver.Driver -P sf${SCALE_FACTOR}_finbench_benchmark.properties | tee LDBC-FinBench.log
      
       - name: Upload results
         uses: actions/upload-artifact@v4
         with:
           name: LDBC-FinBench-results
-          path: ldbc_finbench_transaction_impls/kuzu/results/LDBC-FinBench-results.json
+          path: ldbc_finbench_transaction_impls/ryu/results/LDBC-FinBench-results.json
 
       - name: Upload logs
         uses: actions/upload-artifact@v4
         with:
           name: LDBC-FinBench-logs
-          path: ldbc_finbench_transaction_impls/kuzu/LDBC-FinBench.log
+          path: ldbc_finbench_transaction_impls/ryu/LDBC-FinBench.log
     
       - name: Report result to server
         working-directory: ldbc_finbench_transaction_impls
         run: |
-          python3 kuzu/scripts/report_results.py
+          python3 ryu/scripts/report_results.py

@@ -1,7 +1,7 @@
 /**
  * We would like to thank Mingkun Ni and Mayank Jasoria for doing the initial research and
  * prototyping for the FreeSpaceManager in their CS 848 course project:
- * https://github.com/ericpolo/kuzu_cs848
+ * https://github.com/ericpolo/ryu_cs848
  */
 
 #pragma once
@@ -10,7 +10,7 @@
 #include <set>
 
 #include "common/types/types.h"
-namespace kuzu::storage {
+namespace ryu::storage {
 
 class BufferManager;
 struct PageRange;
@@ -91,4 +91,4 @@ struct FreeEntryIterator {
     FreeSpaceManager::sorted_free_list_t::const_iterator freeListIt;
 };
 
-} // namespace kuzu::storage
+} // namespace ryu::storage

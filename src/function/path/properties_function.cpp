@@ -5,10 +5,10 @@
 #include "function/path/vector_path_functions.h"
 #include "function/scalar_function.h"
 
-using namespace kuzu::common;
-using namespace kuzu::binder;
+using namespace ryu::common;
+using namespace ryu::binder;
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 static std::unique_ptr<FunctionBindData> bindFunc(const ScalarBindFuncInput& input) {
@@ -68,4 +68,4 @@ function_set PropertiesFunction::getFunctionSet() {
 }
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

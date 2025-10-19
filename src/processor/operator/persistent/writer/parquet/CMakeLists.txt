@@ -1,4 +1,4 @@
-add_library(kuzu_processor_operator_parquet_writer
+add_library(ryu_processor_operator_parquet_writer
         OBJECT
         basic_column_writer.cpp
         boolean_column_writer.cpp
@@ -12,7 +12,7 @@ add_library(kuzu_processor_operator_parquet_writer
         uuid_column_writer.cpp)
 
 set(ALL_OBJECT_FILES
-        ${ALL_OBJECT_FILES} $<TARGET_OBJECTS:kuzu_processor_operator_parquet_writer>
+        ${ALL_OBJECT_FILES} $<TARGET_OBJECTS:ryu_processor_operator_parquet_writer>
         PARENT_SCOPE)
 
-target_link_libraries(kuzu_processor_operator_parquet_writer PUBLIC parquet)
+target_link_libraries(ryu_processor_operator_parquet_writer PUBLIC parquet)

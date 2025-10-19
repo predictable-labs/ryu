@@ -8,8 +8,8 @@
 #include "main/db_config.h"
 #include "printer/printer_factory.h"
 
-using namespace kuzu::main;
-using namespace kuzu::common;
+using namespace ryu::main;
+using namespace ryu::common;
 
 int setConfigOutputMode(const std::string& mode, ShellConfig& shell) {
     shell.printer = PrinterFactory::getPrinter(PrinterTypeUtils::fromString(mode));
@@ -27,7 +27,7 @@ void processRunCommands(EmbeddedShell& shell, const std::string& filename) {
     buf[LINENOISE_MAX_LINE] = '\0';
 
     if (fp == NULL) {
-        if (filename != ".kuzurc") {
+        if (filename != ".ryurc") {
             std::cerr << "Warning: cannot open init file: " << filename << '\n';
         }
         return;
@@ -48,7 +48,7 @@ void processRunCommands(EmbeddedShell& shell, const std::string& filename) {
 }
 
 int main(int argc, char* argv[]) {
-    args::ArgumentParser parser("Kuzu shell");
+    args::ArgumentParser parser("Ryu shell");
     args::Positional<std::string> inputDirFlag(parser, "databasePath",
         "Path to the database. If not given or set to \":memory:\", the database will be opened "
         "under in-memory mode.");
@@ -106,7 +106,7 @@ int main(int argc, char* argv[]) {
     }
 
     if (version) {
-        std::cout << "Kuzu " << KUZU_CMAKE_VERSION << '\n';
+        std::cout << "Ryu " << RYU_CMAKE_VERSION << '\n';
         return 0;
     }
 
@@ -141,7 +141,7 @@ int main(int argc, char* argv[]) {
     if (pathToHistory.empty() && !std::filesystem::exists(historyFile)) {
         auto homeDir = ClientContext::getUserHomeDir();
         if (!homeDir.empty()) {
-            pathToHistory = std::string(homeDir) + "/.kuzu/";
+            pathToHistory = std::string(homeDir) + "/.ryu/";
             if (std::filesystem::create_directories(pathToHistory) != 0) {
                 std::cerr << "Warning: failed to create directory: " << pathToHistory << '\n';
                 pathToHistory = "";
@@ -185,7 +185,7 @@ int main(int argc, char* argv[]) {
         ProgressBar::Get(*clientContext)->toggleProgressBarPrinting(true);
     }
 
-    std::string initFile = ".kuzurc";
+    std::string initFile = ".ryurc";
     if (init) {
         initFile = args::get(init);
     }

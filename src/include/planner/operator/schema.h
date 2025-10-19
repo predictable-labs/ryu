@@ -4,7 +4,7 @@
 
 #include "binder/expression/expression.h"
 
-namespace kuzu {
+namespace ryu {
 namespace planner {
 
 using f_group_pos = uint32_t;
@@ -114,7 +114,7 @@ public:
     // Get the group positions containing at least one expression in scope.
     f_group_pos_set getGroupsPosInScope() const;
 
-    KUZU_API std::unique_ptr<Schema> copy() const;
+    RYU_API std::unique_ptr<Schema> copy() const;
 
     void clear();
 
@@ -144,4 +144,4 @@ public:
 };
 
 } // namespace planner
-} // namespace kuzu
+} // namespace ryu

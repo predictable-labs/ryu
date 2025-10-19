@@ -10,7 +10,7 @@
 #include "common/types/types.h"
 #include "common/types/value/value.h"
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 class ValueVector;
 }
@@ -24,7 +24,7 @@ template<typename T>
 concept DataSource =
     std::same_as<storage::ColumnChunkData, T> || std::same_as<common::ValueVector, T>;
 
-struct KUZU_API WarningSourceData {
+struct RYU_API WarningSourceData {
     // we should stick to integral types here as each value essentially adds a column to the output
     // when reading from a file
     using DataType = std::variant<uint64_t, uint32_t>;
@@ -66,7 +66,7 @@ struct LineContext {
 // If parsing in parallel during parsing we may not be able to determine line numbers
 // Thus we have additional fields that can be used to determine line numbers + reconstruct lines
 // After parsing this will be used to populate a PopulatedCopyFromError instance
-struct KUZU_API CopyFromFileError {
+struct RYU_API CopyFromFileError {
     CopyFromFileError(std::string message, WarningSourceData warningData, bool completedLine = true,
         bool mustThrow = false);
 
@@ -112,4 +112,4 @@ WarningSourceData WarningSourceData::constructFrom(uint64_t blockIdx, uint32_t o
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

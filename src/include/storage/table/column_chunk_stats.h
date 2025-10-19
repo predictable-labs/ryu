@@ -4,10 +4,10 @@
 namespace common {
 class ValueVector;
 }
-namespace kuzu::storage {
+namespace ryu::storage {
 class ColumnChunkData;
 
-struct KUZU_API ColumnChunkStats {
+struct RYU_API ColumnChunkStats {
     std::optional<StorageValue> max;
     std::optional<StorageValue> min;
 
@@ -33,4 +33,4 @@ struct MergedColumnChunkStats {
     void merge(const MergedColumnChunkStats& o, common::PhysicalTypeID dataType);
 };
 
-} // namespace kuzu::storage
+} // namespace ryu::storage

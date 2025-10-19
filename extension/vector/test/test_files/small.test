@@ -11,7 +11,7 @@
 ---- ok
 -STATEMENT CALL threads=1;
 ---- ok
--STATEMENT COPY embeddings FROM "${KUZU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-1k.csv" (deLim=',', skip=995);
+-STATEMENT COPY embeddings FROM "${RYU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-1k.csv" (deLim=',', skip=995);
 ---- ok
 -STATEMENT CREATE (e:embeddings{id: 1000})
 ---- ok
@@ -32,7 +32,7 @@
 ---- ok
 -STATEMENT CALL threads=1;
 ---- ok
--STATEMENT COPY embeddings FROM "${KUZU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-1k.csv" (deLim=',');
+-STATEMENT COPY embeddings FROM "${RYU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-1k.csv" (deLim=',');
 ---- ok
 -STATEMENT MATCH (e:embeddings) WHERE e.id < 995 DELETE e
 ---- ok
@@ -53,7 +53,7 @@
 ---- ok
 -STATEMENT CALL threads=1;
 ---- ok
--STATEMENT COPY embeddings FROM "${KUZU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-1k.csv" (deLim=',');
+-STATEMENT COPY embeddings FROM "${RYU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-1k.csv" (deLim=',');
 ---- ok
 -STATEMENT MATCH (e:embeddings) WHERE e.id < 995 DELETE e
 ---- ok
@@ -78,7 +78,7 @@
 ---- ok
 -STATEMENT CALL threads=1;
 ---- ok
--STATEMENT COPY embeddings FROM "${KUZU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-1k.csv" (deLim=',');
+-STATEMENT COPY embeddings FROM "${RYU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-1k.csv" (deLim=',');
 ---- ok
 -STATEMENT MATCH (e:embeddings) WHERE e.id < 995 DELETE e
 ---- ok
@@ -103,7 +103,7 @@
 ---- ok
 -STATEMENT CALL threads=1;
 ---- ok
--STATEMENT COPY embeddings FROM "${KUZU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-1k.csv" (deLim=',');
+-STATEMENT COPY embeddings FROM "${RYU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-1k.csv" (deLim=',');
 ---- ok
 -STATEMENT CALL CREATE_VECTOR_INDEX('embeddings', 'e_hnsw_index','vec', metric := 'l2');
 ---- ok
@@ -120,7 +120,7 @@
 ---- ok
 -STATEMENT CALL threads=1;
 ---- ok
--STATEMENT COPY embeddings FROM "${KUZU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-1k.csv" (deLim=',');
+-STATEMENT COPY embeddings FROM "${RYU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-1k.csv" (deLim=',');
 ---- ok
 -STATEMENT CALL CREATE_VECTOR_INDEX('embeddings', 'e_hnsw_index','vec');
 ---- ok
@@ -137,7 +137,7 @@
 ---- ok
 -STATEMENT CALL threads=1;
 ---- ok
--STATEMENT COPY embeddings FROM "${KUZU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-1k.csv" (deLim=',');
+-STATEMENT COPY embeddings FROM "${RYU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-1k.csv" (deLim=',');
 ---- ok
 -STATEMENT CALL CREATE_VECTOR_INDEX('embeddings', 'e_hnsw_index','vec');
 ---- ok
@@ -155,7 +155,7 @@
 ---- ok
 -STATEMENT CALL threads=1;
 ---- ok
--STATEMENT COPY embeddings FROM "${KUZU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-1k.csv" (deLim=',');
+-STATEMENT COPY embeddings FROM "${RYU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-1k.csv" (deLim=',');
 ---- ok
 -STATEMENT CALL CREATE_VECTOR_INDEX('embeddings', 'e_hnsw_index','vec', metric := 'dotproduct');
 ---- ok
@@ -172,20 +172,20 @@
 ---- ok
 -STATEMENT CALL threads=1;
 ---- ok
--STATEMENT COPY embeddings FROM "${KUZU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-960-1k.csv" (deLim=',');
+-STATEMENT COPY embeddings FROM "${RYU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-960-1k.csv" (deLim=',');
 ---- ok
 -STATEMENT CALL CREATE_VECTOR_INDEX('embeddings', 'e_hnsw_index','vec', metric := 'l2');
 ---- ok
 -STATEMENT CALL show_tables() return *;
 ---- 1
-0|embeddings|NODE|local(kuzu)|
+0|embeddings|NODE|local(ryu)|
 -STATEMENT CALL ENABLE_INTERNAL_CATALOG=true;
 ---- ok
 -STATEMENT CALL show_tables() return *;
 ---- 3
-0|embeddings|NODE|local(kuzu)|
-9223372036854775808|_0_e_hnsw_index_UPPER|REL|local(kuzu)|
-9223372036854775809|_0_e_hnsw_index_LOWER|REL|local(kuzu)|
+0|embeddings|NODE|local(ryu)|
+9223372036854775808|_0_e_hnsw_index_UPPER|REL|local(ryu)|
+9223372036854775809|_0_e_hnsw_index_LOWER|REL|local(ryu)|
 -STATEMENT MATCH (t1:embeddings)-[r:_0_e_hnsw_index_UPPER]->(t2:embeddings) HINT (t1 JOIN r) JOIN t2 WITH t1.id as id, count(*) as cnt RETURN max(cnt);
 ---- 1
 30
@@ -205,20 +205,20 @@
 ---- ok
 -STATEMENT CALL threads=1;
 ---- ok
--STATEMENT COPY embeddings FROM "${KUZU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-960-1k.csv" (deLim=',');
+-STATEMENT COPY embeddings FROM "${RYU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-960-1k.csv" (deLim=',');
 ---- ok
 -STATEMENT CALL CREATE_VECTOR_INDEX('embeddings', 'e_hnsw_index','vec', metric := 'l2', cache_embeddings := false);
 ---- ok
 -STATEMENT CALL show_tables() return *;
 ---- 1
-0|embeddings|NODE|local(kuzu)|
+0|embeddings|NODE|local(ryu)|
 -STATEMENT CALL ENABLE_INTERNAL_CATALOG=true;
 ---- ok
 -STATEMENT CALL show_tables() return *;
 ---- 3
-0|embeddings|NODE|local(kuzu)|
-9223372036854775808|_0_e_hnsw_index_UPPER|REL|local(kuzu)|
-9223372036854775809|_0_e_hnsw_index_LOWER|REL|local(kuzu)|
+0|embeddings|NODE|local(ryu)|
+9223372036854775808|_0_e_hnsw_index_UPPER|REL|local(ryu)|
+9223372036854775809|_0_e_hnsw_index_LOWER|REL|local(ryu)|
 -STATEMENT MATCH (t1:embeddings)-[r:_0_e_hnsw_index_UPPER]->(t2:embeddings) HINT (t1 JOIN r) JOIN t2 WITH t1.id as id, count(*) as cnt RETURN max(cnt);
 ---- 1
 30
@@ -238,7 +238,7 @@
 ---- ok
 -STATEMENT CALL threads=1;
 ---- ok
--STATEMENT COPY embeddings FROM "${KUZU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-1k.csv" (deLim=',');
+-STATEMENT COPY embeddings FROM "${RYU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-1k.csv" (deLim=',');
 ---- ok
 -STATEMENT CALL CREATE_VECTOR_INDEX('embeddings', 'e_hnsw_index','vec', metric := 'l2');
 ---- ok
@@ -270,7 +270,7 @@ embeddings|e_hnsw_index|HNSW|[vec]|True|CALL CREATE_VECTOR_INDEX('embeddings', '
 ---- ok
 -STATEMENT CALL threads=1;
 ---- ok
--STATEMENT COPY embeddings FROM "${KUZU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-tiny.csv" (deLim=',');
+-STATEMENT COPY embeddings FROM "${RYU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-tiny.csv" (deLim=',');
 ---- ok
 -STATEMENT MATCH (n:embeddings) RETURN COUNT(n);
 ---- 1
@@ -289,7 +289,7 @@ embeddings|e_hnsw_index|HNSW|[vec]|True|CALL CREATE_VECTOR_INDEX('embeddings', '
 ---- ok
 -STATEMENT CALL threads=1;
 ---- ok
--STATEMENT COPY embeddings FROM "${KUZU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-tiny.csv" (deLim=',');
+-STATEMENT COPY embeddings FROM "${RYU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-tiny.csv" (deLim=',');
 ---- ok
 -STATEMENT MATCH (n:embeddings) RETURN COUNT(n);
 ---- 1
@@ -313,7 +313,7 @@ embeddings|e_hnsw_index|HNSW|[vec]|True|CALL CREATE_VECTOR_INDEX('embeddings', '
 ---- ok
 -STATEMENT CALL threads=1;
 ---- ok
--STATEMENT COPY embeddings FROM "${KUZU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-1k.csv" (deLim=',');
+-STATEMENT COPY embeddings FROM "${RYU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-1k.csv" (deLim=',');
 ---- ok
 -STATEMENT CALL CREATE_VECTOR_INDEX('embeddings', 'e_hnsw_index','vec', metric := 'dotproduct');
 ---- ok
@@ -338,7 +338,7 @@ embeddings|e_hnsw_index|HNSW|[vec]|True|CALL CREATE_VECTOR_INDEX('embeddings', '
 ---- ok
 -STATEMENT CALL threads=1;
 ---- ok
--STATEMENT COPY embeddings FROM "${KUZU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-1k.csv" (deLim=',');
+-STATEMENT COPY embeddings FROM "${RYU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-1k.csv" (deLim=',');
 ---- ok
 -STATEMENT CALL CREATE_VECTOR_INDEX('embeddings', 'e_hnsw_index','vec', metric := 'dotproduct');
 ---- ok
@@ -362,13 +362,13 @@ Binder exception: _0_e_hnsw_index_UPPER already exists in catalog.
 Binder exception: _0_e_hnsw_index_LOWER already exists in catalog.
 -STATEMENT CALL show_tables() RETURN *
 ---- 1
-0|embeddings|NODE|local(kuzu)|
--STATEMENT EXPORT DATABASE '${KUZU_EXPORT_DB_DIRECTORY}_hnsw/small'
+0|embeddings|NODE|local(ryu)|
+-STATEMENT EXPORT DATABASE '${RYU_EXPORT_DB_DIRECTORY}_hnsw/small'
 ---- ok
--IMPORT_DATABASE "${KUZU_EXPORT_DB_DIRECTORY}_hnsw/small"
+-IMPORT_DATABASE "${RYU_EXPORT_DB_DIRECTORY}_hnsw/small"
 -STATEMENT CALL threads=1;
 ---- ok
--STATEMENT IMPORT DATABASE '${KUZU_EXPORT_DB_DIRECTORY}_hnsw/small';
+-STATEMENT IMPORT DATABASE '${RYU_EXPORT_DB_DIRECTORY}_hnsw/small';
 ---- ok
 -STATEMENT CALL QUERY_VECTOR_INDEX('embeddings', 'e_hnsw_index', [0.1521,0.3021,0.5366,0.2774,0.5593,0.5589,0.1365,0.8557], cast(3 as int32), efs := 500) RETURN node.id ORDER BY distance;
 -CHECK_ORDER
@@ -417,7 +417,7 @@ embeddings|e_hnsw_index|HNSW|[vec]|True|CALL CREATE_VECTOR_INDEX('embeddings', '
 ---- ok
 -STATEMENT CALL threads=1;
 ---- ok
--STATEMENT COPY embeddings FROM "${KUZU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-1k.csv" (deLim=',');
+-STATEMENT COPY embeddings FROM "${RYU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-1k.csv" (deLim=',');
 ---- ok
 -STATEMENT CALL CREATE_VECTOR_INDEX('embeddings', 'e_hnsw_index','vec', metric := 'l2');
 ---- ok
@@ -434,7 +434,7 @@ embeddings|e_hnsw_index|HNSW|[vec]|True|CALL CREATE_VECTOR_INDEX('embeddings', '
 ---- ok
 -STATEMENT CALL threads=1;
 ---- ok
--STATEMENT COPY embeddings FROM "${KUZU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-1k.csv" (deLim=',');
+-STATEMENT COPY embeddings FROM "${RYU_ROOT_DIRECTORY}/dataset/embeddings/embeddings-8-1k.csv" (deLim=',');
 ---- ok
 -STATEMENT CALL CREATE_VECTOR_INDEX('embeddings', 'e_hnsw_index','vec', metric := 'l2');
 ---- ok

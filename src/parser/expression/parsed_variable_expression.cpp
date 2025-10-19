@@ -2,9 +2,9 @@
 
 #include "common/serializer/deserializer.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace parser {
 
 std::unique_ptr<ParsedVariableExpression> ParsedVariableExpression::deserialize(
@@ -15,4 +15,4 @@ std::unique_ptr<ParsedVariableExpression> ParsedVariableExpression::deserialize(
 }
 
 } // namespace parser
-} // namespace kuzu
+} // namespace ryu

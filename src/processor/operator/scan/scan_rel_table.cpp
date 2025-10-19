@@ -4,10 +4,10 @@
 #include "processor/execution_context.h"
 #include "storage/local_storage/local_rel_table.h"
 
-using namespace kuzu::common;
-using namespace kuzu::storage;
+using namespace ryu::common;
+using namespace ryu::storage;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 std::string ScanRelTablePrintInfo::toString() const {
@@ -90,4 +90,4 @@ bool ScanRelTable::getNextTuplesInternal(ExecutionContext* context) {
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

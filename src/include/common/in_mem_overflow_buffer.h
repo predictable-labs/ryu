@@ -7,7 +7,7 @@
 #include "common/api.h"
 #include "common/copy_constructors.h"
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 class MemoryBuffer;
 class MemoryManager;
@@ -15,7 +15,7 @@ class MemoryManager;
 
 namespace common {
 
-struct KUZU_API BufferBlock {
+struct RYU_API BufferBlock {
 public:
     explicit BufferBlock(std::unique_ptr<storage::MemoryBuffer> block);
     ~BufferBlock();
@@ -30,7 +30,7 @@ public:
     void resetCurrentOffset() { currentOffset = 0; }
 };
 
-class KUZU_API InMemOverflowBuffer {
+class RYU_API InMemOverflowBuffer {
 
 public:
     explicit InMemOverflowBuffer(storage::MemoryManager* memoryManager)
@@ -75,4 +75,4 @@ private:
 };
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

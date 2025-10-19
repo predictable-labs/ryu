@@ -3,7 +3,7 @@
 #include "common/file_system/virtual_file_system.h"
 #include "main/duckdb_extension.h"
 
-namespace kuzu {
+namespace ryu {
 namespace duckdb_extension {
 
 bool DuckDBInstaller::install() {
@@ -28,4 +28,4 @@ bool DuckDBInstaller::install() {
 }
 
 } // namespace duckdb_extension
-} // namespace kuzu
+} // namespace ryu

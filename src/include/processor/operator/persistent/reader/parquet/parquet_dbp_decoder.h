@@ -2,7 +2,7 @@
 
 #include "decode_utils.h"
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 class DbpDecoder {
@@ -112,4 +112,4 @@ private:
 };
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

@@ -17,8 +17,8 @@
  * under the License.
  */
 
-#ifndef _KUZU_THRIFT_THRIFT_H_
-#define _KUZU_THRIFT_THRIFT_H_ 1
+#ifndef _RYU_THRIFT_THRIFT_H_
+#define _RYU_THRIFT_THRIFT_H_ 1
 
 #include "transport/PlatformSocket.h"
 
@@ -48,7 +48,7 @@
 
 #define THRIFT_UNUSED_VARIABLE(x) ((void)(x))
 
-namespace kuzu_apache {
+namespace ryu_apache {
 namespace thrift {
 
 class TEnumIterator {
@@ -134,6 +134,6 @@ void profile_print_info();
 void profile_write_pprof(FILE* gen_calls_f, FILE* virtual_calls_f);
 #endif
 }
-} // kuzu_apache::thrift
+} // ryu_apache::thrift
 
-#endif // #ifndef _KUZU_THRIFT_THRIFT_H_
+#endif // #ifndef _RYU_THRIFT_THRIFT_H_

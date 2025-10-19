@@ -1,4 +1,4 @@
-add_library(kuzu_processor_operator_aggregate
+add_library(ryu_processor_operator_aggregate
         OBJECT
         aggregate_hash_table.cpp
         base_aggregate.cpp
@@ -9,5 +9,5 @@ add_library(kuzu_processor_operator_aggregate
         simple_aggregate_scan.cpp)
 
 set(ALL_OBJECT_FILES
-        ${ALL_OBJECT_FILES} $<TARGET_OBJECTS:kuzu_processor_operator_aggregate>
+        ${ALL_OBJECT_FILES} $<TARGET_OBJECTS:ryu_processor_operator_aggregate>
         PARENT_SCOPE)

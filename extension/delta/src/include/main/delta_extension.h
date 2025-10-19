@@ -2,7 +2,7 @@
 
 #include "extension/extension.h"
 
-namespace kuzu {
+namespace ryu {
 namespace delta_extension {
 
 class DeltaExtension final : public extension::Extension {
@@ -14,4 +14,4 @@ public:
 };
 
 } // namespace delta_extension
-} // namespace kuzu
+} // namespace ryu

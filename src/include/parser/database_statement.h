@@ -4,7 +4,7 @@
 
 #include "parser/statement.h"
 
-namespace kuzu {
+namespace ryu {
 namespace parser {
 
 class DatabaseStatement : public Statement {
@@ -19,4 +19,4 @@ private:
 };
 
 } // namespace parser
-} // namespace kuzu
+} // namespace ryu

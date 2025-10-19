@@ -10,10 +10,10 @@
 #include "common/api.h"
 #include "common/serializer/writer.h"
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 
-class KUZU_API Serializer {
+class RYU_API Serializer {
 public:
     explicit Serializer(std::shared_ptr<Writer> writer) : writer(std::move(writer)) {}
 
@@ -123,4 +123,4 @@ template<>
 void Serializer::serializeValue(const std::string& value);
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

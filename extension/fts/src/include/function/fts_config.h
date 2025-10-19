@@ -5,7 +5,7 @@
 #include "common/types/types.h"
 #include "function/table/bind_input.h"
 
-namespace kuzu {
+namespace ryu {
 namespace fts_extension {
 
 struct Stemmer {
@@ -65,7 +65,7 @@ struct Tokenizer {
 struct TokenizerInfo {
     std::string tokenizer = Tokenizer::DEFAULT_VALUE;
     std::string jiebaDictDir =
-        common::stringFormat("{}/extension/fts/build/dict", KUZU_ROOT_DIRECTORY);
+        common::stringFormat("{}/extension/fts/build/dict", RYU_ROOT_DIRECTORY);
 
     TokenizerInfo() = default;
 };
@@ -139,4 +139,4 @@ struct TopK {
 };
 
 } // namespace fts_extension
-} // namespace kuzu
+} // namespace ryu

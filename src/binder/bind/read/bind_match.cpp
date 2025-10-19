@@ -3,10 +3,10 @@
 #include "common/exception/binder.h"
 #include "parser/query/reading_clause/match_clause.h"
 
-using namespace kuzu::common;
-using namespace kuzu::parser;
+using namespace ryu::common;
+using namespace ryu::parser;
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
 static void collectHintPattern(const BoundJoinHintNode& node, binder::expression_set& set) {
@@ -123,4 +123,4 @@ void Binder::rewriteMatchPattern(BoundGraphPattern& boundGraphPattern) {
 }
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

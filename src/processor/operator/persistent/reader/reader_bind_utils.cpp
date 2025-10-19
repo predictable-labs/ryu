@@ -3,9 +3,9 @@
 #include "common/exception/binder.h"
 #include "common/string_format.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 void ReaderBindUtils::validateNumColumns(uint32_t expectedNumber, uint32_t detectedNumber) {
@@ -48,4 +48,4 @@ void ReaderBindUtils::resolveColumns(const std::vector<std::string>& expectedCol
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

@@ -3,7 +3,7 @@
 #include "common/types/value/value.h"
 #include <napi.h>
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
 class Util {
 public:

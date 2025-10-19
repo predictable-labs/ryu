@@ -5,10 +5,10 @@
 #include "common/exception/message.h"
 #include "parser/expression/parsed_variable_expression.h"
 
-using namespace kuzu::common;
-using namespace kuzu::parser;
+using namespace ryu::common;
+using namespace ryu::parser;
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
 std::shared_ptr<Expression> ExpressionBinder::bindVariableExpression(
@@ -38,4 +38,4 @@ std::shared_ptr<Expression> ExpressionBinder::createVariableExpression(LogicalTy
 }
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

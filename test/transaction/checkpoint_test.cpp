@@ -7,12 +7,12 @@
 #include "storage/wal/wal.h"
 #include "transaction/transaction_manager.h"
 
-using namespace kuzu::common;
-using namespace kuzu::testing;
-using namespace kuzu::transaction;
-using namespace kuzu::storage;
+using namespace ryu::common;
+using namespace ryu::testing;
+using namespace ryu::transaction;
+using namespace ryu::storage;
 
-namespace kuzu {
+namespace ryu {
 namespace testing {
 
 class FlakyCheckpointer {
@@ -308,4 +308,4 @@ TEST_F(FlakyCheckpointerTest, ShadowFileDatabaseIDMismatchCorruptedDB) {
 }
 
 } // namespace testing
-} // namespace kuzu
+} // namespace ryu

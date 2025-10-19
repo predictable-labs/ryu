@@ -35,7 +35,7 @@
 #include <sanitizer/msan_interface.h>
 #endif
 
-namespace kuzu_zstd {
+namespace ryu_zstd {
 
 /*-*************************************
 *  Structures

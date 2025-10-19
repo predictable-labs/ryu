@@ -6,7 +6,7 @@
 #include "storage/table/chunked_node_group.h"
 #include "storage/table/column_chunk.h"
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 class PageAllocator;
 class MemoryManager;
@@ -56,7 +56,7 @@ struct CSRRegion {
         const CSRRegion& region);
 };
 
-struct KUZU_API InMemChunkedCSRHeader {
+struct RYU_API InMemChunkedCSRHeader {
     std::unique_ptr<ColumnChunkData> offset;
     std::unique_ptr<ColumnChunkData> length;
     bool randomLookup = false;
@@ -212,4 +212,4 @@ private:
 };
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

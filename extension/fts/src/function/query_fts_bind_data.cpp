@@ -11,12 +11,12 @@
 #include "storage/table/node_table.h"
 #include "utils/fts_utils.h"
 
-namespace kuzu {
+namespace ryu {
 namespace fts_extension {
 
-using namespace kuzu::common;
-using namespace kuzu::binder;
-using namespace kuzu::storage;
+using namespace ryu::common;
+using namespace ryu::binder;
+using namespace ryu::storage;
 
 QueryFTSOptionalParams::QueryFTSOptionalParams(const binder::expression_vector& optionalParams) {
     for (auto& optionalParam : optionalParams) {
@@ -62,4 +62,4 @@ std::vector<std::string> QueryFTSBindData::getQueryTerms(main::ClientContext& co
 }
 
 } // namespace fts_extension
-} // namespace kuzu
+} // namespace ryu

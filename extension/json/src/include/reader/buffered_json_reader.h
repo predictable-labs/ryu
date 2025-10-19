@@ -7,7 +7,7 @@
 #include "storage/buffer_manager/memory_manager.h"
 #include "yyjson.h"
 
-namespace kuzu {
+namespace ryu {
 namespace json_extension {
 
 struct JsonScanBufferHandle {
@@ -94,4 +94,4 @@ private:
 };
 
 } // namespace json_extension
-} // namespace kuzu
+} // namespace ryu

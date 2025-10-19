@@ -9,7 +9,7 @@
 
 struct ArrowSchema;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 class FlatTuple;
 }
@@ -87,4 +87,4 @@ private:
 };
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

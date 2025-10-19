@@ -3,10 +3,10 @@
 #include "function/scalar_function.h"
 #include "function/struct/vector_struct_functions.h"
 
-using namespace kuzu::binder;
-using namespace kuzu::common;
+using namespace ryu::binder;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 static std::unique_ptr<FunctionBindData> bindFunc(const ScalarBindFuncInput& input) {
@@ -29,4 +29,4 @@ function_set RelsFunction::getFunctionSet() {
 }
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

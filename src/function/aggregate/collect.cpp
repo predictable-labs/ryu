@@ -1,12 +1,12 @@
 #include "function/aggregate_function.h"
 #include "storage/storage_utils.h"
 
-using namespace kuzu::binder;
-using namespace kuzu::common;
-using namespace kuzu::storage;
-using namespace kuzu::processor;
+using namespace ryu::binder;
+using namespace ryu::common;
+using namespace ryu::storage;
+using namespace ryu::processor;
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 /**
@@ -182,4 +182,4 @@ function_set CollectFunction::getFunctionSet() {
 }
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

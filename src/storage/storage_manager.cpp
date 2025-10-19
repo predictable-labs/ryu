@@ -17,11 +17,11 @@
 #include "storage/wal/wal_replayer.h"
 #include "transaction/transaction.h"
 
-using namespace kuzu::catalog;
-using namespace kuzu::common;
-using namespace kuzu::transaction;
+using namespace ryu::catalog;
+using namespace ryu::common;
+using namespace ryu::transaction;
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 
 StorageManager::StorageManager(const std::string& databasePath, bool readOnly, bool enableChecksums,
@@ -56,7 +56,7 @@ void StorageManager::initDataFileHandle(VirtualFileSystem* vfs, main::ClientCont
                     std::make_shared<InMemFileWriter>(*MemoryManager::Get(*context));
                 Serializer headerSerializer(headerWriter);
                 initialHeader->serialize(headerSerializer);
-                dataFH->getFileInfo()->writeFile(headerWriter->getPage(0).data(), KUZU_PAGE_SIZE,
+                dataFH->getFileInfo()->writeFile(headerWriter->getPage(0).data(), RYU_PAGE_SIZE,
                     StorageConstants::DB_HEADER_PAGE_IDX);
                 dataFH->getFileInfo()->syncFile();
             }
@@ -315,4 +315,4 @@ StorageManager* StorageManager::Get(const main::ClientContext& context) {
 }
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

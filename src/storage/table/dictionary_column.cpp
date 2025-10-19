@@ -15,10 +15,10 @@
 #include <bit>
 #include <concepts>
 
-using namespace kuzu::common;
-using namespace kuzu::transaction;
+using namespace ryu::common;
+using namespace ryu::transaction;
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 
 using string_index_t = DictionaryChunk::string_index_t;
@@ -221,7 +221,7 @@ bool DictionaryColumn::canDataCommitInPlace(const SegmentState& dataState,
     uint64_t totalStringLengthToAdd) {
     // Make sure there is sufficient space in the data chunk (not currently compressed)
     auto totalStringDataAfterUpdate = dataState.metadata.numValues + totalStringLengthToAdd;
-    if (totalStringDataAfterUpdate > dataState.metadata.getNumPages() * KUZU_PAGE_SIZE) {
+    if (totalStringDataAfterUpdate > dataState.metadata.getNumPages() * RYU_PAGE_SIZE) {
         // Data cannot be updated in place
         return false;
     }
@@ -232,7 +232,7 @@ bool DictionaryColumn::canOffsetCommitInPlace(const SegmentState& offsetState,
     const SegmentState& dataState, uint64_t numNewStrings, uint64_t totalStringLengthToAdd) const {
     auto totalStringOffsetsAfterUpdate = dataState.metadata.numValues + totalStringLengthToAdd;
     auto offsetCapacity =
-        offsetState.metadata.compMeta.numValues(KUZU_PAGE_SIZE, offsetColumn->getDataType()) *
+        offsetState.metadata.compMeta.numValues(RYU_PAGE_SIZE, offsetColumn->getDataType()) *
         offsetState.metadata.getNumPages();
     auto numStringsAfterUpdate = offsetState.metadata.numValues + numNewStrings;
     if (numStringsAfterUpdate > offsetCapacity) {
@@ -263,4 +263,4 @@ bool DictionaryColumn::canOffsetCommitInPlace(const SegmentState& offsetState,
 }
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

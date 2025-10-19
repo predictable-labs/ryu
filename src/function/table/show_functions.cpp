@@ -5,10 +5,10 @@
 #include "function/table/simple_table_function.h"
 #include "transaction/transaction.h"
 
-using namespace kuzu::common;
-using namespace kuzu::catalog;
+using namespace ryu::common;
+using namespace ryu::catalog;
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct FunctionInfo {
@@ -83,4 +83,4 @@ function_set ShowFunctionsFunction::getFunctionSet() {
 }
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

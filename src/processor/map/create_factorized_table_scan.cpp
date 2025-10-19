@@ -2,12 +2,12 @@
 #include "processor/operator/table_scan/ftable_scan_function.h"
 #include "processor/plan_mapper.h"
 
-using namespace kuzu::common;
-using namespace kuzu::planner;
-using namespace kuzu::binder;
-using namespace kuzu::function;
+using namespace ryu::common;
+using namespace ryu::planner;
+using namespace ryu::binder;
+using namespace ryu::function;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 std::unique_ptr<PhysicalOperator> PlanMapper::createFTableScan(const expression_vector& exprs,
@@ -87,4 +87,4 @@ std::unique_ptr<PhysicalOperator> PlanMapper::createFTableScanAligned(
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

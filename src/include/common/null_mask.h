@@ -6,7 +6,7 @@
 #include "common/assert.h"
 #include <span>
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 
 class ArrowNullMaskTree;
@@ -69,7 +69,7 @@ const uint64_t NULL_HIGH_MASKS[65] = {0x0, 0x8000000000000000, 0xc00000000000000
     0xffffffffffffffe0, 0xfffffffffffffff0, 0xfffffffffffffff8, 0xfffffffffffffffc,
     0xfffffffffffffffe, 0xffffffffffffffff};
 
-class KUZU_API NullMask {
+class RYU_API NullMask {
 public:
     static constexpr uint64_t NO_NULL_ENTRY = 0;
     static constexpr uint64_t ALL_NULL_ENTRY = ~uint64_t(NO_NULL_ENTRY);
@@ -191,4 +191,4 @@ private:
 };
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

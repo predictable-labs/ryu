@@ -5,7 +5,7 @@
 
 #include "common/api.h"
 
-namespace kuzu {
+namespace ryu {
 
 namespace regex {
 class RE2;
@@ -16,7 +16,7 @@ namespace common {
 struct timestamp_t;
 struct date_t;
 
-enum class KUZU_API DatePartSpecifier : uint8_t {
+enum class RYU_API DatePartSpecifier : uint8_t {
     YEAR,
     MONTH,
     DAY,
@@ -32,7 +32,7 @@ enum class KUZU_API DatePartSpecifier : uint8_t {
     WEEK,
 };
 
-struct KUZU_API interval_t {
+struct RYU_API interval_t {
     int32_t months = 0;
     int32_t days = 0;
     int64_t micros = 0;
@@ -98,19 +98,19 @@ public:
     static constexpr const int64_t NANOS_PER_DAY = NANOS_PER_HOUR * HOURS_PER_DAY;
     static constexpr const int64_t NANOS_PER_WEEK = NANOS_PER_DAY * DAYS_PER_WEEK;
 
-    KUZU_API static void addition(interval_t& result, uint64_t number, std::string specifierStr);
-    KUZU_API static interval_t fromCString(const char* str, uint64_t len);
-    KUZU_API static std::string toString(interval_t interval);
-    KUZU_API static bool greaterThan(const interval_t& left, const interval_t& right);
-    KUZU_API static void normalizeIntervalEntries(interval_t input, int64_t& months, int64_t& days,
+    RYU_API static void addition(interval_t& result, uint64_t number, std::string specifierStr);
+    RYU_API static interval_t fromCString(const char* str, uint64_t len);
+    RYU_API static std::string toString(interval_t interval);
+    RYU_API static bool greaterThan(const interval_t& left, const interval_t& right);
+    RYU_API static void normalizeIntervalEntries(interval_t input, int64_t& months, int64_t& days,
         int64_t& micros);
-    KUZU_API static void tryGetDatePartSpecifier(std::string specifier, DatePartSpecifier& result);
-    KUZU_API static int32_t getIntervalPart(DatePartSpecifier specifier, interval_t timestamp);
-    KUZU_API static int64_t getMicro(const interval_t& val);
-    KUZU_API static int64_t getNanoseconds(const interval_t& val);
-    KUZU_API static const regex::RE2& regexPattern1();
-    KUZU_API static const regex::RE2& regexPattern2();
+    RYU_API static void tryGetDatePartSpecifier(std::string specifier, DatePartSpecifier& result);
+    RYU_API static int32_t getIntervalPart(DatePartSpecifier specifier, interval_t timestamp);
+    RYU_API static int64_t getMicro(const interval_t& val);
+    RYU_API static int64_t getNanoseconds(const interval_t& val);
+    RYU_API static const regex::RE2& regexPattern1();
+    RYU_API static const regex::RE2& regexPattern2();
 };
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

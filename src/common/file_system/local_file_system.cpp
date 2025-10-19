@@ -25,7 +25,7 @@
 
 #include "storage/storage_utils.h"
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 
 LocalFileInfo::~LocalFileInfo() {
@@ -123,7 +123,7 @@ std::unique_ptr<FileInfo> LocalFileSystem::openFile(const std::string& path, Fil
         if (!rc) {
             throw IOException(
                 "Could not set lock on file : " + fullPath + "\n" +
-                "See the docs: https://docs.kuzudb.com/concurrency for more information.");
+                "See the docs: https://docs.ryugraph.com/concurrency for more information.");
         }
     }
     return std::make_unique<LocalFileInfo>(fullPath, handle, this);
@@ -143,7 +143,7 @@ std::unique_ptr<FileInfo> LocalFileSystem::openFile(const std::string& path, Fil
         if (rc == -1) {
             throw IOException(
                 "Could not set lock on file : " + fullPath + "\n" +
-                "See the docs: https://docs.kuzudb.com/concurrency for more information.");
+                "See the docs: https://docs.ryugraph.com/concurrency for more information.");
         }
     }
     return std::make_unique<LocalFileInfo>(fullPath, fd, this);
@@ -548,4 +548,4 @@ uint64_t LocalFileSystem::getFileSize(const FileInfo& fileInfo) const {
 }
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

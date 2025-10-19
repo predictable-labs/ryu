@@ -2,7 +2,7 @@
 
 #include "database.h"
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 class Table;
 }
@@ -10,7 +10,7 @@ class Table;
 namespace main {
 
 class ClientContext;
-class KUZU_API StorageDriver {
+class RYU_API StorageDriver {
 public:
     explicit StorageDriver(Database* database);
 
@@ -32,4 +32,4 @@ private:
 };
 
 } // namespace main
-} // namespace kuzu
+} // namespace ryu

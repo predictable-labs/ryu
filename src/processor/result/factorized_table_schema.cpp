@@ -2,9 +2,9 @@
 
 #include "common/null_buffer.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 ColumnSchema::ColumnSchema(const ColumnSchema& other) {
@@ -63,4 +63,4 @@ uint64_t FactorizedTableSchema::getNumUnFlatColumns() const {
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

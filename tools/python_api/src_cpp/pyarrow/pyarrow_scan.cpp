@@ -13,11 +13,11 @@
 #include "pyarrow/pyarrow_bind.h"
 #include "pybind11/pytypes.h"
 
-using namespace kuzu::function;
-using namespace kuzu::common;
-using namespace kuzu::catalog;
+using namespace ryu::function;
+using namespace ryu::common;
+using namespace ryu::catalog;
 
-namespace kuzu {
+namespace ryu {
 
 template<typename T>
 static bool moduleIsLoaded() {
@@ -140,4 +140,4 @@ TableFunction PyArrowTableScanFunction::getFunction() {
     return function;
 }
 
-} // namespace kuzu
+} // namespace ryu

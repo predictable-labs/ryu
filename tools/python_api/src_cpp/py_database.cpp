@@ -7,7 +7,7 @@
 #include "main/version.h"
 #include "pandas/pandas_scan.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
 void PyDatabase::initialize(py::handle& m) {
     py::class_<PyDatabase>(m, "Database")
@@ -58,11 +58,11 @@ PyDatabase::PyDatabase(const std::string& databasePath, uint64_t bufferPoolSize,
     systemConfig.throwOnWalReplayFailure = throwOnWalReplayFailure;
     systemConfig.enableChecksums = enableChecksums;
     database = std::make_unique<Database>(databasePath, systemConfig);
-    kuzu::extension::ExtensionUtils::addTableFunc<kuzu::PandasScanFunction>(*database);
+    ryu::extension::ExtensionUtils::addTableFunc<ryu::PandasScanFunction>(*database);
     storageDriver = std::make_unique<StorageDriver>(database.get());
     py::gil_scoped_acquire acquire;
-    if (kuzu::importCache.get() == nullptr) {
-        kuzu::importCache = std::make_shared<kuzu::PythonCachedImport>();
+    if (ryu::importCache.get() == nullptr) {
+        ryu::importCache = std::make_shared<ryu::PythonCachedImport>();
     }
 }
 

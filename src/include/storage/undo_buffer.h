@@ -5,7 +5,7 @@
 #include "buffer_manager/memory_manager.h"
 #include "common/types/types.h"
 
-namespace kuzu {
+namespace ryu {
 namespace catalog {
 class CatalogEntry;
 class CatalogSet;
@@ -24,7 +24,7 @@ class VersionRecordHandler;
 
 class UndoMemoryBuffer {
 public:
-    static constexpr uint64_t UNDO_MEMORY_BUFFER_INIT_CAPACITY = common::KUZU_PAGE_SIZE;
+    static constexpr uint64_t UNDO_MEMORY_BUFFER_INIT_CAPACITY = common::RYU_PAGE_SIZE;
 
     explicit UndoMemoryBuffer(std::unique_ptr<MemoryBuffer> buffer, uint64_t capacity)
         : buffer{std::move(buffer)}, capacity{capacity} {
@@ -126,4 +126,4 @@ private:
 };
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

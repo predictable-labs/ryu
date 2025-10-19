@@ -3,7 +3,7 @@
 #include "common/copier_config/csv_reader_config.h"
 #include "function/function.h"
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct CastFunctionBindData : public FunctionBindData {
@@ -25,4 +25,4 @@ struct CastFunctionBindData : public FunctionBindData {
 };
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

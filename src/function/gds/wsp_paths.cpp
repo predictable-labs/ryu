@@ -6,12 +6,12 @@
 #include "processor/execution_context.h"
 #include "transaction/transaction.h"
 
-using namespace kuzu::common;
-using namespace kuzu::storage;
-using namespace kuzu::processor;
-using namespace kuzu::binder;
+using namespace ryu::common;
+using namespace ryu::storage;
+using namespace ryu::processor;
+using namespace ryu::binder;
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 template<typename T>
@@ -152,4 +152,4 @@ std::unique_ptr<RJAlgorithm> WeightedSPPathsFunction::getAlgorithm() {
 }
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

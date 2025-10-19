@@ -3,7 +3,7 @@
 #include "factorized_table.h"
 #include "planner/operator/schema.h"
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 class FactorizedTableUtils {
@@ -21,9 +21,9 @@ public:
         storage::MemoryManager* memoryManager);
     static std::shared_ptr<FactorizedTable> getFactorizedTableForOutputMsg(
         const std::string& outputMsg, storage::MemoryManager* memoryManager);
-    static KUZU_API std::shared_ptr<FactorizedTable> getSingleStringColumnFTable(
+    static RYU_API std::shared_ptr<FactorizedTable> getSingleStringColumnFTable(
         storage::MemoryManager* mm);
 };
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

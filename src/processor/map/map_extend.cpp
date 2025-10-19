@@ -9,13 +9,13 @@
 #include "processor/plan_mapper.h"
 #include "storage/storage_manager.h"
 
-using namespace kuzu::binder;
-using namespace kuzu::common;
-using namespace kuzu::planner;
-using namespace kuzu::storage;
-using namespace kuzu::catalog;
+using namespace ryu::binder;
+using namespace ryu::common;
+using namespace ryu::planner;
+using namespace ryu::storage;
+using namespace ryu::catalog;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 static ScanRelTableInfo getRelTableScanInfo(const TableCatalogEntry& tableEntry,
@@ -184,4 +184,4 @@ std::unique_ptr<PhysicalOperator> PlanMapper::mapExtend(const LogicalOperator* l
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

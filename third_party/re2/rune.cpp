@@ -17,7 +17,7 @@
 
 #include "utf.h"
 
-namespace kuzu {
+namespace ryu {
 namespace regex {
 
 enum {
@@ -244,4 +244,4 @@ char* utfrune(const char* s, Rune c) {
     return 0;
 }
 } // namespace regex
-} // namespace kuzu
+} // namespace ryu

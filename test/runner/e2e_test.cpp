@@ -11,8 +11,8 @@
 #include "test_runner/test_parser.h"
 
 using ::testing::Test;
-using namespace kuzu::testing;
-using namespace kuzu::common;
+using namespace ryu::testing;
+using namespace ryu::common;
 
 class EndToEndTest final : public DBTest {
 public:
@@ -32,18 +32,18 @@ public:
         }
         bool generateBinaryDemo =
             !std::getenv("USE_EXISTING_BINARY_DATASET") && dataset.ends_with("binary-demo");
-        if (datasetType == TestGroup::DatasetType::KUZU && dataset != "empty" &&
+        if (datasetType == TestGroup::DatasetType::RYU && dataset != "empty" &&
             !generateBinaryDemo) {
             std::filesystem::copy(dataset + "/" + TESTING_DB_FILE_NAME, databasePath);
         }
         createDB(checkpointWaitTimeout);
         createConns(connNames);
-        if (datasetType != TestGroup::DatasetType::KUZU && dataset != "empty") {
+        if (datasetType != TestGroup::DatasetType::RYU && dataset != "empty") {
             initGraph();
         } else if (generateBinaryDemo && TestHelper::E2E_OVERRIDE_IMPORT_DIR.empty()) {
-            initGraph(TestHelper::appendKuzuRootPath("dataset/demo-db/parquet/"));
+            initGraph(TestHelper::appendRyuRootPath("dataset/demo-db/parquet/"));
         } else if (generateBinaryDemo) {
-            initGraph(TestHelper::appendKuzuRootPath(
+            initGraph(TestHelper::appendRyuRootPath(
                 TestHelper::E2E_OVERRIDE_IMPORT_DIR + "/demo-db/parquet/"));
         }
     }
@@ -51,14 +51,14 @@ public:
     void setUpDataset() {
         switch (datasetType) {
         case TestGroup::DatasetType::CSV_TO_PARQUET: {
-            auto csvDatasetPath = TestHelper::appendKuzuRootPath("dataset/" + dataset);
+            auto csvDatasetPath = TestHelper::appendRyuRootPath("dataset/" + dataset);
             tempDatasetPath = generateTempDatasetPath();
             CSVConverter converter(csvDatasetPath, tempDatasetPath, bufferPoolSize, ".parquet");
             converter.convertCSVDataset();
             dataset = tempDatasetPath;
         } break;
         case TestGroup::DatasetType::CSV_TO_JSON: {
-            auto csvDatasetPath = TestHelper::appendKuzuRootPath("dataset/" + dataset);
+            auto csvDatasetPath = TestHelper::appendRyuRootPath("dataset/" + dataset);
             tempDatasetPath = generateTempDatasetPath();
             CSVConverter converter(csvDatasetPath, tempDatasetPath, bufferPoolSize, ".json");
             converter.convertCSVDataset();
@@ -66,11 +66,11 @@ public:
         } break;
         default: {
             // Determine the dataset root path. Uses `E2E_OVERRIDE_IMPORT_DIR` if set to test
-            // datasets exported from earlier Kuzu versions, otherwise the default path.
+            // datasets exported from earlier Ryu versions, otherwise the default path.
             std::string rootDir = TestHelper::E2E_OVERRIDE_IMPORT_DIR.empty() ?
                                       "dataset/" :
                                       TestHelper::E2E_OVERRIDE_IMPORT_DIR;
-            dataset = TestHelper::appendKuzuRootPath(rootDir + dataset);
+            dataset = TestHelper::appendRyuRootPath(rootDir + dataset);
         }
         }
     }
@@ -371,12 +371,12 @@ void checkGtestParams(int argc, char** argv) {
         std::string argument = argv[1];
         if (argument == "--gtest_list_tests") {
             std::filesystem::remove_all(TestHelper::getTestListFile());
-            scanTestFiles(TestHelper::appendKuzuRootPath(TestHelper::E2E_TEST_FILES_DIRECTORY));
+            scanTestFiles(TestHelper::appendRyuRootPath(TestHelper::E2E_TEST_FILES_DIRECTORY));
         }
         if (argument.starts_with("--gtest_filter=")) {
             std::string testCaseFile = findTestFile(argument.substr(15));
             if (testCaseFile.empty()) {
-                scanTestFiles(TestHelper::appendKuzuRootPath(TestHelper::E2E_TEST_FILES_DIRECTORY));
+                scanTestFiles(TestHelper::appendRyuRootPath(TestHelper::E2E_TEST_FILES_DIRECTORY));
             } else {
                 parseAndRegisterTestGroup(testCaseFile);
             }
@@ -401,7 +401,7 @@ int main(int argc, char** argv) {
 
         if (env_import_data_dir != nullptr) {
             auto path =
-                TestHelper::appendKuzuRootPath(std::filesystem::path(env_import_data_dir).string());
+                TestHelper::appendRyuRootPath(std::filesystem::path(env_import_data_dir).string());
             if (!std::filesystem::exists(path)) {
                 throw TestException("IMPORT DATABASE path does not exist: " + path);
             }
@@ -421,7 +421,7 @@ int main(int argc, char** argv) {
         checkGtestParams(argc, argv);
         testing::InitGoogleTest(&argc, argv);
         if (argc > 1) {
-            auto path = TestHelper::appendKuzuRootPath(
+            auto path = TestHelper::appendRyuRootPath(
                 (std::filesystem::path(TestHelper::E2E_TEST_FILES_DIRECTORY) / argv[1]).string());
             if (!std::filesystem::exists(path)) {
                 throw TestException("Test path does not exist [" + path + "].");

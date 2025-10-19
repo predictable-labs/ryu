@@ -1,6 +1,6 @@
 #include "processor/operator/order_by/top_k_scanner.h"
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 void TopKLocalScanState::init(std::vector<DataPos>& outVectorPos, TopKSharedState& sharedState,
@@ -11,8 +11,8 @@ void TopKLocalScanState::init(std::vector<DataPos>& outVectorPos, TopKSharedStat
     payloadScanner = sharedState.buffer->getScanner();
 }
 
-void TopKScan::initLocalStateInternal(kuzu::processor::ResultSet* resultSet,
-    kuzu::processor::ExecutionContext* /*context*/) {
+void TopKScan::initLocalStateInternal(ryu::processor::ResultSet* resultSet,
+    ryu::processor::ExecutionContext* /*context*/) {
     localState->init(outVectorPos, *sharedState, *resultSet);
 }
 
@@ -23,4 +23,4 @@ bool TopKScan::getNextTuplesInternal(ExecutionContext* /*context*/) {
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

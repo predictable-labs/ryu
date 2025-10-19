@@ -4,12 +4,12 @@
 #include "common/types/ku_string.h"
 #include "common/vector/value_vector.h"
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct Reverse {
 public:
-    KUZU_API static void operation(common::ku_string_t& input, common::ku_string_t& result,
+    RYU_API static void operation(common::ku_string_t& input, common::ku_string_t& result,
         common::ValueVector& resultValueVector);
 
 private:
@@ -22,4 +22,4 @@ private:
 };
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

@@ -2,7 +2,7 @@
 
 #include "storage/table/column_chunk.h"
 #include "storage/table/column_chunk_scanner.h"
-namespace kuzu {
+namespace ryu {
 namespace storage {
 struct LazySegmentData {
     std::unique_ptr<ColumnChunkData> segmentData;
@@ -83,4 +83,4 @@ void LazySegmentScanner::rangeSegments(Iterator startIt, common::length_t length
 }
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

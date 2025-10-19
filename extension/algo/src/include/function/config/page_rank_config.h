@@ -5,7 +5,7 @@
 #include "common/exception/binder.h"
 #include "common/types/types.h"
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct DampingFactor {
@@ -37,4 +37,4 @@ struct NormalizeInitial {
 };
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

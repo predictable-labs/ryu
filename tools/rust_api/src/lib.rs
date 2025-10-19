@@ -1,8 +1,8 @@
-//! Bindings to Kuzu: an in-process property graph database management system built for query speed and scalability.
+//! Bindings to Ryu: an in-process property graph database management system built for query speed and scalability.
 //!
 //! ## Example Usage
 //! ```
-//! use kuzu::{Database, SystemConfig, Connection};
+//! use ryu::{Database, SystemConfig, Connection};
 //! # use anyhow::Error;
 //!
 //! # fn main() -> Result<(), Error> {
@@ -22,34 +22,34 @@
 //! ```
 //! ## Building
 //!
-//! By default, the Kuzu C++ library will be compiled from source and statically linked.
+//! By default, the Ryu C++ library will be compiled from source and statically linked.
 //!
 //! If you want to instead link against a pre-built version of the library, the following environment
 //! variables can be used to configure the build process:
 //!
-//! - `KUZU_SHARED`: If set, link dynamically instead of statically
-//! - `KUZU_INCLUDE_DIR`: Directory of Kuzu's headers
-//! - `KUZU_LIBRARY_DIR`: Directory containing Kuzu's pre-built libraries.
+//! - `RYU_SHARED`: If set, link dynamically instead of statically
+//! - `RYU_INCLUDE_DIR`: Directory of Ryu's headers
+//! - `RYU_LIBRARY_DIR`: Directory containing Ryu's pre-built libraries.
 //!
 //! Example:
 //! ```bash
-//! kuzu_prebuilt_dir=/tmp/kuzu # pre-built Kuzu from https://docs.kuzudb.com/installation/#cc
-//! kuzu_prebuilt_dir=/path_to_kuzu_source/build/release/src # Kuzu built from source
-//! export KUZU_LIBRARY_DIR="kuzu_prebuilt_dir"
-//! export KUZU_INCLUDE_DIR="kuzu_prebuilt_dir"
-//! export KUZU_SHARED=1
+//! ryu_prebuilt_dir=/tmp/ryu # pre-built Ryu from https://docs.ryugraph.com/installation/#cc
+//! ryu_prebuilt_dir=/path_to_ryu_source/build/release/src # Ryu built from source
+//! export RYU_LIBRARY_DIR="ryu_prebuilt_dir"
+//! export RYU_INCLUDE_DIR="ryu_prebuilt_dir"
+//! export RYU_SHARED=1
 //! ```
 //! On macOS:
 //! ```bash
-//! brew install kuzu
-//! export KUZU_LIBRARY_DIR=/opt/homebrew/lib
-//! export KUZU_INCLUDE_DIR=/opt/homebrew/include
-//! export KUZU_SHARED=1
+//! brew install ryu
+//! export RYU_LIBRARY_DIR=/opt/homebrew/lib
+//! export RYU_INCLUDE_DIR=/opt/homebrew/include
+//! export RYU_SHARED=1
 //! ```
 //!
 //! ## Using Extensions
-//! By default, binaries created using this library will not work with Kuzu's
-//! [extensions](https://docs.kuzudb.com/extensions/) (except on Windows/MSVC, where the linker works differently).
+//! By default, binaries created using this library will not work with Ryu's
+//! [extensions](https://docs.ryugraph.com/extensions/) (except on Windows/MSVC, where the linker works differently).
 //!
 //! If you want to use extensions in binaries (binary crates or tests) using this
 //! library, you will need to add the following (or a similar command; see
@@ -79,9 +79,9 @@ mod logical_type;
 mod query_result;
 mod value;
 
-/// The version of the Kuzu crate as reported by Cargo's `CARGO_PKG_VERSION` environment variable
+/// The version of the Ryu crate as reported by Cargo's `CARGO_PKG_VERSION` environment variable
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
-/// Returns the storage version of the Kuzu library
+/// Returns the storage version of the Ryu library
 pub fn get_storage_version() -> u64 {
     crate::ffi::ffi::get_storage_version()
 }

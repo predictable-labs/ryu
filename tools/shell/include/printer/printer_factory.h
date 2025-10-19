@@ -2,7 +2,7 @@
 
 #include "printer/printer.h"
 
-namespace kuzu {
+namespace ryu {
 namespace main {
 
 class PrinterFactory {
@@ -11,4 +11,4 @@ public:
 };
 
 } // namespace main
-} // namespace kuzu
+} // namespace ryu

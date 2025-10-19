@@ -3,13 +3,13 @@
 #include "common/constants.h"
 #include "function/struct/vector_struct_functions.h"
 
-using namespace kuzu::storage;
-using namespace kuzu::main;
-using namespace kuzu::common;
-using namespace kuzu::function;
-using namespace kuzu::processor;
+using namespace ryu::storage;
+using namespace ryu::main;
+using namespace ryu::common;
+using namespace ryu::function;
+using namespace ryu::processor;
 
-namespace kuzu {
+namespace ryu {
 namespace evaluator {
 
 static void updateNullPattern(ValueVector& patternVector, const ValueVector& idVector) {
@@ -85,4 +85,4 @@ void UndirectedRelExpressionEvaluator::initFurther(const ResultSet& resultSet) {
 }
 
 } // namespace evaluator
-} // namespace kuzu
+} // namespace ryu

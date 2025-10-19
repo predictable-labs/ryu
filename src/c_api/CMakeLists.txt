@@ -1,4 +1,4 @@
-add_library(kuzu_c_api
+add_library(ryu_c_api
         OBJECT
         connection.cpp
         database.cpp
@@ -12,5 +12,5 @@ add_library(kuzu_c_api
         version.cpp)
 
 set(ALL_OBJECT_FILES
-        ${ALL_OBJECT_FILES} $<TARGET_OBJECTS:kuzu_c_api>
+        ${ALL_OBJECT_FILES} $<TARGET_OBJECTS:ryu_c_api>
         PARENT_SCOPE)

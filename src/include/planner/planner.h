@@ -10,7 +10,7 @@
 #include "planner/operator/logical_plan.h"
 #include "planner/operator/sip/semi_mask_target_type.h"
 
-namespace kuzu {
+namespace ryu {
 namespace extension {
 class PlannerExtension;
 }
@@ -64,7 +64,7 @@ private:
     std::unordered_map<std::string, binder::expression_vector> patternNameToProperties;
 };
 
-class KUZU_API Planner {
+class RYU_API Planner {
 public:
     explicit Planner(main::ClientContext* clientContext);
     DELETE_COPY_AND_MOVE(Planner);
@@ -349,4 +349,4 @@ private:
 };
 
 } // namespace planner
-} // namespace kuzu
+} // namespace ryu

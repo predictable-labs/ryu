@@ -24,9 +24,9 @@
 #include "storage/table/column_chunk_data.h"
 #include <ranges>
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 
 template<typename T>
@@ -69,7 +69,7 @@ uint32_t getDataTypeSizeInChunk(const common::PhysicalTypeID& dataType) {
     }
     default: {
         auto size = PhysicalTypeUtils::getFixedTypeSize(dataType);
-        KU_ASSERT(size <= KUZU_PAGE_SIZE);
+        KU_ASSERT(size <= RYU_PAGE_SIZE);
         return size;
     }
     }
@@ -1248,4 +1248,4 @@ std::pair<std::optional<StorageValue>, std::optional<StorageValue>> getMinMaxSto
 }
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

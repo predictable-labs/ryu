@@ -5,11 +5,11 @@
 #include "planner/operator/logical_aggregate.h"
 #include "planner/operator/logical_distinct.h"
 
-using namespace kuzu::binder;
-using namespace kuzu::common;
-using namespace kuzu::planner;
+using namespace ryu::binder;
+using namespace ryu::common;
+using namespace ryu::planner;
 
-namespace kuzu {
+namespace ryu {
 namespace optimizer {
 
 void AggKeyDependencyOptimizer::rewrite(planner::LogicalPlan* plan) {
@@ -88,4 +88,4 @@ AggKeyDependencyOptimizer::resolveKeysAndDependentKeys(const expression_vector& 
 }
 
 } // namespace optimizer
-} // namespace kuzu
+} // namespace ryu

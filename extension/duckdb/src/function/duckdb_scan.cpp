@@ -7,10 +7,10 @@
 #include "function/table/table_function.h"
 #include "processor/execution_context.h"
 
-using namespace kuzu::function;
-using namespace kuzu::common;
+using namespace ryu::function;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace duckdb_extension {
 
 std::string DuckDBScanBindData::getColumnsToSelect() const {
@@ -121,4 +121,4 @@ TableFunction getScanFunction(std::shared_ptr<DuckDBTableScanInfo> scanInfo) {
 }
 
 } // namespace duckdb_extension
-} // namespace kuzu
+} // namespace ryu

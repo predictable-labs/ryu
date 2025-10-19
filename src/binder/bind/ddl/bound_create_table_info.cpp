@@ -3,11 +3,11 @@
 #include "catalog/catalog_entry/catalog_entry_type.h"
 #include "catalog/catalog_entry/table_catalog_entry.h"
 
-using namespace kuzu::parser;
-using namespace kuzu::common;
-using namespace kuzu::catalog;
+using namespace ryu::parser;
+using namespace ryu::common;
+using namespace ryu::catalog;
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
 std::string BoundCreateTableInfo::toString() const {
@@ -40,4 +40,4 @@ std::string BoundCreateTableInfo::toString() const {
 }
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

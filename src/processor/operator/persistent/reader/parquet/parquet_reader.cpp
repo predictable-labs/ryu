@@ -15,13 +15,13 @@
 #include "processor/operator/persistent/reader/reader_bind_utils.h"
 #include "processor/warning_context.h"
 
-using namespace kuzu_parquet::format;
+using namespace ryu_parquet::format;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
-using namespace kuzu::function;
-using namespace kuzu::common;
+using namespace ryu::function;
+using namespace ryu::common;
 
 ParquetReader::ParquetReader(std::string filePath, std::vector<bool> columnSkips,
     main::ClientContext* context)
@@ -382,7 +382,7 @@ uint64_t ParquetReader::getGroupSpan(ParquetReaderScanState& state) {
     return max_offset - min_offset;
 }
 
-LogicalType ParquetReader::deriveLogicalType(const kuzu_parquet::format::SchemaElement& s_ele) {
+LogicalType ParquetReader::deriveLogicalType(const ryu_parquet::format::SchemaElement& s_ele) {
     // inner node
     if (s_ele.type == Type::FIXED_LEN_BYTE_ARRAY && !s_ele.__isset.type_length) {
         // LCOV_EXCL_START
@@ -753,4 +753,4 @@ function_set ParquetScanFunction::getFunctionSet() {
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

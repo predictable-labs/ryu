@@ -221,10 +221,10 @@ Catalog exception: function QUERY_FTS_INDEX is not defined. This function exists
 ---- 2
 0|0.271133
 3|0.209476
--STATEMENT EXPORT DATABASE '${KUZU_EXPORT_DB_DIRECTORY}_fts/small'
+-STATEMENT EXPORT DATABASE '${RYU_EXPORT_DB_DIRECTORY}_fts/small'
 ---- ok
--IMPORT_DATABASE "${KUZU_EXPORT_DB_DIRECTORY}_fts/small"
--STATEMENT IMPORT DATABASE '${KUZU_EXPORT_DB_DIRECTORY}_fts/small';
+-IMPORT_DATABASE "${RYU_EXPORT_DB_DIRECTORY}_fts/small"
+-STATEMENT IMPORT DATABASE '${RYU_EXPORT_DB_DIRECTORY}_fts/small';
 ---- ok
 -STATEMENT CALL QUERY_FTS_INDEX('doc', 'docIdx', 'Alice') RETURN node.ID, score
 ---- 2
@@ -251,12 +251,12 @@ name_stopwords
 Binder exception: Table 0_docIdx_docs does not exist.
 -STATEMENT call show_tables() return *
 ---- 6
-0|doc|NODE|local(kuzu)|
-1|city_stopwords|NODE|local(kuzu)|
-2|name_stopwords|NODE|local(kuzu)|
-4|likes|REL|local(kuzu)|
-5|INVALID_STOPWORDS|NODE|local(kuzu)|
-6|INVALID_STOPWORDS_COL_TYPE|NODE|local(kuzu)|
+0|doc|NODE|local(ryu)|
+1|city_stopwords|NODE|local(ryu)|
+2|name_stopwords|NODE|local(ryu)|
+4|likes|REL|local(ryu)|
+5|INVALID_STOPWORDS|NODE|local(ryu)|
+6|INVALID_STOPWORDS_COL_TYPE|NODE|local(ryu)|
 -STATEMENT DROP TABLE `0_docIdx_docs`
 ---- error
 Binder exception: Table 0_docIdx_docs does not exist.
@@ -365,10 +365,10 @@ student|studentIdx|FTS|[firstName]|True|CALL CREATE_FTS_INDEX('student', 'studen
 0|0.271133
 3|0.209476
 -RELOADDB
--STATEMENT EXPORT DATABASE '${KUZU_EXPORT_DB_DIRECTORY}_fts/fts_small_export_test'
+-STATEMENT EXPORT DATABASE '${RYU_EXPORT_DB_DIRECTORY}_fts/fts_small_export_test'
 ---- ok
--IMPORT_DATABASE "${KUZU_EXPORT_DB_DIRECTORY}_fts/fts_small_export_test"
--STATEMENT IMPORT DATABASE '${KUZU_EXPORT_DB_DIRECTORY}_fts/fts_small_export_test'
+-IMPORT_DATABASE "${RYU_EXPORT_DB_DIRECTORY}_fts/fts_small_export_test"
+-STATEMENT IMPORT DATABASE '${RYU_EXPORT_DB_DIRECTORY}_fts/fts_small_export_test'
 ---- ok
 -STATEMENT CALL QUERY_FTS_INDEX('doc', 'docIdx', 'Alice') RETURN node.ID, score
 ---- error

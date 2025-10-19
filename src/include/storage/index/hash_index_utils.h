@@ -10,7 +10,7 @@
 #include "function/hash/hash_functions.h"
 #include "storage/index/hash_index_header.h"
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 
 static constexpr uint64_t NUM_HASH_INDEXES = common::HashIndexConstants::NUM_HASH_INDEXES;
@@ -18,7 +18,7 @@ static constexpr uint64_t NUM_HASH_INDEXES_LOG2 = common::HashIndexConstants::NU
 
 static constexpr common::page_idx_t INDEX_HEADER_PAGES = 2;
 static constexpr uint64_t INDEX_HEADERS_PER_PAGE =
-    common::KUZU_PAGE_SIZE / sizeof(HashIndexHeaderOnDisk);
+    common::RYU_PAGE_SIZE / sizeof(HashIndexHeaderOnDisk);
 
 static constexpr common::page_idx_t P_SLOTS_HEADER_PAGE_IDX = 0;
 static constexpr common::page_idx_t O_SLOTS_HEADER_PAGE_IDX = 1;
@@ -27,8 +27,8 @@ static constexpr uint64_t INDEX_HEADER_IDX_IN_ARRAY = 0;
 
 // so that all 256 hash indexes can be stored in two pages, the HashIndexHeaderOnDisk must be
 // smaller than 32 bytes
-static_assert(NUM_HASH_INDEXES * sizeof(HashIndexHeaderOnDisk) <=
-              common::KUZU_PAGE_SIZE * INDEX_HEADER_PAGES);
+static_assert(
+    NUM_HASH_INDEXES * sizeof(HashIndexHeaderOnDisk) <= common::RYU_PAGE_SIZE * INDEX_HEADER_PAGES);
 
 enum class SlotType : uint8_t { PRIMARY = 0, OVF = 1 };
 
@@ -83,4 +83,4 @@ public:
     }
 };
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

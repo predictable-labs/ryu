@@ -3,7 +3,7 @@
 #include "hnsw_config.h"
 #include "storage/table/list_chunk_data.h"
 
-namespace kuzu {
+namespace ryu {
 namespace catalog {
 class TableCatalogEntry;
 class NodeTableCatalogEntry;
@@ -19,7 +19,7 @@ concept VectorElementType = std::is_floating_point_v<T>;
 using metric_func_t = std::function<double(const void*, const void*, uint32_t)>;
 
 struct HNSWIndexUtils {
-    enum class KUZU_API IndexOperation { CREATE, QUERY, DROP };
+    enum class RYU_API IndexOperation { CREATE, QUERY, DROP };
 
     static bool indexExists(const main::ClientContext& context,
         const transaction::Transaction* transaction, const catalog::TableCatalogEntry* tableEntry,
@@ -62,4 +62,4 @@ private:
 };
 
 } // namespace vector_extension
-} // namespace kuzu
+} // namespace ryu

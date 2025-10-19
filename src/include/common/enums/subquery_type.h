@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 
 enum class SubqueryType : uint8_t {
@@ -11,4 +11,4 @@ enum class SubqueryType : uint8_t {
 };
 
 }
-} // namespace kuzu
+} // namespace ryu

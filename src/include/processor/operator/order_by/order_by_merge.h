@@ -5,7 +5,7 @@
 #include "processor/operator/sink.h"
 #include "processor/result/result_set.h"
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 class OrderByMerge final : public Sink {
@@ -38,4 +38,4 @@ private:
 };
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

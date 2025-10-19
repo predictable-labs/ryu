@@ -10,10 +10,10 @@
 #include "storage/buffer_manager/memory_manager.h"
 #include "transaction/transaction.h"
 
-using namespace kuzu::catalog;
-using namespace kuzu::common;
+using namespace ryu::catalog;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 void Drop::executeInternal(ExecutionContext* context) {
@@ -131,4 +131,4 @@ void Drop::handleMacroExistence(const main::ClientContext* context) {
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

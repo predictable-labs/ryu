@@ -13,10 +13,10 @@
 #include "function/cast/functions/cast_functions.h"
 #include "transaction/transaction.h"
 
-using namespace kuzu::common;
-using namespace kuzu::binder;
+using namespace ryu::common;
+using namespace ryu::binder;
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct CastChildFunctionExecutor {
@@ -1203,4 +1203,4 @@ function_set CastAnyFunction::getFunctionSet() {
 }
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

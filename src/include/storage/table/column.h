@@ -4,7 +4,7 @@
 #include "common/types/types.h"
 #include "storage/table/column_reader_writer.h"
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 class MemoryManager;
 
@@ -200,4 +200,4 @@ struct ColumnFactory {
 };
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

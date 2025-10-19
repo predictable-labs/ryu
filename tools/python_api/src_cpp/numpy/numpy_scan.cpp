@@ -8,9 +8,9 @@
 #include "py_str_utils.h"
 #include "utf8proc_wrapper.h"
 
-namespace kuzu {
+namespace ryu {
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
 template<class T>
 void ScanNumpyColumn(py::array& npArray, uint64_t offset, ValueVector* outputVector,
@@ -234,4 +234,4 @@ void NumpyScan::scanObjectColumn(PyObject** col, uint64_t count, uint64_t offset
     }
 }
 
-} // namespace kuzu
+} // namespace ryu

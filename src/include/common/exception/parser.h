@@ -3,10 +3,10 @@
 #include "common/api.h"
 #include "exception.h"
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 
-class KUZU_API ParserException : public Exception {
+class RYU_API ParserException : public Exception {
 public:
     static constexpr const char* ERROR_PREFIX = "Parser exception: ";
 
@@ -14,4 +14,4 @@ public:
 };
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

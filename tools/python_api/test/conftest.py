@@ -7,20 +7,20 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 import pytest
-from test_helper import KUZU_ROOT
+from test_helper import RYU_ROOT
 
 python_build_dir = Path(__file__).parent.parent / "build"
 try:
-    import kuzu
+    import ryu
 except ModuleNotFoundError:
     sys.path.append(str(python_build_dir))
-    import kuzu
+    import ryu
 
 if TYPE_CHECKING:
     from type_aliases import ConnDB
 
 
-def init_npy(conn: kuzu.Connection) -> None:
+def init_npy(conn: ryu.Connection) -> None:
     conn.execute(
         """
         CREATE NODE TABLE npyoned (
@@ -36,11 +36,11 @@ def init_npy(conn: kuzu.Connection) -> None:
     conn.execute(
         f"""
         COPY npyoned from (
-          "{KUZU_ROOT}/dataset/npy-1d/one_dim_int64.npy",
-          "{KUZU_ROOT}/dataset/npy-1d/one_dim_int32.npy",
-          "{KUZU_ROOT}/dataset/npy-1d/one_dim_int16.npy",
-          "{KUZU_ROOT}/dataset/npy-1d/one_dim_double.npy",
-          "{KUZU_ROOT}/dataset/npy-1d/one_dim_float.npy") BY COLUMN;
+          "{RYU_ROOT}/dataset/npy-1d/one_dim_int64.npy",
+          "{RYU_ROOT}/dataset/npy-1d/one_dim_int32.npy",
+          "{RYU_ROOT}/dataset/npy-1d/one_dim_int16.npy",
+          "{RYU_ROOT}/dataset/npy-1d/one_dim_double.npy",
+          "{RYU_ROOT}/dataset/npy-1d/one_dim_float.npy") BY COLUMN;
         """
     )
     conn.execute(
@@ -59,17 +59,17 @@ def init_npy(conn: kuzu.Connection) -> None:
     conn.execute(
         f"""
         COPY npytwod FROM (
-          "{KUZU_ROOT}/dataset/npy-2d/id_int64.npy",
-          "{KUZU_ROOT}/dataset/npy-2d/two_dim_int64.npy",
-          "{KUZU_ROOT}/dataset/npy-2d/two_dim_int32.npy",
-          "{KUZU_ROOT}/dataset/npy-2d/two_dim_int16.npy",
-          "{KUZU_ROOT}/dataset/npy-2d/two_dim_double.npy",
-          "{KUZU_ROOT}/dataset/npy-2d/two_dim_float.npy") BY COLUMN;
+          "{RYU_ROOT}/dataset/npy-2d/id_int64.npy",
+          "{RYU_ROOT}/dataset/npy-2d/two_dim_int64.npy",
+          "{RYU_ROOT}/dataset/npy-2d/two_dim_int32.npy",
+          "{RYU_ROOT}/dataset/npy-2d/two_dim_int16.npy",
+          "{RYU_ROOT}/dataset/npy-2d/two_dim_double.npy",
+          "{RYU_ROOT}/dataset/npy-2d/two_dim_float.npy") BY COLUMN;
         """
     )
 
 
-def init_tensor(conn: kuzu.Connection) -> None:
+def init_tensor(conn: ryu.Connection) -> None:
     conn.execute(
         """
         CREATE NODE TABLE tensor (
@@ -82,18 +82,18 @@ def init_tensor(conn: kuzu.Connection) -> None:
         );
         """
     )
-    conn.execute(f'COPY tensor FROM "{KUZU_ROOT}/dataset/tensor-list/vTensor.csv" (HEADER=true)')
+    conn.execute(f'COPY tensor FROM "{RYU_ROOT}/dataset/tensor-list/vTensor.csv" (HEADER=true)')
 
 
-def init_long_str(conn: kuzu.Connection) -> None:
+def init_long_str(conn: ryu.Connection) -> None:
     conn.execute("CREATE NODE TABLE personLongString (name STRING, spouse STRING, PRIMARY KEY(name))")
-    conn.execute(f'COPY personLongString FROM "{KUZU_ROOT}/dataset/long-string-pk-tests/vPerson.csv"')
+    conn.execute(f'COPY personLongString FROM "{RYU_ROOT}/dataset/long-string-pk-tests/vPerson.csv"')
     conn.execute("CREATE REL TABLE knowsLongString (FROM personLongString TO personLongString, MANY_MANY)")
-    conn.execute(f'COPY knowsLongString FROM "{KUZU_ROOT}/dataset/long-string-pk-tests/eKnows.csv"')
+    conn.execute(f'COPY knowsLongString FROM "{RYU_ROOT}/dataset/long-string-pk-tests/eKnows.csv"')
 
 
-def init_tinysnb(conn: kuzu.Connection) -> None:
-    tiny_snb_path = (Path(__file__).parent / f"{KUZU_ROOT}/dataset/tinysnb").resolve()
+def init_tinysnb(conn: ryu.Connection) -> None:
+    tiny_snb_path = (Path(__file__).parent / f"{RYU_ROOT}/dataset/tinysnb").resolve()
     schema_path = tiny_snb_path / "schema.cypher"
     with schema_path.open(mode="r") as f:
         for line in f.readlines():
@@ -105,13 +105,13 @@ def init_tinysnb(conn: kuzu.Connection) -> None:
     with copy_path.open(mode="r") as f:
         for line in f.readlines():
             line = line.strip()
-            line = line.replace("dataset/tinysnb", f"{KUZU_ROOT}/dataset/tinysnb")
+            line = line.replace("dataset/tinysnb", f"{RYU_ROOT}/dataset/tinysnb")
             if line:
                 conn.execute(line)
 
 
-def init_demo(conn: kuzu.Connection) -> None:
-    tiny_snb_path = (Path(__file__).parent / f"{KUZU_ROOT}/dataset/demo-db/csv").resolve()
+def init_demo(conn: ryu.Connection) -> None:
+    tiny_snb_path = (Path(__file__).parent / f"{RYU_ROOT}/dataset/demo-db/csv").resolve()
     schema_path = tiny_snb_path / "schema.cypher"
     with schema_path.open(mode="r") as f:
         for line in f.readlines():
@@ -123,12 +123,12 @@ def init_demo(conn: kuzu.Connection) -> None:
     with copy_path.open(mode="r") as f:
         for line in f.readlines():
             line = line.strip()
-            line = line.replace("dataset/demo-db/csv", f"{KUZU_ROOT}/dataset/demo-db/csv")
+            line = line.replace("dataset/demo-db/csv", f"{RYU_ROOT}/dataset/demo-db/csv")
             if line:
                 conn.execute(line)
 
 
-def init_movie_serial(conn: kuzu.Connection) -> None:
+def init_movie_serial(conn: ryu.Connection) -> None:
     conn.execute(
         """
         CREATE NODE TABLE moviesSerial (
@@ -139,7 +139,7 @@ def init_movie_serial(conn: kuzu.Connection) -> None:
           PRIMARY KEY (ID)
         );"""
     )
-    conn.execute(f'COPY moviesSerial from "{KUZU_ROOT}/dataset/tinysnb-serial/vMovies.csv"')
+    conn.execute(f'COPY moviesSerial from "{RYU_ROOT}/dataset/tinysnb-serial/vMovies.csv"')
 
 
 _POOL_SIZE_: int = 256 * 1024 * 1024
@@ -147,7 +147,7 @@ _POOL_SIZE_: int = 256 * 1024 * 1024
 
 def get_db_file_path(tmp_path: Path) -> Path:
     """Return the path to the database file."""
-    return tmp_path / "db.kz"
+    return tmp_path / "db.ryu"
 
 
 def init_db(path: Path) -> Path:
@@ -167,13 +167,13 @@ def init_db(path: Path) -> Path:
 
 
 _READONLY_CONN_DB_: ConnDB | None = None
-_READONLY_ASYNC_CONNECTION_: kuzu.AsyncConnection | None = None
+_READONLY_ASYNC_CONNECTION_: ryu.AsyncConnection | None = None
 
 
 def create_conn_db(path: Path, *, read_only: bool) -> ConnDB:
     """Return a new connection and database."""
-    db = kuzu.Database(path, buffer_pool_size=_POOL_SIZE_, read_only=read_only)
-    conn = kuzu.Connection(db, num_threads=4)
+    db = ryu.Database(path, buffer_pool_size=_POOL_SIZE_, read_only=read_only)
+    conn = ryu.Connection(db, num_threads=4)
     return conn, db
 
 
@@ -193,22 +193,22 @@ def conn_db_readwrite(tmp_path: Path) -> ConnDB:
 
 
 @pytest.fixture
-def async_connection_readonly(tmp_path: Path) -> kuzu.AsyncConnection:
+def async_connection_readonly(tmp_path: Path) -> ryu.AsyncConnection:
     """Return a cached read-only async connection."""
     global _READONLY_ASYNC_CONNECTION_
     if _READONLY_ASYNC_CONNECTION_ is None:
         conn, db = create_conn_db(init_db(tmp_path), read_only=True)
         conn.close()
-        _READONLY_ASYNC_CONNECTION_ = kuzu.AsyncConnection(db, max_threads_per_query=4)
+        _READONLY_ASYNC_CONNECTION_ = ryu.AsyncConnection(db, max_threads_per_query=4)
     return _READONLY_ASYNC_CONNECTION_
 
 
 @pytest.fixture
-def async_connection_readwrite(tmp_path: Path) -> kuzu.AsyncConnection:
+def async_connection_readwrite(tmp_path: Path) -> ryu.AsyncConnection:
     """Return a writeable async connection."""
     conn, db = create_conn_db(init_db(tmp_path), read_only=False)
     conn.close()
-    return kuzu.AsyncConnection(db, max_threads_per_query=4)
+    return ryu.AsyncConnection(db, max_threads_per_query=4)
 
 
 @pytest.fixture
@@ -220,8 +220,8 @@ def conn_db_empty(tmp_path: Path) -> ConnDB:
 @pytest.fixture
 def conn_db_in_mem() -> ConnDB:
     """Return a new in-memory connection and database."""
-    db = kuzu.Database(database_path=":memory:", buffer_pool_size=_POOL_SIZE_, read_only=False)
-    conn = kuzu.Connection(db, num_threads=4)
+    db = ryu.Database(database_path=":memory:", buffer_pool_size=_POOL_SIZE_, read_only=False)
+    conn = ryu.Connection(db, num_threads=4)
     return conn, db
 
 

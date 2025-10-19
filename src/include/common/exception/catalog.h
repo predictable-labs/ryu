@@ -3,13 +3,13 @@
 #include "common/api.h"
 #include "exception.h"
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 
-class KUZU_API CatalogException : public Exception {
+class RYU_API CatalogException : public Exception {
 public:
     explicit CatalogException(const std::string& msg) : Exception("Catalog exception: " + msg){};
 };
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

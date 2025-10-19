@@ -23,11 +23,11 @@ def check_for_extension_build(makefile):
 # Should be fine since the footprint is small, but any further extensions
 # to this tool should rework this if the footprint for duplicated code gets
 # bigger.
-def get_version(kuzu_root):
-    cmake_file = os.path.join(kuzu_root, "CMakeLists.txt")
+def get_version(ryu_root):
+    cmake_file = os.path.join(ryu_root, "CMakeLists.txt")
     with open(cmake_file) as f:
         for line in f:
-            if line.startswith("project(Kuzu VERSION"):
+            if line.startswith("project(Ryu VERSION"):
                 return line.split(" ")[2].strip()
     return "0"
 
@@ -57,7 +57,7 @@ def run_command(cmd, cwd=None, capture_output=False, check=True):
 
 
 def export_datasets_and_test(
-    kuzu_root,
+    ryu_root,
     base_worktree,
     test_worktree,
     dataset_dir,
@@ -86,16 +86,16 @@ def export_datasets_and_test(
         # and atomically rename to `export_path` after all exports are successful.
         # Avoids partial exports.
         inprogress_path = f"{export_path}_inprogress" + os.sep
-        export_script_path = os.path.join(kuzu_root, "scripts", "export-dbs.py")
+        export_script_path = os.path.join(ryu_root, "scripts", "export-dbs.py")
         exec_path = os.path.join(
-            base_worktree, "build", "relwithdebinfo", "tools", "shell", "kuzu"
+            base_worktree, "build", "relwithdebinfo", "tools", "shell", "ryu"
         )
         run_command(
             f"""python3 {export_script_path} \
             --executable {exec_path} \
             --dataset-dir {dataset_dir} \
             --output-dir {inprogress_path}""",
-            cwd=kuzu_root,
+            cwd=ryu_root,
         )
         os.rename(inprogress_path, export_path + os.sep)
 
@@ -115,7 +115,7 @@ def write_split_testfile(
 
     def replace_placeholders(lines):
         return [
-            line.replace("${KUZU_EXPORT_DB_DIRECTORY}", os.path.join(db_dir, ""))
+            line.replace("${RYU_EXPORT_DB_DIRECTORY}", os.path.join(db_dir, ""))
             for line in lines
         ]
 
@@ -140,13 +140,13 @@ def write_split_testfile(
         return result
 
     with open(export_path, "w") as f:
-        f.write(header.replace("${KUZU_EXPORT_DB_DIRECTORY}", os.path.join(db_dir, "")))
+        f.write(header.replace("${RYU_EXPORT_DB_DIRECTORY}", os.path.join(db_dir, "")))
         f.writelines(replace_placeholders(export_lines))
 
     with open(import_path, "w") as f:
         f.write(
             transform_import_header(
-                header.replace("${KUZU_EXPORT_DB_DIRECTORY}", os.path.join(db_dir, ""))
+                header.replace("${RYU_EXPORT_DB_DIRECTORY}", os.path.join(db_dir, ""))
             )
         )
         f.writelines(transform_import_lines(replace_placeholders(import_lines)))
@@ -224,24 +224,24 @@ def split_files(test_dir, output_dir):
 
 
 def run_export_specific_tests(
-    kuzu_root, base_worktree, test_worktree, test_dir, output_dir, cleanup
+    ryu_root, base_worktree, test_worktree, test_dir, output_dir, cleanup
 ):
     # Split tests in test_dir
     split_files(test_dir, output_dir)
-    # Build base_worktree kuzu
+    # Build base_worktree ryu
     run_command("make test-build", cwd=base_worktree)
     # Run the export tests.
     run_command(
         f"E2E_TEST_FILES_DIRECTORY='.' ./.worktree-base/build/relwithdebinfo/test/runner/e2e_test {os.path.abspath(os.path.join(output_dir, 'export'))}",
-        cwd=kuzu_root,
+        cwd=ryu_root,
         check=False,
     )
-    # Build test_worktree kuzu
+    # Build test_worktree ryu
     run_command("make test-build", cwd=test_worktree)
     # Run the import tests.
     run_command(
         f"E2E_TEST_FILES_DIRECTORY='.' ./.worktree-test/build/relwithdebinfo/test/runner/e2e_test {os.path.abspath(os.path.join(output_dir, 'import'))}",
-        cwd=kuzu_root,
+        cwd=ryu_root,
         check=False,
     )
 
@@ -298,15 +298,15 @@ def main():
         cleanup = args.cleanup
 
         script_dir = os.path.dirname(os.path.realpath(__file__))
-        kuzu_root = os.path.abspath(os.path.join(script_dir, ".."))
-        base_worktree = os.path.join(kuzu_root, ".worktree-base")
-        test_worktree = os.path.join(kuzu_root, ".worktree-test")
-        create_worktree(base_worktree, base_commit, kuzu_root)
-        create_worktree(test_worktree, test_commit, kuzu_root)
+        ryu_root = os.path.abspath(os.path.join(script_dir, ".."))
+        base_worktree = os.path.join(ryu_root, ".worktree-base")
+        test_worktree = os.path.join(ryu_root, ".worktree-test")
+        create_worktree(base_worktree, base_commit, ryu_root)
+        create_worktree(test_worktree, test_commit, ryu_root)
 
         if bool(args.dataset_dir):
             export_datasets_and_test(
-                kuzu_root,
+                ryu_root,
                 base_worktree,
                 test_worktree,
                 os.path.abspath(args.dataset_dir),
@@ -318,7 +318,7 @@ def main():
             assert bool(args.test_dir)
             export_path = output_dir
             run_export_specific_tests(
-                kuzu_root,
+                ryu_root,
                 base_worktree,
                 test_worktree,
                 os.path.abspath(args.test_dir),
@@ -336,9 +336,9 @@ def main():
         if base_worktree or test_worktree:
             print("Removing worktrees")
             if base_worktree:
-                remove_worktree(base_worktree, kuzu_root)
+                remove_worktree(base_worktree, ryu_root)
             if test_worktree:
-                remove_worktree(test_worktree, kuzu_root)
+                remove_worktree(test_worktree, ryu_root)
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import kuzu
+import ryu
 
 from type_aliases import ConnDB
 

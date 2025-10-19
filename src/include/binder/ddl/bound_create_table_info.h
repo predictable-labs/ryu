@@ -7,7 +7,7 @@
 #include "common/enums/rel_multiplicity.h"
 #include "property_definition.h"
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 enum class RelMultiplicity : uint8_t;
 }
@@ -54,7 +54,7 @@ private:
           hasParent{other.hasParent} {}
 };
 
-struct KUZU_API BoundExtraCreateTableInfo : BoundExtraCreateCatalogEntryInfo {
+struct RYU_API BoundExtraCreateTableInfo : BoundExtraCreateCatalogEntryInfo {
     std::vector<PropertyDefinition> propertyDefinitions;
 
     explicit BoundExtraCreateTableInfo(std::vector<PropertyDefinition> propertyDefinitions)
@@ -109,4 +109,4 @@ struct BoundExtraCreateRelTableGroupInfo final : BoundExtraCreateTableInfo {
 };
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

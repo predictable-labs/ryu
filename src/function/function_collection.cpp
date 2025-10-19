@@ -30,9 +30,9 @@
 #include "processor/operator/persistent/reader/npy/npy_reader.h"
 #include "processor/operator/persistent/reader/parquet/parquet_reader.h"
 
-using namespace kuzu::processor;
+using namespace ryu::processor;
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 #define SCALAR_FUNCTION_BASE(_PARAM, _NAME)                                                        \
@@ -254,4 +254,4 @@ FunctionCollection* FunctionCollection::getFunctions() {
 }
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

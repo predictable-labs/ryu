@@ -6,10 +6,10 @@
 #include "processor/operator/table_function_call.h"
 #include "processor/plan_mapper.h"
 
-using namespace kuzu::common;
-using namespace kuzu::planner;
+using namespace ryu::common;
+using namespace ryu::planner;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 // masksPerTable is collected from semiMasker.
@@ -128,4 +128,4 @@ std::unique_ptr<PhysicalOperator> PlanMapper::mapSemiMasker(
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

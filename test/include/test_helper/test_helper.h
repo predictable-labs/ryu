@@ -5,9 +5,9 @@
 #include "common/file_system/file_system.h"
 #include "common/string_utils.h"
 #include "common/system_config.h"
-#include "main/kuzu.h"
+#include "main/ryu.h"
 
-namespace kuzu {
+namespace ryu {
 namespace testing {
 
 struct TestQueryConfig {
@@ -22,7 +22,7 @@ struct TestQueryConfig {
     bool compareResult = true;
 };
 
-static const std::string TESTING_DB_FILE_NAME = "db.kz";
+static const std::string TESTING_DB_FILE_NAME = "db.ryu";
 
 class TestHelper {
 public:
@@ -39,7 +39,7 @@ public:
     // size configs (including tests which have high peak hash index memory usage) It should be
     // tweaked to a more accurate value when the hash index is capable of reducing its memory usage
     static constexpr uint64_t HASH_INDEX_MEM =
-        common::HashIndexConstants::NUM_HASH_INDEXES * common::KUZU_PAGE_SIZE * 9;
+        common::HashIndexConstants::NUM_HASH_INDEXES * common::RYU_PAGE_SIZE * 9;
     static constexpr uint64_t DEFAULT_BUFFER_POOL_SIZE_FOR_TESTING =
         (1ull << 26) /* (64MB) */ + HASH_INDEX_MEM;
 
@@ -59,12 +59,12 @@ public:
     static void executeScript(const std::string& cypherScript, main::Connection& conn);
 
     static std::string getTestListFile() {
-        return appendKuzuRootPath(std::string(E2E_TEST_FILES_DIRECTORY) + "/test_list");
+        return appendRyuRootPath(std::string(E2E_TEST_FILES_DIRECTORY) + "/test_list");
     }
 
-    static std::string appendKuzuRootPath(const std::string& path) {
+    static std::string appendRyuRootPath(const std::string& path) {
         if (std::filesystem::path(path).is_relative()) {
-            return KUZU_ROOT_DIRECTORY + std::string("/") + path;
+            return RYU_ROOT_DIRECTORY + std::string("/") + path;
         }
         return path;
     }
@@ -83,9 +83,9 @@ public:
     static std::filesystem::path getRootTempDir() {
         auto tempDir = std::getenv("RUNNER_TEMP");
         if (tempDir != nullptr) {
-            return std::filesystem::path(tempDir) / "kuzu";
+            return std::filesystem::path(tempDir) / "ryu";
         }
-        return std::filesystem::temp_directory_path() / "kuzu";
+        return std::filesystem::temp_directory_path() / "ryu";
     }
 
     static std::string getTempDir(const std::string& name) {
@@ -93,7 +93,7 @@ public:
         std::filesystem::create_directories(path);
         auto pathStr = path.string();
 #ifdef _WIN32
-        // kuzu still doesn't support backslashes in paths on windows
+        // ryu still doesn't support backslashes in paths on windows
         std::replace(pathStr.begin(), pathStr.end(), '\\', '/');
 #endif
         return pathStr;
@@ -105,7 +105,7 @@ public:
         path = path / TESTING_DB_FILE_NAME;
         auto pathStr = path.string();
 #ifdef _WIN32
-        // kuzu still doesn't support backslashes in paths on windows
+        // ryu still doesn't support backslashes in paths on windows
         std::replace(pathStr.begin(), pathStr.end(), '\\', '/');
 #endif
         return pathStr;
@@ -126,7 +126,7 @@ public:
     static std::string joinPath(const std::string& base, const std::string& part) {
         auto pathStr = common::FileSystem::joinPath(base, part);
 #ifdef _WIN32
-        // kuzu still doesn't support backslashes in paths on windows
+        // ryu still doesn't support backslashes in paths on windows
         std::replace(pathStr.begin(), pathStr.end(), '\\', '/');
 #endif
         return pathStr;
@@ -134,4 +134,4 @@ public:
 };
 
 } // namespace testing
-} // namespace kuzu
+} // namespace ryu

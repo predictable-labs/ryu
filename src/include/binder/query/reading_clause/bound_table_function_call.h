@@ -4,10 +4,10 @@
 #include "binder/query/reading_clause/bound_reading_clause.h"
 #include "function/table/table_function.h"
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
-class KUZU_API BoundTableFunctionCall : public BoundReadingClause {
+class RYU_API BoundTableFunctionCall : public BoundReadingClause {
     static constexpr common::ClauseType clauseType_ = common::ClauseType::TABLE_FUNCTION_CALL;
 
 public:
@@ -22,4 +22,4 @@ private:
 };
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

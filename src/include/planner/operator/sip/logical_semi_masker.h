@@ -5,7 +5,7 @@
 #include "planner/operator/logical_operator.h"
 #include "semi_mask_target_type.h"
 
-namespace kuzu {
+namespace ryu {
 namespace planner {
 
 /*
@@ -57,7 +57,7 @@ struct ExtraNodeIDListKeyInfo final : ExtraKeyInfo {
     }
 };
 
-class KUZU_API LogicalSemiMasker final : public LogicalOperator {
+class RYU_API LogicalSemiMasker final : public LogicalOperator {
     static constexpr LogicalOperatorType type_ = LogicalOperatorType::SEMI_MASKER;
 
 public:
@@ -114,4 +114,4 @@ private:
 };
 
 } // namespace planner
-} // namespace kuzu
+} // namespace ryu

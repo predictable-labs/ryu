@@ -5,7 +5,7 @@
 #include "common/types/types.h"
 #include "disk_array.h"
 
-namespace kuzu {
+namespace ryu {
 namespace storage {
 
 class FileHandle;
@@ -15,7 +15,7 @@ class DiskArrayCollection {
         explicit HeaderPage(uint32_t numHeaders = 0)
             : nextHeaderPage{common::INVALID_PAGE_IDX}, numHeaders{numHeaders} {}
         static constexpr size_t NUM_HEADERS_PER_PAGE =
-            (common::KUZU_PAGE_SIZE - sizeof(common::page_idx_t) - sizeof(uint32_t)) /
+            (common::RYU_PAGE_SIZE - sizeof(common::page_idx_t) - sizeof(uint32_t)) /
             sizeof(DiskArrayHeader);
 
         bool operator==(const HeaderPage&) const = default;
@@ -75,4 +75,4 @@ private:
 };
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

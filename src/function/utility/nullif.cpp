@@ -4,10 +4,10 @@
 #include "function/rewrite_function.h"
 #include "function/utility/vector_utility_functions.h"
 
-using namespace kuzu::binder;
-using namespace kuzu::common;
+using namespace ryu::binder;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 static std::shared_ptr<Expression> rewriteFunc(const RewriteFunctionBindInput& input) {
@@ -35,4 +35,4 @@ function_set NullIfFunction::getFunctionSet() {
 }
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

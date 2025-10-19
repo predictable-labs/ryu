@@ -2,7 +2,7 @@
 
 #include "logical_operator.h"
 
-namespace kuzu {
+namespace ryu {
 namespace planner {
 
 class LogicalUnion : public LogicalOperator {
@@ -35,4 +35,4 @@ private:
 };
 
 } // namespace planner
-} // namespace kuzu
+} // namespace ryu

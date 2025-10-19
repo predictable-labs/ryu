@@ -1,8 +1,8 @@
 from pathlib import Path
 
-import kuzu
+import ryu
 import pytest
-from test_helper import KUZU_ROOT
+from test_helper import RYU_ROOT
 from conftest import get_db_file_path
 
 
@@ -68,15 +68,15 @@ def prevent_data_file_truncation(conn):
 
 @pytest.fixture
 def fsm_node_table_setup(tmp_path: Path):
-    db = kuzu.Database(get_db_file_path(tmp_path))
-    conn = kuzu.Connection(db)
+    db = ryu.Database(get_db_file_path(tmp_path))
+    conn = ryu.Connection(db)
     conn.execute("call threads=1")
     conn.execute("call auto_checkpoint=false")
     conn.execute(
         "create node table person (ID INt64, fName StRING, gender INT64, isStudent BoOLEAN, isWorker BOOLEAN, age INT64, eyeSight DOUBLE, birthdate DATE, registerTime TIMESTAMP, lastJobDuration interval, workedHours INT64[], usedNames STRING[], courseScoresPerTerm INT64[][], grades INT64[4], height float, u UUID, PRIMARY KEY (ID));"
     )
     conn.execute(
-        f"COPY person FROM ['{KUZU_ROOT}/dataset/tinysnb/vPerson.csv', '{KUZU_ROOT}/dataset/tinysnb/vPerson2.csv'](ignore_errors=true, header=false)"
+        f"COPY person FROM ['{RYU_ROOT}/dataset/tinysnb/vPerson.csv', '{RYU_ROOT}/dataset/tinysnb/vPerson2.csv'](ignore_errors=true, header=false)"
     )
     return db, conn
 
@@ -88,24 +88,24 @@ def fsm_rel_table_setup(fsm_node_table_setup):
         "create rel table knows (FROM person TO person, date DATE, meetTime TIMESTAMP, validInterval INTERVAL, comments STRING[], summary STRUCT(locations STRING[], transfer STRUCT(day DATE, amount INT64[])), notes UNION(firstmet DATE, type INT16, comment STRING), someMap MAP(STRING, STRING), MANY_MAnY);"
     )
     conn.execute(
-        f"COPY knows FROM ['{KUZU_ROOT}/dataset/tinysnb/eKnows.csv', '{KUZU_ROOT}/dataset/tinysnb/eKnows_2.csv']"
+        f"COPY knows FROM ['{RYU_ROOT}/dataset/tinysnb/eKnows.csv', '{RYU_ROOT}/dataset/tinysnb/eKnows_2.csv']"
     )
     return fsm_node_table_setup
 
 
 @pytest.fixture
 def fsm_rel_group_setup(tmp_path: Path):
-    db = kuzu.Database(get_db_file_path(tmp_path))
-    conn = kuzu.Connection(db)
+    db = ryu.Database(get_db_file_path(tmp_path))
+    conn = ryu.Connection(db)
     conn.execute("call threads=1")
     conn.execute("call auto_checkpoint=false")
     conn.execute("create node table personA (ID INt64, fName StRING, PRIMARY KEY (ID));")
     conn.execute("create node table personB (ID INt64, fName StRING, PRIMARY KEY (ID));")
     conn.execute("create rel table likes (FROM personA TO personB, FROM personB To personA, date DATE);")
-    conn.execute(f'COPY personA FROM "{KUZU_ROOT}/dataset/rel-group/node.csv";')
-    conn.execute(f'COPY personB FROM "{KUZU_ROOT}/dataset/rel-group/node.csv";')
-    conn.execute(f'COPY likes FROM "{KUZU_ROOT}/dataset/rel-group/edge.csv" (FROM="personA", TO="personB");')
-    conn.execute(f'COPY likes FROM "{KUZU_ROOT}/dataset/rel-group/edge.csv" (FROM="personB", TO="personA");')
+    conn.execute(f'COPY personA FROM "{RYU_ROOT}/dataset/rel-group/node.csv";')
+    conn.execute(f'COPY personB FROM "{RYU_ROOT}/dataset/rel-group/node.csv";')
+    conn.execute(f'COPY likes FROM "{RYU_ROOT}/dataset/rel-group/edge.csv" (FROM="personA", TO="personB");')
+    conn.execute(f'COPY likes FROM "{RYU_ROOT}/dataset/rel-group/edge.csv" (FROM="personB", TO="personA");')
     return db, conn
 
 
@@ -159,7 +159,7 @@ def test_fsm_reclaim_node_table_recopy(fsm_node_table_setup) -> None:
         "create node table person (ID INt64, fName StRING, gender INT64, isStudent BoOLEAN, isWorker BOOLEAN, age INT64, eyeSight DOUBLE, birthdate DATE, registerTime TIMESTAMP, lastJobDuration interval, workedHours INT64[], usedNames STRING[], courseScoresPerTerm INT64[][], grades INT64[4], height float, u UUID, PRIMARY KEY (ID));"
     )
     conn.execute(
-        f"COPY person FROM ['{KUZU_ROOT}/dataset/tinysnb/vPerson.csv', '{KUZU_ROOT}/dataset/tinysnb/vPerson2.csv'](ignore_errors=true, header=false)"
+        f"COPY person FROM ['{RYU_ROOT}/dataset/tinysnb/vPerson.csv', '{RYU_ROOT}/dataset/tinysnb/vPerson2.csv'](ignore_errors=true, header=false)"
     )
     new_num_pages = get_total_used_pages(conn)
     assert prev_num_pages == new_num_pages

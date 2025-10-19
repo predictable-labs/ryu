@@ -3,7 +3,7 @@
 #include "json_scalar_functions.h"
 #include "json_utils.h"
 
-namespace kuzu {
+namespace ryu {
 namespace json_extension {
 
 using namespace function;
@@ -60,4 +60,4 @@ function_set JsonKeysFunction::getFunctionSet() {
 }
 
 } // namespace json_extension
-} // namespace kuzu
+} // namespace ryu

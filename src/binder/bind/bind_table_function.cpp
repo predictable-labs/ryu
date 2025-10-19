@@ -7,10 +7,10 @@
 #include "main/client_context.h"
 #include "transaction/transaction.h"
 
-using namespace kuzu::common;
-using namespace kuzu::function;
+using namespace ryu::common;
+using namespace ryu::function;
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
 BoundTableScanInfo Binder::bindTableFunc(const std::string& tableFuncName,
@@ -74,4 +74,4 @@ BoundTableScanInfo Binder::bindTableFunc(const std::string& tableFuncName,
 }
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

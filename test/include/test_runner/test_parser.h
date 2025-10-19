@@ -8,7 +8,7 @@
 #include "test_helper/test_helper.h"
 #include "test_runner/test_group.h"
 
-namespace kuzu {
+namespace ryu {
 namespace testing {
 enum class TokenType {
     // header only
@@ -177,8 +177,8 @@ private:
     const std::string RANDOM_FUNC = "RANDOM";
     // Any value here will be replaced inside the .test files
     // in queries/statements and expected error message.
-    // Example: ${KUZU_ROOT_DIRECTORY} will be replaced by
-    // KUZU_ROOT_DIRECTORY
+    // Example: ${RYU_ROOT_DIRECTORY} will be replaced by
+    // RYU_ROOT_DIRECTORY
     std::unordered_map<std::string, common::Value> variableMap;
 
 private:
@@ -193,4 +193,4 @@ private:
 };
 
 } // namespace testing
-} // namespace kuzu
+} // namespace ryu

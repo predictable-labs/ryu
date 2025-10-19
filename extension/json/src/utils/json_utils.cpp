@@ -11,9 +11,9 @@
 #include "function/cast/functions/numeric_limits.h"
 #include "json_type.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace json_extension {
 
 JsonWrapper::~JsonWrapper() {
@@ -655,4 +655,4 @@ uint32_t jsonArraySize(const JsonWrapper& wrapper) {
 }
 
 } // namespace json_extension
-} // namespace kuzu
+} // namespace ryu

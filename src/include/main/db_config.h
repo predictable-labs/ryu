@@ -4,7 +4,7 @@
 
 #include "common/types/value/value.h"
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 enum class LogicalTypeID : uint8_t;
 } // namespace common
@@ -73,8 +73,8 @@ struct DBConfig {
     explicit DBConfig(const SystemConfig& systemConfig);
 
     static ConfigurationOption* getOptionByName(const std::string& optionName);
-    KUZU_API static bool isDBPathInMemory(const std::string& dbPath);
+    RYU_API static bool isDBPathInMemory(const std::string& dbPath);
 };
 
 } // namespace main
-} // namespace kuzu
+} // namespace ryu

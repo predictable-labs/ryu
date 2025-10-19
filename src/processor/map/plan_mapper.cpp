@@ -7,12 +7,12 @@
 #include "storage/storage_manager.h"
 #include "storage/table/node_table.h"
 
-using namespace kuzu::binder;
-using namespace kuzu::common;
-using namespace kuzu::planner;
-using namespace kuzu::storage;
+using namespace ryu::binder;
+using namespace ryu::common;
+using namespace ryu::planner;
+using namespace ryu::storage;
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 PlanMapper::PlanMapper(ExecutionContext* executionContext)
@@ -231,4 +231,4 @@ std::unique_ptr<SemiMask> PlanMapper::createSemiMask(table_id_t tableID) const {
 }
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

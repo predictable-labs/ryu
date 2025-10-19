@@ -3,9 +3,9 @@
 #include "function/hash/vector_hash_functions.h"
 #include "function/scalar_function.h"
 
-using namespace kuzu::common;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 struct SHA256Operator {
@@ -29,4 +29,4 @@ function_set SHA256Function::getFunctionSet() {
 }
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

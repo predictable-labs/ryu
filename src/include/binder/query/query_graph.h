@@ -5,7 +5,7 @@
 
 #include "binder/expression/rel_expression.h"
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
 constexpr static uint8_t MAX_NUM_QUERY_VARIABLES = 64;
@@ -156,8 +156,8 @@ public:
     const QueryGraph* getQueryGraph(common::idx_t idx) const { return &queryGraphs[idx]; }
 
     bool contains(const std::string& name) const;
-    KUZU_API std::vector<std::shared_ptr<NodeExpression>> getQueryNodes() const;
-    KUZU_API std::vector<std::shared_ptr<RelExpression>> getQueryRels() const;
+    RYU_API std::vector<std::shared_ptr<NodeExpression>> getQueryNodes() const;
+    RYU_API std::vector<std::shared_ptr<RelExpression>> getQueryRels() const;
 
 private:
     std::vector<QueryGraph> mergeGraphs(common::idx_t baseGraphIdx);
@@ -175,4 +175,4 @@ struct BoundGraphPattern {
 };
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

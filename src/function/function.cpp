@@ -2,10 +2,10 @@
 
 #include "binder/expression/expression_util.h"
 
-using namespace kuzu::binder;
-using namespace kuzu::common;
+using namespace ryu::binder;
+using namespace ryu::common;
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 std::unique_ptr<FunctionBindData> FunctionBindData::getSimpleBindData(
@@ -15,4 +15,4 @@ std::unique_ptr<FunctionBindData> FunctionBindData::getSimpleBindData(
 }
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

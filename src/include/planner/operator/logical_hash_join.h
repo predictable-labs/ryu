@@ -4,14 +4,14 @@
 #include "logical_operator.h"
 #include "planner/operator/sip/side_way_info_passing.h"
 
-namespace kuzu {
+namespace ryu {
 namespace planner {
 
 // We only support equality comparison as join condition
 using join_condition_t = binder::expression_pair;
 
 // Probe side on left, i.e. children[0]. Build side on right, i.e. children[1].
-class KUZU_API LogicalHashJoin final : public LogicalOperator {
+class RYU_API LogicalHashJoin final : public LogicalOperator {
     static constexpr LogicalOperatorType type_ = LogicalOperatorType::HASH_JOIN;
 
 public:
@@ -66,4 +66,4 @@ private:
 };
 
 } // namespace planner
-} // namespace kuzu
+} // namespace ryu

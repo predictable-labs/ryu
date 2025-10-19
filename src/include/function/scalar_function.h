@@ -7,7 +7,7 @@
 #include "ternary_function_executor.h"
 #include "unary_function_executor.h"
 
-namespace kuzu {
+namespace ryu {
 namespace function {
 
 // Evaluate function at compile time, e.g. struct_extraction.
@@ -23,7 +23,7 @@ using scalar_func_exec_t =
 using scalar_func_select_t = std::function<bool(
     const std::vector<std::shared_ptr<common::ValueVector>>&, common::SelectionVector&, void*)>;
 
-struct KUZU_API ScalarFunction : public ScalarOrAggregateFunction {
+struct RYU_API ScalarFunction : public ScalarOrAggregateFunction {
     scalar_func_exec_t execFunc = nullptr;
     scalar_func_select_t selectFunc = nullptr;
     scalar_func_compile_exec_t compileFunc = nullptr;
@@ -248,4 +248,4 @@ struct KUZU_API ScalarFunction : public ScalarOrAggregateFunction {
 };
 
 } // namespace function
-} // namespace kuzu
+} // namespace ryu

@@ -2,14 +2,14 @@
 
 #include "storage/table/chunked_node_group.h"
 
-namespace kuzu {
+namespace ryu {
 namespace transaction {
 class Transaction;
 } // namespace transaction
 
 namespace storage {
 
-class KUZU_API InMemChunkedNodeGroupCollection {
+class RYU_API InMemChunkedNodeGroupCollection {
 public:
     explicit InMemChunkedNodeGroupCollection(std::vector<common::LogicalType> types)
         : types{std::move(types)} {}
@@ -52,4 +52,4 @@ private:
 };
 
 } // namespace storage
-} // namespace kuzu
+} // namespace ryu

@@ -44,9 +44,9 @@ include_directories(
         ${PROJECT_SOURCE_DIR}/third_party/httplib
 )
 
-add_library(kuzu_generated_extension_loader OBJECT ${GENERATED_CPP_FILE})
+add_library(ryu_generated_extension_loader OBJECT ${GENERATED_CPP_FILE})
 
-# Both the kuzu source and httpfs extension includes the httplib which is a header
+# Both the ryu source and httpfs extension includes the httplib which is a header
 # only library. Httpfs requires the openssl function to be enabled in httplib, so
 # we also have to enable httplib there if httpfs is static linked.
 if ("httpfs" IN_LIST STATICALLY_LINKED_EXTENSIONS)
@@ -54,7 +54,7 @@ if ("httpfs" IN_LIST STATICALLY_LINKED_EXTENSIONS)
     include_directories(${OPENSSL_INCLUDE_DIR})
 endif ()
 
-add_library(kuzu_extension
+add_library(ryu_extension
         OBJECT
         catalog_extension.cpp
         extension.cpp
@@ -65,6 +65,6 @@ add_library(kuzu_extension
 )
 
 set(ALL_OBJECT_FILES
-        ${ALL_OBJECT_FILES} $<TARGET_OBJECTS:kuzu_extension>
-        ${ALL_OBJECT_FILES} $<TARGET_OBJECTS:kuzu_generated_extension_loader>
+        ${ALL_OBJECT_FILES} $<TARGET_OBJECTS:ryu_extension>
+        ${ALL_OBJECT_FILES} $<TARGET_OBJECTS:ryu_generated_extension_loader>
         PARENT_SCOPE)

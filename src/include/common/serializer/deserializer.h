@@ -11,10 +11,10 @@
 #include "common/assert.h"
 #include "common/serializer/reader.h"
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 
-class KUZU_API Deserializer {
+class RYU_API Deserializer {
 public:
     explicit Deserializer(std::unique_ptr<Reader> reader) : reader(std::move(reader)) {}
 
@@ -145,4 +145,4 @@ template<>
 void Deserializer::deserializeValue(std::string& value);
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

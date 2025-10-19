@@ -1,4 +1,4 @@
-import com.kuzudb.*;
+import com.ryugraph.*;
 
 public class Main {
     public static void main(String[] args) {

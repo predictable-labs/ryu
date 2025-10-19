@@ -2,7 +2,7 @@
 
 #include "processor/operator/sink.h"
 
-namespace kuzu {
+namespace ryu {
 namespace processor {
 
 struct UseDatabasePrintInfo final : OPPrintInfo {
@@ -41,4 +41,4 @@ private:
 };
 
 } // namespace processor
-} // namespace kuzu
+} // namespace ryu

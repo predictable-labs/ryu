@@ -6,7 +6,7 @@
 
 #include "common/api.h"
 
-namespace kuzu {
+namespace ryu {
 namespace common {
 
 using lock_t = std::unique_lock<std::mutex>;
@@ -23,7 +23,7 @@ using lock_t = std::unique_lock<std::mutex>;
  * finalize, users should save it somewhere that can be accessed in
  * finalize(). See ProcessorTask for an example of this.
  */
-class KUZU_API Task {
+class RYU_API Task {
     friend class TaskScheduler;
 
 public:
@@ -104,4 +104,4 @@ protected:
 };
 
 } // namespace common
-} // namespace kuzu
+} // namespace ryu

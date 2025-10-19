@@ -3,7 +3,7 @@
 #include "binder/expression/expression.h"
 #include "bound_reading_clause.h"
 
-namespace kuzu {
+namespace ryu {
 namespace binder {
 
 class BoundUnwindClause final : public BoundReadingClause {
@@ -24,4 +24,4 @@ private:
 };
 
 } // namespace binder
-} // namespace kuzu
+} // namespace ryu

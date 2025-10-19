@@ -4,15 +4,15 @@ import os
 import re
 from pathlib import Path
 
-KUZU_RS_ROOT = Path(__file__).parent
-KUZU_ROOT = KUZU_RS_ROOT.parent.parent
+RYU_RS_ROOT = Path(__file__).parent
+RYU_ROOT = RYU_RS_ROOT.parent.parent
 
 
-def get_kuzu_version():
-    cmake_file = KUZU_ROOT / "CMakeLists.txt"
+def get_ryu_version():
+    cmake_file = RYU_ROOT / "CMakeLists.txt"
     with open(cmake_file) as f:
         for line in f:
-            if line.startswith("project(Kuzu VERSION"):
+            if line.startswith("project(Ryu VERSION"):
                 version = line.split(" ")[2].strip()
                 # Make version semver-compatible
                 components = version.split(".")
@@ -22,9 +22,9 @@ def get_kuzu_version():
 
 
 if __name__ == "__main__":
-    version = get_kuzu_version()
+    version = get_ryu_version()
     version_changed = False
-    with open(KUZU_RS_ROOT / "Cargo.toml", encoding="utf-8") as file:
+    with open(RYU_RS_ROOT / "Cargo.toml", encoding="utf-8") as file:
         data = file.readlines()
         section = None
         for index, line in enumerate(data):
@@ -43,5 +43,5 @@ if __name__ == "__main__":
                     break
 
     if version_changed:
-        with open(KUZU_RS_ROOT / "Cargo.toml", "w", encoding="utf-8") as file:
+        with open(RYU_RS_ROOT / "Cargo.toml", "w", encoding="utf-8") as file:
             file.writelines(data)

@@ -2,7 +2,7 @@
 
 #include "pybind_include.h"
 
-namespace kuzu {
+namespace ryu {
 
 namespace common {
 class ValueVector;
@@ -17,4 +17,4 @@ struct NumpyScan {
         common::ValueVector* outputVector);
 };
 
-} // namespace kuzu
+} // namespace ryu
