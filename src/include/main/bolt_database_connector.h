@@ -5,6 +5,10 @@
 
 #include "main/database_connector.h"
 
+// Forward declare neo4j client types to avoid including C header in header
+struct neo4j_connection;
+struct neo4j_config;
+
 namespace ryu {
 namespace main {
 
@@ -26,6 +30,7 @@ struct BoltConnectionInfo {
 class BoltDatabaseConnector : public DatabaseConnector {
 public:
     explicit BoltDatabaseConnector(std::string_view url, const SystemConfig& config);
+    ~BoltDatabaseConnector();
 
     DatabaseConnectionType getConnectionType() const override {
         return DatabaseConnectionType::BOLT;
@@ -38,13 +43,13 @@ public:
 
 private:
     void connect();
-    void authenticate();
-    void selectDatabase();
+    void disconnect();
 
     BoltConnectionInfo connectionInfo;
 
-    // Bolt protocol state
-    int socketFd;
+    // libneo4j-omni connection state
+    neo4j_connection* connection;
+    neo4j_config* config;
     bool isConnected;
 };
 

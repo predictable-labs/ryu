@@ -23,7 +23,7 @@ add_subdirectory(extension)
 add_library(ryu STATIC ${ALL_OBJECT_FILES})
 add_library(ryu_shared SHARED ${ALL_OBJECT_FILES})
 
-set(RYU_LIBRARIES antlr4_cypher antlr4_runtime brotlidec brotlicommon fast_float utf8proc re2 fastpfor parquet snappy thrift yyjson zstd miniz mbedtls lz4 roaring_bitmap simsimd)
+set(RYU_LIBRARIES antlr4_cypher antlr4_runtime brotlidec brotlicommon fast_float utf8proc re2 fastpfor parquet snappy thrift yyjson zstd miniz mbedtls lz4 roaring_bitmap simsimd neo4j-client)
 if (NOT __SINGLE_THREADED__)
         set(RYU_LIBRARIES ${RYU_LIBRARIES} Threads::Threads)
 endif()

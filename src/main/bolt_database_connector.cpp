@@ -4,10 +4,9 @@
 #include <regex>
 #include <sstream>
 
-#include <arpa/inet.h>
-#include <netdb.h>
-#include <sys/socket.h>
-#include <unistd.h>
+extern "C" {
+#include <neo4j-client.h>
+}
 
 #include "common/exception/exception.h"
 #include "extension/extension_manager.h"
@@ -18,6 +17,9 @@ namespace main {
 
 // Test-only flag to track if BoltDatabaseConnector was initialized
 bool g_bolt_connector_test_initialized = false;
+
+// Static initialization flag for neo4j client library
+static bool neo4j_lib_initialized = false;
 
 // Parse Bolt URL format: ryu://[username:password@]host:port/database
 // or ryus://[username:password@]host:port/database (with TLS)
@@ -55,65 +57,91 @@ BoltConnectionInfo BoltConnectionInfo::parseURL(const std::string& url) {
     return info;
 }
 
-BoltDatabaseConnector::BoltDatabaseConnector(std::string_view url, const SystemConfig& config)
-    : socketFd(-1), isConnected(false) {
-    // Note: config parameter is accepted for consistency with factory interface but not stored
+BoltDatabaseConnector::BoltDatabaseConnector(std::string_view url, const SystemConfig& systemConfig)
+    : connection(nullptr), config(nullptr), isConnected(false) {
+    // Initialize neo4j client library once
+    if (!neo4j_lib_initialized) {
+        if (neo4j_client_init() != 0) {
+            throw common::Exception("Failed to initialize neo4j client library");
+        }
+        neo4j_lib_initialized = true;
+    }
+
+    // Parse the connection URL
     connectionInfo = BoltConnectionInfo::parseURL(std::string(url));
+
+    // Create neo4j config
+    config = neo4j_new_config();
+    if (config == nullptr) {
+        throw common::Exception("Failed to create neo4j client configuration");
+    }
+
+    // Set authentication credentials if provided
+    if (!connectionInfo.username.empty()) {
+        if (neo4j_config_set_username(config, connectionInfo.username.c_str()) != 0) {
+            neo4j_config_free(config);
+            throw common::Exception("Failed to set username in neo4j config");
+        }
+    }
+
+    if (!connectionInfo.password.empty()) {
+        if (neo4j_config_set_password(config, connectionInfo.password.c_str()) != 0) {
+            neo4j_config_free(config);
+            throw common::Exception("Failed to set password in neo4j config");
+        }
+    }
+}
+
+BoltDatabaseConnector::~BoltDatabaseConnector() {
+    disconnect();
+    if (config != nullptr) {
+        neo4j_config_free(config);
+        config = nullptr;
+    }
 }
 
 void BoltDatabaseConnector::connect() {
-    // Create socket
-    socketFd = socket(AF_INET, SOCK_STREAM, 0);
-    if (socketFd < 0) {
-        throw common::Exception("Failed to create socket for Bolt connection");
+    if (isConnected) {
+        return; // Already connected
     }
 
-    // Resolve hostname
-    struct hostent* server = gethostbyname(connectionInfo.host.c_str());
-    if (server == nullptr) {
-        close(socketFd);
-        throw common::Exception("Failed to resolve hostname: " + connectionInfo.host);
+    // Build the connection URI for neo4j_connect
+    // Format: neo4j://host:port or neo4js://host:port for TLS
+    std::stringstream connectionUri;
+    if (connectionInfo.useTLS) {
+        connectionUri << "neo4j+s://";
+    } else {
+        connectionUri << "neo4j://";
     }
 
-    // Setup server address
-    struct sockaddr_in serverAddr;
-    memset(&serverAddr, 0, sizeof(serverAddr));
-    serverAddr.sin_family = AF_INET;
-    memcpy(&serverAddr.sin_addr.s_addr, server->h_addr, server->h_length);
-    serverAddr.sin_port = htons(connectionInfo.port);
+    connectionUri << connectionInfo.host << ":" << connectionInfo.port;
 
-    // Connect to server
-    if (::connect(socketFd, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) < 0) {
-        close(socketFd);
+    // Connect to the Neo4j server using libneo4j-omni
+    connection = neo4j_connect(connectionUri.str().c_str(), config, NEO4J_INSECURE);
+
+    if (connection == nullptr) {
         std::stringstream ss;
         ss << "Failed to connect to Bolt server at " << connectionInfo.host << ":"
-           << connectionInfo.port;
+           << connectionInfo.port << " - " << strerror(errno);
         throw common::Exception(ss.str());
     }
 
-    isConnected = true;
-
-    // TODO: Perform Bolt handshake
-    // - Send Bolt magic preamble (0x6060B017)
-    // - Send supported protocol versions
-    // - Receive agreed version from server
-}
-
-void BoltDatabaseConnector::authenticate() {
-    if (!isConnected) {
-        throw common::Exception("Cannot authenticate: not connected to Bolt server");
+    // Check if credentials expired
+    if (neo4j_credentials_expired(connection)) {
+        neo4j_close(connection);
+        connection = nullptr;
+        throw common::Exception("Neo4j credentials have expired");
     }
 
-    // TODO: Implement Bolt authentication
-    // - Send HELLO message with authentication credentials
-    // - Receive SUCCESS or FAILURE response
-    // - Handle different authentication schemes (BASIC, KERBEROS, etc.)
+    isConnected = true;
 }
 
-void BoltDatabaseConnector::selectDatabase() {
-    // TODO: Implement database selection
-    // - In Bolt v4+, database selection is part of the HELLO message
-    // - For earlier versions, might need to send a USE statement
+void BoltDatabaseConnector::disconnect() {
+    if (connection != nullptr) {
+        neo4j_close(connection);
+        connection = nullptr;
+        isConnected = false;
+    }
 }
 
 void BoltDatabaseConnector::initialize(Database* database) {
@@ -121,21 +149,15 @@ void BoltDatabaseConnector::initialize(Database* database) {
     g_bolt_connector_test_initialized = true;
 
     // Store the URL as the database path
-    database->databasePath = std::string(connectionInfo.host) + ":" +
-        std::to_string(connectionInfo.port) + "/" + connectionInfo.database;
-
-    // Connect to the Bolt server
-    connect();
-
-    // Authenticate if credentials provided
-    if (!connectionInfo.username.empty()) {
-        authenticate();
-    }
-
-    // Select the database
+    std::stringstream dbPath;
+    dbPath << connectionInfo.host << ":" << connectionInfo.port;
     if (!connectionInfo.database.empty()) {
-        selectDatabase();
+        dbPath << "/" << connectionInfo.database;
     }
+    database->databasePath = dbPath.str();
+
+    // Connect to the Bolt server (authentication is handled by libneo4j-omni during connection)
+    connect();
 
     // Initialize minimal components for remote databases
     // Extension manager for potential client-side extensions
@@ -149,11 +171,7 @@ void BoltDatabaseConnector::initialize(Database* database) {
 
 void BoltDatabaseConnector::cleanup(Database* database) {
     // Close the Bolt connection
-    if (isConnected && socketFd >= 0) {
-        close(socketFd);
-        socketFd = -1;
-        isConnected = false;
-    }
+    disconnect();
 
     if (database->dbLifeCycleManager) {
         database->dbLifeCycleManager->isDatabaseClosed = true;
