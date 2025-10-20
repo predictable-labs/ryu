@@ -57,13 +57,20 @@ target_link_libraries(neo4j-client PUBLIC OpenSSL::SSL OpenSSL::Crypto)
 # Disable warnings for third-party code
 if(NOT MSVC)
     target_compile_options(neo4j-client PRIVATE
-        -Wno-all
-        -Wno-extra
-        -Wno-deprecated-declarations
-        -Wno-error
+        -w                              # Disable all warnings
+        -Wno-error                      # Don't treat warnings as errors
+        -Wno-error=format-truncation    # Specifically disable format-truncation error
+        -Wno-format-truncation          # Disable format-truncation warning
     )
 else()
     target_compile_options(neo4j-client PRIVATE /W0)
+endif()
+
+# Remove any -Werror flags that might be inherited
+get_target_property(NEO4J_COMPILE_OPTIONS neo4j-client COMPILE_OPTIONS)
+if(NEO4J_COMPILE_OPTIONS)
+    list(FILTER NEO4J_COMPILE_OPTIONS EXCLUDE REGEX "-Werror")
+    set_target_properties(neo4j-client PROPERTIES COMPILE_OPTIONS "${NEO4J_COMPILE_OPTIONS}")
 endif()
 
 # Set C standard to C11 (needed for _Static_assert)
