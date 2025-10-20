@@ -99,8 +99,8 @@ namespace ryu {
 namespace main {
 // Add a test-only static flag to BoltDatabaseConnector
 extern bool g_bolt_connector_test_initialized;
-}
-}
+} // namespace main
+} // namespace ryu
 
 bool ryu::main::g_bolt_connector_test_initialized = false;
 

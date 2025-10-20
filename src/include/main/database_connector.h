@@ -17,7 +17,7 @@ namespace storage {
 class StorageManager;
 class BufferManager;
 class MemoryManager;
-}
+} // namespace storage
 
 namespace transaction {
 class TransactionManager;
@@ -41,8 +41,8 @@ class Database;
 class DatabaseManager;
 
 enum class DatabaseConnectionType {
-    EMBEDDED,  // Local file-based or in-memory
-    BOLT       // Remote Bolt protocol connection
+    EMBEDDED, // Local file-based or in-memory
+    BOLT      // Remote Bolt protocol connection
 };
 
 /**
@@ -74,16 +74,12 @@ public:
     /**
      * @brief Returns whether this connection is remote
      */
-    bool isRemote() const {
-        return getConnectionType() == DatabaseConnectionType::BOLT;
-    }
+    bool isRemote() const { return getConnectionType() == DatabaseConnectionType::BOLT; }
 
     /**
      * @brief Returns whether this connection is embedded (local)
      */
-    bool isEmbedded() const {
-        return getConnectionType() == DatabaseConnectionType::EMBEDDED;
-    }
+    bool isEmbedded() const { return getConnectionType() == DatabaseConnectionType::EMBEDDED; }
 };
 
 } // namespace main
