@@ -8,7 +8,7 @@ namespace common {
 
 class RYU_API RuntimeException : public Exception {
 public:
-    explicit RuntimeException(const std::string& msg) : Exception("Runtime exception: " + msg) {};
+    explicit RuntimeException(const std::string& msg) : Exception("Runtime exception: " + msg){};
 };
 
 } // namespace common
