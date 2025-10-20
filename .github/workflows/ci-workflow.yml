@@ -170,6 +170,7 @@ jobs:
           path: dataset/binary-demo
 
       - name: Generate and upload tinysnb
+        if: steps.cache-binary-demo.outputs.cache-hit != 'true'
         run: |
           version_current="$(python3 benchmark/version.py)"
           echo "0" > version_minio.txt
@@ -186,6 +187,7 @@ jobs:
           rm -rf tinysnb version_minio.txt
 
       - name: Generate and upload ldbc-sf01
+        if: steps.cache-binary-demo.outputs.cache-hit != 'true'
         run: |
           version_current="$(python3 benchmark/version.py)"
           echo "0" > version_minio.txt
