@@ -39,12 +39,20 @@ file(GLOB NEO4J_CLIENT_SOURCES
     lib/src/values.c
 )
 
+# Generate config.h from config.h.cmake.in
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/config.h
+    @ONLY
+)
+
 # Create static library
 add_library(neo4j-client STATIC ${NEO4J_CLIENT_SOURCES})
 
-# Set include directories - include the root dir for config.h
+# Set include directories - include the binary dir for generated config.h and source dir for headers
 target_include_directories(neo4j-client PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/lib/src
+    ${CMAKE_CURRENT_BINARY_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
