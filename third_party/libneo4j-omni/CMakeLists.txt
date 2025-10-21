@@ -39,10 +39,11 @@ file(GLOB NEO4J_CLIENT_SOURCES
     lib/src/values.c
 )
 
-# Generate config.h from config.h.cmake.in
+# Generate config.h from config.h.cmake.in into the source directory
+# (source files use relative includes like "../../config.h")
 configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake.in
-    ${CMAKE_CURRENT_BINARY_DIR}/config.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/config.h
     @ONLY
 )
 
