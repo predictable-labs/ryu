@@ -90,10 +90,37 @@ check_symbol_exists(memset_s "string.h" HAVE_MEMSET_S)
 check_symbol_exists(mkstemp "stdlib.h" HAVE_MKSTEMP)
 check_symbol_exists(open_memstream "stdio.h" HAVE_OPEN_MEMSTREAM)
 
-# OpenSSL functions
-check_symbol_exists(BIO_meth_new "openssl/bio.h" HAVE_BIO_METH_NEW)
-check_symbol_exists(ASN1_STRING_get0_data "openssl/asn1.h" HAVE_ASN1_STRING_GET0_DATA)
-check_symbol_exists(CRYPTO_set_locking_callback "openssl/crypto.h" HAVE_CRYPTO_SET_LOCKING_CALLBACK)
+# OpenSSL functions - need to link against OpenSSL for these checks
+set(CMAKE_REQUIRED_LIBRARIES OpenSSL::SSL OpenSSL::Crypto)
+
+check_c_source_compiles("
+#include <openssl/bio.h>
+int main() {
+    BIO_METHOD *m = BIO_meth_new(0, \"test\");
+    return m != NULL ? 0 : 1;
+}
+" HAVE_BIO_METH_NEW)
+
+check_c_source_compiles("
+#include <openssl/asn1.h>
+#include <openssl/x509.h>
+int main() {
+    ASN1_STRING *s = NULL;
+    const unsigned char *d = ASN1_STRING_get0_data(s);
+    (void)d;
+    return 0;
+}
+" HAVE_ASN1_STRING_GET0_DATA)
+
+check_c_source_compiles("
+#include <openssl/crypto.h>
+int main() {
+    CRYPTO_set_locking_callback(NULL);
+    return 0;
+}
+" HAVE_CRYPTO_SET_LOCKING_CALLBACK)
+
+set(CMAKE_REQUIRED_LIBRARIES)
 
 # Set OpenSSL flag
 set(HAVE_OPENSSL 1)
