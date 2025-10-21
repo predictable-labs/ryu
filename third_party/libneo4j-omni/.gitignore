@@ -44,6 +44,7 @@ TAGS
 /build-aux/m4/lt~obsolete.m4
 /configure
 /config.*
+!/config.h.cmake.in
 /lib/src/neo4j-client.h
 /lib/test/check_libneo4j-client
 /libneo4j-client-*.tar.gz
