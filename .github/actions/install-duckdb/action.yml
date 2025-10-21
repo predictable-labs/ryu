@@ -33,6 +33,9 @@ runs:
       if: runner.os == 'Linux'
       shell: bash
       run: |
+        # Ensure the cache directory exists and has correct permissions
+        sudo mkdir -p /tmp/duckdb-install/lib /tmp/duckdb-install/include
+        sudo chmod -R 755 /tmp/duckdb-install
         sudo cp /tmp/duckdb-install/lib/libduckdb.so /usr/local/lib/
         sudo cp /tmp/duckdb-install/include/duckdb.h /usr/local/include/
         sudo cp /tmp/duckdb-install/include/duckdb.hpp /usr/local/include/
