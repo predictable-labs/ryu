@@ -149,6 +149,11 @@ jobs:
           signature_v2 = False
           EOF
 
+      - name: Install neo4j dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libtool libltdl-dev libedit-dev libssl-dev
+
       - name: Install DuckDB
         if: steps.cache-binary-demo.outputs.cache-hit != 'true'
         uses: ./.github/actions/install-duckdb
@@ -228,6 +233,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install neo4j dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libtool libltdl-dev libedit-dev libssl-dev
 
       - name: Download binary-demo
         uses: actions/download-artifact@v4
@@ -507,6 +517,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install neo4j dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libtool libltdl-dev libedit-dev libssl-dev
+
       - name: Install DuckDB
         uses: ./.github/actions/install-duckdb
 
@@ -618,6 +633,11 @@ jobs:
       HTTP_CACHE_FILE: TRUE
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install neo4j dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libtool libltdl-dev libedit-dev libssl-dev
 
       - name: Download binary-demo
         uses: actions/download-artifact@v4
@@ -1042,7 +1062,7 @@ jobs:
       - name: Install clangd
         run: |
           sudo apt-get update
-          sudo apt-get install -y clangd
+          sudo apt-get install -y clangd libtool libltdl-dev libedit-dev libssl-dev
 
       - name: Install DuckDB
         uses: ./.github/actions/install-duckdb
