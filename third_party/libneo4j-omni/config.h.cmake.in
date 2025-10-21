@@ -66,6 +66,9 @@
 /* Define to 1 if you have openssl. */
 #cmakedefine HAVE_OPENSSL 1
 
+/* Define to 1 if TLS support is available. */
+#cmakedefine HAVE_TLS 1
+
 /* Define to 1 if you have the `open_memstream' function. */
 #cmakedefine HAVE_OPEN_MEMSTREAM 1
 

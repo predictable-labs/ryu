@@ -97,6 +97,7 @@ check_symbol_exists(CRYPTO_set_locking_callback "openssl/crypto.h" HAVE_CRYPTO_S
 
 # Set OpenSSL flag
 set(HAVE_OPENSSL 1)
+set(HAVE_TLS 1)
 
 # Set pthread flag (assuming pthreads are available on Linux)
 set(HAVE_PTHREADS 1)
