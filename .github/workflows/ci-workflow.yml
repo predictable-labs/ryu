@@ -1059,10 +1059,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install clangd
+      - name: Install clang and dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y clangd libtool libltdl-dev libedit-dev libssl-dev
+          sudo apt-get install -y clang clangd clang-tidy libtool libltdl-dev libedit-dev libssl-dev
 
       - name: Install DuckDB
         uses: ./.github/actions/install-duckdb
