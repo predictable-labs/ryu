@@ -1,3 +1,4 @@
+add_subdirectory(backup)
 add_subdirectory(buffer_manager)
 add_subdirectory(compression)
 add_subdirectory(local_storage)

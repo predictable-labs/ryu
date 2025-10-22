@@ -9,6 +9,7 @@
 #include "main/client_context.h"
 #include "main/database.h"
 #include "main/db_config.h"
+#include "storage/backup/backup_manager.h"
 #include "storage/buffer_manager/buffer_manager.h"
 #include "storage/buffer_manager/memory_manager.h"
 #include "storage/checkpointer.h"
@@ -311,6 +312,45 @@ StorageManager* StorageManager::Get(const main::ClientContext& context) {
         return context.getAttachedDatabase()->getStorageManager();
     } else {
         return context.getDatabase()->getStorageManager();
+    }
+}
+
+// Backup API implementations
+void StorageManager::startBackup(const std::string& backupPath) {
+    if (inMemory) {
+        throw RuntimeException("Backup not supported for in-memory databases");
+    }
+    if (readOnly) {
+        throw RuntimeException("Backup not supported for read-only databases");
+    }
+    // Note: BackupManager needs Database* which we don't have access to here.
+    // For now, we'll throw an error. This will be resolved when Connection API is added.
+    throw RuntimeException("Backup API requires Database* - use Connection::startBackup() instead");
+}
+
+BackupState StorageManager::getBackupState() const {
+    if (!backupManager) {
+        return BackupState::IDLE;
+    }
+    return backupManager->getBackupState();
+}
+
+double StorageManager::getBackupProgress() const {
+    if (!backupManager) {
+        return 0.0;
+    }
+    return backupManager->getBackupProgress();
+}
+
+void StorageManager::waitForBackupCompletion() {
+    if (backupManager) {
+        backupManager->waitForCompletion();
+    }
+}
+
+void StorageManager::notifyBackupPageModification(common::page_idx_t pageIdx) {
+    if (backupManager && backupManager->getBackupState() == BackupState::IN_PROGRESS) {
+        backupManager->notifyPageModification(pageIdx);
     }
 }
 

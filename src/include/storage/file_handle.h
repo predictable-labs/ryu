@@ -72,6 +72,10 @@ public:
     void setLockedPageDirty(common::page_idx_t pageIdx) {
         KU_ASSERT(pageIdx < numPages);
         pageStates[pageIdx].setDirty();
+        // TODO(backup): Notify backup manager of page modification
+        // Need to call: StorageManager::Get(context)->notifyBackupPageModification(pageIdx);
+        // This requires adding ClientContext* as a member of FileHandle or finding
+        // an alternative approach to access the backup manager from this context.
     }
 
     common::file_idx_t getFileIndex() const { return fileIndex; }
