@@ -235,41 +235,45 @@ jobs:
           name: binary-demo
           path: ${{ github.workspace }}/dataset/binary-demo
 
+      - name: Build
+        run: |
+          make test-build
+
       - name: Test
         run: |
-          make test
+          ctest --test-dir build/relwithdebinfo/test --output-on-failure -j ${TEST_JOBS}
 
       - name: Test in mem
         env:
           IN_MEM_MODE: true
         run: |
-          make test
+          ctest --test-dir build/relwithdebinfo/test --output-on-failure -j ${TEST_JOBS}
 
       - name: Test checkpoint at threshold 0
         env:
           AUTO_CHECKPOINT: true
           CHECKPOINT_THRESHOLD: 0
         run: |
-          make test
+          ctest --test-dir build/relwithdebinfo/test --output-on-failure -j ${TEST_JOBS}
 
       - name: Test recovery
         env:
           AUTO_CHECKPOINT: false
           CHECKPOINT_ON_CLOSE: false
         run: |
-          make test
+          ctest --test-dir build/relwithdebinfo/test --output-on-failure -j ${TEST_JOBS}
 
       - name: Test sparse frontier threshold at 2
         env:
           SPARSE_FRONTIER_THRESHOLD: 2
         run: |
-          make test
+          ctest --test-dir build/relwithdebinfo/test --output-on-failure -j ${TEST_JOBS}
 
       - name: Test with checksums disabled
         env:
           ENABLE_CHECKSUMS: false
         run: |
-          make test
+          ctest --test-dir build/relwithdebinfo/test --output-on-failure -j ${TEST_JOBS}
 
       - name: Ensure Python dependencies
         run: pip install --user -r tools/python_api/requirements_dev.txt
@@ -631,9 +635,13 @@ jobs:
           name: binary-demo
           path: dataset/binary-demo
 
+      - name: Build
+        run: |
+          make test-build
+
       - name: Test
         run: |
-          make test
+          ctest --test-dir build/relwithdebinfo/test --output-on-failure -j ${TEST_JOBS}
 
       - name: Test fwd only rel tables
         env:
@@ -641,20 +649,21 @@ jobs:
           GTEST_FILTER: "*~*:RelScanTest*"
           DEFAULT_REL_STORAGE_DIRECTION: FWD
         run: |
-          make test
+          ctest --test-dir build/relwithdebinfo/test --output-on-failure -j ${TEST_JOBS}
 
       - name: Test compression disabled
         env:
           ENABLE_COMPRESSION: false
+          DEFAULT_REL_STORAGE_DIRECTION: BOTH
         run: |
-          make test DEFAULT_REL_STORAGE_DIRECTION=BOTH
+          ctest --test-dir build/relwithdebinfo/test --output-on-failure -j ${TEST_JOBS}
 
       - name: Test recovery
         env:
           AUTO_CHECKPOINT: false
           CHECKPOINT_ON_CLOSE: false
         run: |
-          make test
+          ctest --test-dir build/relwithdebinfo/test --output-on-failure -j ${TEST_JOBS}
 
       - name: Ensure Python dependencies
         run: pip install --user -r tools/python_api/requirements_dev.txt
