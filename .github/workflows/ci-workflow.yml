@@ -495,7 +495,7 @@ jobs:
 
   rust-build-test:
     name: rust build & test
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       # CARGO_BUILD_JOBS is set using this in the Makefile
       NUM_THREADS: 32
@@ -1027,7 +1027,7 @@ jobs:
   clang-tidy:
     name: clang tidy & clangd diagnostics check
     needs: [ sanity-checks ]
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     env:
       GEN: Ninja
       NUM_THREADS: 32
