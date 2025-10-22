@@ -170,6 +170,7 @@ jobs:
           path: dataset/binary-demo
 
       - name: Generate and upload tinysnb
+        if: steps.cache-binary-demo.outputs.cache-hit != 'true'
         run: |
           version_current="$(python3 benchmark/version.py)"
           echo "0" > version_minio.txt
@@ -186,6 +187,7 @@ jobs:
           rm -rf tinysnb version_minio.txt
 
       - name: Generate and upload ldbc-sf01
+        if: steps.cache-binary-demo.outputs.cache-hit != 'true'
         run: |
           version_current="$(python3 benchmark/version.py)"
           echo "0" > version_minio.txt
@@ -495,7 +497,7 @@ jobs:
 
   rust-build-test:
     name: rust build & test
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       # CARGO_BUILD_JOBS is set using this in the Makefile
       NUM_THREADS: 32
@@ -504,6 +506,11 @@ jobs:
       RYU_LOCAL_EXTENSIONS: ${{ github.workspace }}/extension
     steps:
       - uses: actions/checkout@v4
+
+      - name: Setup Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          toolchain: stable
 
       - name: Install DuckDB
         uses: ./.github/actions/install-duckdb
@@ -1197,7 +1204,7 @@ jobs:
 
   shell-test:
     name: shell test
-    runs-on: ubuntu-24.04
+    runs-on: self-hosted
     needs: [ sanity-checks ]
     steps:
       - uses: actions/checkout@v4
