@@ -1197,7 +1197,7 @@ jobs:
 
   shell-test:
     name: shell test
-    runs-on: ubuntu-24.04
+    runs-on: self-hosted
     needs: [ sanity-checks ]
     steps:
       - uses: actions/checkout@v4
