@@ -3,9 +3,11 @@ add_subdirectory(query_result)
 add_library(ryu_main
         OBJECT
         attached_database.cpp
+        bolt_database_connector.cpp
         client_context.cpp
         connection.cpp
         database.cpp
+        database_connector_factory.cpp
         database_manager.cpp
         plan_printer.cpp
         prepared_statement.cpp

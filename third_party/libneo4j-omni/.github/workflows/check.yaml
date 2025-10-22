@@ -1,0 +1,76 @@
+name: Tests
+
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+
+jobs:
+
+  check-mac:
+    runs-on: macos-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install prerequisites
+        run: |
+          sudo chmod -R a+rwx /usr/local/share/ || mkdir -p /usr/local/share/ -m a+rwx
+          brew install libtool automake check
+
+      - name: Configure
+        run: |
+          ./autogen.sh
+          ./configure --disable-tools
+
+      - name: Build
+        run: |
+          cd lib/src
+          make libneo4j-client.la
+
+      - name: Test
+        run: |
+          cd lib/test
+          make check || ( cat test-suite.log ; false )
+      # Running make check at the top level works as well, but simply skips
+      # the tests if configure didn't find libcheck for some reason.
+
+      - name: Install
+        run: |
+          make check
+          sudo make install
+
+
+  check-linux:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install prerequisites
+        run: |
+          sudo apt-get install -y check
+
+      - name: Configure
+        run: |
+          ./autogen.sh
+          ./configure --disable-tools --disable-werror
+
+      - name: Build
+        run: |
+          cd lib/src
+          make libneo4j-client.la
+
+      - name: Test
+        run: |
+          cd lib/test
+          make check || ( cat test-suite.log ; false )
+      # Running make check at the top level works as well, but simply skips
+      # the tests if configure didn't find libcheck for some reason.
+
+      - name: Install
+        run: |
+          make check
+          sudo make install

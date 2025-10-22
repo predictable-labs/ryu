@@ -31,6 +31,7 @@ class StorageExtension;
 } // namespace storage
 
 namespace main {
+class DatabaseConnector;
 class DatabaseManager;
 /**
  * @brief Stores runtime configuration for creating or opening a Database
@@ -93,6 +94,8 @@ struct RYU_API SystemConfig {
  * @brief Database class is the main class of Ryu. It manages all database components.
  */
 class Database {
+    friend class DatabaseConnector;
+    friend class BoltDatabaseConnector;
     friend class EmbeddedShell;
     friend class ClientContext;
     friend class Connection;
@@ -142,6 +145,8 @@ public:
 
     const DBConfig& getConfig() const { return dbConfig; }
 
+    RYU_API bool isRemoteDatabase() const;
+
     std::vector<storage::StorageExtension*> getStorageExtensions();
 
     uint64_t getNextQueryID();
@@ -181,6 +186,7 @@ private:
 private:
     std::string databasePath;
     DBConfig dbConfig;
+    std::unique_ptr<DatabaseConnector> connector;
     std::unique_ptr<common::VirtualFileSystem> vfs;
     std::unique_ptr<storage::BufferManager> bufferManager;
     std::unique_ptr<storage::MemoryManager> memoryManager;

@@ -1,0 +1,37 @@
+{
+   ignore_libcrypto_conditional_jump_errors_in_leak
+   Memcheck:Leak
+   ...
+   obj:*/libcrypto.so.*
+}
+{
+   ignore_libcrypto_conditional_jump_errors_in_cond
+   Memcheck:Cond
+   ...
+   obj:*/libcrypto.so.*
+}
+{
+   ignore_libssl_conditional_jump_errors_in_cond
+   Memcheck:Cond
+   ...
+   obj:*/libssl.so.*
+}
+{
+   ignore_libcrypto_conditional_jump_errors_in_value8
+   Memcheck:Value8
+   ...
+   obj:*/libcrypto.so.*
+}
+{
+   ignore_libcrypto_conditional_jump_errors_in_param
+   Memcheck:Param
+   sendmsg(msg.msg_iov[0])
+   ...
+   obj:*/libcrypto.so.*
+}
+{
+    ignore_libedit_el_set
+    Memcheck:Leak
+    ...
+    obj:*/libedit.so.*
+}

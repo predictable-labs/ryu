@@ -149,6 +149,11 @@ jobs:
           signature_v2 = False
           EOF
 
+      - name: Install neo4j dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libtool libltdl-dev libedit-dev libssl-dev
+
       - name: Install DuckDB
         if: steps.cache-binary-demo.outputs.cache-hit != 'true'
         uses: ./.github/actions/install-duckdb
@@ -170,6 +175,7 @@ jobs:
           path: dataset/binary-demo
 
       - name: Generate and upload tinysnb
+        if: steps.cache-binary-demo.outputs.cache-hit != 'true'
         run: |
           version_current="$(python3 benchmark/version.py)"
           echo "0" > version_minio.txt
@@ -186,6 +192,7 @@ jobs:
           rm -rf tinysnb version_minio.txt
 
       - name: Generate and upload ldbc-sf01
+        if: steps.cache-binary-demo.outputs.cache-hit != 'true'
         run: |
           version_current="$(python3 benchmark/version.py)"
           echo "0" > version_minio.txt
@@ -226,6 +233,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install neo4j dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libtool libltdl-dev libedit-dev libssl-dev
 
       - name: Download binary-demo
         uses: actions/download-artifact@v4
@@ -505,6 +517,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install neo4j dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libtool libltdl-dev libedit-dev libssl-dev
+
       - name: Install DuckDB
         uses: ./.github/actions/install-duckdb
 
@@ -616,6 +633,11 @@ jobs:
       HTTP_CACHE_FILE: TRUE
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install neo4j dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libtool libltdl-dev libedit-dev libssl-dev
 
       - name: Download binary-demo
         uses: actions/download-artifact@v4
@@ -1027,7 +1049,7 @@ jobs:
   clang-tidy:
     name: clang tidy & clangd diagnostics check
     needs: [ sanity-checks ]
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       GEN: Ninja
       NUM_THREADS: 32
@@ -1037,10 +1059,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install clangd
+      - name: Install clang and dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y clangd
+          sudo apt-get install -y build-essential clang clangd clang-tidy libtool libltdl-dev libedit-dev libssl-dev cmake ninja-build
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
       - name: Install DuckDB
         uses: ./.github/actions/install-duckdb

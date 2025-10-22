@@ -1,0 +1,415 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>libneo4j-omni: libneo4j-client for all Neo4j versions &mdash; libneo4j-client 5.0.4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=3205dc05"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="neo4j-client API" href="neo4j-client-doxy.html" />
+    <link rel="prev" title="libneo4j-omni: libneo4j-client for all Neo4j versions" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            libneo4j-client
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">libneo4j-omni: libneo4j-client for all Neo4j versions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#about">About</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#neo4j-client-usage">neo4j-client Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#libneo4j-client">libneo4j-client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#api">API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#building">Building</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#support">Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#contributing">Contributing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#license">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#copyright">Copyright</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="neo4j-client-doxy.html">neo4j-client API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-index.html">API Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">libneo4j-client</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">libneo4j-omni: libneo4j-client for all Neo4j versions</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/README.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="libneo4j-omni-libneo4j-client-for-all-neo4j-versions">
+<h1>libneo4j-omni: libneo4j-client for all Neo4j versions<a class="headerlink" href="#libneo4j-omni-libneo4j-client-for-all-neo4j-versions" title="Link to this heading"></a></h1>
+<section id="about">
+<h2>About<a class="headerlink" href="#about" title="Link to this heading"></a></h2>
+<p>neo4j-client is a command shell (CLI) for Neo4j written by Chris
+Leishman (<a class="reference external" href="https://github.com/cleishm">&#64;cleishm</a>).  It supports secure
+connections to Neo4j server, sending of statements (including
+multiline statements), persistent command history, and rendering of
+results to tables or CSV.</p>
+<p>neo4j-client utilizes the <a class="reference external" href="https://neo4j.com/docs/bolt/current/bolt/">Bolt Network Protocol</a>, and will work with any server that supports Bolt.</p>
+<p>This version of neo4j-client is maintained by
+<a class="reference external" href="https://github.com/majensen">&#64;majensen</a>, and attempts to stay current
+with the latest version of Bolt and the
+<a class="reference external" href="https://neo4j.com">Neo4j server</a>. At some time, these improvements
+may fold in to the orginal repo at
+<a class="reference external" href="https://github.com/cleishm/libneo4j-client">https://github.com/cleishm/libneo4j-client</a>.</p>
+<p>The libneo4j-client API is <a class="reference external" href="https://majensen.github.io/libneo4j-omni/neo4j-client-doxy.html#">browseable here</a>.</p>
+</section>
+<section id="features">
+<h2>Features<a class="headerlink" href="#features" title="Link to this heading"></a></h2>
+<p>libneo4j-omni includes all features of
+<a class="reference external" href="https://github.com/cleishm/libneo4j-client">libneo4j-client</a>, plus
+the following:</p>
+<ul class="simple">
+<li><p>Support for Neo4j versions 3, 4, and 5, including</p>
+<ul>
+<li><p>Transactions</p></li>
+<li><p>Database selection</p></li>
+<li><p>Element IDs on graph entities for Neo4j 5+</p></li>
+</ul>
+</li>
+<li><p>Most <a class="reference external" href="https://neo4j.com/docs/bolt/current/bolt/structure-semantics/">Structure-based data
+types</a>
+returned by the Neo4j server along with Node, Relationship, and
+Path, including</p>
+<ul>
+<li><p>Date, Time, LocalTime, DateTime, LocalDateTime, Duration, Point2D, Point3D</p></li>
+</ul>
+</li>
+<li><p>Meaningful rendering of supported data types in the REPL client</p></li>
+<li><p>Hack the version negotiation handshake with <code class="docutils literal notranslate"><span class="pre">--support</span></code>, e.g.
+<code class="docutils literal notranslate"><span class="pre">neo4j-client</span> <span class="pre">--support</span> <span class="pre">6.0,5.7-5.0</span> <span class="pre">&lt;host&gt;</span></code></p></li>
+</ul>
+</section>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h2>
+<p>neo4j-client is known to work on GNU/Linux, Mac OS X and FreeBSD. It
+supports Neo4j through version 5.</p>
+</section>
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h2>
+</section>
+<section id="neo4j-client-usage">
+<h2>neo4j-client Usage<a class="headerlink" href="#neo4j-client-usage" title="Link to this heading"></a></h2>
+<p>Example interactive usage:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>neo4j-client<span class="w"> </span>-u<span class="w"> </span>neo4j<span class="w"> </span>localhost
+<span class="go">The authenticity of host &#39;localhost:7687&#39; could not be established.</span>
+<span class="go">TLS certificate fingerprint is ded0fd2e893cd0b579f47f7798e10cb68dfa2fd3bc9b3c973157da81bab451d74f9452ba99a9c5f66dadb8a360959e5ebd8abb2d7c81230841e60531a96d268.</span>
+<span class="go">Would you like to trust this host (NO/yes/once)? yes</span>
+<span class="go">Password: *****</span>
+<span class="go">neo4j&gt; :help</span>
+<span class="go">Enter commands or cypher statements at the prompt.</span>
+
+<span class="go">Commands always begin with a colon (:) and conclude at the end of the line,</span>
+<span class="go">for example `:help`. Statements do not begin with a colon (:), may span</span>
+<span class="go">multiple lines, are terminated with a semi-colon (;) and will be sent to</span>
+<span class="go">the Neo4j server for evaluation.</span>
+
+<span class="go">Available commands:</span>
+<span class="go">:quit                  Exit the shell</span>
+<span class="go">:connect &#39;&lt;url&gt;&#39;       Connect to the specified URL</span>
+<span class="go">:connect host [port]   Connect to the specified host (and optional port)</span>
+<span class="go">:disconnect            Disconnect the client from the server</span>
+<span class="go">:export                Display currently exported parameters</span>
+<span class="go">:export name=val ...   Export parameters for queries</span>
+<span class="go">:unexport name ...     Unexport parameters for queries</span>
+<span class="go">:begin [timeout(ms)] [mode(r|w)]</span>
+<span class="go">                       Begin an explicit transaction (v3.0+)</span>
+<span class="go">:commit                Commit an open transaction (v3.0+)</span>
+<span class="go">:rollback              Rollback an open transaction (v3.0+)</span>
+<span class="go">:reset                 Reset the session with the server</span>
+<span class="go">:set                   Display current option values</span>
+<span class="go">:set option=value ...  Set shell options</span>
+<span class="go">:unset option ...      Unset shell options</span>
+<span class="go">:status                Show the client connection status</span>
+<span class="go">:help                  Show usage information</span>
+<span class="go">:dbname [name]         View or set database for queries (v4.0+)</span>
+<span class="go">:format (table|csv)    Set the output format</span>
+<span class="go">:width (&lt;n&gt;|auto)      Set the number of columns in the table output</span>
+
+<span class="go">For more information, see the neo4j-client(1) manpage.</span>
+<span class="go">neo4j&gt;</span>
+<span class="go">neo4j&gt; :status</span>
+<span class="go">Connected to &#39;neo4j://neo4j@localhost:7687&#39;</span>
+<span class="go">neo4j&gt;</span>
+<span class="go">neo4j&gt; MATCH (n:Person) RETURN n LIMIT 3;</span>
+<span class="go">+----------------------------------------------------------------------------+</span>
+<span class="go">| n                                                                          |</span>
+<span class="go">+----------------------------------------------------------------------------+</span>
+<span class="go">| (:Person{born:1964,name:&quot;Keanu Reeves&quot;})                                   |</span>
+<span class="go">| (:Person{born:1967,name:&quot;Carrie-Anne Moss&quot;})                               |</span>
+<span class="go">| (:Person{born:1961,name:&quot;Laurence Fishburne&quot;})                             |</span>
+<span class="go">+----------------------------------------------------------------------------+</span>
+<span class="go">neo4j&gt;</span>
+<span class="go">neo4j&gt; :set</span>
+<span class="go"> echo=off           // echo non-interactive commands before rendering results</span>
+<span class="go"> insecure=no        // do not attempt to establish secure connections</span>
+<span class="go"> format=table       // set the output format (`table` or `csv`).</span>
+<span class="go"> outfile=           // redirect output to a file</span>
+<span class="go"> username=&quot;neo4j&quot;   // the default username for connections</span>
+<span class="go"> width=auto         // the width to render tables (`auto` for term width)</span>
+<span class="go">neo4j&gt;</span>
+<span class="go">neo4j&gt; :quit</span>
+<span class="gp">$</span>
+</pre></div>
+</div>
+<p>Example non-interactive usage:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;MATCH (n:Person) RETURN n.name AS name, n.born AS born LIMIT 3&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>neo4j-client<span class="w"> </span>-u<span class="w"> </span>neo4j<span class="w"> </span>-P<span class="w"> </span>localhost<span class="w"> </span>&gt;<span class="w"> </span>result.csv
+<span class="go">Password: *****</span>
+<span class="gp">$</span>
+<span class="gp">$ </span>cat<span class="w"> </span>result.csv
+<span class="go">&quot;name&quot;,&quot;born&quot;</span>
+<span class="go">&quot;Keanu Reeves&quot;,1964</span>
+<span class="go">&quot;Carrie-Anne Moss&quot;,1967</span>
+<span class="go">&quot;Laurence Fishburne&quot;,1961</span>
+<span class="gp">$</span>
+</pre></div>
+</div>
+<p>Evaluating source files, e.g.:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cat<span class="w"> </span>query.cyp
+<span class="go">:set echo</span>
+<span class="go">:export name=&#39;Emil&#39;</span>
+
+<span class="go">// Create a person node if it doesn&#39;t exist</span>
+<span class="go">begin;</span>
+<span class="go">MERGE (:Person {name: {name}});</span>
+<span class="go">commit;</span>
+
+<span class="go">// return the total number of people</span>
+<span class="go">MATCH (n:Person)</span>
+<span class="go">RETURN count(n);</span>
+<span class="gp">$</span>
+<span class="gp">$ </span>neo4j-client<span class="w"> </span>-u<span class="w"> </span>neo4j<span class="w"> </span>-p<span class="w"> </span>pass<span class="w"> </span>-o<span class="w"> </span>result.out<span class="w"> </span>-i<span class="w"> </span>query.cyp
+<span class="gp">$ </span>cat<span class="w"> </span>result.out
+<span class="go">+:export name=&#39;Emil&#39;</span>
+<span class="go">+begin;</span>
+<span class="go">+MERGE (:Person {name: {name}});</span>
+<span class="go">Nodes created: 1</span>
+<span class="go">Properties set: 1</span>
+<span class="go">Labels added: 1</span>
+<span class="go">+commit;</span>
+<span class="go">+MATCH (n:Person)</span>
+<span class="go"> RETURN count(n);</span>
+<span class="go">&quot;count(n)&quot;</span>
+<span class="go">137</span>
+<span class="gp">$</span>
+</pre></div>
+</div>
+</section>
+<section id="libneo4j-client">
+<h2>libneo4j-client<a class="headerlink" href="#libneo4j-client" title="Link to this heading"></a></h2>
+<p>libneo4j-client is a client library for Neo4j, written in C, and intended as a
+foundation on which basic tools and drivers for various languages may be built.
+libneo4j-client takes care of all the detail of establishing a session with a
+Neo4j server, sending statements for evaluation, and retrieving results.</p>
+<p>libneo4j-client provides a single C header file, <code class="docutils literal notranslate"><span class="pre">neo4j-client.h</span></code>, for
+inclusion in source code using the libneo4j-client API.</p>
+<p>libneo4j-client can be included in your project by linking the library at
+compile time, typically using the linking flags
+<code class="docutils literal notranslate"><span class="pre">-lneo4j-client</span> <span class="pre">-lssl</span> <span class="pre">-lcrypto</span> <span class="pre">-lm</span></code>.  Alternatively, libneo4j-client ships with
+a <a class="reference external" href="https://wiki.freedesktop.org/www/Software/pkg-config/">pkg-config</a>
+description file, enabling you to obtain the required flags using
+<code class="docutils literal notranslate"><span class="pre">pkg-config</span> <span class="pre">--libs</span> <span class="pre">libneo4j-client</span></code>.</p>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h2>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;neo4j-client.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;errno.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">neo4j_client_init</span><span class="p">();</span>
+
+<span class="w">    </span><span class="cm">/* use NEO4J_INSECURE when connecting to disable TLS */</span>
+<span class="w">    </span><span class="n">neo4j_connection_t</span><span class="w"> </span><span class="o">*</span><span class="n">connection</span><span class="w"> </span><span class="o">=</span>
+<span class="w">            </span><span class="n">neo4j_connect</span><span class="p">(</span><span class="s">&quot;neo4j://user:pass@localhost:7687&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">NEO4J_INSECURE</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">connection</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">neo4j_perror</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="w"> </span><span class="n">errno</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Connection failed&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">EXIT_FAILURE</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">neo4j_result_stream_t</span><span class="w"> </span><span class="o">*</span><span class="n">results</span><span class="w"> </span><span class="o">=</span>
+<span class="w">            </span><span class="n">neo4j_run</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;RETURN &#39;hello world&#39;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">neo4j_null</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">results</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">neo4j_perror</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="w"> </span><span class="n">errno</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Failed to run statement&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">EXIT_FAILURE</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">neo4j_result_t</span><span class="w"> </span><span class="o">*</span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">neo4j_fetch_next</span><span class="p">(</span><span class="n">results</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">neo4j_perror</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="w"> </span><span class="n">errno</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Failed to fetch result&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">EXIT_FAILURE</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">neo4j_value_t</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">neo4j_result_field</span><span class="p">(</span><span class="n">result</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">buf</span><span class="p">[</span><span class="mi">128</span><span class="p">];</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">neo4j_tostring</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">)));</span>
+
+<span class="w">    </span><span class="n">neo4j_close_results</span><span class="p">(</span><span class="n">results</span><span class="p">);</span>
+<span class="w">    </span><span class="n">neo4j_close</span><span class="p">(</span><span class="n">connection</span><span class="p">);</span>
+<span class="w">    </span><span class="n">neo4j_client_cleanup</span><span class="p">();</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">EXIT_SUCCESS</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="api">
+<h2>API<a class="headerlink" href="#api" title="Link to this heading"></a></h2>
+<p>See <a class="reference external" href="https://majensen.github.io/libneo4j-omni/neo4j-client-doxy.html#">the API documentation</a> on <a class="reference external" href="https://majensen.github.io/libneo4j-omni">GitHub Pages</a>.</p>
+</section>
+<section id="building">
+<h2>Building<a class="headerlink" href="#building" title="Link to this heading"></a></h2>
+<p>Please <a class="reference external" href="https://github.com/majensen/libneo4j-omni/releases">download the latest release</a>, unpack and then:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>./configure
+<span class="gp">$ </span>make<span class="w"> </span>clean<span class="w"> </span>check
+<span class="gp">$ </span>sudo<span class="w"> </span>make<span class="w"> </span>install
+</pre></div>
+</div>
+<p>libneo4j-client requires OpenSSL, although this can be disabled by invoking
+configure with <code class="docutils literal notranslate"><span class="pre">--without-tls</span></code>.</p>
+<p>neo4j-client also requires some dependencies to build, including
+<a class="reference external" href="http://thrysoee.dk/editline/">libedit</a> and
+<a class="reference external" href="https://github.com/cleishm/libcypher-parser">libcypher-parser</a>. If these are not available,
+just the library can be built (without neo4j-client), by invoking configure
+with <code class="docutils literal notranslate"><span class="pre">--disable-tools</span></code>.</p>
+<p>Building from the GitHub repository requires a few extra steps. Firstly, some
+additional tooling is required, including autoconf, automake and libtool.
+Assuming these are available, to checkout from GitHub and build:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/majensen/libneo4j-omni.git
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>libneo4j-omni
+<span class="gp">$ </span>./autogen.sh
+<span class="gp">$ </span>./configure
+<span class="gp">$ </span>make<span class="w"> </span>clean<span class="w"> </span>check
+<span class="gp">$ </span>sudo<span class="w"> </span>make<span class="w"> </span>install
+</pre></div>
+</div>
+<p>If you encounter warnings or errors during the build, please report them at
+<a class="reference external" href="https://github.com/majensen/libneo4j-omni/issues">https://github.com/majensen/libneo4j-omni/issues</a>. If you wish to proceed
+despite warnings, please invoke configure with the <code class="docutils literal notranslate"><span class="pre">--disable-werror</span></code>.</p>
+<p>NOTE: Recent versions of Mac OS X ship without the OpenSSL header files, and
+autoconf doesn’t pick this up (yet). If you used the homebrew install method,
+this will resolve the issue. If you’re using Mac OS X, want to build manually
+instead of using homebrew, and you get a build failure related to missing
+openssl headers, try the following:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>brew<span class="w"> </span>install<span class="w"> </span>openssl
+<span class="gp">$ </span>./configure<span class="w"> </span>--with-libs<span class="o">=</span>/usr/local/opt/openssl
+<span class="gp">$ </span>make<span class="w"> </span>clean<span class="w"> </span>check
+<span class="gp">$ </span>sudo<span class="w"> </span>make<span class="w"> </span>install
+</pre></div>
+</div>
+<p>More detail about this workaround can be found via <code class="docutils literal notranslate"><span class="pre">brew</span> <span class="pre">info</span> <span class="pre">openssl</span></code>.</p>
+</section>
+<section id="support">
+<h2>Support<a class="headerlink" href="#support" title="Link to this heading"></a></h2>
+<p>Please raise your issue on
+<a class="reference external" href="https://github.com/majensen/libneo4j-omni">GitHub</a>. Include details
+of how to reproduce the bug.</p>
+</section>
+<section id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Link to this heading"></a></h2>
+<p>See <a class="reference external" href="https://github.com/majensen/libneo4j-omni/blob/main/CONTRIBUTING.md">/CONTRIBUTING.md</a></p>
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Link to this heading"></a></h2>
+<p>neo4j-client as libneo4j-client is licensed under the <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>.</p>
+<p>Unless required by applicable law or agreed to in writing, software distributed
+under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations under the License.</p>
+</section>
+<section id="copyright">
+<h2>Copyright<a class="headerlink" href="#copyright" title="Link to this heading"></a></h2>
+<p>libneo4j-omni is (c) 2016-2021 Chris Leishman, with additions (c)
+2021-2023 Mark A. Jensen. Use git-blame to determine attribution.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="libneo4j-omni: libneo4j-client for all Neo4j versions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="neo4j-client-doxy.html" class="btn btn-neutral float-right" title="neo4j-client API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2023, Chris Leishman; portions 2023, Mark A. Jensen.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

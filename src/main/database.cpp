@@ -6,8 +6,14 @@
 #include "extension/planner_extension.h"
 #include "extension/transformer_extension.h"
 #include "main/client_context.h"
+#include "main/database_connector_factory.h"
 #include "main/database_manager.h"
+#include "processor/processor.h"
 #include "storage/buffer_manager/buffer_manager.h"
+#include "storage/storage_extension.h"
+#include "storage/storage_manager.h"
+#include "storage/storage_utils.h"
+#include "transaction/transaction_manager.h"
 
 #if defined(_WIN32)
 #include <windows.h>
@@ -18,11 +24,6 @@
 #include "common/exception/exception.h"
 #include "common/file_system/virtual_file_system.h"
 #include "main/db_config.h"
-#include "processor/processor.h"
-#include "storage/storage_extension.h"
-#include "storage/storage_manager.h"
-#include "storage/storage_utils.h"
-#include "transaction/transaction_manager.h"
 
 using namespace ryu::catalog;
 using namespace ryu::common;
@@ -83,13 +84,24 @@ SystemConfig::SystemConfig(uint64_t bufferPoolSize_, uint64_t maxNumThreads, boo
     this->maxDBSize = maxDBSize;
 }
 
+static bool isRemoteURL(std::string_view path) {
+    return path.rfind("ryu://", 0) == 0 || path.rfind("ryus://", 0) == 0;
+}
+
 Database::Database(std::string_view databasePath, SystemConfig systemConfig)
     : Database(databasePath, systemConfig, initBufferManager) {}
 
 Database::Database(std::string_view databasePath, SystemConfig systemConfig,
     construct_bm_func_t constructBMFunc)
     : dbConfig(systemConfig) {
-    initMembers(databasePath, constructBMFunc);
+    if (isRemoteURL(databasePath)) {
+        // Remote database: use connector pattern
+        connector = DatabaseConnectorFactory::createConnector(databasePath, systemConfig);
+        connector->initialize(this);
+    } else {
+        // Embedded database: use traditional initMembers path (preserves test functionality)
+        initMembers(databasePath, constructBMFunc);
+    }
 }
 
 std::unique_ptr<BufferManager> Database::initBufferManager(const Database& db) {
@@ -138,13 +150,23 @@ void Database::initMembers(std::string_view dbPath, construct_bm_func_t initBmFu
 }
 
 Database::~Database() {
-    if (!dbConfig.readOnly && dbConfig.forceCheckpointOnClose) {
-        try {
-            ClientContext clientContext(this);
-            transactionManager->checkpoint(clientContext);
-        } catch (...) {} // NOLINT
+    if (connector) {
+        // Remote database: delegate cleanup to connector
+        connector->cleanup(this);
+    } else {
+        // Embedded database: traditional cleanup
+        if (!dbConfig.readOnly && dbConfig.forceCheckpointOnClose) {
+            try {
+                ClientContext clientContext(this);
+                transactionManager->checkpoint(clientContext);
+            } catch (...) {} // NOLINT
+        }
+        dbLifeCycleManager->isDatabaseClosed = true;
     }
-    dbLifeCycleManager->isDatabaseClosed = true;
+}
+
+bool Database::isRemoteDatabase() const {
+    return connector && connector->isRemote();
 }
 
 // NOLINTNEXTLINE(readability-make-member-function-const): Semantically non-const function.
