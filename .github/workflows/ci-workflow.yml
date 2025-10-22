@@ -422,7 +422,7 @@ jobs:
 
   gcc-build-test-vector-size:
     name: gcc build & test in-mem only with various vector size
-    needs: [ gcc-build-test ]
+    needs: [ gcc-test-core ]
     runs-on: self-hosted
     env:
       NUM_THREADS: 32
