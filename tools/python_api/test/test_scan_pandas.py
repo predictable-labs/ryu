@@ -204,7 +204,7 @@ def test_scan_pandas(conn_db_empty: ConnDB) -> None:
         ],
     }
     df = pd.DataFrame(data)
-    df["datetime_microseconds_tz"] = df["datetime_microseconds_tz"].dt.tz_localize("US/Eastern")
+    df["datetime_microseconds_tz"] = df["datetime_microseconds_tz"].dt.tz_localize(ZoneInfo("US/Eastern"))
     results = conn.execute("LOAD FROM df RETURN *")
     validate_scan_pandas_results(results)
 
