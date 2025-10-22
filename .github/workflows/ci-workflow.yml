@@ -209,7 +209,7 @@ jobs:
     runs-on: self-hosted
     env:
       NUM_THREADS: 32
-      TEST_JOBS: 48
+      TEST_JOBS: 16
       CLANGD_DIAGNOSTIC_JOBS: 32
       CLANGD_DIAGNOSTIC_INSTANCES: 6
       GEN: Ninja
@@ -228,17 +228,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Cache build directory
-        uses: actions/cache@v4
-        with:
-          path: |
-            build
-            ~/.cache/ccache
-          key: gcc-build-${{ runner.os }}-${{ hashFiles('**/CMakeLists.txt', 'src/**/*.cpp', 'src/**/*.h') }}-${{ github.sha }}
-          restore-keys: |
-            gcc-build-${{ runner.os }}-${{ hashFiles('**/CMakeLists.txt', 'src/**/*.cpp', 'src/**/*.h') }}-
-            gcc-build-${{ runner.os }}-
 
       - name: Download binary-demo
         uses: actions/download-artifact@v4
@@ -488,11 +477,6 @@ jobs:
         working-directory: tools/wasm
         run: npm run test
 
-      - name: Install CMake
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y cmake
-
       - name: Clean up
         run: make clean
 
@@ -625,7 +609,7 @@ jobs:
     runs-on: self-hosted
     env:
       NUM_THREADS: 32
-      TEST_JOBS: 48
+      TEST_JOBS: 16
       CC: clang
       CXX: clang++
       UW_S3_ACCESS_KEY_ID: ${{ secrets.UW_S3_ACCESS_KEY_ID }}
@@ -640,17 +624,6 @@ jobs:
       HTTP_CACHE_FILE: TRUE
     steps:
       - uses: actions/checkout@v4
-
-      - name: Cache build directory
-        uses: actions/cache@v4
-        with:
-          path: |
-            build
-            ~/.cache/ccache
-          key: clang-build-${{ runner.os }}-${{ hashFiles('**/CMakeLists.txt', 'src/**/*.cpp', 'src/**/*.h') }}-${{ github.sha }}
-          restore-keys: |
-            clang-build-${{ runner.os }}-${{ hashFiles('**/CMakeLists.txt', 'src/**/*.cpp', 'src/**/*.h') }}-
-            clang-build-${{ runner.os }}-
 
       - name: Download binary-demo
         uses: actions/download-artifact@v4
