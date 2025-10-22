@@ -241,6 +241,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          clean: false
 
       - name: Download binary-demo
         uses: actions/download-artifact@v4
@@ -273,6 +275,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          clean: false
 
       - name: Download binary-demo
         uses: actions/download-artifact@v4
@@ -304,6 +308,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          clean: false
 
       - name: Download binary-demo
         uses: actions/download-artifact@v4
@@ -345,6 +351,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          clean: false
 
       - name: Download binary-demo
         uses: actions/download-artifact@v4
@@ -378,6 +386,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          clean: false
 
       - name: Download binary-demo
         uses: actions/download-artifact@v4
@@ -435,6 +445,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          clean: false
 
       - name: Download binary-demo
         uses: actions/download-artifact@v4
@@ -785,6 +797,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          clean: false
 
       - name: Download binary-demo
         uses: actions/download-artifact@v4
@@ -829,6 +843,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          clean: false
 
       - name: Download binary-demo
         uses: actions/download-artifact@v4
@@ -853,6 +869,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          clean: false
 
       - name: Download binary-demo
         uses: actions/download-artifact@v4
@@ -909,6 +927,8 @@ jobs:
       HTTP_CACHE_FILE: TRUE
     steps:
       - uses: actions/checkout@v4
+        with:
+          clean: false
 
       - name: Build
         run: |
@@ -945,6 +965,8 @@ jobs:
       BUFFER_POOL_SIZE: 1073741824
     steps:
       - uses: actions/checkout@v4
+        with:
+          clean: false
 
       - name: Build
         run: |
@@ -990,6 +1012,8 @@ jobs:
       BUFFER_POOL_SIZE: 1073741824
     steps:
       - uses: actions/checkout@v4
+        with:
+          clean: false
 
       - name: Build
         run: |
