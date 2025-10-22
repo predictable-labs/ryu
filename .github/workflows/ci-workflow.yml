@@ -226,7 +226,7 @@ jobs:
     needs: [ gcc-build, generate-binary-datasets ]
     runs-on: [self-hosted, runner1]
     env:
-      TEST_JOBS: 48
+      TEST_JOBS: 16
       BUILD_PATH: gcc-relwithdebinfo
       UW_S3_ACCESS_KEY_ID: ${{ secrets.UW_S3_ACCESS_KEY_ID }}
       UW_S3_SECRET_ACCESS_KEY: ${{ secrets.UW_S3_SECRET_ACCESS_KEY }}
@@ -259,7 +259,7 @@ jobs:
     needs: [ gcc-build, generate-binary-datasets ]
     runs-on: [self-hosted, runner1]
     env:
-      TEST_JOBS: 48
+      TEST_JOBS: 16
       BUILD_PATH: gcc-relwithdebinfo
       IN_MEM_MODE: true
       UW_S3_ACCESS_KEY_ID: ${{ secrets.UW_S3_ACCESS_KEY_ID }}
@@ -293,7 +293,7 @@ jobs:
     needs: [ gcc-build, generate-binary-datasets ]
     runs-on: [self-hosted, runner1]
     env:
-      TEST_JOBS: 48
+      TEST_JOBS: 16
       BUILD_PATH: gcc-relwithdebinfo
       UW_S3_ACCESS_KEY_ID: ${{ secrets.UW_S3_ACCESS_KEY_ID }}
       UW_S3_SECRET_ACCESS_KEY: ${{ secrets.UW_S3_SECRET_ACCESS_KEY }}
@@ -336,7 +336,7 @@ jobs:
     needs: [ gcc-build, generate-binary-datasets ]
     runs-on: [self-hosted, runner1]
     env:
-      TEST_JOBS: 48
+      TEST_JOBS: 16
       BUILD_PATH: gcc-relwithdebinfo
       UW_S3_ACCESS_KEY_ID: ${{ secrets.UW_S3_ACCESS_KEY_ID }}
       UW_S3_SECRET_ACCESS_KEY: ${{ secrets.UW_S3_SECRET_ACCESS_KEY }}
@@ -751,7 +751,7 @@ jobs:
     needs: [ clang-build, generate-binary-datasets ]
     runs-on: [self-hosted, runner2]
     env:
-      TEST_JOBS: 48
+      TEST_JOBS: 16
       BUILD_PATH: clang-relwithdebinfo
       UW_S3_ACCESS_KEY_ID: ${{ secrets.UW_S3_ACCESS_KEY_ID }}
       UW_S3_SECRET_ACCESS_KEY: ${{ secrets.UW_S3_SECRET_ACCESS_KEY }}
@@ -782,7 +782,7 @@ jobs:
     needs: [ clang-build, generate-binary-datasets ]
     runs-on: [self-hosted, runner2]
     env:
-      TEST_JOBS: 48
+      TEST_JOBS: 16
       BUILD_PATH: clang-relwithdebinfo
       UW_S3_ACCESS_KEY_ID: ${{ secrets.UW_S3_ACCESS_KEY_ID }}
       UW_S3_SECRET_ACCESS_KEY: ${{ secrets.UW_S3_SECRET_ACCESS_KEY }}
@@ -826,7 +826,7 @@ jobs:
     needs: [ clang-build, generate-binary-datasets ]
     runs-on: [self-hosted, runner2]
     env:
-      TEST_JOBS: 48
+      TEST_JOBS: 16
       BUILD_PATH: clang-relwithdebinfo
       AUTO_CHECKPOINT: false
       CHECKPOINT_ON_CLOSE: false
