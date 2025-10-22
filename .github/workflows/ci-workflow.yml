@@ -217,17 +217,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Cache build directory
-        uses: actions/cache@v4
-        with:
-          path: |
-            build/gcc-relwithdebinfo
-            ~/.cache/ccache
-          key: gcc-build-${{ runner.os }}-${{ hashFiles('**/CMakeLists.txt', 'src/**/*.cpp', 'src/**/*.h') }}-${{ github.sha }}
-          restore-keys: |
-            gcc-build-${{ runner.os }}-${{ hashFiles('**/CMakeLists.txt', 'src/**/*.cpp', 'src/**/*.h') }}-
-            gcc-build-${{ runner.os }}-
-
       - name: Build
         run: |
           make test-build
@@ -740,17 +729,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Cache build directory
-        uses: actions/cache@v4
-        with:
-          path: |
-            build/clang-relwithdebinfo
-            ~/.cache/ccache
-          key: clang-build-${{ runner.os }}-${{ hashFiles('**/CMakeLists.txt', 'src/**/*.cpp', 'src/**/*.h') }}-${{ github.sha }}
-          restore-keys: |
-            clang-build-${{ runner.os }}-${{ hashFiles('**/CMakeLists.txt', 'src/**/*.cpp', 'src/**/*.h') }}-
-            clang-build-${{ runner.os }}-
 
       - name: Build
         run: |
