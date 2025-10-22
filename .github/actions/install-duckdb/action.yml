@@ -11,8 +11,21 @@ runs:
         path: /tmp/duckdb-install
         key: duckdb-v1.1.3-linux-${{ runner.arch }}
 
+    - name: Check if DuckDB is already installed (Linux)
+      if: runner.os == 'Linux'
+      id: check-duckdb-linux
+      shell: bash
+      run: |
+        if [ -f /usr/local/lib/libduckdb.so ] && [ -f /usr/local/include/duckdb.h ]; then
+          echo "DuckDB is already installed on self-hosted runner"
+          echo "already_installed=true" >> $GITHUB_OUTPUT
+        else
+          echo "DuckDB not found, will install"
+          echo "already_installed=false" >> $GITHUB_OUTPUT
+        fi
+
     - name: Build DuckDB (Linux)
-      if: runner.os == 'Linux' && steps.cache-duckdb-linux.outputs.cache-hit != 'true'
+      if: runner.os == 'Linux' && steps.check-duckdb-linux.outputs.already_installed != 'true' && steps.cache-duckdb-linux.outputs.cache-hit != 'true'
       shell: bash
       run: |
         # Build DuckDB from source to ensure ABI compatibility
@@ -33,7 +46,7 @@ runs:
         cd ~ && rm -rf /tmp/duckdb-src
 
     - name: Install DuckDB from cache (Linux)
-      if: runner.os == 'Linux'
+      if: runner.os == 'Linux' && steps.check-duckdb-linux.outputs.already_installed != 'true'
       shell: bash
       run: |
         # Ensure the cache directory exists and has correct permissions
