@@ -208,7 +208,7 @@ jobs:
     needs: [ sanity-checks, python-lint-check, generate-binary-datasets ]
     runs-on: self-hosted
     env:
-      NUM_THREADS: 32
+      NUM_THREADS: 24
       GEN: Ninja
       CC: gcc
       CXX: g++
@@ -380,7 +380,7 @@ jobs:
     needs: [ gcc-build, generate-binary-datasets ]
     runs-on: self-hosted
     env:
-      NUM_THREADS: 32
+      NUM_THREADS: 24
       BUILD_PATH: gcc-relwithdebinfo
       GEN: Ninja
       CC: gcc
@@ -733,7 +733,7 @@ jobs:
     needs: [ sanity-checks, python-lint-check, generate-binary-datasets ]
     runs-on: self-hosted
     env:
-      NUM_THREADS: 32
+      NUM_THREADS: 24
       CC: clang
       CXX: clang++
       BUILD_PATH: clang-relwithdebinfo
@@ -867,7 +867,7 @@ jobs:
     needs: [ clang-build, generate-binary-datasets ]
     runs-on: self-hosted
     env:
-      NUM_THREADS: 32
+      NUM_THREADS: 24
       BUILD_PATH: clang-relwithdebinfo
       CC: clang
       CXX: clang++
