@@ -146,13 +146,6 @@ configure_file(
     @ONLY
 )
 
-# Generate neo4j-client.h from neo4j-client.h.in
-configure_file(
-    ${CMAKE_CURRENT_SOURCE_DIR}/lib/src/neo4j-client.h.in
-    ${CMAKE_CURRENT_SOURCE_DIR}/lib/src/neo4j-client.h
-    @ONLY
-)
-
 # Create static library
 add_library(neo4j-client STATIC ${NEO4J_CLIENT_SOURCES})
 
