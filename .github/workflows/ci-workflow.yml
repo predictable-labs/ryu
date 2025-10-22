@@ -203,18 +203,48 @@ jobs:
           s3cmd sync ./ldbc01 s3://ryu-test/
           rm -rf ldbc01 version_minio.txt
 
-  gcc-build-test:
-    name: gcc build & test
+  gcc-build:
+    name: gcc build
     needs: [ sanity-checks, python-lint-check, generate-binary-datasets ]
     runs-on: self-hosted
     env:
       NUM_THREADS: 32
-      TEST_JOBS: 16
-      CLANGD_DIAGNOSTIC_JOBS: 32
-      CLANGD_DIAGNOSTIC_INSTANCES: 6
       GEN: Ninja
       CC: gcc
       CXX: g++
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache build directory
+        uses: actions/cache@v4
+        with:
+          path: |
+            build
+            ~/.cache/ccache
+          key: gcc-build-${{ runner.os }}-${{ hashFiles('**/CMakeLists.txt', 'src/**/*.cpp', 'src/**/*.h') }}-${{ github.sha }}
+          restore-keys: |
+            gcc-build-${{ runner.os }}-${{ hashFiles('**/CMakeLists.txt', 'src/**/*.cpp', 'src/**/*.h') }}-
+            gcc-build-${{ runner.os }}-
+
+      - name: Build
+        run: |
+          make test-build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: gcc-build-artifacts
+          path: |
+            build/relwithdebinfo
+          retention-days: 1
+
+  gcc-test-core:
+    name: gcc test (core)
+    needs: [ gcc-build, generate-binary-datasets ]
+    runs-on: self-hosted
+    env:
+      TEST_JOBS: 48
       UW_S3_ACCESS_KEY_ID: ${{ secrets.UW_S3_ACCESS_KEY_ID }}
       UW_S3_SECRET_ACCESS_KEY: ${{ secrets.UW_S3_SECRET_ACCESS_KEY }}
       AWS_S3_ACCESS_KEY_ID: ${{ secrets.AWS_S3_ACCESS_KEY_ID }}
@@ -229,25 +259,90 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: gcc-build-artifacts
+          path: build/relwithdebinfo
+
       - name: Download binary-demo
         uses: actions/download-artifact@v4
         with:
           name: binary-demo
           path: ${{ github.workspace }}/dataset/binary-demo
 
-      - name: Build
-        run: |
-          make test-build
-
       - name: Test
         run: |
           ctest --test-dir build/relwithdebinfo/test --output-on-failure -j ${TEST_JOBS}
 
+  gcc-test-in-mem:
+    name: gcc test (in-memory)
+    needs: [ gcc-build, generate-binary-datasets ]
+    runs-on: self-hosted
+    env:
+      TEST_JOBS: 48
+      IN_MEM_MODE: true
+      UW_S3_ACCESS_KEY_ID: ${{ secrets.UW_S3_ACCESS_KEY_ID }}
+      UW_S3_SECRET_ACCESS_KEY: ${{ secrets.UW_S3_SECRET_ACCESS_KEY }}
+      AWS_S3_ACCESS_KEY_ID: ${{ secrets.AWS_S3_ACCESS_KEY_ID }}
+      AWS_S3_SECRET_ACCESS_KEY: ${{ secrets.AWS_S3_SECRET_ACCESS_KEY }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_S3_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_S3_SECRET_ACCESS_KEY }}
+      GCS_ACCESS_KEY_ID: ${{ secrets.GCS_ACCESS_KEY_ID }}
+      GCS_SECRET_ACCESS_KEY: ${{ secrets.GCS_SECRET_ACCESS_KEY }}
+      RUN_ID: "$(hostname)-$(date +%s)"
+      HTTP_CACHE_FILE: TRUE
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: gcc-build-artifacts
+          path: build/relwithdebinfo
+
+      - name: Download binary-demo
+        uses: actions/download-artifact@v4
+        with:
+          name: binary-demo
+          path: ${{ github.workspace }}/dataset/binary-demo
+
       - name: Test in mem
-        env:
-          IN_MEM_MODE: true
         run: |
           ctest --test-dir build/relwithdebinfo/test --output-on-failure -j ${TEST_JOBS}
+
+  gcc-test-checkpoint-recovery:
+    name: gcc test (checkpoint & recovery)
+    needs: [ gcc-build, generate-binary-datasets ]
+    runs-on: self-hosted
+    env:
+      TEST_JOBS: 48
+      UW_S3_ACCESS_KEY_ID: ${{ secrets.UW_S3_ACCESS_KEY_ID }}
+      UW_S3_SECRET_ACCESS_KEY: ${{ secrets.UW_S3_SECRET_ACCESS_KEY }}
+      AWS_S3_ACCESS_KEY_ID: ${{ secrets.AWS_S3_ACCESS_KEY_ID }}
+      AWS_S3_SECRET_ACCESS_KEY: ${{ secrets.AWS_S3_SECRET_ACCESS_KEY }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_S3_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_S3_SECRET_ACCESS_KEY }}
+      GCS_ACCESS_KEY_ID: ${{ secrets.GCS_ACCESS_KEY_ID }}
+      GCS_SECRET_ACCESS_KEY: ${{ secrets.GCS_SECRET_ACCESS_KEY }}
+      RUN_ID: "$(hostname)-$(date +%s)"
+      HTTP_CACHE_FILE: TRUE
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: gcc-build-artifacts
+          path: build/relwithdebinfo
+
+      - name: Download binary-demo
+        uses: actions/download-artifact@v4
+        with:
+          name: binary-demo
+          path: ${{ github.workspace }}/dataset/binary-demo
 
       - name: Test checkpoint at threshold 0
         env:
@@ -263,6 +358,38 @@ jobs:
         run: |
           ctest --test-dir build/relwithdebinfo/test --output-on-failure -j ${TEST_JOBS}
 
+  gcc-test-variants:
+    name: gcc test (config variants)
+    needs: [ gcc-build, generate-binary-datasets ]
+    runs-on: self-hosted
+    env:
+      TEST_JOBS: 48
+      UW_S3_ACCESS_KEY_ID: ${{ secrets.UW_S3_ACCESS_KEY_ID }}
+      UW_S3_SECRET_ACCESS_KEY: ${{ secrets.UW_S3_SECRET_ACCESS_KEY }}
+      AWS_S3_ACCESS_KEY_ID: ${{ secrets.AWS_S3_ACCESS_KEY_ID }}
+      AWS_S3_SECRET_ACCESS_KEY: ${{ secrets.AWS_S3_SECRET_ACCESS_KEY }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_S3_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_S3_SECRET_ACCESS_KEY }}
+      GCS_ACCESS_KEY_ID: ${{ secrets.GCS_ACCESS_KEY_ID }}
+      GCS_SECRET_ACCESS_KEY: ${{ secrets.GCS_SECRET_ACCESS_KEY }}
+      RUN_ID: "$(hostname)-$(date +%s)"
+      HTTP_CACHE_FILE: TRUE
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: gcc-build-artifacts
+          path: build/relwithdebinfo
+
+      - name: Download binary-demo
+        uses: actions/download-artifact@v4
+        with:
+          name: binary-demo
+          path: ${{ github.workspace }}/dataset/binary-demo
+
       - name: Test sparse frontier threshold at 2
         env:
           SPARSE_FRONTIER_THRESHOLD: 2
@@ -274,6 +401,32 @@ jobs:
           ENABLE_CHECKSUMS: false
         run: |
           ctest --test-dir build/relwithdebinfo/test --output-on-failure -j ${TEST_JOBS}
+
+  gcc-test-language-bindings:
+    name: gcc test (Python, Node.js, Java, Rust)
+    needs: [ gcc-build, generate-binary-datasets ]
+    runs-on: self-hosted
+    env:
+      NUM_THREADS: 32
+      GEN: Ninja
+      CC: gcc
+      CXX: g++
+      RUN_ID: "$(hostname)-$(date +%s)"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: gcc-build-artifacts
+          path: build/relwithdebinfo
+
+      - name: Download binary-demo
+        uses: actions/download-artifact@v4
+        with:
+          name: binary-demo
+          path: ${{ github.workspace }}/dataset/binary-demo
 
       - name: Ensure Python dependencies
         run: pip install --user -r tools/python_api/requirements_dev.txt
@@ -302,7 +455,7 @@ jobs:
 
   gcc-build-test-vector-size:
     name: gcc build & test in-mem only with various vector size
-    needs: [ gcc-build-test ]
+    needs: [ gcc-test-core ]
     runs-on: ubuntu-latest
     env:
       NUM_THREADS: 32
@@ -540,7 +693,7 @@ jobs:
 
   clang-build-test-with-tsan:
     name: clang build & test with tsan
-    needs: [ clang-build-test, generate-binary-datasets ]
+    needs: [ clang-test-core, generate-binary-datasets ]
     runs-on: ubuntu-latest
     env:
       NUM_THREADS: 32
@@ -570,7 +723,7 @@ jobs:
 
   gcc-build-test-with-asan:
     name: gcc build & test with asan
-    needs: [ gcc-build-test, generate-binary-datasets ]
+    needs: [ gcc-test-core, generate-binary-datasets ]
     runs-on: ubuntu-latest
     env:
       NUM_THREADS: 32
@@ -607,15 +760,47 @@ jobs:
         run: |
           make test DEFAULT_REL_STORAGE_DIRECTION=BOTH
 
-  clang-build-test:
-    name: clang build & test
+  clang-build:
+    name: clang build
     needs: [ sanity-checks, python-lint-check, generate-binary-datasets ]
     runs-on: self-hosted
     env:
       NUM_THREADS: 32
-      TEST_JOBS: 16
       CC: clang
       CXX: clang++
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache build directory
+        uses: actions/cache@v4
+        with:
+          path: |
+            build
+            ~/.cache/ccache
+          key: clang-build-${{ runner.os }}-${{ hashFiles('**/CMakeLists.txt', 'src/**/*.cpp', 'src/**/*.h') }}-${{ github.sha }}
+          restore-keys: |
+            clang-build-${{ runner.os }}-${{ hashFiles('**/CMakeLists.txt', 'src/**/*.cpp', 'src/**/*.h') }}-
+            clang-build-${{ runner.os }}-
+
+      - name: Build
+        run: |
+          make test-build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: clang-build-artifacts
+          path: |
+            build/relwithdebinfo
+          retention-days: 1
+
+  clang-test-core:
+    name: clang test (core)
+    needs: [ clang-build, generate-binary-datasets ]
+    runs-on: self-hosted
+    env:
+      TEST_JOBS: 48
       UW_S3_ACCESS_KEY_ID: ${{ secrets.UW_S3_ACCESS_KEY_ID }}
       UW_S3_SECRET_ACCESS_KEY: ${{ secrets.UW_S3_SECRET_ACCESS_KEY }}
       AWS_S3_ACCESS_KEY_ID: ${{ secrets.AWS_S3_ACCESS_KEY_ID }}
@@ -626,8 +811,15 @@ jobs:
       GCS_SECRET_ACCESS_KEY: ${{ secrets.GCS_SECRET_ACCESS_KEY }}
       RUN_ID: "$(hostname)-$(date +%s)"
       HTTP_CACHE_FILE: TRUE
+
     steps:
       - uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: clang-build-artifacts
+          path: build/relwithdebinfo
 
       - name: Download binary-demo
         uses: actions/download-artifact@v4
@@ -635,13 +827,41 @@ jobs:
           name: binary-demo
           path: dataset/binary-demo
 
-      - name: Build
-        run: |
-          make test-build
-
       - name: Test
         run: |
           ctest --test-dir build/relwithdebinfo/test --output-on-failure -j ${TEST_JOBS}
+
+  clang-test-fwd-compression:
+    name: clang test (fwd-only & compression)
+    needs: [ clang-build, generate-binary-datasets ]
+    runs-on: self-hosted
+    env:
+      TEST_JOBS: 48
+      UW_S3_ACCESS_KEY_ID: ${{ secrets.UW_S3_ACCESS_KEY_ID }}
+      UW_S3_SECRET_ACCESS_KEY: ${{ secrets.UW_S3_SECRET_ACCESS_KEY }}
+      AWS_S3_ACCESS_KEY_ID: ${{ secrets.AWS_S3_ACCESS_KEY_ID }}
+      AWS_S3_SECRET_ACCESS_KEY: ${{ secrets.AWS_S3_SECRET_ACCESS_KEY }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_S3_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_S3_SECRET_ACCESS_KEY }}
+      GCS_ACCESS_KEY_ID: ${{ secrets.GCS_ACCESS_KEY_ID }}
+      GCS_SECRET_ACCESS_KEY: ${{ secrets.GCS_SECRET_ACCESS_KEY }}
+      RUN_ID: "$(hostname)-$(date +%s)"
+      HTTP_CACHE_FILE: TRUE
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: clang-build-artifacts
+          path: build/relwithdebinfo
+
+      - name: Download binary-demo
+        uses: actions/download-artifact@v4
+        with:
+          name: binary-demo
+          path: dataset/binary-demo
 
       - name: Test fwd only rel tables
         env:
@@ -658,12 +878,68 @@ jobs:
         run: |
           ctest --test-dir build/relwithdebinfo/test --output-on-failure -j ${TEST_JOBS}
 
+  clang-test-recovery:
+    name: clang test (recovery)
+    needs: [ clang-build, generate-binary-datasets ]
+    runs-on: self-hosted
+    env:
+      TEST_JOBS: 48
+      AUTO_CHECKPOINT: false
+      CHECKPOINT_ON_CLOSE: false
+      UW_S3_ACCESS_KEY_ID: ${{ secrets.UW_S3_ACCESS_KEY_ID }}
+      UW_S3_SECRET_ACCESS_KEY: ${{ secrets.UW_S3_SECRET_ACCESS_KEY }}
+      AWS_S3_ACCESS_KEY_ID: ${{ secrets.AWS_S3_ACCESS_KEY_ID }}
+      AWS_S3_SECRET_ACCESS_KEY: ${{ secrets.AWS_S3_SECRET_ACCESS_KEY }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_S3_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_S3_SECRET_ACCESS_KEY }}
+      GCS_ACCESS_KEY_ID: ${{ secrets.GCS_ACCESS_KEY_ID }}
+      GCS_SECRET_ACCESS_KEY: ${{ secrets.GCS_SECRET_ACCESS_KEY }}
+      RUN_ID: "$(hostname)-$(date +%s)"
+      HTTP_CACHE_FILE: TRUE
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: clang-build-artifacts
+          path: build/relwithdebinfo
+
+      - name: Download binary-demo
+        uses: actions/download-artifact@v4
+        with:
+          name: binary-demo
+          path: dataset/binary-demo
+
       - name: Test recovery
-        env:
-          AUTO_CHECKPOINT: false
-          CHECKPOINT_ON_CLOSE: false
         run: |
           ctest --test-dir build/relwithdebinfo/test --output-on-failure -j ${TEST_JOBS}
+
+  clang-test-language-bindings:
+    name: clang test (Python, Node.js, Java, Rust)
+    needs: [ clang-build, generate-binary-datasets ]
+    runs-on: self-hosted
+    env:
+      NUM_THREADS: 32
+      CC: clang
+      CXX: clang++
+      RUN_ID: "$(hostname)-$(date +%s)"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: clang-build-artifacts
+          path: build/relwithdebinfo
+
+      - name: Download binary-demo
+        uses: actions/download-artifact@v4
+        with:
+          name: binary-demo
+          path: dataset/binary-demo
 
       - name: Ensure Python dependencies
         run: pip install --user -r tools/python_api/requirements_dev.txt
@@ -695,7 +971,7 @@ jobs:
       matrix:
         page_size_log2: [ 16, 18 ]
     name: clang build & test with page_size_log2=${{ matrix.page_size_log2 }}
-    needs: [ clang-build-test ]
+    needs: [ clang-test-core ]
     runs-on: ubuntu-latest
     env:
       NUM_THREADS: 32
@@ -732,7 +1008,7 @@ jobs:
       matrix:
         node_group_size_log2: [ 4, 12, 19 ]
     name: clang build & test with node_group_size_log2=${{ matrix.node_group_size_log2 }}
-    needs: [ clang-build-test ]
+    needs: [ clang-test-core ]
     runs-on: ubuntu-latest
     env:
       NUM_THREADS: 32
@@ -777,7 +1053,7 @@ jobs:
         # 256B, 64KB, 512KB
         max_segment_size_log2: [ 8, 16, 19 ]
     name: clang build & test with max_segment_size_log2=${{ matrix.max_segment_size_log2 }}
-    needs: [ clang-build-test ]
+    needs: [ clang-test-core ]
     runs-on: ubuntu-latest
     env:
       NUM_THREADS: 32
@@ -1022,7 +1298,7 @@ jobs:
 
   benchmark:
     name: benchmark
-    needs: [ gcc-build-test, clang-build-test ]
+    needs: [ gcc-test-core, clang-test-core ]
     uses: ./.github/workflows/benchmark-workflow.yml
 
   report-benchmark-result:
@@ -1232,7 +1508,7 @@ jobs:
 
   linux-extension-test:
     name: linux extension test
-    needs: [ gcc-build-test, clang-build-test ]
+    needs: [ gcc-test-core, clang-test-core ]
     runs-on: ubuntu-latest
     env:
       NUM_THREADS: 32
