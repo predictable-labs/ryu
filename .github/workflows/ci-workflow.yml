@@ -206,7 +206,7 @@ jobs:
   gcc-build:
     name: gcc build
     needs: [ sanity-checks, python-lint-check, generate-binary-datasets ]
-    runs-on: self-hosted
+    runs-on: [self-hosted, runner1]
     env:
       NUM_THREADS: 24
       GEN: Ninja
@@ -224,7 +224,7 @@ jobs:
   gcc-test-core:
     name: gcc test (core)
     needs: [ gcc-build, generate-binary-datasets ]
-    runs-on: self-hosted
+    runs-on: [self-hosted, runner1]
     env:
       TEST_JOBS: 48
       BUILD_PATH: gcc-relwithdebinfo
@@ -255,7 +255,7 @@ jobs:
   gcc-test-in-mem:
     name: gcc test (in-memory)
     needs: [ gcc-build, generate-binary-datasets ]
-    runs-on: self-hosted
+    runs-on: [self-hosted, runner1]
     env:
       TEST_JOBS: 48
       BUILD_PATH: gcc-relwithdebinfo
@@ -287,7 +287,7 @@ jobs:
   gcc-test-checkpoint-recovery:
     name: gcc test (checkpoint & recovery)
     needs: [ gcc-build, generate-binary-datasets ]
-    runs-on: self-hosted
+    runs-on: [self-hosted, runner1]
     env:
       TEST_JOBS: 48
       BUILD_PATH: gcc-relwithdebinfo
@@ -328,7 +328,7 @@ jobs:
   gcc-test-variants:
     name: gcc test (config variants)
     needs: [ gcc-build, generate-binary-datasets ]
-    runs-on: self-hosted
+    runs-on: [self-hosted, runner1]
     env:
       TEST_JOBS: 48
       BUILD_PATH: gcc-relwithdebinfo
@@ -367,7 +367,7 @@ jobs:
   gcc-test-language-bindings:
     name: gcc test (Python, Node.js, Java, Rust)
     needs: [ gcc-build, generate-binary-datasets ]
-    runs-on: self-hosted
+    runs-on: [self-hosted, runner1]
     env:
       NUM_THREADS: 24
       BUILD_PATH: gcc-relwithdebinfo
@@ -720,7 +720,7 @@ jobs:
   clang-build:
     name: clang build
     needs: [ sanity-checks, python-lint-check, generate-binary-datasets ]
-    runs-on: self-hosted
+    runs-on: [self-hosted, runner2]
     env:
       NUM_THREADS: 24
       CC: clang
@@ -737,7 +737,7 @@ jobs:
   clang-test-core:
     name: clang test (core)
     needs: [ clang-build, generate-binary-datasets ]
-    runs-on: self-hosted
+    runs-on: [self-hosted, runner2]
     env:
       TEST_JOBS: 48
       BUILD_PATH: clang-relwithdebinfo
@@ -768,7 +768,7 @@ jobs:
   clang-test-fwd-compression:
     name: clang test (fwd-only & compression)
     needs: [ clang-build, generate-binary-datasets ]
-    runs-on: self-hosted
+    runs-on: [self-hosted, runner2]
     env:
       TEST_JOBS: 48
       BUILD_PATH: clang-relwithdebinfo
@@ -810,7 +810,7 @@ jobs:
   clang-test-recovery:
     name: clang test (recovery)
     needs: [ clang-build, generate-binary-datasets ]
-    runs-on: self-hosted
+    runs-on: [self-hosted, runner2]
     env:
       TEST_JOBS: 48
       BUILD_PATH: clang-relwithdebinfo
@@ -843,7 +843,7 @@ jobs:
   clang-test-language-bindings:
     name: clang test (Python, Node.js, Java, Rust)
     needs: [ clang-build, generate-binary-datasets ]
-    runs-on: self-hosted
+    runs-on: [self-hosted, runner2]
     env:
       NUM_THREADS: 24
       BUILD_PATH: clang-relwithdebinfo
