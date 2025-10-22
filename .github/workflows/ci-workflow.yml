@@ -1027,7 +1027,7 @@ jobs:
   clang-tidy:
     name: clang tidy & clangd diagnostics check
     needs: [ sanity-checks ]
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       GEN: Ninja
       NUM_THREADS: 32
@@ -1037,10 +1037,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install clangd
+      - name: Install clangd and deps
         run: |
           sudo apt-get update
-          sudo apt-get install -y clangd
+          sudo apt-get install -y build-essential clang clangd clang-tidy libtool libltdl-dev libedit-dev libssl-dev cmake ninja-build
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install neo4j dependencies
+        run: |
+          sudo apt-get install -y libtool libltdl-dev libedit-dev libssl-dev
 
       - name: Install DuckDB
         uses: ./.github/actions/install-duckdb
