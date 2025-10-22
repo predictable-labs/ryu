@@ -7,6 +7,10 @@
 #include <cstdint>
 
 namespace ryu {
+namespace common {
+class VirtualFileSystem;
+}
+
 namespace storage {
 
 struct BackupMetadata {
@@ -27,10 +31,10 @@ struct BackupMetadata {
     static BackupMetadata deserialize(common::Deserializer& deserializer);
 
     // Write metadata to file
-    void writeToFile(const std::string& metadataPath) const;
+    void writeToFile(const std::string& metadataPath, common::VirtualFileSystem* vfs) const;
 
     // Read metadata from file
-    static BackupMetadata readFromFile(const std::string& metadataPath);
+    static BackupMetadata readFromFile(const std::string& metadataPath, common::VirtualFileSystem* vfs);
 };
 
 } // namespace storage

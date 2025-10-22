@@ -1,12 +1,11 @@
 #pragma once
 
 #include "common/types/types.h"
-#include "storage/buffer_manager/buffer_manager.h"
-#include "storage/file_handle.h"
 #include <memory>
 #include <unordered_map>
 #include <mutex>
 #include <string>
+#include <vector>
 
 namespace ryu {
 namespace storage {
@@ -51,10 +50,9 @@ public:
 private:
     std::string shadowFilePath;
     BufferManager& bufferManager;
-    std::unique_ptr<FileHandle> shadowFileHandle;
 
-    // Map from original page index to shadow page index
-    std::unordered_map<common::page_idx_t, common::page_idx_t> pageMapping;
+    // In-memory storage for shadow pages
+    std::unordered_map<common::page_idx_t, std::vector<uint8_t>> shadowPages;
     mutable std::mutex mtx;
 
     // Counter for allocating shadow pages

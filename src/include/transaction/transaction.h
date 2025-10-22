@@ -118,6 +118,16 @@ public:
     void commit(storage::WAL* wal);
     void rollback(storage::WAL* wal);
 
+    // Backup snapshot transaction support
+    void setSnapshotTS(common::transaction_t ts) {
+        isSnapshot = true;
+        overrideSnapshotTS = ts;
+    }
+    bool isSnapshotTransaction() const { return isSnapshot; }
+    common::transaction_t getEffectiveStartTS() const {
+        return isSnapshot ? overrideSnapshotTS : startTS;
+    }
+
     storage::LocalStorage* getLocalStorage() const { return localStorage.get(); }
     LocalCacheManager& getLocalCacheManager() { return localCacheManager; }
     bool isUnCommitted(common::table_id_t tableID, common::offset_t nodeOffset) const;
@@ -161,6 +171,9 @@ private:
     LocalCacheManager localCacheManager;
     bool forceCheckpoint;
     std::atomic<bool> hasCatalogChanges;
+    // Backup snapshot transaction support
+    bool isSnapshot = false;
+    common::transaction_t overrideSnapshotTS = 0;
 };
 
 // TODO(bmwinger): These shouldn't need to be exported
