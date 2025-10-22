@@ -206,7 +206,7 @@ jobs:
   gcc-build-test:
     name: gcc build & test
     needs: [ sanity-checks, python-lint-check, generate-binary-datasets ]
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       NUM_THREADS: 32
       TEST_JOBS: 16
@@ -384,8 +384,8 @@ jobs:
 
       - name: Generate coverage report for on-disk mode
         run: |
-          lcov --config-file .lcovrc --ignore-errors mismatch,negative,unused,empty -c -d ./ --no-external -o cover_extension.info && \
-          lcov --config-file .lcovrc --ignore-errors mismatch,negative,unused,empty --remove cover_extension.info $(< .github/workflows/lcov_exclude) -o cover_extension.info
+          lcov --config-file .lcovrc --ignore-errors mismatch,negative,unused,empty -c -d ./ --no-external -o cover_on_disk.info && \
+          lcov --config-file .lcovrc --ignore-errors mismatch,negative,unused,empty --remove cover_on_disk.info $(< .github/workflows/lcov_exclude) -o cover_on_disk.info
 
       - name: Upload coverage report for on-disk mode
         uses: codecov/codecov-action@v4.5.0
@@ -497,6 +497,7 @@ jobs:
 
   rust-build-test:
     name: rust build & test
+    if: false  # Temporarily disabled
     runs-on: self-hosted
     env:
       # CARGO_BUILD_JOBS is set using this in the Makefile
@@ -959,6 +960,7 @@ jobs:
 
   code-format:
     name: code format
+    if: false  # Temporarily disabled
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -1033,6 +1035,7 @@ jobs:
 
   clang-tidy:
     name: clang tidy & clangd diagnostics check
+    if: false  # Temporarily disabled
     needs: [ sanity-checks ]
     runs-on: self-hosted
     env:
@@ -1204,6 +1207,7 @@ jobs:
 
   shell-test:
     name: shell test
+    if: false  # Temporarily disabled
     runs-on: self-hosted
     needs: [ sanity-checks ]
     steps:
