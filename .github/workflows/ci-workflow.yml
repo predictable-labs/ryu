@@ -606,7 +606,7 @@ jobs:
   clang-build-test:
     name: clang build & test
     needs: [ sanity-checks, python-lint-check, generate-binary-datasets ]
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       NUM_THREADS: 32
       TEST_JOBS: 16
