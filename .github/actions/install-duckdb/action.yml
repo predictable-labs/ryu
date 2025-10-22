@@ -16,6 +16,8 @@ runs:
       shell: bash
       run: |
         # Build DuckDB from source to ensure ABI compatibility
+        # Clean up any existing directory from previous runs
+        rm -rf /tmp/duckdb-src
         git clone --depth 1 --branch v1.1.3 https://github.com/duckdb/duckdb.git /tmp/duckdb-src
         cd /tmp/duckdb-src
         mkdir build && cd build
