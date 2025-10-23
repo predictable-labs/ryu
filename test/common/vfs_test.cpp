@@ -96,8 +96,9 @@ TEST(VFSTests, VirtualFileSystemDeleteFilesEdgeCases) {
         vfs.removeFileIfExists("/tmp/dbHome_edge/../test2_edge");
     } catch (const ryu::common::IOException& e) {
         // Expected behavior
-        EXPECT_STREQ(e.what(), "IO exception: Error: Path /tmp/dbHome_edge/../test2_edge is not within the "
-                               "allowed list of files to be removed.");
+        EXPECT_STREQ(e.what(),
+            "IO exception: Error: Path /tmp/dbHome_edge/../test2_edge is not within the "
+            "allowed list of files to be removed.");
     }
 
     try {
@@ -144,8 +145,9 @@ TEST(VFSTests, VirtualFileSystemDeleteFilesEdgeCases) {
         vfs.removeFileIfExists("/tmp/dbHome_edge/test2_edge");
     } catch (const ryu::common::IOException& e) {
         // Expected behavior
-        EXPECT_STREQ(e.what(), "IO exception: Error: Path /tmp/dbHome_edge/test2_edge is not within the "
-                               "allowed list of files to be removed.");
+        EXPECT_STREQ(e.what(),
+            "IO exception: Error: Path /tmp/dbHome_edge/test2_edge is not within the "
+            "allowed list of files to be removed.");
     }
 
     ASSERT_TRUE(std::filesystem::exists("/tmp/test2_edge"));
