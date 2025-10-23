@@ -53,13 +53,10 @@ if __name__ == "__main__":
         os.remove(os.path.join(tempdir, "ryu-source.tar"))
 
         # Remove components that are not needed for the pip package
-        shutil.rmtree(os.path.join(tempdir, "ryu-source/dataset"))
-        shutil.rmtree(os.path.join(tempdir, "ryu-source/examples"))
-        shutil.rmtree(os.path.join(tempdir, "ryu-source/benchmark"))
-        shutil.rmtree(os.path.join(tempdir, "ryu-source/logo"))
-        shutil.rmtree(os.path.join(tempdir, "ryu-source/extension"))
-        shutil.rmtree(os.path.join(tempdir, "ryu-source/test"))
-        shutil.rmtree(os.path.join(tempdir, "ryu-source/.github"))
+        for dir_to_remove in ["dataset", "examples", "benchmark", "logo", "extension", "test", ".github"]:
+            dir_path = os.path.join(tempdir, "ryu-source", dir_to_remove)
+            if os.path.exists(dir_path):
+                shutil.rmtree(dir_path)
 
         os.makedirs(os.path.join(tempdir, "ryu"))
         for path in ["setup.py", "setup.cfg", "MANIFEST.in"]:
