@@ -29,22 +29,35 @@ jobs:
       - name: Build wheels
         working-directory: ./scripts/pip-package/
         run: |
-          # Build wheels for multiple Python versions
-          for PYBIN in /opt/python/cp3{8,9,10,11,12}*/bin; do
-            if [ -d "$PYBIN" ]; then
-              echo "Building wheel with $PYBIN/python"
-              "${PYBIN}/pip" install -U pip setuptools wheel
-              "${PYBIN}/pip" wheel . --no-deps -w wheelhouse/
-            fi
-          done
+          mkdir -p wheelhouse
 
-          # Repair wheels to make them manylinux compatible
-          for whl in wheelhouse/*.whl; do
-            if [[ ! "$whl" =~ manylinux ]]; then
-              auditwheel repair "$whl" -w wheelhouse/
-              rm "$whl"
-            fi
-          done
+          # Build wheels for multiple Python versions if manylinux paths exist
+          if [ -d "/opt/python" ]; then
+            echo "Found manylinux Python installations"
+            for PYBIN in /opt/python/cp3{8,9,10,11,12}*/bin; do
+              if [ -d "$PYBIN" ]; then
+                echo "Building wheel with $PYBIN/python"
+                "${PYBIN}/pip" install -U pip setuptools wheel
+                "${PYBIN}/pip" wheel . --no-deps -w wheelhouse/
+              fi
+            done
+          else
+            echo "No manylinux Python found, using system Python"
+            python3 -m pip wheel . --no-deps -w wheelhouse/
+          fi
+
+          # Repair wheels to make them manylinux compatible if any were built
+          if ls wheelhouse/*.whl 1> /dev/null 2>&1; then
+            for whl in wheelhouse/*.whl; do
+              if [[ ! "$whl" =~ manylinux ]]; then
+                echo "Repairing $whl"
+                auditwheel repair "$whl" -w wheelhouse/
+                rm "$whl"
+              fi
+            done
+          else
+            echo "No wheels found to repair"
+          fi
 
       - uses: actions/upload-artifact@v4
         with:
@@ -71,22 +84,35 @@ jobs:
       - name: Build wheels
         working-directory: ./scripts/pip-package/
         run: |
-          # Build wheels for multiple Python versions
-          for PYBIN in /opt/python/cp3{8,9,10,11,12}*/bin; do
-            if [ -d "$PYBIN" ]; then
-              echo "Building wheel with $PYBIN/python"
-              "${PYBIN}/pip" install -U pip setuptools wheel
-              "${PYBIN}/pip" wheel . --no-deps -w wheelhouse/
-            fi
-          done
+          mkdir -p wheelhouse
 
-          # Repair wheels to make them manylinux compatible
-          for whl in wheelhouse/*.whl; do
-            if [[ ! "$whl" =~ manylinux ]]; then
-              auditwheel repair "$whl" -w wheelhouse/
-              rm "$whl"
-            fi
-          done
+          # Build wheels for multiple Python versions if manylinux paths exist
+          if [ -d "/opt/python" ]; then
+            echo "Found manylinux Python installations"
+            for PYBIN in /opt/python/cp3{8,9,10,11,12}*/bin; do
+              if [ -d "$PYBIN" ]; then
+                echo "Building wheel with $PYBIN/python"
+                "${PYBIN}/pip" install -U pip setuptools wheel
+                "${PYBIN}/pip" wheel . --no-deps -w wheelhouse/
+              fi
+            done
+          else
+            echo "No manylinux Python found, using system Python"
+            python3 -m pip wheel . --no-deps -w wheelhouse/
+          fi
+
+          # Repair wheels to make them manylinux compatible if any were built
+          if ls wheelhouse/*.whl 1> /dev/null 2>&1; then
+            for whl in wheelhouse/*.whl; do
+              if [[ ! "$whl" =~ manylinux ]]; then
+                echo "Repairing $whl"
+                auditwheel repair "$whl" -w wheelhouse/
+                rm "$whl"
+              fi
+            done
+          else
+            echo "No wheels found to repair"
+          fi
 
       - uses: actions/upload-artifact@v4
         with:
