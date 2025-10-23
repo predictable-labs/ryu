@@ -663,7 +663,7 @@ jobs:
   clang-build-test-with-tsan:
     name: clang build & test with tsan
     needs: [ clang-test-core, generate-binary-datasets ]
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       NUM_THREADS: 24
       TEST_JOBS: 16
@@ -693,7 +693,7 @@ jobs:
   gcc-build-test-with-asan:
     name: gcc build & test with asan
     needs: [ gcc-test-core, generate-binary-datasets ]
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       NUM_THREADS: 24
       TEST_JOBS: 16
@@ -908,7 +908,7 @@ jobs:
         page_size_log2: [ 16, 18 ]
     name: clang build & test with page_size_log2=${{ matrix.page_size_log2 }}
     needs: [ clang-test-core ]
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       NUM_THREADS: 24
       TEST_JOBS: 16
@@ -935,6 +935,7 @@ jobs:
 
       - name: Generate binary demo
         run: |
+          rm -rf dataset/binary-demo
           bash scripts/generate_binary_demo.sh
 
       - name: Test
@@ -947,7 +948,7 @@ jobs:
         node_group_size_log2: [ 4, 12, 19 ]
     name: clang build & test with node_group_size_log2=${{ matrix.node_group_size_log2 }}
     needs: [ clang-test-core ]
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       NUM_THREADS: 24
       TEST_JOBS: 16
@@ -977,6 +978,7 @@ jobs:
 
       - name: Generate binary demo
         run: |
+          rm -rf dataset/binary-demo
           bash scripts/generate_binary_demo.sh
 
       - name: Test
@@ -994,7 +996,7 @@ jobs:
         max_segment_size_log2: [ 8, 16, 19 ]
     name: clang build & test with max_segment_size_log2=${{ matrix.max_segment_size_log2 }}
     needs: [ clang-test-core ]
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       NUM_THREADS: 24
       TEST_JOBS: 16
@@ -1020,6 +1022,7 @@ jobs:
 
       - name: Generate binary demo
         run: |
+          rm -rf dataset/binary-demo
           bash scripts/generate_binary_demo.sh
 
       - name: Test
