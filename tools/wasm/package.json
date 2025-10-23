@@ -1,6 +1,6 @@
 {
   "name": "ryu-wasm",
-  "version": "0.0.1",
+  "version": "25.9.0",
   "description": "Official WebAssembly build of Ryu in-process property graph database management system.",
   "main": "index.js",
   "homepage": "https://ryugraph.com/",
