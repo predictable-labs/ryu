@@ -14,8 +14,8 @@ jobs:
         working-directory: scripts/pip-package/
         run: |
           mkdir wheelhouse
-          python3 package_tar.py ryu.tar.gz
-          pip3 wheel ryu.tar.gz --no-deps -w wheelhouse/
+          python3 package_tar.py ryugraph.tar.gz
+          pip3 wheel ryugraph.tar.gz --no-deps -w wheelhouse/
           auditwheel repair wheelhouse/ryugraph-*.whl -w wheelhouse/
 
       - uses: actions/upload-artifact@v4
