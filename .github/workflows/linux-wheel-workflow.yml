@@ -26,6 +26,11 @@ jobs:
           python3 update-nightly-build-version.py
         working-directory: scripts
 
+      - name: Create source distribution
+        working-directory: ./scripts/pip-package/
+        run: |
+          python3 package_tar.py ryugraph.tar.gz
+
       - name: Build wheels
         working-directory: ./scripts/pip-package/
         run: |
@@ -38,12 +43,12 @@ jobs:
               if [ -d "$PYBIN" ]; then
                 echo "Building wheel with $PYBIN/python"
                 "${PYBIN}/pip" install -U pip setuptools wheel
-                "${PYBIN}/pip" wheel . --no-deps -w wheelhouse/
+                "${PYBIN}/pip" wheel ryugraph.tar.gz --no-deps -w wheelhouse/
               fi
             done
           else
             echo "No manylinux Python found, using system Python"
-            python3 -m pip wheel . --no-deps -w wheelhouse/
+            python3 -m pip wheel ryugraph.tar.gz --no-deps -w wheelhouse/
           fi
 
           # Repair wheels to make them manylinux compatible if any were built
@@ -81,6 +86,11 @@ jobs:
           python3 update-nightly-build-version.py
         working-directory: scripts
 
+      - name: Create source distribution
+        working-directory: ./scripts/pip-package/
+        run: |
+          python3 package_tar.py ryugraph.tar.gz
+
       - name: Build wheels
         working-directory: ./scripts/pip-package/
         run: |
@@ -93,12 +103,12 @@ jobs:
               if [ -d "$PYBIN" ]; then
                 echo "Building wheel with $PYBIN/python"
                 "${PYBIN}/pip" install -U pip setuptools wheel
-                "${PYBIN}/pip" wheel . --no-deps -w wheelhouse/
+                "${PYBIN}/pip" wheel ryugraph.tar.gz --no-deps -w wheelhouse/
               fi
             done
           else
             echo "No manylinux Python found, using system Python"
-            python3 -m pip wheel . --no-deps -w wheelhouse/
+            python3 -m pip wheel ryugraph.tar.gz --no-deps -w wheelhouse/
           fi
 
           # Repair wheels to make them manylinux compatible if any were built
