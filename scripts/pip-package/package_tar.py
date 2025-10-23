@@ -30,7 +30,7 @@ if __name__ == "__main__":
     if len(sys.argv) == 2:
         file_name = sys.argv[1]
     else:
-        file_name = "ryu-%s.tar.gz" % _get_ryu_version()
+        file_name = "ryugraph-%s.tar.gz" % _get_ryu_version()
     print("Creating %s..." % file_name)
 
     with TemporaryDirectory() as tempdir:
@@ -80,7 +80,7 @@ if __name__ == "__main__":
         shutil.copy2("README.md", os.path.join(tempdir, "README_PYTHON_BUILD.md"))
         subprocess.check_call([sys.executable, "setup.py", "egg_info"], cwd=tempdir)
         shutil.copy2(
-            os.path.join(tempdir, "ryu.egg-info", "PKG-INFO"),
+            os.path.join(tempdir, "ryugraph.egg-info", "PKG-INFO"),
             os.path.join(tempdir, "PKG-INFO"),
         )
         with tarfile.open(file_name, "w:gz") as sdist:
