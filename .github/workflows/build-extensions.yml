@@ -112,10 +112,14 @@ jobs:
       - name: Install DuckDB
         uses: ./.github/actions/install-duckdb
 
+      - name: Setup MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+
       - name: Build precompiled extensions
         shell: cmd
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           make extension-release
 
       - name: Collect built artifacts

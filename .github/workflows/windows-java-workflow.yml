@@ -22,10 +22,14 @@ jobs:
           python3 update-nightly-build-version.py
         working-directory: ./scripts
 
+      - name: Setup MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+
       - name: Build Java lib for Windows
         shell: cmd
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           make java NUM_THREADS=48
 
       - uses: actions/upload-artifact@v4
