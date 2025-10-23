@@ -84,19 +84,19 @@ TEST(VFSTests, VirtualFileSystemDeleteFilesWithHome) {
 #endif
 
 TEST(VFSTests, VirtualFileSystemDeleteFilesEdgeCases) {
-    std::string homeDir = "/tmp/dbHome";
+    std::string homeDir = "/tmp/dbHome_edge";
     ryu::common::VirtualFileSystem vfs(homeDir);
-    std::filesystem::create_directories("/tmp/dbHome/");
-    std::filesystem::create_directories("/tmp/dbHome/../test2");
+    std::filesystem::create_directories("/tmp/dbHome_edge/");
+    std::filesystem::create_directories("/tmp/dbHome_edge/../test2_edge");
     std::filesystem::create_directories("/tmp");
-    std::filesystem::create_directories("/tmp/dbHome/test2");
+    std::filesystem::create_directories("/tmp/dbHome_edge/test2_edge");
 
     // Attempt to delete files outside the home directory (should error)
     try {
-        vfs.removeFileIfExists("/tmp/dbHome/../test2");
+        vfs.removeFileIfExists("/tmp/dbHome_edge/../test2_edge");
     } catch (const ryu::common::IOException& e) {
         // Expected behavior
-        EXPECT_STREQ(e.what(), "IO exception: Error: Path /tmp/dbHome/../test2 is not within the "
+        EXPECT_STREQ(e.what(), "IO exception: Error: Path /tmp/dbHome_edge/../test2_edge is not within the "
                                "allowed list of files to be removed.");
     }
 
@@ -141,19 +141,19 @@ TEST(VFSTests, VirtualFileSystemDeleteFilesEdgeCases) {
     }
 
     try {
-        vfs.removeFileIfExists("/tmp/dbHome/test2");
+        vfs.removeFileIfExists("/tmp/dbHome_edge/test2_edge");
     } catch (const ryu::common::IOException& e) {
         // Expected behavior
-        EXPECT_STREQ(e.what(), "IO exception: Error: Path /tmp/dbHome/test2 is not within the "
+        EXPECT_STREQ(e.what(), "IO exception: Error: Path /tmp/dbHome_edge/test2_edge is not within the "
                                "allowed list of files to be removed.");
     }
 
-    ASSERT_TRUE(std::filesystem::exists("/tmp/test2"));
-    ASSERT_TRUE(std::filesystem::exists("/tmp/dbHome/test2"));
+    ASSERT_TRUE(std::filesystem::exists("/tmp/test2_edge"));
+    ASSERT_TRUE(std::filesystem::exists("/tmp/dbHome_edge/test2_edge"));
 
     // Cleanup: Remove directories after the test
-    std::filesystem::remove_all("/tmp/test2");
-    std::filesystem::remove_all("/tmp/dbHome/test2");
+    std::filesystem::remove_all("/tmp/test2_edge");
+    std::filesystem::remove_all("/tmp/dbHome_edge");
 }
 
 #if defined(_WIN32)

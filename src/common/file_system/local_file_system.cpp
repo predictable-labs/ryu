@@ -262,6 +262,7 @@ static std::unordered_set<std::string> getDatabaseFileSet(const std::string& pat
     result.insert(storage::StorageUtils::getWALFilePath(path));
     result.insert(storage::StorageUtils::getShadowFilePath(path));
     result.insert(storage::StorageUtils::getTmpFilePath(path));
+    result.insert(path + ".lock");
     return result;
 }
 
