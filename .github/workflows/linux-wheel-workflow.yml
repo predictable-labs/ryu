@@ -11,15 +11,15 @@ on:
 
 jobs:
   build-linux-wheels-x86_64:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
 
       - name: Update nightly version
         if: ${{ inputs.isNightly == true }}
         run: |
-          /opt/python/cp310-cp310/bin/python -m pip install packaging
-          /opt/python/cp310-cp310/bin/python update-nightly-build-version.py
+          python3 -m pip install packaging
+          python3 update-nightly-build-version.py
         working-directory: scripts
 
       - name: Build wheels
@@ -35,15 +35,15 @@ jobs:
 
   build-linux-wheels-aarch64:
     # Make sure this job runs on the larger self-hosted Linux ARM64 machine
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
 
       - name: Update nightly version
         if: ${{ inputs.isNightly == true }}
         run: |
-          /opt/python/cp310-cp310/bin/python -m pip install packaging
-          /opt/python/cp310-cp310/bin/python update-nightly-build-version.py
+          python3 -m pip install packaging
+          python3 update-nightly-build-version.py
         working-directory: scripts
 
       - name: Build wheels

@@ -4,7 +4,7 @@ on: workflow_dispatch
 
 jobs:
   build-python-package:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       PLATFORM: manylinux_2_28_x86_64
     steps:
@@ -14,8 +14,8 @@ jobs:
         working-directory: scripts/pip-package/
         run: |
           mkdir wheelhouse
-          /opt/python/cp310-cp310/bin/python package_tar.py ryu.tar.gz
-          /opt/python/cp310-cp310/bin/pip wheel ryu.tar.gz --no-deps -w wheelhouse/
+          python3 package_tar.py ryu.tar.gz
+          pip3 wheel ryu.tar.gz --no-deps -w wheelhouse/
           auditwheel repair wheelhouse/ryu-*.whl -w wheelhouse/
 
       - uses: actions/upload-artifact@v4
