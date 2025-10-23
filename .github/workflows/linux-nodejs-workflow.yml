@@ -18,7 +18,7 @@ jobs:
       - name: Update nightly version
         if: ${{ inputs.isNightly == true }}
         run: |
-          python3 -m pip install packaging
+          python3 -m pip install --break-system-packages packaging
           python3 update-nightly-build-version.py
         working-directory: scripts
       
@@ -54,7 +54,7 @@ jobs:
       - name: Update nightly version
         if: ${{ inputs.isNightly == true }}
         run: |
-          python3 -m pip install packaging
+          python3 -m pip install --break-system-packages packaging
           python3 update-nightly-build-version.py
         working-directory: scripts
 
