@@ -1,4 +1,4 @@
-PYPI_URL = "https://pypi.org/pypi/ryu/json"
+PYPI_URL = "https://pypi.org/pypi/ryugraph/json"
 CMAKE_KEYWORD = "project(Ryu VERSION "
 CMAKE_SUFFIX = " LANGUAGES CXX C)\n"
 EXTENSION_KEYWORD = 'add_definitions(-DRYU_EXTENSION_VERSION="'
