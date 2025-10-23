@@ -15,6 +15,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install build dependencies
+        run: |
+          python3 -m pip install -U pip setuptools wheel auditwheel
+
       - name: Update nightly version
         if: ${{ inputs.isNightly == true }}
         run: |
@@ -52,6 +56,10 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          python3 -m pip install -U pip setuptools wheel auditwheel
 
       - name: Update nightly version
         if: ${{ inputs.isNightly == true }}

@@ -48,7 +48,7 @@ if __name__ == "__main__":
         )
 
         with tarfile.open(os.path.join(tempdir, "ryu-source.tar")) as tar:
-            tar.extractall(path=os.path.join(tempdir, "ryu-source"), filter=None)
+            tar.extractall(path=os.path.join(tempdir, "ryu-source"))
 
         os.remove(os.path.join(tempdir, "ryu-source.tar"))
 
