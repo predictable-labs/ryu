@@ -624,7 +624,6 @@ jobs:
 
   rust-build-test:
     name: rust build & test
-    if: false  # Temporarily disabled
     runs-on: self-hosted
     env:
       # CARGO_BUILD_JOBS is set using this in the Makefile
@@ -1188,7 +1187,6 @@ jobs:
 
   code-format:
     name: code format
-    if: false  # Temporarily disabled
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -1263,7 +1261,6 @@ jobs:
 
   clang-tidy:
     name: clang tidy & clangd diagnostics check
-    if: false  # Temporarily disabled
     needs: [ sanity-checks ]
     runs-on: self-hosted
     env:
@@ -1435,7 +1432,6 @@ jobs:
 
   shell-test:
     name: shell test
-    if: false  # Temporarily disabled
     runs-on: self-hosted
     needs: [ sanity-checks ]
     steps:
