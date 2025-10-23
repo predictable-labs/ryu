@@ -104,7 +104,7 @@ class BuildExtFirst(_build_py):
         return super().run()
 
 
-setup(name='ryu',
+setup(name='ryugraph',
       version=ryu_version,
       install_requires=[],
       ext_modules=[CMakeExtension(
