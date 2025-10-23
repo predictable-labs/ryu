@@ -1,5 +1,5 @@
 # Ryu
-Ryu is an embedded graph database built for query speed and scalability. Ryu is optimized for handling complex analytical workloads 
+Ryu, a fork of Kuzu, is an embedded graph database built for query speed and scalability. Ryu is optimized for handling complex analytical workloads 
 on very large databases and provides a set of retrieval features, such as a full text search and vector indices. Our core feature set includes:
 
 - Flexible Property Graph Data Model and Cypher query language
