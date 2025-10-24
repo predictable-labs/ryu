@@ -44,7 +44,7 @@ publishing {
             pom {
                 name = 'ryu'
                 description = 'Ryu is an embedded graph database built for query speed and scalability.'
-                url = 'http://ryugraph.com'
+                url = 'http://ryugraph.io'
                 inceptionYear = '2020'
                 properties = [
                         'project.build.sourceEncoding'    : 'UTF-8',
@@ -56,20 +56,20 @@ publishing {
                 licenses {
                     license {
                         name = 'MIT License'
-                        url = 'https://github.com/ryugraph/ryu/blob/master/LICENSE'
+                        url = 'https://github.com/predictable-labs/ryugraph/blob/main/LICENSE'
                     }
                 }
                 developers {
                     developer {
                         id = 'ryugraph'
                         name = 'Ryu Inc.'
-                        email = 'contact@ryugraph.com'
+                        email = 'contact@ryugraph.io'
                     }
                 }
                 scm {
-                    connection = 'scm:git:git://github.com/ryugraph/ryu.git'
-                    developerConnection = 'scm:git:ssh://github.com/ryugraph/ryu.git'
-                    url = 'https://github.com/ryugraph/ryu'
+                    connection = 'scm:git:git://github.com/predictable-labs/ryugraph.git'
+                    developerConnection = 'scm:git:ssh://github.com/predictable-labs/ryugraph.git'
+                    url = 'https://github.com/predictable-labs/ryugraph'
                 }
             }
             from components.java
@@ -87,7 +87,7 @@ publishing {
         }
         maven {
             name = 'GitHubPackages'
-            url = uri('https://maven.pkg.github.com/ryugraph/ryu')
+            url = uri('https://maven.pkg.github.com/predictable-labs/ryugraph')
             credentials {
                 username = System.getenv('GITHUB_ACTOR')
                 password = System.getenv('GITHUB_TOKEN')

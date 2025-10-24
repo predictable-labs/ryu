@@ -60,7 +60,7 @@ const main = async () => {
 
 main().catch(console.error);
 ```
- ✅ The dataset used in this example can be found in the [official Ryu repository](https://github.com/ryugraph/ryu/tree/master/dataset/demo-db/csv).
+ ✅ The dataset used in this example can be found in the [official Ryu repository](https://github.com/predictable-labs/ryugraph/tree/main/dataset/demo-db/csv).
 
 ---
 
@@ -144,6 +144,6 @@ Refer to the [npm documentation](https://docs.npmjs.com/cli/v9/commands/npm-publ
 
 ## 🔗 Resources
 
-* [Ryu GitHub](https://github.com/ryugraph/ryu)
-* [Ryu Documentation](https://docs.ryugraph.com)
-* [Issue Tracker](https://github.com/ryugraph/ryu/issues)
+* [Ryu GitHub](https://github.com/predictable-labs/ryugraph)
+* [Ryu Documentation](https://docs.ryugraph.io)
+* [Issue Tracker](https://github.com/predictable-labs/ryugraph/issues)

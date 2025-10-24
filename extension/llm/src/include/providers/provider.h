@@ -11,7 +11,7 @@ public:
     // TODO(Tanvir) When docs are created validate the url in the string
     static constexpr const char* referenceRyuDocs =
         "For more information, please refer to the official Ryu documentation: "
-        "https://docs.ryugraph.com/extensions/llm/\n";
+        "https://docs.ryugraph.io/extensions/llm/\n";
     virtual ~EmbeddingProvider() = default;
     virtual std::string getClient() const = 0;
     virtual std::string getPath(const std::string& model) const = 0;

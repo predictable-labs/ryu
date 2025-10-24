@@ -33,7 +33,7 @@
 //!
 //! Example:
 //! ```bash
-//! ryu_prebuilt_dir=/tmp/ryu # pre-built Ryu from https://docs.ryugraph.com/installation/#cc
+//! ryu_prebuilt_dir=/tmp/ryu # pre-built Ryu from https://docs.ryugraph.io/installation/#cc
 //! ryu_prebuilt_dir=/path_to_ryu_source/build/release/src # Ryu built from source
 //! export RYU_LIBRARY_DIR="ryu_prebuilt_dir"
 //! export RYU_INCLUDE_DIR="ryu_prebuilt_dir"
@@ -49,7 +49,7 @@
 //!
 //! ## Using Extensions
 //! By default, binaries created using this library will not work with Ryu's
-//! [extensions](https://docs.ryugraph.com/extensions/) (except on Windows/MSVC, where the linker works differently).
+//! [extensions](https://docs.ryugraph.io/extensions/) (except on Windows/MSVC, where the linker works differently).
 //!
 //! If you want to use extensions in binaries (binary crates or tests) using this
 //! library, you will need to add the following (or a similar command; see

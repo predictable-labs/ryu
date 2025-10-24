@@ -53,7 +53,7 @@ def test_extension_install_httpfs(conn_db_readwrite: ConnDB, tmpdir: str, extens
     opener = urllib.request.build_opener()
     opener.addheaders = [("User-agent", "Ryu Test Suite")]
     urllib.request.install_opener(opener)
-    download_url = f"http://extension.ryugraph.com/v{extension_version}/{extension_extension_dir_prefix}/httpfs/libhttpfs.ryu_extension"
+    download_url = f"http://extension.ryugraph.io/v{extension_version}/{extension_extension_dir_prefix}/httpfs/libhttpfs.ryu_extension"
     temp_path = Path(tmpdir) / "libhttpfs.ryu_extension"
     urllib.request.urlretrieve(download_url, temp_path)
 

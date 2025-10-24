@@ -3,10 +3,10 @@
   "version": "25.9.0",
   "description": "Official WebAssembly build of Ryugraph in-process property graph database management system.",
   "main": "index.js",
-  "homepage": "https://ryugraph.com/",
+  "homepage": "https://ryugraph.io/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ryugraph/ryu.git"
+    "url": "https://github.com/predictable-labs/ryugraph.git"
   },
   "exports": {
     ".": {
