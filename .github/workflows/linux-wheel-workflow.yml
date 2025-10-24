@@ -65,14 +65,17 @@ jobs:
             echo "No wheels found to repair"
           fi
 
+      - name: List built wheels
+        run: ls -la ./scripts/pip-package/wheelhouse/
+
       - uses: actions/upload-artifact@v4
         with:
           name: linux-wheels-x86_64
-          path: ./scripts/pip-package/wheelhouse/*manylinux*x86_64.whl
+          path: ./scripts/pip-package/wheelhouse/*.whl
 
   build-linux-wheels-aarch64:
     # Make sure this job runs on the larger self-hosted Linux ARM64 machine
-    runs-on: self-hosted
+    runs-on: blacksmith-4vcpu-ubuntu-2404-arm
     steps:
       - uses: actions/checkout@v4
 
@@ -126,7 +129,10 @@ jobs:
             echo "No wheels found to repair"
           fi
 
+      - name: List built wheels
+        run: ls -la ./scripts/pip-package/wheelhouse/
+
       - uses: actions/upload-artifact@v4
         with:
           name: linux-wheels-aarch64
-          path: ./scripts/pip-package/wheelhouse/*manylinux*aarch64.whl
+          path: ./scripts/pip-package/wheelhouse/*.whl
