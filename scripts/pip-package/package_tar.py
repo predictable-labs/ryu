@@ -30,7 +30,7 @@ if __name__ == "__main__":
     if len(sys.argv) == 2:
         file_name = sys.argv[1]
     else:
-        file_name = "ryu-%s.tar.gz" % _get_ryu_version()
+        file_name = "ryugraph-%s.tar.gz" % _get_ryu_version()
     print("Creating %s..." % file_name)
 
     with TemporaryDirectory() as tempdir:
@@ -48,18 +48,15 @@ if __name__ == "__main__":
         )
 
         with tarfile.open(os.path.join(tempdir, "ryu-source.tar")) as tar:
-            tar.extractall(path=os.path.join(tempdir, "ryu-source"), filter=None)
+            tar.extractall(path=os.path.join(tempdir, "ryu-source"))
 
         os.remove(os.path.join(tempdir, "ryu-source.tar"))
 
         # Remove components that are not needed for the pip package
-        shutil.rmtree(os.path.join(tempdir, "ryu-source/dataset"))
-        shutil.rmtree(os.path.join(tempdir, "ryu-source/examples"))
-        shutil.rmtree(os.path.join(tempdir, "ryu-source/benchmark"))
-        shutil.rmtree(os.path.join(tempdir, "ryu-source/logo"))
-        shutil.rmtree(os.path.join(tempdir, "ryu-source/extension"))
-        shutil.rmtree(os.path.join(tempdir, "ryu-source/test"))
-        shutil.rmtree(os.path.join(tempdir, "ryu-source/.github"))
+        for dir_to_remove in ["dataset", "examples", "benchmark", "logo", "extension", "test", ".github"]:
+            dir_path = os.path.join(tempdir, "ryu-source", dir_to_remove)
+            if os.path.exists(dir_path):
+                shutil.rmtree(dir_path)
 
         os.makedirs(os.path.join(tempdir, "ryu"))
         for path in ["setup.py", "setup.cfg", "MANIFEST.in"]:
@@ -83,7 +80,7 @@ if __name__ == "__main__":
         shutil.copy2("README.md", os.path.join(tempdir, "README_PYTHON_BUILD.md"))
         subprocess.check_call([sys.executable, "setup.py", "egg_info"], cwd=tempdir)
         shutil.copy2(
-            os.path.join(tempdir, "ryu.egg-info", "PKG-INFO"),
+            os.path.join(tempdir, "ryugraph.egg-info", "PKG-INFO"),
             os.path.join(tempdir, "PKG-INFO"),
         )
         with tarfile.open(file_name, "w:gz") as sdist:

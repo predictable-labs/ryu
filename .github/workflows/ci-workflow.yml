@@ -1059,17 +1059,20 @@ jobs:
           name: binary-demo
           path: dataset/binary-demo
 
+      - name: Setup MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+
       - name: Visual Studio Generator Build
         shell: cmd
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           make all GEN="Visual Studio 17 2022"
           make clean
 
       - name: Test
         shell: cmd
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           make test
 
       - name: Test compression disabled
@@ -1077,7 +1080,6 @@ jobs:
         env:
           ENABLE_COMPRESSION: false
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           make test
 
       - name: Test fwd only rel tables
@@ -1086,7 +1088,6 @@ jobs:
           DEFAULT_REL_STORAGE_DIRECTION: FWD
           GTEST_FILTER: "*~*:RelScanTest*"
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           make test
 
       - name: Test in mem
@@ -1094,7 +1095,6 @@ jobs:
         env:
           IN_MEM_MODE: true
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           make test DEFAULT_REL_STORAGE_DIRECTION=BOTH
 
       - name: Test recovery
@@ -1103,7 +1103,6 @@ jobs:
           AUTO_CHECKPOINT: false
           CHECKPOINT_ON_CLOSE: false
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           make test
 
       - name: Test sparse frontier threshold at 2
@@ -1111,7 +1110,6 @@ jobs:
         env:
           SPARSE_FRONTIER_THRESHOLD: 2
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           make test
 
       - name: Ensure Python dependencies
@@ -1120,7 +1118,6 @@ jobs:
       - name: Python test
         shell: cmd
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           make pytest
 
       - name: Ensure Node.js dependencies
@@ -1129,13 +1126,11 @@ jobs:
       - name: Node.js test
         shell: cmd
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           make nodejstest
 
       - name: Java test
         shell: cmd
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           make javatest
 
       - name: Rust test
@@ -1143,7 +1138,6 @@ jobs:
         env:
           RYU_LOCAL_EXTENSIONS: ${{ github.workspace }}/extension
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           make extension-release
           make rusttest
 
@@ -1155,7 +1149,6 @@ jobs:
           RYU_LOCAL_EXTENSIONS: ${{ github.workspace }}/extension
         shell: cmd
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           set PATH=%PATH%;${{ github.workspace }}/build/release/src
           make extension-release
           make rusttest
@@ -1688,6 +1681,11 @@ jobs:
       - name: Install dependencies
         run: pip install rangehttpserver requests
 
+      - name: Setup MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+
       - name: Update PostgreSQL host
         working-directory: extension/postgres/test/test_files
         env:
@@ -1711,13 +1709,11 @@ jobs:
       - name: Extension test build
         shell: cmd
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           make extension-test-build
 
       - name: Extension test
         shell: cmd
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           python3 scripts/generate-tinysnb.py
           if %errorlevel% neq 0 exit /b %errorlevel%
           start /b python scripts/setup-extension-repo.py
@@ -1729,7 +1725,6 @@ jobs:
           IN_MEM_MODE: true
           HTTP_CACHE_FILE: false
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           python3 scripts/generate-tinysnb.py
           if %errorlevel% neq 0 exit /b %errorlevel%
           start /b python scripts/setup-extension-repo.py
@@ -1741,7 +1736,6 @@ jobs:
           AUTO_CHECKPOINT: true
           CHECKPOINT_THRESHOLD: 0
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           python3 scripts/generate-tinysnb.py
           if %errorlevel% neq 0 exit /b %errorlevel%
           start /b python scripts/setup-extension-repo.py
@@ -1753,7 +1747,6 @@ jobs:
           AUTO_CHECKPOINT: false
           CHECKPOINT_ON_CLOSE: false
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           python3 scripts/generate-tinysnb.py
           if %errorlevel% neq 0 exit /b %errorlevel%
           start /b python scripts/setup-extension-repo.py
@@ -1762,13 +1755,11 @@ jobs:
       - name: Clean
         shell: cmd
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           make clean
 
       - name: Static link extension test
         shell: cmd
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           if %errorlevel% neq 0 exit /b %errorlevel%
           start /b make extension-static-link-test
 
@@ -1778,12 +1769,10 @@ jobs:
           IN_MEM_MODE: true
           HTTP_CACHE_FILE: false
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           if %errorlevel% neq 0 exit /b %errorlevel%
           start /b make extension-static-link-test
 
       - name: Clean
         shell: cmd
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           make clean

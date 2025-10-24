@@ -15,6 +15,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install build dependencies
+        run: |
+          pip3 install -U pip setuptools wheel
+
       - name: Update nightly version
         if: ${{ inputs.isNightly == true }}
         run: |
@@ -28,7 +32,7 @@ jobs:
         run: |
           if exist wheelhouse rmdir /s /q wheelhouse
           mkdir wheelhouse
-          python.exe package_tar.py ryu.tar.gz
+          python.exe package_tar.py ryugraph.tar.gz
 
       # Manually set up cibuildwheel instead of importing their
       # action since there seems to be an issue with quoting
@@ -40,6 +44,11 @@ jobs:
           python-version: "3.7 - 3.12"
           update-environment: false
 
+      - name: Setup MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+
       - name: Build Wheels
         env:
           CIBW_ARCHS_WINDOWS: AMD64
@@ -48,12 +57,8 @@ jobs:
           NUM_THREADS: 40
         shell: cmd
         working-directory: ./scripts/pip-package/
-        run:
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
-
-          pipx run --spec cibuildwheel cibuildwheel
-          "ryu.tar.gz"
-          --output-dir "wheelhouse"
+        run: |
+          pipx run --spec cibuildwheel cibuildwheel "ryugraph.tar.gz" --output-dir "wheelhouse"
 
       - uses: actions/upload-artifact@v4
         with:

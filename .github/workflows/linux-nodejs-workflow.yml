@@ -11,15 +11,15 @@ on:
 
 jobs:
   build-linux-nodejs-x86_64:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
 
       - name: Update nightly version
         if: ${{ inputs.isNightly == true }}
         run: |
-          /opt/python/cp310-cp310/bin/python -m pip install packaging
-          /opt/python/cp310-cp310/bin/python update-nightly-build-version.py
+          python3 -m pip install --break-system-packages packaging
+          python3 update-nightly-build-version.py
         working-directory: scripts
       
       - name: Create Node.js source distribution
@@ -47,15 +47,15 @@ jobs:
           path: tools/nodejs_api/package/ryujs-linux-x64.node
 
   build-linux-nodejs-aarch64:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
 
       - name: Update nightly version
         if: ${{ inputs.isNightly == true }}
         run: |
-          /opt/python/cp310-cp310/bin/python -m pip install packaging
-          /opt/python/cp310-cp310/bin/python update-nightly-build-version.py
+          python3 -m pip install --break-system-packages packaging
+          python3 update-nightly-build-version.py
         working-directory: scripts
 
       - name: Create Node.js source distribution

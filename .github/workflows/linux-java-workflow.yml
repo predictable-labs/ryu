@@ -12,15 +12,15 @@ env:
 
 jobs:
   build-linux-java-x86_64:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
 
       - name: Update nightly version
         if: ${{ inputs.isNightly == true }}
         run: |
-          /opt/python/cp310-cp310/bin/python -m pip install packaging
-          /opt/python/cp310-cp310/bin/python update-nightly-build-version.py
+          python3 -m pip install --break-system-packages packaging
+          python3 update-nightly-build-version.py
         working-directory: scripts
 
       - name: Build Java lib for Linux
@@ -33,15 +33,15 @@ jobs:
           path: tools/java_api/build/libryu_java_native*
 
   build-linux-java-aarch64:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
 
       - name: Update nightly version
         if: ${{ inputs.isNightly == true }}
         run: |
-          /opt/python/cp310-cp310/bin/python -m pip install packaging
-          /opt/python/cp310-cp310/bin/python update-nightly-build-version.py
+          python3 -m pip install --break-system-packages packaging
+          python3 update-nightly-build-version.py
         working-directory: scripts
 
       - name: Build Java lib for Linux
@@ -53,14 +53,14 @@ jobs:
           path: tools/java_api/build/libryu_java_native*
 
   build-linux-java-armv8a:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
 
       - name: Update nightly version
         if: ${{ inputs.isNightly == true }}
         run: |
-          python3 -m pip install packaging
+          python3 -m pip install --break-system-packages packaging
           python3 update-nightly-build-version.py
         working-directory: scripts
 
