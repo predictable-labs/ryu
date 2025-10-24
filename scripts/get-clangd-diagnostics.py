@@ -67,20 +67,41 @@ class LSPClient:
         )
 
     def expect_notif(self, method):
-        json_data = self.recv_json()
-        assert json_data["method"] == method
-        assert "error" not in json_data
-        return json_data["params"]
+        # Keep reading until we get the notification we're looking for
+        # clangd may send multiple notifications and responses
+        while True:
+            json_data = self.recv_json()
+            # Skip responses (they have 'id' but no 'method')
+            if "method" not in json_data:
+                continue
+            # Found the notification we want
+            if json_data["method"] == method:
+                assert "error" not in json_data
+                return json_data["params"]
+            # Skip other notifications and keep looking
 
     def recv_json(self):
-        header = self.stdout.readline()
         content_len_header = "Content-Length: "
-        assert header.startswith(content_len_header)
-        assert header.endswith("\r\n")
+
+        # Keep reading until we find a valid Content-Length header
+        # clangd may send log messages or other output before the header
+        while True:
+            header = self.stdout.readline()
+            if not header:
+                raise EOFError("Connection closed by clangd")
+
+            if header.startswith(content_len_header):
+                break
+
+            # Skip lines that don't look like headers (e.g., log messages)
+            continue
+
+        assert header.endswith("\r\n"), f"Invalid header format: {repr(header)}"
         data_len = int(header[len(content_len_header) : -2])
 
-        # Expect end of header
-        assert self.stdout.read(2) == "\r\n"
+        # Expect end of header (blank line)
+        separator = self.stdout.read(2)
+        assert separator == "\r\n", f"Expected header separator, got: {repr(separator)}"
 
         data = self.stdout.read(data_len)
         return json.loads(data)
