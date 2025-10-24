@@ -30,7 +30,7 @@ pub struct PreparedStatement {
 /// [error](Error::FailedQuery) if another write query is in progress.
 ///
 /// ```
-/// # use ryu::{Connection, Database, SystemConfig, Value, Error};
+/// # use ryugraph::{Connection, Database, SystemConfig, Value, Error};
 /// # fn main() -> anyhow::Result<()> {
 /// # let temp_dir = tempfile::tempdir()?;
 /// # let db = Database::new(temp_dir.path().join("testdb"), SystemConfig::default())?;
@@ -150,7 +150,7 @@ impl<'a> Connection<'a> {
     /// # Arguments
     /// * `prepared_statement`: The prepared statement to execute
     ///```
-    /// # use ryu::{Database, SystemConfig, Connection, Value};
+    /// # use ryugraph::{Database, SystemConfig, Connection, Value};
     /// # use anyhow::Error;
     /// #
     /// # fn main() -> Result<(), Error> {
