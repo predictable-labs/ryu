@@ -11,7 +11,7 @@ on:
 
 jobs:
   build-wasm:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
 
@@ -24,15 +24,18 @@ jobs:
           python3 update-nightly-build-version.py
         working-directory: scripts
       
+      - name: Setup Emscripten
+        uses: mymindstorm/setup-emsdk@v14
+        with:
+          version: 3.1.51
+
       - name: Install dependencies
         working-directory: tools/wasm
         run: npm i
-      
+
       - name: Build WebAssembly package
         working-directory: tools/wasm
-        run: |
-          source /home/runner/emsdk/emsdk_env.sh
-          npm run build
+        run: npm run build
 
       - uses: actions/upload-artifact@v4
         with:
