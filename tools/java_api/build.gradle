@@ -41,9 +41,10 @@ if (System.getenv('SKIP_CMAKE_BUILD') != 'true') {
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            artifactId = 'ryugraph'
             pom {
-                name = 'ryu'
-                description = 'Ryu is an embedded graph database built for query speed and scalability.'
+                name = 'ryugraph'
+                description = 'Ryugraph is an embedded graph database built for query speed and scalability.'
                 url = 'http://ryugraph.io'
                 inceptionYear = '2020'
                 properties = [
@@ -61,9 +62,9 @@ publishing {
                 }
                 developers {
                     developer {
-                        id = 'ryugraph'
-                        name = 'Ryu Inc.'
-                        email = 'contact@ryugraph.io'
+                        id = 'predictable-labs'
+                        name = 'Predictable Labs'
+                        email = 'contact@predictable.sh'
                     }
                 }
                 scm {
