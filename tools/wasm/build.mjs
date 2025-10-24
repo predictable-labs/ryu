@@ -11,7 +11,7 @@ const ES_BUILD_CONFIG = {
   entryPoints: ['./build/sync/index.js', './build/index.js', 'build/ryu_wasm_worker.js'],
   bundle: true,
   format: 'esm',
-  external: ['fs', 'path', 'ws', 'crypto', "worker_threads", "os", "util"],
+  external: ['fs', 'path', 'ws', 'crypto', "worker_threads", "os", "util", "perf_hooks"],
   outdir: 'package',
   logLevel: 'info',
   define: {
