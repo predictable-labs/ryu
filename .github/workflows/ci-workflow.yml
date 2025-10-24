@@ -1714,7 +1714,7 @@ jobs:
       - name: Extension test
         shell: cmd
         run: |
-python3 scripts/generate-tinysnb.py
+          python3 scripts/generate-tinysnb.py
           if %errorlevel% neq 0 exit /b %errorlevel%
           start /b python scripts/setup-extension-repo.py
           make extension-test
@@ -1725,7 +1725,7 @@ python3 scripts/generate-tinysnb.py
           IN_MEM_MODE: true
           HTTP_CACHE_FILE: false
         run: |
-python3 scripts/generate-tinysnb.py
+          python3 scripts/generate-tinysnb.py
           if %errorlevel% neq 0 exit /b %errorlevel%
           start /b python scripts/setup-extension-repo.py
           make extension-test
@@ -1736,7 +1736,7 @@ python3 scripts/generate-tinysnb.py
           AUTO_CHECKPOINT: true
           CHECKPOINT_THRESHOLD: 0
         run: |
-python3 scripts/generate-tinysnb.py
+          python3 scripts/generate-tinysnb.py
           if %errorlevel% neq 0 exit /b %errorlevel%
           start /b python scripts/setup-extension-repo.py
           make extension-test
@@ -1747,7 +1747,7 @@ python3 scripts/generate-tinysnb.py
           AUTO_CHECKPOINT: false
           CHECKPOINT_ON_CLOSE: false
         run: |
-python3 scripts/generate-tinysnb.py
+          python3 scripts/generate-tinysnb.py
           if %errorlevel% neq 0 exit /b %errorlevel%
           start /b python scripts/setup-extension-repo.py
           make extension-test
@@ -1755,12 +1755,12 @@ python3 scripts/generate-tinysnb.py
       - name: Clean
         shell: cmd
         run: |
-make clean
+          make clean
 
       - name: Static link extension test
         shell: cmd
         run: |
-if %errorlevel% neq 0 exit /b %errorlevel%
+          if %errorlevel% neq 0 exit /b %errorlevel%
           start /b make extension-static-link-test
 
       - name: Static link extension test in mem mode
@@ -1769,10 +1769,10 @@ if %errorlevel% neq 0 exit /b %errorlevel%
           IN_MEM_MODE: true
           HTTP_CACHE_FILE: false
         run: |
-if %errorlevel% neq 0 exit /b %errorlevel%
+          if %errorlevel% neq 0 exit /b %errorlevel%
           start /b make extension-static-link-test
 
       - name: Clean
         shell: cmd
         run: |
-make clean
+          make clean
