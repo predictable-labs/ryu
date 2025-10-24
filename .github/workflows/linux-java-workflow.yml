@@ -54,6 +54,8 @@ jobs:
 
   build-linux-java-armv8a:
     runs-on: self-hosted
+    env:
+      ANDROID_NDK_ROOT: /opt/android-ndk
     steps:
       - uses: actions/checkout@v4
 
