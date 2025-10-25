@@ -55,7 +55,7 @@ if get_os() != "win":
         file_name += '.dylib'
     else:
         file_name += '.so'
-    official_repo = f"https://extension.ryugraph.com/{ryu_version}/{arch_version}/common/{file_name}"
+    official_repo = f"https://extension.ryugraph.io/{ryu_version}/{arch_version}/common/{file_name}"
     response = requests.get(official_repo)
     if response.status_code == 200:
         with open(os.path.join(path, 'common', file_name), "wb") as f:
