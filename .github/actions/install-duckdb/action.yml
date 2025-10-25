@@ -78,9 +78,13 @@ runs:
       if: runner.os == 'macOS'
       shell: bash
       run: |
-        sudo cp /tmp/duckdb-install/duckdb.h /usr/local/include/
-        sudo cp /tmp/duckdb-install/duckdb.hpp /usr/local/include/
-        sudo cp /tmp/duckdb-install/libduckdb.dylib /usr/local/lib/
+        mkdir -p $HOME/duckdb/include
+        mkdir -p $HOME/duckdb/lib
+        cp /tmp/duckdb-install/duckdb.h $HOME/duckdb/include/
+        cp /tmp/duckdb-install/duckdb.hpp $HOME/duckdb/include/
+        cp /tmp/duckdb-install/libduckdb.dylib $HOME/duckdb/lib/
+        echo "DuckDB_DIR=$HOME/duckdb" >> $GITHUB_ENV
+        echo "DYLD_LIBRARY_PATH=$HOME/duckdb/lib:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
 
     - name: Cache DuckDB (Windows)
       if: runner.os == 'Windows'
@@ -94,9 +98,13 @@ runs:
       if: runner.os == 'Windows' && steps.cache-duckdb-windows.outputs.cache-hit != 'true'
       shell: pwsh
       run: |
+        # Download both shared and static libraries
         Invoke-WebRequest -Uri "https://github.com/duckdb/duckdb/releases/download/v1.1.3/libduckdb-windows-amd64.zip" -OutFile "libduckdb-windows-amd64.zip"
         Expand-Archive -Path "libduckdb-windows-amd64.zip" -DestinationPath "C:\duckdb-cache"
         Remove-Item "libduckdb-windows-amd64.zip"
+        # Also download static library if available
+        Invoke-WebRequest -Uri "https://github.com/duckdb/duckdb/releases/download/v1.1.3/duckdb_cli-windows-amd64.zip" -OutFile "duckdb_cli.zip" -ErrorAction SilentlyContinue
+        if (Test-Path "duckdb_cli.zip") { Remove-Item "duckdb_cli.zip" }
 
     - name: Install DuckDB from cache (Windows)
       if: runner.os == 'Windows'
@@ -108,4 +116,6 @@ runs:
         Copy-Item "C:\duckdb-cache\duckdb.hpp" -Destination "C:\Program Files\duckdb\include\" -Force
         Copy-Item "C:\duckdb-cache\duckdb.dll" -Destination "C:\Program Files\duckdb\lib\" -Force
         Copy-Item "C:\duckdb-cache\duckdb.lib" -Destination "C:\Program Files\duckdb\lib\" -Force
+        # Set both CMAKE_PREFIX_PATH and DuckDB_DIR for FindDuckDB.cmake
         echo "CMAKE_PREFIX_PATH=C:\Program Files\duckdb" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+        echo "DuckDB_DIR=C:\Program Files\duckdb" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append

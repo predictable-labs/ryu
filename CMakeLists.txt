@@ -416,7 +416,7 @@ add_subdirectory(third_party)
 
 add_definitions(-DRYU_ROOT_DIRECTORY="${PROJECT_SOURCE_DIR}")
 add_definitions(-DRYU_CMAKE_VERSION="${CMAKE_PROJECT_VERSION}")
-add_definitions(-DRYU_EXTENSION_VERSION="0.11.1")
+add_definitions(-DRYU_EXTENSION_VERSION="25.9.0")
 
 if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/extension/CMakeLists.txt")
     add_subdirectory(extension)
