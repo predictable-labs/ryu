@@ -117,10 +117,20 @@ jobs:
         with:
           arch: x64
 
-      - name: Build precompiled extensions
-        shell: cmd
+      - name: Debug DuckDB installation
+        shell: pwsh
         run: |
-          make extension-release EXTRA_CMAKE_FLAGS="-DDuckDB_DIR=C:\Program Files\duckdb"
+          Write-Host "Checking DuckDB installation..."
+          Get-ChildItem -Path "C:\Program Files\duckdb" -Recurse
+          Write-Host "Environment variables:"
+          Write-Host "DuckDB_DIR=$env:DuckDB_DIR"
+          Write-Host "CMAKE_PREFIX_PATH=$env:CMAKE_PREFIX_PATH"
+
+      - name: Build precompiled extensions
+        shell: pwsh
+        run: |
+          $env:DuckDB_DIR = "C:\Program Files\duckdb"
+          make extension-release EXTRA_CMAKE_FLAGS="-DDuckDB_DIR=`"C:/Program Files/duckdb`""
 
       - name: Collect built artifacts
         run: python scripts/collect-extensions.py
