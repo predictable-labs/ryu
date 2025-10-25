@@ -38,11 +38,11 @@ The instructions of setting up a local extension server can be found below.
 
 ### Host your own extension server
 
-The extension server is based on NGINX and is hosted on [GitHub](https://ghcr.io/ryugraph/extension-repo). You can pull the Docker image and run it in your environment:
+The extension server is based on NGINX and is hosted on [GitHub Container Registry](https://ghcr.io/predictable-labs/extension-repo). You can pull the Docker image and run it in your environment:
 
 ```bash
-docker pull ghcr.io/ryugraph/extension-repo:latest
-docker run -d -p 8080:80 ghcr.io/ryugraph/extension-repo:latest
+docker pull ghcr.io/predictable-labs/extension-repo:latest
+docker run -d -p 8080:80 ghcr.io/predictable-labs/extension-repo:latest
 ```
 
 In this example, the extension server will be available at `http://localhost:8080`. You can then install extensions from your server by appending the `FROM` clause to the `INSTALL` command:

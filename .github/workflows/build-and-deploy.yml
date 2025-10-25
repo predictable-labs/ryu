@@ -500,3 +500,94 @@ jobs:
     with:
       isNightly: ${{ github.event_name == 'schedule' || github.event.inputs.isNightly == 'true' }}
     secrets: inherit
+
+  deploy-precompiled-binaries:
+    if: ${{ github.event_name == 'schedule' || github.event.inputs.skipBinaries != 'true' }}
+    needs: [build-precompiled-bin-mac, build-precompiled-bin-linux, build-precompiled-bin-windows]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update nightly version
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.isNightly == 'true' }}
+        run: |
+          pip3 install packaging
+          python3 update-nightly-build-version.py
+        working-directory: scripts
+
+      - name: Get version
+        id: version
+        run: |
+          VERSION=$(cat CMakeLists.txt | grep "project(Ryu VERSION" | cut -d ' ' -f 3 | cut -d ')' -f 1)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Version: $VERSION"
+
+      - name: Download all binary artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: release-artifacts
+
+      - name: List downloaded artifacts
+        run: ls -R release-artifacts
+
+      - name: Prepare release archives
+        run: |
+          cd release-artifacts
+
+          # Create Windows archives (individual files need to be zipped)
+          cd libryu-windows-x86_64
+          zip -r libryu-windows-x86_64.zip ryu.h ryu.hpp ryu_shared.dll ryu_shared.lib
+          cd ..
+
+          cd ryu_cli-windows-x86_64
+          zip ryu_cli-windows-x86_64.zip ryu.exe
+          cd ..
+
+          cd ..
+
+      - name: Upload release artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ryu-precompiled-binaries
+          path: release-artifacts
+
+      - name: Create or update GitHub Release
+        if: ${{ github.event.inputs.isDeploy == 'true' && github.event.inputs.isNightly != 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION="v${{ steps.version.outputs.version }}"
+
+          # Check if release exists
+          if gh release view $VERSION >/dev/null 2>&1; then
+            echo "Release $VERSION exists, uploading assets..."
+            RELEASE_CMD="gh release upload $VERSION --clobber"
+          else
+            echo "Creating new release $VERSION..."
+            gh release create $VERSION \
+              --title "Ryu $VERSION" \
+              --notes "Release $VERSION of Ryu Graph Database" \
+              --draft=false \
+              --latest
+            RELEASE_CMD="gh release upload $VERSION"
+          fi
+
+          # Upload library tarballs
+          $RELEASE_CMD release-artifacts/libryu-linux-x86_64/libryu-linux-x86_64.tar.gz
+          $RELEASE_CMD release-artifacts/libryu-linux-aarch64/libryu-linux-aarch64.tar.gz
+          $RELEASE_CMD release-artifacts/libryu-android-armv8a/libryu-android-armv8a.tar.gz
+          $RELEASE_CMD release-artifacts/libryu-osx-universal/libryu-osx-universal.tar.gz
+
+          # Upload CLI tarballs
+          $RELEASE_CMD release-artifacts/ryu_cli-linux-x86_64/ryu_cli-linux-x86_64.tar.gz
+          $RELEASE_CMD release-artifacts/ryu_cli-linux-aarch64/ryu_cli-linux-aarch64.tar.gz
+          $RELEASE_CMD release-artifacts/ryu_cli-android-armv8a/ryu_cli-android-armv8a.tar.gz
+          $RELEASE_CMD release-artifacts/ryu_cli-osx-universal/ryu_cli-osx-universal.tar.gz
+
+          # Upload Windows zips
+          $RELEASE_CMD release-artifacts/libryu-windows-x86_64/libryu-windows-x86_64.zip
+          $RELEASE_CMD release-artifacts/ryu_cli-windows-x86_64/ryu_cli-windows-x86_64.zip
+
+          echo "Release $VERSION published successfully!"
