@@ -33,12 +33,20 @@ jobs:
           rm -rf *
           mv ../extension-scripts/* .
 
-      - name: Download artifacts
+      - name: Download artifacts from previous run
+        if: ${{ inputs.run_id != '' }}
+        uses: dawidd6/action-download-artifact@v3
+        with:
+          workflow: build-and-deploy-extension.yml
+          run_id: ${{ inputs.run_id }}
+          name: ryu-extensions
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download artifacts from current run
+        if: ${{ inputs.run_id == '' }}
         uses: actions/download-artifact@v4
         with:
           name: ryu-extensions
-          run-id: ${{ inputs.run_id || github.run_id }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Ensure dataset directory exists
         run: |
@@ -47,6 +55,15 @@ jobs:
             echo "Dataset directory is empty, creating placeholder"
             echo "# Dataset placeholder" > dataset/README.md
           fi
+
+      - name: Debug - List files
+        run: |
+          echo "Current directory:"
+          pwd
+          echo "Files in current directory:"
+          ls -la
+          echo "Checking for Dockerfile:"
+          test -f Dockerfile && echo "Dockerfile exists" || echo "Dockerfile NOT found"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
