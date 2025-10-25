@@ -63,8 +63,9 @@ jobs:
       - name: Clear old artifacts
         run: rm -rf releases/$RELEASE_VERSION/
 
-      - name: Create temporary directory for artifacts
+      - name: Create directories for artifacts
         run: |
+          mkdir -p releases/$RELEASE_VERSION
           mkdir -p extension-artifacts
           mkdir -p extension-artifacts/linux_amd64
           mkdir -p extension-artifacts/linux_arm64
