@@ -1,6 +1,12 @@
 name: Deploy Extensions
 
-on: 
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: 'Workflow run ID to download artifacts from (leave empty to use latest)'
+        required: false
+        type: string
   workflow_call:
 
 jobs:
@@ -27,9 +33,20 @@ jobs:
           rm -rf *
           mv ../extension-scripts/* .
 
-      - uses: actions/download-artifact@v4
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
         with:
           name: ryu-extensions
+          run-id: ${{ inputs.run_id || github.run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Ensure dataset directory exists
+        run: |
+          mkdir -p dataset
+          if [ ! "$(ls -A dataset)" ]; then
+            echo "Dataset directory is empty, creating placeholder"
+            echo "# Dataset placeholder" > dataset/README.md
+          fi
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
