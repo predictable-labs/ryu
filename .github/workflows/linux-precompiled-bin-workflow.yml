@@ -38,7 +38,11 @@ jobs:
         run: |
           mv install/include/ryu.h .
           mv install/include/ryu.hpp .
-          mv install/lib64/libryu.so .
+          if [ -f install/lib64/libryu.so ]; then
+            mv install/lib64/libryu.so .
+          else
+            mv install/lib/libryu.so .
+          fi
           mv install/bin/ryu .
 
       - name: Create tarball
@@ -78,7 +82,11 @@ jobs:
         run: |
           mv install/include/ryu.h .
           mv install/include/ryu.hpp .
-          mv install/lib64/libryu.so .
+          if [ -f install/lib64/libryu.so ]; then
+            mv install/lib64/libryu.so .
+          else
+            mv install/lib/libryu.so .
+          fi
           mv install/bin/ryu .
 
       - name: Create tarball
