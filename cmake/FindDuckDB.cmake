@@ -13,6 +13,7 @@ find_path(DuckDB_INCLUDE_DIR
         /usr/include
         ${DuckDB_DIR}/include
         $ENV{DuckDB_DIR}/include
+        "C:/Program Files/duckdb/include"
     DOC "DuckDB include directory"
 )
 
@@ -28,12 +29,13 @@ if(DuckDB_USE_STATIC_LIBS)
     )
 else()
     find_library(DuckDB_LIBRARY
-        NAMES duckdb libduckdb.so libduckdb.dylib duckdb.dll
+        NAMES duckdb libduckdb.so libduckdb.dylib
         PATHS
             /usr/local/lib
             /usr/lib
             ${DuckDB_DIR}/lib
             $ENV{DuckDB_DIR}/lib
+            "C:/Program Files/duckdb/lib"
         DOC "DuckDB shared library"
     )
 endif()

@@ -63,7 +63,7 @@ jobs:
         uses: ./.github/actions/install-duckdb
 
       - name: Build precompiled extensions
-        run: make extension-release NUM_THREADS=$(sysctl -n hw.logicalcpu)
+        run: make extension-release NUM_THREADS=$(sysctl -n hw.logicalcpu) EXTRA_CMAKE_FLAGS="-DDuckDB_DIR=$HOME/duckdb"
         env:
           MACOSX_DEPLOYMENT_TARGET: 11.0
           CMAKE_OSX_ARCHITECTURES: "arm64"
@@ -87,7 +87,7 @@ jobs:
         uses: ./.github/actions/install-duckdb
 
       - name: Build precompiled extensions
-        run: make extension-release NUM_THREADS=$(sysctl -n hw.logicalcpu)
+        run: make extension-release NUM_THREADS=$(sysctl -n hw.logicalcpu) EXTRA_CMAKE_FLAGS="-DDuckDB_DIR=$HOME/duckdb"
         env:
           MACOSX_DEPLOYMENT_TARGET: 11.0
           CMAKE_OSX_ARCHITECTURES: "x86_64"
@@ -120,7 +120,7 @@ jobs:
       - name: Build precompiled extensions
         shell: cmd
         run: |
-          make extension-release
+          make extension-release EXTRA_CMAKE_FLAGS="-DDuckDB_DIR=C:\Program Files\duckdb"
 
       - name: Collect built artifacts
         run: python scripts/collect-extensions.py
