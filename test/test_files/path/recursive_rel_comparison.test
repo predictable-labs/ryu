@@ -1,0 +1,36 @@
+-DATASET CSV EMPTY
+
+--
+
+-CASE RecursiveRelComparisonBug
+
+-STATEMENT CREATE NODE TABLE People(name STRING PRIMARY KEY);
+---- ok
+-STATEMENT CREATE REL TABLE LivesWith(FROM People TO People);
+---- ok
+
+-STATEMENT CREATE (a:People {name: 'A'});
+---- ok
+-STATEMENT CREATE (b:People {name: 'B'});
+---- ok
+-STATEMENT CREATE (c:People {name: 'C'});
+---- ok
+-STATEMENT CREATE (d:People {name: 'D'});
+---- ok
+
+-STATEMENT MATCH (a:People {name: 'A'}), (b:People {name:'B'}) CREATE (a)-[:LivesWith]->(b);
+---- ok
+-STATEMENT MATCH (b:People {name: 'B'}), (c:People {name:'C'}) CREATE (b)-[:LivesWith]->(c);
+---- ok
+-STATEMENT MATCH (c:People {name: 'C'}), (d:People {name:'D'}) CREATE (c)-[:LivesWith]->(d);
+---- ok
+-STATEMENT MATCH (a:People {name: 'A'}), (c:People {name:'C'}) CREATE (a)-[:LivesWith]->(c);
+---- ok
+-STATEMENT MATCH (a:People {name: 'A'}), (d:People {name:'D'}) CREATE (a)-[:LivesWith]->(d);
+---- ok
+
+-LOG RecursivePathWithAllAndRelComparison
+# Bug: Segfault when using ALL() with relationship comparison in recursive path
+-STATEMENT MATCH (a)-[t:LivesWith]->(d) WHERE a.name <> d.name WITH a, d, t MATCH p = (a)-[:LivesWith*1..]->(d) WHERE length(p) >= 2 AND ALL (r IN relationships(p) WHERE r <> t) WITH DISTINCT t RETURN count(t);
+---- 1
+2
