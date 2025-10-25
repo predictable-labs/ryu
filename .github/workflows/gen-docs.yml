@@ -218,7 +218,7 @@ jobs:
         run: |
           git checkout -b "api-documentation-update-${{ github.sha }}"
           git config --global user.name "CI User"
-          git config --global user.email "ci@ryugraph.com"
+          git config --global user.email "ci@ryugraph.io"
           git add .
           git commit -m "Update API documentations"
           git push -u origin "api-documentation-update-${{ github.sha }}"

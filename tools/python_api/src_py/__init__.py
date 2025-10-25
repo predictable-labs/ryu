@@ -33,7 +33,7 @@ while results.has_next():
     print(results.get_next())
 ```
 
-The dataset used in this example can be found [here](https://github.com/ryugraph/ryu/tree/master/dataset/demo-db/csv).
+The dataset used in this example can be found [here](https://github.com/predictable-labs/ryugraph/tree/main/dataset/demo-db/csv).
 
 """
 

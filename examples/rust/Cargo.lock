@@ -122,7 +122,7 @@ dependencies = [
  "half",
  "lexical-core",
  "num",
- "ryu 1.0.20",
+ "ryu",
 ]
 
 [[package]]
@@ -754,20 +754,6 @@ checksum = "b39cdef0fa800fc44525c84ccb54a029961a8215f9619753635a9c0d2538d46d"
 
 [[package]]
 name = "ryu"
-version = "0.11.1"
-dependencies = [
- "arrow",
- "cmake",
- "cxx",
- "cxx-build",
- "rust_decimal",
- "rustversion",
- "time",
- "uuid",
-]
-
-[[package]]
-name = "ryu"
 version = "1.0.20"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "28d3b2b1366ec20994f1fd18c3c594f05c5dd4bc44d8bb0c1c632c8d6829481f"
@@ -777,7 +763,21 @@ name = "ryu-rust-example"
 version = "0.1.0"
 dependencies = [
  "arrow",
- "ryu 0.11.1",
+ "ryugraph",
+]
+
+[[package]]
+name = "ryugraph"
+version = "25.9.0"
+dependencies = [
+ "arrow",
+ "cmake",
+ "cxx",
+ "cxx-build",
+ "rust_decimal",
+ "rustversion",
+ "time",
+ "uuid",
 ]
 
 [[package]]

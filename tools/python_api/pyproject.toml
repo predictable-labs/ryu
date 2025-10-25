@@ -7,10 +7,10 @@ keywords = ["graph", "database"]
 version = "25.9.0"
 
 [project.urls]
-Homepage = "https://ryugraph.com/"
-Documentation = "https://docs.ryugraph.com/"
-Repository = "https://github.com/ryugraph/ryu"
-Changelog = "https://github.com/ryugraph/ryu/releases"
+Homepage = "https://ryugraph.io/"
+Documentation = "https://docs.ryugraph.io/"
+Repository = "https://github.com/predictable-labs/ryugraph"
+Changelog = "https://github.com/predictable-labs/ryugraph/releases"
 
 [tool.mypy]
 files = ["src_py", "test"]

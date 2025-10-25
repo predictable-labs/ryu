@@ -8,4 +8,4 @@ Associated docs (issue or PR):
 
 # Contributor agreement
 
-- [ ] I have read and agree to the [Contributor Agreement](https://github.com/ryugraph/ryu/blob/master/CLA.md).
+- [ ] I have read and agree to the [Contributor Agreement](https://github.com/predictable-labs/ryugraph/blob/main/CLA.md).

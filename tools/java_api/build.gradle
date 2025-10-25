@@ -45,7 +45,7 @@ publishing {
             pom {
                 name = 'ryugraph'
                 description = 'Ryugraph is an embedded graph database built for query speed and scalability.'
-                url = 'http://ryugraph.com'
+                url = 'http://ryugraph.io'
                 inceptionYear = '2020'
                 properties = [
                         'project.build.sourceEncoding'    : 'UTF-8',

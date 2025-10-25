@@ -1,7 +1,7 @@
 # Ryu-Wasm
 Ryu-Wasm is the official WebAssembly build of Ryu in-process property graph database management system. 
 Ryu is an embeddable property graph database management system built for query speed and scalability. 
-Please visit [Ryu website](https://ryugraph.com) for more information. Ryu-Wasm enables the following:
+Please visit [Ryu website](https://ryugraph.io) for more information. Ryu-Wasm enables the following:
 
 - Fast, in-browser graph analysis without ever sending data to a server
 - Strong data privacy guarantees, as the data never leaves the browser
@@ -23,7 +23,7 @@ We provide three versions of this example:
 - `browser_persistent`: This example demonstrates how to use Ryu-Wasm in a web browser with a persistent IDBFS filesystem.
 - `nodejs`: This example demonstrates how to use Ryu-Wasm in Node.js.
 
-The example can be found in [the examples directory](https://github.com/ryugraph/ryu/tree/master/tools/wasm/examples).
+The example can be found in [the examples directory](https://github.com/predictable-labs/ryugraph/tree/main/tools/wasm/examples).
 
 ## Understanding the package
 
@@ -54,9 +54,9 @@ For the Node.js variant, the worker script can be resolved automatically and you
 ## API documentation
 The API documentation can be found here:
 
-**Synchronous** version: [API documentation](https://ryugraph.com/api-docs/wasm/sync/)
+**Synchronous** version: [API documentation](https://ryugraph.io/api-docs/wasm/sync/)
 
-**Asynchronous** version: [API documentation](https://ryugraph.com/api-docs/wasm/async/)
+**Asynchronous** version: [API documentation](https://ryugraph.io/api-docs/wasm/async/)
 
 ## Local development
 

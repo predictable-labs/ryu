@@ -17,15 +17,15 @@ Ryu was initially developed by Kuzu Inc. Now it's maintained by Predictable Labs
 
 ## Docs and Blog
 
-To learn more about Ryu, see our [Documentation](https://ryugraph.github.io/docs) and [Blog](https://ryugraph.github.io/blog) page.
+To learn more about Ryu, see our [Documentation](https://ryugraph.io/docs) and [Blog](https://ryugraph.io/blog) page.
 
 ## Getting Started
 
-Refer to our [Getting Started](https://ryugraph.github.io/docs/get-started/) page for your first example.
+Refer to our [Getting Started](https://ryugraph.io/docs/get-started/) page for your first example.
 
 ## Extensions
 Ryu has an extension framework that users can dynamically load the functionality you need at runtime.
-We've developed a list of [official extensions](https://ryugraph.github.io/docs/extensions/#available-extensions) that you can use to extend Ryu's functionality.
+We've developed a list of [official extensions](https://ryugraph.io/docs/extensions/#available-extensions) that you can use to extend Ryu's functionality.
 
 Ryu requires you to install the extension before loading and using it.
 Note that Ryu no longer provides the official extension server, where you can directly install any official extensions.
@@ -53,7 +53,7 @@ INSTALL <EXTENSION_NAME> FROM 'http://localhost:8080/';
 
 ## Build from Source
 
-You can build from source using the instructions provided in the [developer guide](https://ryugraph.github.io/docs/developer-guide).
+You can build from source using the instructions provided in the [developer guide](https://ryugraph.io/docs/developer-guide).
 
 ## License
 Ryu is licensed under the [MIT License](LICENSE).

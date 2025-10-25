@@ -30,7 +30,7 @@ pub struct PreparedStatement {
 /// [error](Error::FailedQuery) if another write query is in progress.
 ///
 /// ```
-/// # use ryu::{Connection, Database, SystemConfig, Value, Error};
+/// # use ryugraph::{Connection, Database, SystemConfig, Value, Error};
 /// # fn main() -> anyhow::Result<()> {
 /// # let temp_dir = tempfile::tempdir()?;
 /// # let db = Database::new(temp_dir.path().join("testdb"), SystemConfig::default())?;
@@ -106,7 +106,7 @@ impl<'a> Connection<'a> {
     /// using [`Connection::execute`]
     ///
     /// # Arguments
-    /// * `query`: The query to prepare. See <https://ryugraph.com/docs/cypher> for details on the
+    /// * `query`: The query to prepare. See <https://ryugraph.io/docs/cypher> for details on the
     ///   query format.
     pub fn prepare(&self, query: &str) -> Result<PreparedStatement, Error> {
         let statement =
@@ -123,7 +123,7 @@ impl<'a> Connection<'a> {
     /// Executes the given query and returns the result.
     ///
     /// # Arguments
-    /// * `query`: The query to execute. See <https://ryugraph.com/docs/cypher> for details on the
+    /// * `query`: The query to execute. See <https://ryugraph.io/docs/cypher> for details on the
     ///   query format.
     // TODO(bmwinger): Instead of having a Value enum in the results, perhaps QueryResult, and thus query
     // should be generic.
@@ -150,7 +150,7 @@ impl<'a> Connection<'a> {
     /// # Arguments
     /// * `prepared_statement`: The prepared statement to execute
     ///```
-    /// # use ryu::{Database, SystemConfig, Connection, Value};
+    /// # use ryugraph::{Database, SystemConfig, Connection, Value};
     /// # use anyhow::Error;
     /// #
     /// # fn main() -> Result<(), Error> {
