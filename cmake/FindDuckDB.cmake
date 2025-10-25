@@ -19,12 +19,13 @@ find_path(DuckDB_INCLUDE_DIR
 
 if(DuckDB_USE_STATIC_LIBS)
     find_library(DuckDB_LIBRARY
-        NAMES libduckdb_static.a duckdb_static
+        NAMES libduckdb_static.a duckdb_static duckdb
         PATHS
             /usr/local/lib
             /usr/lib
             ${DuckDB_DIR}/lib
             $ENV{DuckDB_DIR}/lib
+            "C:/Program Files/duckdb/lib"
         DOC "DuckDB static library"
     )
 else()

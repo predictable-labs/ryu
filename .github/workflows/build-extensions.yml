@@ -117,15 +117,6 @@ jobs:
         with:
           arch: x64
 
-      - name: Debug DuckDB installation
-        shell: pwsh
-        run: |
-          Write-Host "Checking DuckDB installation..."
-          Get-ChildItem -Path "C:\Program Files\duckdb" -Recurse
-          Write-Host "Environment variables:"
-          Write-Host "DuckDB_DIR=$env:DuckDB_DIR"
-          Write-Host "CMAKE_PREFIX_PATH=$env:CMAKE_PREFIX_PATH"
-
       - name: Build precompiled extensions
         shell: pwsh
         run: |
