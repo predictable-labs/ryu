@@ -28,8 +28,8 @@ jobs:
         continue-on-error: true
         id: pull-image
         run: |
-          docker pull ghcr.io/ryugraph/extension-repo:latest
-          docker run --rm -d --name ryu-extensions ghcr.io/ryugraph/extension-repo:latest tail -f /dev/null
+          docker pull ghcr.io/predictable-labs/extension-repo:latest
+          docker run --rm -d --name ryu-extensions ghcr.io/predictable-labs/extension-repo:latest tail -f /dev/null
       
       - name: Copy ghcr extensions
         if: steps.pull-image.outcome == 'success'

@@ -81,4 +81,4 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ghcr.io/ryugraph/extension-repo:latest
+          tags: ghcr.io/predictable-labs/extension-repo:latest
