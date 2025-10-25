@@ -25,11 +25,14 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Pull ghcr extensions and run container
+        continue-on-error: true
+        id: pull-image
         run: |
           docker pull ghcr.io/ryugraph/extension-repo:latest
           docker run --rm -d --name ryu-extensions ghcr.io/ryugraph/extension-repo:latest tail -f /dev/null
       
       - name: Copy ghcr extensions
+        if: steps.pull-image.outcome == 'success'
         run: |
           mkdir ./ghcr-extensions
           docker cp ryu-extensions:/usr/share/nginx/html ./ghcr-extensions
@@ -37,6 +40,13 @@ jobs:
           sudo chmod -R 755 ghcr-extensions
           mv ghcr-extensions/html/dataset ghcr-extensions/dataset
           mv ghcr-extensions/html/ ghcr-extensions/releases
+
+      - name: Create empty ghcr extensions directory
+        if: steps.pull-image.outcome != 'success'
+        run: |
+          mkdir -p ./ghcr-extensions/releases
+          mkdir -p ./ghcr-extensions/dataset
+          echo "No pre-existing extensions found in GHCR" > ./ghcr-extensions/README.txt
 
       - name: Upload ghcr extensions
         uses: actions/upload-artifact@v4
