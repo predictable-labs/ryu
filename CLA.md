@@ -1,6 +1,6 @@
 ## Contributor Agreement
 
-Thank you for your interest in contributing to Xiyang Feng's, Guodong Jin's, Chang Liu's, Ziyi Chen's, and Semih Salihoğlu's Ryu ("We" or "Us").
+Thank you for your interest in contributing to Predictable Labs, Inc's Ryu ("We" or "Us"). Ryu is the active continuation of the Kuzu embedded graph database project, which was archived in October 2025. This contributor agreement governs contributions to Ryu, ensuring the continued development and evolution of this innovative graph database technology.
 
 The purpose of this contributor agreement ("Agreement") is to clarify and document the rights granted by contributors to Us.
 
