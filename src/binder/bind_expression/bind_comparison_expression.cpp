@@ -44,7 +44,7 @@ std::shared_ptr<Expression> ExpressionBinder::bindComparisonExpression(
         expression_vector newChildren;
         // For pattern expressions (NODE/REL), use getInternalID() directly
         // For non-pattern expressions (VARIABLE, FUNCTION, etc.), extract the _ID field
-        for (auto& child : children) {
+        for (const auto& child : children) {
             if (child->expressionType == ExpressionType::PATTERN) {
                 newChildren.push_back(child->constCast<NodeOrRelExpression>().getInternalID());
             } else {
