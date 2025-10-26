@@ -160,18 +160,16 @@ def test_label_segfault(conn_db_readwrite: ConnDB) -> None:
         WITH nodes(p) AS ns
         RETURN properties(ns, "_LABEL")[1];
     """
+    import contextlib
+
     conn, _ = conn_db_readwrite
 
     # Create schema as described in the issue
     # Drop tables first in case of test reruns or fixture reuse
-    try:
+    with contextlib.suppress(Exception):
         conn.execute("DROP TABLE Person;")
-    except Exception:
-        pass  # Table doesn't exist, which is fine
-    try:
+    with contextlib.suppress(Exception):
         conn.execute("DROP TABLE LivesWith;")
-    except Exception:
-        pass  # Table doesn't exist, which is fine
 
     conn.execute("CREATE NODE TABLE Person(name STRING PRIMARY KEY, occupation STRING);")
     conn.execute("CREATE REL TABLE LivesWith(FROM Person TO Person);")
