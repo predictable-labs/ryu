@@ -151,42 +151,35 @@ def test_label_segfault(conn_db_readwrite: ConnDB) -> None:
     """Test for segfault bug when calling label() on node extracted from path with array indexing.
 
     Issue: With data created using LivesWith relationship, the following segfaults:
-        MATCH p = (n)-[:LivesWith]->(m:Person {name: 'Bob'})
+        MATCH p = (n)-[:LivesWith]->(m:TestPerson {name: 'Bob'})
         WITH nodes(p) AS ns
         RETURN label(ns[1]);
 
     But this works:
-        MATCH p = (n)-[:LivesWith]->(m:Person {name: 'Bob'})
+        MATCH p = (n)-[:LivesWith]->(m:TestPerson {name: 'Bob'})
         WITH nodes(p) AS ns
         RETURN properties(ns, "_LABEL")[1];
     """
-    import contextlib
-
     conn, _ = conn_db_readwrite
 
     # Create schema as described in the issue
-    # Drop tables first in case of test reruns or fixture reuse
-    with contextlib.suppress(Exception):
-        conn.execute("DROP TABLE Person;")
-    with contextlib.suppress(Exception):
-        conn.execute("DROP TABLE LivesWith;")
-
-    conn.execute("CREATE NODE TABLE Person(name STRING PRIMARY KEY, occupation STRING);")
-    conn.execute("CREATE REL TABLE LivesWith(FROM Person TO Person);")
+    # Use unique table names to avoid conflicts with other tests
+    conn.execute("CREATE NODE TABLE TestPerson(name STRING PRIMARY KEY, occupation STRING);")
+    conn.execute("CREATE REL TABLE TestLivesWith(FROM TestPerson TO TestPerson);")
 
     # Create test data
-    conn.execute("CREATE (p:Person {name: 'Alice'})-[:LivesWith]->(:Person {name: 'Bob'});")
+    conn.execute("CREATE (p:TestPerson {name: 'Alice'})-[:TestLivesWith]->(:TestPerson {name: 'Bob'});")
 
     # First, verify the working query using properties()
     result = conn.execute(
         """
-        MATCH p = (n)-[:LivesWith]->(m:Person {name: 'Bob'})
+        MATCH p = (n)-[:TestLivesWith]->(m:TestPerson {name: 'Bob'})
         WITH nodes(p) AS ns
         RETURN properties(ns, "_LABEL")[1];
         """
     )
     assert result.has_next()
-    assert result.get_next() == ["Person"]
+    assert result.get_next() == ["TestPerson"]
     assert not result.has_next()
     result.close()
 
@@ -194,12 +187,12 @@ def test_label_segfault(conn_db_readwrite: ConnDB) -> None:
     # This should segfault with the current bug
     result = conn.execute(
         """
-        MATCH p = (n)-[:LivesWith]->(m:Person {name: 'Bob'})
+        MATCH p = (n)-[:TestLivesWith]->(m:TestPerson {name: 'Bob'})
         WITH nodes(p) AS ns
         RETURN label(ns[1]);
         """
     )
     assert result.has_next()
-    assert result.get_next() == ["Person"]
+    assert result.get_next() == ["TestPerson"]
     assert not result.has_next()
     result.close()
