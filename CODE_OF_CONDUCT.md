@@ -1,9 +1,3 @@
-Ryu is being developed publicly by Ryu Inc., under an MIT license in this GitHub repo. We encourage everyone
-to open issues and discuss topics only related to Ryu. We also kindly ask everyone to be
-respectful, polite and avoid any hurtful language in any form.
-Ryu Inc. is a startup based in Canada 🇨🇦, a land that is proud of their high standards
-for politeness and where a person you bumped into on the road will likely
-apologize to you even if it was your fault: so, again, we ask you to please be
-kind and respectful to everyone on this GitHub.
-If you prefer not to discuss something through open issues and discussions,
-you can always reach us through [email](mailto:contact@ryugraph.io).
+Ryu is being developed publicly by Predictable Labs, Inc., under an MIT license in this GitHub repo. Ryu is a fork of Kuzu, which was originally developed by Kuzu Inc. in Canada 🇨🇦, a land known for its high standards of politeness and respect. Following Kuzu's archival in October 2025, Ryu continues the development and evolution of this embedded graph database technology, carrying forward the same values of kindness and respectful communication that were foundational to the original project. We encourage everyone to open issues and discuss topics only related to Ryu. We also kindly ask everyone to be respectful, polite and avoid any hurtful language in any form.
+Predictable Labs, Inc. is a startup based in the USA 🇺🇸 and India 🇮🇳, originating from India where we share the same values of politeness and respect. We believe in treating everyone with kindness and dignity, so we ask you to please be kind and respectful to everyone on this GitHub.
+If you prefer not to discuss something through open issues and discussions, you can always reach us through [email](mailto:contact@ryugraph.io).

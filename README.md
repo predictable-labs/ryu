@@ -13,7 +13,7 @@ on very large databases and provides a set of retrieval features, such as a full
 - Serializable ACID transactions
 - Wasm (WebAssembly) bindings for fast, secure execution in the browser
 
-Ryu was initially developed by Kuzu Inc. Now it's maintained by Predictable Labs under the name of Ryu. It is available under a permissible license.
+Ryu or RyuGraph is a fork of [Kuzu](https://github.com/kuzudb/kuzu), which was originally developed by Kuzu Inc. Following Kuzu's archival in October 2025, Ryu continues the development and evolution of this embedded graph database technology. Ryu is maintained by Predictable Labs, Inc. and is available under a permissible license, ensuring the continued advancement of this innovative graph database solution.
 
 ## Docs and Blog
 

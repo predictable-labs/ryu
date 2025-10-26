@@ -1,6 +1,7 @@
 MIT License
 
 Copyright (c) 2022-2025 Kùzu Inc.
+Copyright (c) 2025 Predictable Labs, Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,3 +20,9 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+This project is a fork of Kùzu (https://github.com/kuzudb/kuzu), which was
+archived in October 2025. Ryu continues the development and evolution of this
+embedded graph database technology under the MIT License.
