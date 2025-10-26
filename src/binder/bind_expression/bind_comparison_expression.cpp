@@ -51,8 +51,8 @@ std::shared_ptr<Expression> ExpressionBinder::bindComparisonExpression(
                 expression_vector extractChildren;
                 extractChildren.push_back(child);
                 extractChildren.push_back(createLiteralExpression(InternalKeyword::ID));
-                newChildren.push_back(bindScalarFunctionExpression(extractChildren,
-                    StructExtractFunctions::name));
+                newChildren.push_back(
+                    bindScalarFunctionExpression(extractChildren, StructExtractFunctions::name));
             }
         }
         return bindComparisonExpression(expressionType, newChildren);
