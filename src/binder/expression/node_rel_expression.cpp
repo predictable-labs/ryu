@@ -35,7 +35,10 @@ void NodeOrRelExpression::addEntries(const std::vector<TableCatalogEntry*>& entr
 
 void NodeOrRelExpression::addPropertyExpression(std::shared_ptr<PropertyExpression> property) {
     auto propertyName = property->getPropertyName();
-    KU_ASSERT(!propertyNameToIdx.contains(propertyName));
+    // If property already exists, skip adding it (idempotent operation)
+    if (propertyNameToIdx.contains(propertyName)) {
+        return;
+    }
     propertyNameToIdx.insert({propertyName, propertyExprs.size()});
     propertyExprs.push_back(std::move(property));
 }
