@@ -1,0 +1,25 @@
+-DATASET CSV EMPTY
+
+--
+
+-CASE DeleteDuplicateRelsBug
+
+-STATEMENT CREATE NODE TABLE Person(name STRING PRIMARY KEY);
+---- ok
+-STATEMENT CREATE REL TABLE LivesWith(FROM Person TO Person);
+---- ok
+
+-STATEMENT CREATE (p:Person {name: 'Alice'});
+---- ok
+-STATEMENT CREATE (p:Person {name: 'Bob'});
+---- ok
+
+-STATEMENT MATCH (p:Person {name: 'Alice'}), (q:Person {name: 'Bob'}) CREATE (p)-[:LivesWith]->(q);
+---- ok
+-STATEMENT MATCH (p:Person {name: 'Alice'}), (q:Person {name: 'Bob'}) CREATE (p)-[:LivesWith]->(q);
+---- ok
+
+-LOG DeleteUnwindedCollectedRels
+# Bug: Segfault when deleting relationships that were unwound from a collected list
+-STATEMENT MATCH (a)-[r:LivesWith]->(b) WITH collect(r) AS rs WITH rs[2:] AS dups UNWIND dups AS d MATCH (a)-[s:LivesWith]->(b) WHERE s=d DELETE s;
+---- ok
