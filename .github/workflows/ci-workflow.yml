@@ -395,6 +395,9 @@ jobs:
           name: binary-demo
           path: dataset/binary-demo
 
+      - name: Clean build
+        run: make clean
+
       - name: Build
         run: make test-build
 
@@ -873,6 +876,9 @@ jobs:
         with:
           name: binary-demo
           path: dataset/binary-demo
+
+      - name: Clean build
+        run: make clean
 
       - name: Build
         run: make test-build
