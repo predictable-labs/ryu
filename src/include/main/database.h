@@ -160,6 +160,8 @@ public:
 
     common::VirtualFileSystem* getVFS() { return vfs.get(); }
 
+    std::string getDatabasePath() const { return databasePath; }
+
 private:
     using construct_bm_func_t =
         std::function<std::unique_ptr<storage::BufferManager>(const Database&)>;

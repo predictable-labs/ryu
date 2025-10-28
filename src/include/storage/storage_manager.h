@@ -4,6 +4,7 @@
 
 #include "catalog/catalog.h"
 #include "shadow_file.h"
+#include "storage/backup/backup_state.h"
 #include "storage/index/index.h"
 #include "storage/wal/wal.h"
 
@@ -24,6 +25,7 @@ class Table;
 class NodeTable;
 class RelTable;
 class DiskArrayCollection;
+class BackupManager;
 struct DatabaseHeader;
 
 class RYU_API StorageManager {
@@ -77,6 +79,13 @@ public:
 
     static StorageManager* Get(const main::ClientContext& context);
 
+    // Backup API
+    void startBackup(const std::string& backupPath);
+    BackupState getBackupState() const;
+    double getBackupProgress() const;
+    void waitForBackupCompletion();
+    void notifyBackupPageModification(common::page_idx_t pageIdx);
+
 private:
     void createNodeTable(catalog::NodeTableCatalogEntry* entry);
 
@@ -94,6 +103,7 @@ private:
     MemoryManager& memoryManager;
     std::unique_ptr<WAL> wal;
     std::unique_ptr<ShadowFile> shadowFile;
+    std::unique_ptr<BackupManager> backupManager;
     bool enableCompression;
     bool inMemory;
     std::vector<IndexType> registeredIndexTypes;
