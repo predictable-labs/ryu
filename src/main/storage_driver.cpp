@@ -2,6 +2,7 @@
 
 #include <thread>
 
+#include "catalog/catalog_entry/rel_group_catalog_entry.h"
 #include "catalog/catalog_entry/table_catalog_entry.h"
 #include "main/client_context.h"
 #include "storage/storage_manager.h"
@@ -118,9 +119,29 @@ uint64_t StorageDriver::getNumNodes(const std::string& nodeName) const {
 uint64_t StorageDriver::getNumRels(const std::string& relName) const {
     clientContext->query("BEGIN TRANSACTION READ ONLY;");
     auto transaction = Transaction::Get(*clientContext);
-    auto result = getTable(*clientContext, relName)->getNumTotalRows(transaction);
-    clientContext->query("COMMIT");
-    return result;
+    auto catalog = Catalog::Get(*clientContext);
+    auto entry = catalog->getTableCatalogEntry(transaction, relName);
+
+    // Check if this is a RelGroup entry
+    if (entry->getType() == CatalogEntryType::REL_GROUP_ENTRY) {
+        auto relGroupEntry = entry->ptrCast<RelGroupCatalogEntry>();
+        auto storageManager = StorageManager::Get(*clientContext);
+
+        // Sum up the row counts from all relationship tables in the group
+        uint64_t totalRows = 0;
+        for (const auto& relTableInfo : relGroupEntry->getRelEntryInfos()) {
+            auto relTable = storageManager->getTable(relTableInfo.oid);
+            totalRows += relTable->getNumTotalRows(transaction);
+        }
+
+        clientContext->query("COMMIT");
+        return totalRows;
+    } else {
+        // For non-RelGroup tables (shouldn't happen for relationships, but handle it anyway)
+        auto result = getTable(*clientContext, relName)->getNumTotalRows(transaction);
+        clientContext->query("COMMIT");
+        return result;
+    }
 }
 
 void StorageDriver::scanColumn(Table* table, column_id_t columnID, const offset_t* offsets,
