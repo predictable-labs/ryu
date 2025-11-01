@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import ryu
+import ryugraph as ryu
 
 from type_aliases import ConnDB
 

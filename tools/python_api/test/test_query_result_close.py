@@ -13,7 +13,7 @@ def test_query_result_close(tmp_path: Path, build_dir: Path) -> None:
         import sys
         sys.path.append(r"{build_dir!s}")
 
-        import ryu
+        import ryugraph as ryu
         db = ryu.Database(r"{db_path!s}")
         conn = ryu.Connection(db)
         conn.execute('''

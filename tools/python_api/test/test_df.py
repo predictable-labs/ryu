@@ -6,7 +6,7 @@ from decimal import Decimal
 from typing import Any
 from uuid import UUID
 
-import ryu
+import ryugraph as ryu
 import pytz
 from pandas import Timedelta, Timestamp
 from type_aliases import ConnDB

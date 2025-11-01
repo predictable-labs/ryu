@@ -6,7 +6,7 @@ from pathlib import Path
 from textwrap import dedent
 from typing import TYPE_CHECKING
 
-import ryu
+import ryugraph as ryu
 import pytest
 from conftest import get_db_file_path
 
@@ -17,7 +17,7 @@ def open_database_on_subprocess(tmp_path: Path, build_dir: Path) -> None:
         import sys
         sys.path.append(r"{build_dir!s}")
 
-        import ryu
+        import ryugraph as ryu
         db = ryu.Database(r"{tmp_path!s}")
         print(r"{tmp_path!s}")
     """

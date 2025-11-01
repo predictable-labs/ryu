@@ -9,7 +9,7 @@ from uuid import UUID
 import pytest
 
 import ground_truth
-import ryu
+import ryugraph as ryu
 import polars as pl
 import pyarrow as pa
 import pytz

@@ -4,7 +4,7 @@ import threading
 import time
 from typing import TYPE_CHECKING
 
-import ryu
+import ryugraph as ryu
 import pytest
 from type_aliases import ConnDB
 

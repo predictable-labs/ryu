@@ -9,7 +9,7 @@ from type_aliases import ConnDB
 # required by python-lint
 if TYPE_CHECKING:
     from pathlib import Path
-import ryu
+import ryugraph as ryu
 
 
 def test_struct_param_access(conn_db_readwrite: ConnDB) -> None:

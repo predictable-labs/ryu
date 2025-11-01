@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
-from . import _ryu
+from . import _ryugraph
 from .types import Type
 
 if TYPE_CHECKING:
@@ -112,7 +112,7 @@ class Database:
         self.enable_checksums = enable_checksums
         self.is_closed = False
 
-        self._database: Any = None  # (type: _ryu.Database from pybind11)
+        self._database: Any = None  # (type: _ryugraph.Database from pybind11)
         if not lazy_init:
             self.init_database()
 
@@ -137,7 +137,7 @@ class Database:
         str
             The version of the database.
         """
-        return _ryu.Database.get_version()  # type: ignore[union-attr]
+        return _ryugraph.Database.get_version()  # type: ignore[union-attr]
 
     @staticmethod
     def get_storage_version() -> int:
@@ -149,7 +149,7 @@ class Database:
         int
             The storage version of the database.
         """
-        return _ryu.Database.get_storage_version()  # type: ignore[union-attr]
+        return _ryugraph.Database.get_storage_version()  # type: ignore[union-attr]
 
     def __getstate__(self) -> dict[str, Any]:
         state = {
@@ -165,7 +165,7 @@ class Database:
         """Initialize the database."""
         self.check_for_database_close()
         if self._database is None:
-            self._database = _ryu.Database(  # type: ignore[union-attr]
+            self._database = _ryugraph.Database(  # type: ignore[union-attr]
                 self.database_path,
                 self.buffer_pool_size,
                 self.max_num_threads,
@@ -289,7 +289,7 @@ class Database:
         self.is_closed = True
         if self._database is not None:
             self._database.close()
-            self._database: Any = None  # (type: _ryu.Database from pybind11)
+            self._database: Any = None  # (type: _ryugraph.Database from pybind11)
 
     def check_for_database_close(self) -> None:
         """
