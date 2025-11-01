@@ -54,19 +54,22 @@ TEST_F(ApiTest, StorageDriverGetNumRelsMultipleTypes) {
     auto numKnows = storageDriver->getNumRels("knows");
     auto resultKnows = conn->query("MATCH ()-[:knows]->() RETURN COUNT(*)");
     ASSERT_TRUE(resultKnows->hasNext());
-    ASSERT_EQ(numKnows, static_cast<uint64_t>(resultKnows->getNext()->getValue(0)->getValue<int64_t>()));
+    ASSERT_EQ(numKnows,
+        static_cast<uint64_t>(resultKnows->getNext()->getValue(0)->getValue<int64_t>()));
 
     // Test "studyAt" relationship
     auto numStudyAt = storageDriver->getNumRels("studyAt");
     auto resultStudyAt = conn->query("MATCH ()-[:studyAt]->() RETURN COUNT(*)");
     ASSERT_TRUE(resultStudyAt->hasNext());
-    ASSERT_EQ(numStudyAt, static_cast<uint64_t>(resultStudyAt->getNext()->getValue(0)->getValue<int64_t>()));
+    ASSERT_EQ(numStudyAt,
+        static_cast<uint64_t>(resultStudyAt->getNext()->getValue(0)->getValue<int64_t>()));
 
     // Test "workAt" relationship
     auto numWorkAt = storageDriver->getNumRels("workAt");
     auto resultWorkAt = conn->query("MATCH ()-[:workAt]->() RETURN COUNT(*)");
     ASSERT_TRUE(resultWorkAt->hasNext());
-    ASSERT_EQ(numWorkAt, static_cast<uint64_t>(resultWorkAt->getNext()->getValue(0)->getValue<int64_t>()));
+    ASSERT_EQ(numWorkAt,
+        static_cast<uint64_t>(resultWorkAt->getNext()->getValue(0)->getValue<int64_t>()));
 }
 
 // Test for issue #6020: getNumRels with custom relationship

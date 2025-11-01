@@ -188,7 +188,7 @@ def test_pyg_graph_store_issue_6020(tmp_path) -> None:
     conn.close()
 
     # Create PyTorch Geometric remote backend - this should not throw
-    feature_store, graph_store = db.get_torch_geometric_remote_backend()
+    _, graph_store = db.get_torch_geometric_remote_backend()
 
     # Verify edge attributes are retrieved correctly
     edge_attrs = graph_store.get_all_edge_attrs()
