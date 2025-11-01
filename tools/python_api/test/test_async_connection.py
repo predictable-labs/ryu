@@ -1,7 +1,7 @@
 import asyncio
 import time
 
-import ryu
+import ryugraph as ryu
 import pyarrow as pa
 import pytest
 

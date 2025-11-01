@@ -5,12 +5,12 @@ This package provides a Python API for Ryu graph database management system.
 
 To install the package, run:
 ```
-python3 -m pip install ryu
+python3 -m pip install ryugraph
 ```
 
 Example usage:
 ```python
-import ryu
+import ryugraph as ryu
 
 db = ryu.Database("./test")
 conn = ryu.Connection(db)

@@ -1,12 +1,12 @@
 include(FetchContent)
-project(_ryu)
+project(_ryugraph)
 
 set(CMAKE_CXX_STANDARD 20)
 
 file(GLOB SOURCE_PY
         "src_py/*")
 
-pybind11_add_module(_ryu
+pybind11_add_module(_ryugraph
         SHARED
         src_cpp/ryu_binding.cpp
         src_cpp/cached_import/py_cached_item.cpp
@@ -27,21 +27,21 @@ pybind11_add_module(_ryu
         src_cpp/numpy/numpy_type.cpp
         src_cpp/numpy/numpy_scan.cpp)
 
-set_target_properties(_ryu
+set_target_properties(_ryugraph
         PROPERTIES
-        LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/build/ryu"
-        RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/build/ryu"
-        ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/build/ryu")
+        LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/build/ryugraph"
+        RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/build/ryugraph"
+        ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/build/ryugraph")
 
-target_link_libraries(_ryu
+target_link_libraries(_ryugraph
         PRIVATE
         ryu)
 
 target_include_directories(
-        _ryu
+        _ryugraph
         PUBLIC
         src_cpp/include)
 
-get_target_property(PYTHON_DEST _ryu LIBRARY_OUTPUT_DIRECTORY)
+get_target_property(PYTHON_DEST _ryugraph LIBRARY_OUTPUT_DIRECTORY)
 
 file(COPY ${SOURCE_PY} DESTINATION ${PYTHON_DEST})

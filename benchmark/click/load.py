@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import ryu
+import ryugraph as ryu
 import timeit
 import psutil
 

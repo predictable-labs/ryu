@@ -27,7 +27,7 @@ disable_error_code = [
 
 [[tool.mypy.overrides]]
 module = [
-  "_ryu.*",
+  "_ryugraph.*",
   "networkx.*",
   "pandas.*",
   "pyarrow.*",

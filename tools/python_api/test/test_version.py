@@ -1,5 +1,5 @@
 def test_version() -> None:
-    import ryu
+    import ryugraph as ryu
 
     assert ryu.version != ""
     assert ryu.storage_version > 0

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-import ryu
+import ryugraph as ryu
 import pytest
 from test_helper import RYU_ROOT
 from conftest import get_db_file_path

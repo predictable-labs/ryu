@@ -44,10 +44,10 @@ format: requirements
 
 build:  ## Compile ryu (and install in 'build') for Python
 	$(MAKE) -C ../../ python
-	cp src_py/*.py build/ryu/
+	cp src_py/*.py build/ryugraph/
 
 test: requirements  ## Run the Python unit tests
-	cp src_py/*.py build/ryu/ && cd build
+	cp src_py/*.py build/ryugraph/ && cd build
 	$(VENV_BIN)/pytest test
 
 help:  ## Display this help information

@@ -3,7 +3,7 @@
 import timeit
 import sys
 
-import ryu
+import ryugraph as ryu
 
 query = sys.stdin.read()
 print(query)

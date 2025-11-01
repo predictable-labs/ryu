@@ -19,7 +19,7 @@ if TYPE_CHECKING:
     import pyarrow as pa
     import torch_geometric.data as geo
 
-    from . import _ryu
+    from . import _ryugraph
 
     if sys.version_info >= (3, 11):
         from typing import Self
@@ -30,14 +30,14 @@ if TYPE_CHECKING:
 class QueryResult:
     """QueryResult stores the result of a query execution."""
 
-    def __init__(self, connection: _ryu.Connection, query_result: _ryu.QueryResult):  # type: ignore[name-defined]
+    def __init__(self, connection: _ryugraph.Connection, query_result: _ryugraph.QueryResult):  # type: ignore[name-defined]
         """
         Parameters
         ----------
-        connection : _ryu.Connection
+        connection : _ryugraph.Connection
             The underlying C++ connection object from pybind11.
 
-        query_result : _ryu.QueryResult
+        query_result : _ryugraph.QueryResult
             The underlying C++ query result object from pybind11.
 
         """

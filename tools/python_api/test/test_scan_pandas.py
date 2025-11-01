@@ -13,7 +13,7 @@ try:
 except ImportError:
     from backports.zoneinfo import ZoneInfo  # type: ignore[no-redef]
 
-import ryu
+import ryugraph as ryu
 from ryu.constants import ID, LABEL
 
 

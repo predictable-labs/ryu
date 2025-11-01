@@ -1,6 +1,6 @@
 import sys
 
-from ryu import Connection, Database
+from ryugraph import Connection, Database
 
 if sys.version_info >= (3, 10):
     from typing import TypeAlias
