@@ -1,5 +1,11 @@
 from __future__ import annotations
 
+import pytest
+
+pytest.importorskip("torch")
+
+import ryu
+
 TINY_SNB_KNOWS_GROUND_TRUTH = {
     0: [2, 3, 5],
     2: [0, 3, 5],
@@ -109,3 +115,89 @@ TINY_SNB_PERSON_IDS_GROUND_TRUTH = [0, 2, 3, 5, 7, 8, 9, 10]
 #     fs, _ = db.get_torch_geometric_remote_backend(8)
 #     for i in range(20000):
 #         assert fs["npy20k", "id", i].item() == i
+
+
+# Test for issue #6020: get_num_rels should not throw "unordered_map::at: key not found"
+def test_get_num_rels_issue_6020(tmp_path) -> None:
+    """
+    Test that StorageDriver.getNumRels correctly handles RelGroup entries.
+    This test verifies the fix for issue #6020 where get_num_rels would throw
+    "IndexError: unordered_map::at: key not found" when called on relationship names.
+    """
+    db_path = tmp_path / "test_db"
+    db = ryu.Database(str(db_path))
+    conn = ryu.Connection(db)
+
+    # Create schema similar to the reported issue
+    conn.execute("CREATE NODE TABLE Program(id INT64, name STRING, PRIMARY KEY(id))")
+    conn.execute("CREATE NODE TABLE Subject(id INT64, name STRING, PRIMARY KEY(id))")
+    conn.execute("CREATE REL TABLE ProgramIsFor(FROM Program TO Subject)")
+
+    # Insert test data
+    conn.execute("CREATE (p:Program {id: 1, name: 'CS101'})")
+    conn.execute("CREATE (p:Program {id: 2, name: 'CS102'})")
+    conn.execute("CREATE (s:Subject {id: 1, name: 'Math'})")
+    conn.execute("CREATE (s:Subject {id: 2, name: 'Science'})")
+
+    # Create relationships
+    conn.execute("MATCH (p:Program {id: 1}), (s:Subject {id: 1}) CREATE (p)-[:ProgramIsFor]->(s)")
+    conn.execute("MATCH (p:Program {id: 1}), (s:Subject {id: 2}) CREATE (p)-[:ProgramIsFor]->(s)")
+    conn.execute("MATCH (p:Program {id: 2}), (s:Subject {id: 1}) CREATE (p)-[:ProgramIsFor]->(s)")
+    conn.execute("MATCH (p:Program {id: 2}), (s:Subject {id: 2}) CREATE (p)-[:ProgramIsFor]->(s)")
+
+    # Get count via Cypher for comparison
+    result = conn.execute("MATCH ()-[:ProgramIsFor]->() RETURN COUNT(*)")
+    cypher_count = result.get_next()[0]
+
+    # THIS IS THE CRITICAL TEST - before the fix, this would throw:
+    # IndexError: unordered_map::at: key not found
+    num_rels = conn._connection.get_num_rels("ProgramIsFor")
+
+    # Verify the count is correct
+    assert num_rels == cypher_count
+    assert num_rels == 4
+
+    conn.close()
+
+
+# Test for issue #6020: PyTorch Geometric graph store creation
+def test_pyg_graph_store_issue_6020(tmp_path) -> None:
+    """
+    Test that PyTorch Geometric graph store can be created without errors.
+    This was the original use case that triggered issue #6020.
+    """
+    pytest.importorskip("torch_geometric")
+
+    db_path = tmp_path / "test_pyg_db"
+    db = ryu.Database(str(db_path))
+    conn = ryu.Connection(db)
+
+    # Create schema
+    conn.execute("CREATE NODE TABLE Program(id INT64, name STRING, PRIMARY KEY(id))")
+    conn.execute("CREATE NODE TABLE Subject(id INT64, name STRING, PRIMARY KEY(id))")
+    conn.execute("CREATE REL TABLE ProgramIsFor(FROM Program TO Subject)")
+
+    # Insert test data
+    conn.execute("CREATE (p:Program {id: 1, name: 'CS101'})")
+    conn.execute("CREATE (p:Program {id: 2, name: 'CS102'})")
+    conn.execute("CREATE (s:Subject {id: 1, name: 'Math'})")
+    conn.execute("CREATE (s:Subject {id: 2, name: 'Science'})")
+    conn.execute("MATCH (p:Program {id: 1}), (s:Subject {id: 1}) CREATE (p)-[:ProgramIsFor]->(s)")
+    conn.execute("MATCH (p:Program {id: 1}), (s:Subject {id: 2}) CREATE (p)-[:ProgramIsFor]->(s)")
+
+    conn.close()
+
+    # Create PyTorch Geometric remote backend - this should not throw
+    _, graph_store = db.get_torch_geometric_remote_backend()
+
+    # Verify edge attributes are retrieved correctly
+    edge_attrs = graph_store.get_all_edge_attrs()
+    assert len(edge_attrs) > 0
+
+    # Find the ProgramIsFor edge
+    program_is_for_attrs = [attr for attr in edge_attrs if attr.edge_type[1] == "ProgramIsFor"]
+    assert len(program_is_for_attrs) == 1
+
+    # Verify the size is correct (2 programs, 2 subjects)
+    attr = program_is_for_attrs[0]
+    assert attr.size == (2, 2)
